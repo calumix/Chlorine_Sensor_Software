@@ -1,0 +1,58 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  PROJ_NAME: "2692-007-00_Echosounder"  
+  RELEASE_VERSTRING: "${CI_COMMIT_TAG}-${CI_COMMIT_SHORT_SHA}"  
+  RELEASE_BINARY_BASE: "$PROJ_NAME-${RELEASE_VERSTRING}"
+  PACKAGE_BASE_URL: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PROJ_NAME}/${RELEASE_VERSTRING}"
+  
+stages:
+ - build
+ - upload
+ - release
+
+build:
+ stage: build
+ image: ${CI_REGISTRY}/omnitech-public/0105/0105-021-mcuxpresso-24.12.148:latest 
+ script:
+   #The .cproject has XML markup inside that has a CR appended on windows, but the linux build always wants to strip it off, making our repo dirty  
+  - chmod a-w .cproject
+  #the makefile.defs uses a git command to create a version string. There are some requirements for the resuling string (see git_ver_parse.h) that we check here
+  #this test will fail if the version doesn't match our required format (could be due to version tag format, etc).
+  - "[[ `git describe --abbrev=4 --long --tags --always --dirty` =~ ^(v[0-9]{1,3}-)?([0-9]{1,2}-)?(g)*([0-9A-Fa-f]){4}(-dirty)? ]]"  
+  - /usr/local/mcuxpressoide/ide/mcuxpressoide -nosplash --launcher.suppressErrors -application org.eclipse.cdt.managedbuilder.core.headlessbuild -data /tmp/ -import . -build $PROJ_NAME 
+  - echo "Version ${RELEASE_VERSTRING}"
+  - git diff    
+  - cp Release/$PROJ_NAME.axf ${RELEASE_BINARY_BASE}.axf
+  - cp Release/$PROJ_NAME.hex ${RELEASE_BINARY_BASE}.hex
+ artifacts:
+  paths:
+   - "${RELEASE_BINARY_BASE}.hex"
+   - "${RELEASE_BINARY_BASE}.axf"
+  expire_in: 1 week
+
+upload:
+  stage: upload
+  image: "$CI_REGISTRY/omnitech-public/0105/0105-002-docker:latest"
+  rules:
+    - if: $CI_COMMIT_TAG
+  script:    
+    - |
+      curl --fail --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file ${RELEASE_BINARY_BASE} ${PACKAGE_BASE_URL}/${RELEASE_BINARY_BASE}
+
+release_job:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: $CI_COMMIT_TAG 
+  script:
+    - echo "running release_job"    
+  release:
+    name: 'Release $CI_COMMIT_TAG'
+    description: '${PROJ_NAME} Release ${CI_COMMIT_TAG} Binary'
+    tag_name: '$CI_COMMIT_TAG'                      
+    ref: '$CI_COMMIT_TAG'    
+    assets:
+      links:
+        - name: 'Hex File'
+          url: '${PACKAGE_BASE_URL}/${RELEASE_BINARY_BASE}.hex'          
+          link_type: 'other'
