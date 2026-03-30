@@ -21,12 +21,9 @@
 #include "clock_config.h"
 #include "fsl_debug_console.h"
 #include "fsl_ostimer.h"
-#include "nmea.h"
-#include "tuss4470.h"
 #include "commands.h"
 #include "message.h"
 #include "usb_port.h"
-#include "echogram.h"
 #include "env.h"
 
 //This prevents linker from removing symbol -- this symbol is necessary for gdb to show individual freertos task call stacks when debugging
@@ -59,13 +56,10 @@ void CommandRxTask(void * params){
 
 
 struct RxTaskParams rx_task_config;
-struct Message nmea_port_msg;
+struct Message usb_port_msg;
 QueueHandle_t cmd_queue;
-QueueHandle_t ping_cmds;
 StreamBufferHandle_t usb_tx;
 StreamBufferHandle_t usb_rx;
-QueueHandle_t sensor_reading;
-
 
 static configRUN_TIME_COUNTER_TYPE first_count;
 configRUN_TIME_COUNTER_TYPE FreeRTOSRuntimeCounterGet(void){
@@ -82,16 +76,12 @@ void FreeRTOSRuntimeCounterInit(void){
  */
 void InitTask(void*params){
 	EnvInit();
-	TUSS4470Init(&ping_cmds);
-    CommandParserInit(&cmd_queue,ping_cmds);
-    MessageInit(&nmea_port_msg);
+    CommandParserInit(&cmd_queue);
     USBInit(&usb_tx, &usb_rx);
-    ADCDMAInit(env.echo_baud, usb_tx, &sensor_reading);
-    NMEAInit(env.nmea_baud,nmea_port_msg.rx_stream,nmea_port_msg.tx_queue,sensor_reading);
-    rx_task_config.msg = &nmea_port_msg;
+    MessageInit(&usb_port_msg,usb_tx,usb_rx);
     rx_task_config.command = cmd_queue;
-
-    xTaskCreate(CommandRxTask,"NMEA Parse",256,(void*)&rx_task_config,0,NULL);
+    rx_task_config.msg = &usb_port_msg;
+    xTaskCreate(CommandRxTask,"CMD Parse",256,(void*)&rx_task_config,0,NULL);
 
 	vTaskDelete(NULL);
 }

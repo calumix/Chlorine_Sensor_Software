@@ -21,8 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief power driver version 2.0.1. */
-#define FSL_POWER_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+/*! @brief power driver version 2.0.0. */
+#define FSL_POWER_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
 /*@}*/
 
 /* Power mode configuration API parameter */
@@ -71,7 +71,9 @@ typedef enum pd_bits
     kPDRUNCFG_ForceUnsigned = 0x80000000U,
 } pd_bit_t;
 
-/*! @brief BOD VBAT level */
+/**
+ * @brief BOD VBAT level
+ */
 typedef enum _power_bod_vbat_level
 {
     kPOWER_BodVbatLevel1000mv = 0,  /*!< Brown out detector VBAT level 1V */
@@ -102,7 +104,9 @@ typedef enum _power_bod_vbat_level
     kPOWER_BodVbatLevel3300mv = 25, /*!< Brown out detector VBAT level 3.3V */
 } power_bod_vbat_level_t;
 
-/*! @brief BOD Hysteresis control */
+/**
+ * @brief BOD Hysteresis control
+ */
 typedef enum _power_bod_hyst
 {
     kPOWER_BodHystLevel25mv  = 0U, /*!< BOD Hysteresis control level 25mv */
@@ -110,8 +114,9 @@ typedef enum _power_bod_hyst
     kPOWER_BodHystLevel75mv  = 2U, /*!< BOD Hysteresis control level 75mv */
     kPOWER_BodHystLevel100mv = 3U, /*!< BOD Hysteresis control level 100mv */
 } power_bod_hyst_t;
-
-/*! @brief BOD core level */
+/**
+ * @brief BOD core level
+ */
 typedef enum _power_bod_core_level
 {
     kPOWER_BodCoreLevel600mv = 0, /*!< Brown out detector core level 600mV */
@@ -180,28 +185,12 @@ typedef enum _power_device_boot_mode
     (1UL << 3) /*!< Enable SRAMX_3 retention when entering in Low power modes       */
 #define LOWPOWER_SRAMRETCTRL_RETEN_RAM00 \
     (1UL << 4) /*!< Enable SRAM0_0 retention when entering in Low power modes       */
-#define LOWPOWER_SRAMRETCTRL_RETEN_RAM01 \
-    (1UL << 5) /*!< Enable SRAM0_1 retention when entering in Low power modes       */
 #define LOWPOWER_SRAMRETCTRL_RETEN_RAM10 \
     (1UL << 6) /*!< Enable SRAM1_0 retention when entering in Low power modes       */
 #define LOWPOWER_SRAMRETCTRL_RETEN_RAM20 \
     (1UL << 7) /*!< Enable SRAM2_0 retention when entering in Low power modes       */
-#define LOWPOWER_SRAMRETCTRL_RETEN_RAM30 \
-    (1UL << 8) /*!< Enable SRAM3_0 retention when entering in Low power modes       */
-#define LOWPOWER_SRAMRETCTRL_RETEN_RAM31 \
-    (1UL << 9) /*!< Enable SRAM3_1 retention when entering in Low power modes       */
-#define LOWPOWER_SRAMRETCTRL_RETEN_RAM40 \
-    (1UL << 10) /*!< Enable SRAM4_0 retention when entering in Low power modes       */
-#define LOWPOWER_SRAMRETCTRL_RETEN_RAM41 \
-    (1UL << 11) /*!< Enable SRAM4_1 retention when entering in Low power modes       */
-#define LOWPOWER_SRAMRETCTRL_RETEN_RAM42 \
-    (1UL << 12) /*!< Enable SRAM4_2 retention when entering in Low power modes       */
-#define LOWPOWER_SRAMRETCTRL_RETEN_RAM43 \
-    (1UL << 13) /*!< Enable SRAM4_3 retention when entering in Low power modes       */
 #define LOWPOWER_SRAMRETCTRL_RETEN_RAM_USB_HS \
     (1UL << 14) /*!< Enable SRAM USB HS retention when entering in Low power modes   */
-#define LOWPOWER_SRAMRETCTRL_RETEN_RAM_PUF \
-    (1UL << 15) /*!< Enable SRAM PUFF retention when entering in Low power modes     */
 
 /**
  * @brief Low Power Modes Wake up sources
@@ -229,27 +218,28 @@ typedef enum _power_device_boot_mode
 #define WAKEUP_FLEXCOMM6       (1ULL << 20) /*!< [SLEEP, DEEP SLEEP                             ] */
 #define WAKEUP_FLEXCOMM7       (1ULL << 21) /*!< [SLEEP, DEEP SLEEP                             ] */
 #define WAKEUP_ADC             (1ULL << 22) /*!< [SLEEP,                                        ] */
-#define WAKEUP_ACMP_CAPT       (1ULL << 24) /*!< [SLEEP, DEEP SLEEP, POWER DOWN                 ] */
+// reserved                                         (1ULL << 23)
+#define WAKEUP_ACMP (1ULL << 24) /*!< [SLEEP, DEEP SLEEP, POWER DOWN                 ] */
 // reserved                                         (1ULL << 25)
 // reserved                                         (1ULL << 26)
 #define WAKEUP_USB0_NEEDCLK          (1ULL << 27) /*!< [SLEEP, DEEP SLEEP                             ] */
 #define WAKEUP_USB0                  (1ULL << 28) /*!< [SLEEP, DEEP SLEEP                             ] */
 #define WAKEUP_RTC_LITE_ALARM_WAKEUP (1ULL << 29) /*!< [SLEEP, DEEP SLEEP, POWER DOWN, DEEP POWER DOWN] */
-#define WAKEUP_EZH_ARCH_B            (1ULL << 30) /*!< [SLEEP,                                        ] */
-#define WAKEUP_WAKEUP_MAILBOX        (1ULL << 31) /*!< [SLEEP, DEEP SLEEP, POWER DOWN                 ] */
-#define WAKEUP_GPIO_INT0_4           (1ULL << 32) /*!< [SLEEP, DEEP SLEEP                             ] */
-#define WAKEUP_GPIO_INT0_5           (1ULL << 33) /*!< [SLEEP, DEEP SLEEP                             ] */
-#define WAKEUP_GPIO_INT0_6           (1ULL << 34) /*!< [SLEEP, DEEP SLEEP                             ] */
-#define WAKEUP_GPIO_INT0_7           (1ULL << 35) /*!< [SLEEP, DEEP SLEEP                             ] */
-#define WAKEUP_CTIMER2               (1ULL << 36) /*!< [SLEEP, DEEP SLEEP                             ] */
-#define WAKEUP_CTIMER4               (1ULL << 37) /*!< [SLEEP, DEEP SLEEP                             ] */
-#define WAKEUP_OS_EVENT_TIMER        (1ULL << 38) /*!< [SLEEP, DEEP SLEEP, POWER DOWN, DEEP POWER DOWN] */
+// reserved                                         (1ULL << 30)
+// reserved                                         (1ULL << 31)
+#define WAKEUP_GPIO_INT0_4    (1ULL << 32) /*!< [SLEEP, DEEP SLEEP                             ] */
+#define WAKEUP_GPIO_INT0_5    (1ULL << 33) /*!< [SLEEP, DEEP SLEEP                             ] */
+#define WAKEUP_GPIO_INT0_6    (1ULL << 34) /*!< [SLEEP, DEEP SLEEP                             ] */
+#define WAKEUP_GPIO_INT0_7    (1ULL << 35) /*!< [SLEEP, DEEP SLEEP                             ] */
+#define WAKEUP_CTIMER2        (1ULL << 36) /*!< [SLEEP, DEEP SLEEP                             ] */
+#define WAKEUP_CTIMER4        (1ULL << 37) /*!< [SLEEP, DEEP SLEEP                             ] */
+#define WAKEUP_OS_EVENT_TIMER (1ULL << 38) /*!< [SLEEP, DEEP SLEEP, POWER DOWN, DEEP POWER DOWN] */
 // reserved                                         (1ULL << 39)
 // reserved                                         (1ULL << 40)
 // reserved                                         (1ULL << 41)
-#define WAKEUP_SDIO (1ULL << 42) /*!< [SLEEP,                                        ] */
-// reserved                                         (1ULL << 43)
-// reserved                                         (1ULL << 44)
+// reserved                                         (1ULL << 42)
+#define CAN0_INT0 (1ULL << 43) /*!< [SLEEP,                                        ] */
+#define CAN1_INT0 (1ULL << 44) /*!< [SLEEP,                                        ] */
 // reserved                                         (1ULL << 45)
 // reserved                                         (1ULL << 46)
 #define WAKEUP_USB1                (1ULL << 47) /*!< [SLEEP, DEEP SLEEP                             ] */
@@ -261,13 +251,13 @@ typedef enum _power_device_boot_mode
 #define WAKEUP_SEC_VIO             (1ULL << 53)
 #define WAKEUP_SHA                 (1ULL << 54) /*!< [SLEEP,                                        ] */
 #define WAKEUP_CASPER              (1ULL << 55) /*!< [SLEEP,                                        ] */
-#define WAKEUP_PUFF                (1ULL << 56) /*!< [SLEEP,                                        ] */
-#define WAKEUP_PQ                  (1ULL << 57) /*!< [SLEEP,                                        ] */
-#define WAKEUP_SDMA1               (1ULL << 58) /*!< [SLEEP, DEEP SLEEP                             ] */
-#define WAKEUP_LSPI_HS             (1ULL << 59) /*!< [SLEEP, DEEP SLEEP                             ] */
-// reserved WAKEUP_PVTVF0_AMBER                     (1ULL << 60)
-// reserved WAKEUP_PVTVF0_RED                       (1ULL << 61)
-// reserved WAKEUP_PVTVF1_AMBER                     (1ULL << 62)
+#define WAKEUP_PUF                 (1ULL << 56) /*!< [SLEEP,                                        ] */
+// reserved                                         (1ULL << 57)
+#define WAKEUP_SDMA1   (1ULL << 58) /*!< [SLEEP, DEEP SLEEP                             ] */
+#define WAKEUP_LSPI_HS (1ULL << 59) /*!< [SLEEP, DEEP SLEEP                             ] */
+//#define CDOG (1ULL << 60)           !< [SLEEP,                                        ]
+// reserved                                         (1ULL << 61)
+// reserved                                         (1ULL << 62)
 #define WAKEUP_ALLWAKEUPIOS (1ULL << 63) /*!< [                             , DEEP POWER DOWN] */
 
 /**
@@ -301,6 +291,16 @@ typedef enum _power_device_boot_mode
 #define LOWPOWER_WAKEUPIOSRC_RISING         1 /*!< Wake up on rising edge                  */
 #define LOWPOWER_WAKEUPIOSRC_FALLING        2 /*!< Wake up on falling edge                 */
 #define LOWPOWER_WAKEUPIOSRC_RISING_FALLING 3 /*!< Wake up on both rising or falling edges */
+
+#define LOWPOWER_WAKEUPIOSRC_PIO0MODE_INDEX 12 /*!< Pin P1( 1) */
+#define LOWPOWER_WAKEUPIOSRC_PIO1MODE_INDEX 14 /*!< Pin P0(28) */
+#define LOWPOWER_WAKEUPIOSRC_PIO2MODE_INDEX 16 /*!< Pin P1(18) */
+#define LOWPOWER_WAKEUPIOSRC_PIO3MODE_INDEX 18 /*!< Pin P1(30) */
+
+#define LOWPOWER_WAKEUPIOSRC_IO_MODE_PLAIN    0 /*!< Wake up Pad is plain input              */
+#define LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLDOWN 1 /*!< Wake up Pad is pull-down                */
+#define LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLUP   2 /*!< Wake up Pad is pull-up                  */
+#define LOWPOWER_WAKEUPIOSRC_IO_MODE_REPEATER 3 /*!< Wake up Pad is in repeater              */
 
 #define LOWPOWER_WAKEUPIO_PIO0_PULLUPDOWN_INDEX 8  /*!< Wake-up I/O 0 pull-up/down configuration index */
 #define LOWPOWER_WAKEUPIO_PIO1_PULLUPDOWN_INDEX 9  /*!< Wake-up I/O 1 pull-up/down configuration index */
@@ -395,13 +395,7 @@ static inline void POWER_DisablePD(pd_bit_t en)
  * @param hyst BoD Hysteresis control
  * @param enBodVbatReset VBAT brown out detect reset
  */
-static inline void POWER_SetBodVbatLevel(power_bod_vbat_level_t level, power_bod_hyst_t hyst, bool enBodVbatReset)
-{
-    PMC->BODVBAT = (PMC->BODVBAT & (~(PMC_BODVBAT_TRIGLVL_MASK | PMC_BODVBAT_HYST_MASK))) | PMC_BODVBAT_TRIGLVL(level) |
-                   PMC_BODVBAT_HYST(hyst);
-    PMC->RESETCTRL =
-        (PMC->RESETCTRL & (~PMC_RESETCTRL_BODVBATRESETENABLE_MASK)) | PMC_RESETCTRL_BODVBATRESETENABLE(enBodVbatReset);
-}
+void POWER_SetBodVbatLevel(power_bod_vbat_level_t level, power_bod_hyst_t hyst, bool enBodVbatReset);
 
 #if defined(PMC_BODCORE_TRIGLVL_MASK)
 /*!
@@ -411,13 +405,7 @@ static inline void POWER_SetBodVbatLevel(power_bod_vbat_level_t level, power_bod
  * @param hyst BoD Hysteresis control
  * @param enBodCoreReset core brown out detect reset
  */
-static inline void POWER_SetBodCoreLevel(power_bod_core_level_t level, power_bod_hyst_t hyst, bool enBodCoreReset)
-{
-    PMC->BODCORE = (PMC->BODCORE & (~(PMC_BODCORE_TRIGLVL_MASK | PMC_BODCORE_HYST_MASK))) | PMC_BODCORE_TRIGLVL(level) |
-                   PMC_BODCORE_HYST(hyst);
-    PMC->RESETCTRL =
-        (PMC->RESETCTRL & (~PMC_RESETCTRL_BODCORERESETENABLE_MASK)) | PMC_RESETCTRL_BODCORERESETENABLE(enBodCoreReset);
-}
+void POWER_SetBodCoreLevel(power_bod_core_level_t level, power_bod_hyst_t hyst, bool enBodCoreReset);
 #endif
 
 /*!
@@ -526,7 +514,7 @@ void POWER_EnterDeepPowerDown(uint32_t exclude_from_pd,
 
 /**
  * @brief   Configures and enters in SLEEP low power mode
- * @param   :
+ *
  * @return  Nothing
  */
 void POWER_EnterSleep(void);
@@ -575,7 +563,6 @@ extern void POWER_Xtal32khzCapabankTrim(int32_t pi32_32kfXtalIecLoadpF_x100,
                                         int32_t pi32_32kfXtalNPcbParCappF_x100);
 /**
  * @brief   Enables and sets LDO for 16MHz XTAL
- *
  * @return  none
  */
 extern void POWER_SetXtal16mhzLdo(void);

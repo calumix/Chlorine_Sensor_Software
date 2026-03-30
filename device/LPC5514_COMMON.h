@@ -1,24 +1,23 @@
 /*
 ** ###################################################################
-**     Processors:          LPC5528JBD100
-**                          LPC5528JBD64
-**                          LPC5528JEV59
-**                          LPC5528JEV98
+**     Processors:          LPC5514JBD100
+**                          LPC5514JBD64
+**                          LPC5514JEV59
 **
 **     Compilers:           GNU C Compiler
 **                          IAR ANSI C/C++ Compiler for ARM
 **                          Keil ARM C/C++ Compiler
 **                          MCUXpresso Compiler
 **
-**     Reference manual:    LPC55S6x/LPC55S2x/LPC552x User manual(UM11126) Rev.1.3  16 May 2019
-**     Version:             rev. 1.1, 2019-05-16
-**     Build:               b240704
+**     Reference manual:    LPC55S1x/LPC551x User manual Rev.0.6  15 November 2019
+**     Version:             rev. 2.0, 2024-10-29
+**     Build:               b250520
 **
 **     Abstract:
-**         CMSIS Peripheral Access Layer for LPC5528
+**         CMSIS Peripheral Access Layer for LPC5514
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -27,29 +26,32 @@
 **     Revisions:
 **     - rev. 1.0 (2018-08-22)
 **         Initial version based on v0.2UM
-**     - rev. 1.1 (2019-05-16)
-**         Initial A1 version based on v1.3UM
+**     - rev. 1.1 (2019-12-03)
+**         Initial version based on v0.6UM
+**     - rev. 2.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
 **
 ** ###################################################################
 */
 
 /*!
- * @file LPC5528_COMMON.h
- * @version 1.1
- * @date 2019-05-16
- * @brief CMSIS Peripheral Access Layer for LPC5528
+ * @file LPC5514_COMMON.h
+ * @version 2.0
+ * @date 2024-10-29
+ * @brief CMSIS Peripheral Access Layer for LPC5514
  *
- * CMSIS Peripheral Access Layer for LPC5528
+ * CMSIS Peripheral Access Layer for LPC5514
  */
 
-#if !defined(LPC5528_COMMON_H_)
-#define LPC5528_COMMON_H_                        /**< Symbol preventing repeated inclusion */
+#if !defined(LPC5514_COMMON_H_)
+#define LPC5514_COMMON_H_                        /**< Symbol preventing repeated inclusion */
 
 /** Memory map major version (memory maps with equal major version number are
  * compatible) */
-#define MCU_MEM_MAP_VERSION 0x0100U
+#define MCU_MEM_MAP_VERSION 0x0200U
 /** Memory map minor version */
-#define MCU_MEM_MAP_VERSION_MINOR 0x0001U
+#define MCU_MEM_MAP_VERSION_MINOR 0x0000U
 
 
 /* ----------------------------------------------------------------------------
@@ -62,7 +64,7 @@
  */
 
 /** Interrupt Number Definitions */
-#define NUMBER_OF_INT_VECTORS 76                 /**< Number of interrupts in the Vector table */
+#define NUMBER_OF_INT_VECTORS 77                 /**< Number of interrupts in the Vector table */
 
 typedef enum IRQn {
   /* Auxiliary constants */
@@ -105,7 +107,7 @@ typedef enum IRQn {
   FLEXCOMM7_IRQn               = 21,               /**< Flexcomm Interface 7 (USART, SPI, I2C, I2S, FLEXCOMM) */
   ADC0_IRQn                    = 22,               /**< ADC0  */
   Reserved39_IRQn              = 23,               /**< Reserved interrupt */
-  ACMP_IRQn                    = 24,               /**< ACMP  interrupts */
+  ACMP_IRQn                    = 24,               /**< ACMP interrupts */
   Reserved41_IRQn              = 25,               /**< Reserved interrupt */
   Reserved42_IRQn              = 26,               /**< Reserved interrupt */
   USB0_NEEDCLK_IRQn            = 27,               /**< USB Activity Wake-up Interrupt */
@@ -119,13 +121,13 @@ typedef enum IRQn {
   PIN_INT7_IRQn                = 35,               /**< Pin interrupt 7 or pattern match engine slice 7 int */
   CTIMER2_IRQn                 = 36,               /**< Standard counter/timer CTIMER2 */
   CTIMER4_IRQn                 = 37,               /**< Standard counter/timer CTIMER4 */
-  OS_EVENT_IRQn                = 38,               /**< OSEVTIMER0 and OSEVTIMER0_WAKEUP interrupts */
+  OS_EVENT_IRQn                = 38,               /**< OS_EVENT_TIMER and OS_EVENT_WAKEUP interrupts */
   Reserved55_IRQn              = 39,               /**< Reserved interrupt */
   Reserved56_IRQn              = 40,               /**< Reserved interrupt */
   Reserved57_IRQn              = 41,               /**< Reserved interrupt */
-  SDIO_IRQn                    = 42,               /**< SD/MMC  */
-  Reserved59_IRQn              = 43,               /**< Reserved interrupt */
-  Reserved60_IRQn              = 44,               /**< Reserved interrupt */
+  Reserved58_IRQn              = 42,               /**< Reserved interrupt */
+  CAN0_IRQ0_IRQn               = 43,               /**< CAN0 interrupt0 */
+  CAN0_IRQ1_IRQn               = 44,               /**< CAN0 interrupt1 */
   Reserved61_IRQn              = 45,               /**< Reserved interrupt */
   USB1_PHY_IRQn                = 46,               /**< USB1_PHY */
   USB1_IRQn                    = 47,               /**< USB1 interrupt */
@@ -137,10 +139,11 @@ typedef enum IRQn {
   SEC_VIO_IRQn                 = 53,               /**< SEC_VIO interrupt */
   Reserved70_IRQn              = 54,               /**< Reserved interrupt */
   CASER_IRQn                   = 55,               /**< CASPER interrupt */
-  Reserved72_IRQn              = 56,               /**< Reserved interrupt */
-  PQ_IRQn                      = 57,               /**< PQ interrupt */
+  PUF_IRQn                     = 56,               /**< PUF interrupt */
+  Reserved73_IRQn              = 57,               /**< Reserved interrupt */
   DMA1_IRQn                    = 58,               /**< DMA1 interrupt */
-  FLEXCOMM8_IRQn               = 59                /**< Flexcomm Interface 8 (SPI, , FLEXCOMM) */
+  FLEXCOMM8_IRQn               = 59,               /**< Flexcomm Interface 8 (SPI, , FLEXCOMM) */
+  CDOG_IRQn                    = 60                /**< CDOG interrupt */
 } IRQn_Type;
 
 /*!
@@ -165,16 +168,18 @@ typedef enum IRQn {
 #define __SAUREGION_PRESENT            1         /**< Defines if an SAU is present or not */
 
 #include "core_cm33.h"                 /* Core Peripheral Access Layer */
-#include "system_LPC5528.h"            /* Device specific configuration file */
-
-#define LPC5528_SERIES
-/* CPU specific feature definitions */
-#include "LPC5528_features.h"
+#include "system_LPC5514.h"            /* Device specific configuration file */
 
 /*!
  * @}
  */ /* end of group Cortex_Core_Configuration */
 
+
+#ifndef LPC5514_SERIES
+#define LPC5514_SERIES
+#endif
+/* CPU specific feature definitions */
+#include "LPC5514_features.h"
 
 /* ADC - Peripheral instance base addresses */
 #if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE & 0x2))
@@ -305,6 +310,68 @@ typedef enum IRQn {
   /** Array initializer of ANACTRL peripheral base pointers */
   #define ANACTRL_BASE_PTRS                        { ANACTRL }
 #endif
+
+/* CAN - Peripheral instance base addresses */
+#if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE & 0x2))
+  /** Peripheral CAN0 base address */
+  #define CAN0_BASE                                (0x5009D000u)
+  /** Peripheral CAN0 base address */
+  #define CAN0_BASE_NS                             (0x4009D000u)
+  /** Peripheral CAN0 base pointer */
+  #define CAN0                                     ((CAN_Type *)CAN0_BASE)
+  /** Peripheral CAN0 base pointer */
+  #define CAN0_NS                                  ((CAN_Type *)CAN0_BASE_NS)
+  /** Array initializer of CAN peripheral base addresses */
+  #define CAN_BASE_ADDRS                           { CAN0_BASE }
+  /** Array initializer of CAN peripheral base pointers */
+  #define CAN_BASE_PTRS                            { CAN0 }
+  /** Array initializer of CAN peripheral base addresses */
+  #define CAN_BASE_ADDRS_NS                        { CAN0_BASE_NS }
+  /** Array initializer of CAN peripheral base pointers */
+  #define CAN_BASE_PTRS_NS                         { CAN0_NS }
+#else
+  /** Peripheral CAN0 base address */
+  #define CAN0_BASE                                (0x4009D000u)
+  /** Peripheral CAN0 base pointer */
+  #define CAN0                                     ((CAN_Type *)CAN0_BASE)
+  /** Array initializer of CAN peripheral base addresses */
+  #define CAN_BASE_ADDRS                           { CAN0_BASE }
+  /** Array initializer of CAN peripheral base pointers */
+  #define CAN_BASE_PTRS                            { CAN0 }
+#endif
+/** Interrupt vectors for the CAN peripheral type */
+#define CAN_IRQS                                 { { CAN0_IRQ0_IRQn, CAN0_IRQ1_IRQn } }
+
+/* CDOG - Peripheral instance base addresses */
+#if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE & 0x2))
+  /** Peripheral CDOG base address */
+  #define CDOG_BASE                                (0x500A1000u)
+  /** Peripheral CDOG base address */
+  #define CDOG_BASE_NS                             (0x400A1000u)
+  /** Peripheral CDOG base pointer */
+  #define CDOG                                     ((CDOG_Type *)CDOG_BASE)
+  /** Peripheral CDOG base pointer */
+  #define CDOG_NS                                  ((CDOG_Type *)CDOG_BASE_NS)
+  /** Array initializer of CDOG peripheral base addresses */
+  #define CDOG_BASE_ADDRS                          { CDOG_BASE }
+  /** Array initializer of CDOG peripheral base pointers */
+  #define CDOG_BASE_PTRS                           { CDOG }
+  /** Array initializer of CDOG peripheral base addresses */
+  #define CDOG_BASE_ADDRS_NS                       { CDOG_BASE_NS }
+  /** Array initializer of CDOG peripheral base pointers */
+  #define CDOG_BASE_PTRS_NS                        { CDOG_NS }
+#else
+  /** Peripheral CDOG base address */
+  #define CDOG_BASE                                (0x400A1000u)
+  /** Peripheral CDOG base pointer */
+  #define CDOG                                     ((CDOG_Type *)CDOG_BASE)
+  /** Array initializer of CDOG peripheral base addresses */
+  #define CDOG_BASE_ADDRS                          { CDOG_BASE }
+  /** Array initializer of CDOG peripheral base pointers */
+  #define CDOG_BASE_PTRS                           { CDOG }
+#endif
+/** Interrupt vectors for the CDOG peripheral type */
+#define CDOG_IRQS                                { CDOG_IRQn }
 
 /* CRC - Peripheral instance base addresses */
 #if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE & 0x2))
@@ -518,25 +585,25 @@ typedef enum IRQn {
 /* FLASH_CFPA - Peripheral instance base addresses */
 #if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE & 0x2))
   /** Peripheral FLASH_CFPA0 base address */
-  #define FLASH_CFPA0_BASE                         (0x1009E000u)
+  #define FLASH_CFPA0_BASE                         (0x1003E000u)
   /** Peripheral FLASH_CFPA0 base address */
-  #define FLASH_CFPA0_BASE_NS                      (0x9E000u)
+  #define FLASH_CFPA0_BASE_NS                      (0x3E000u)
   /** Peripheral FLASH_CFPA0 base pointer */
   #define FLASH_CFPA0                              ((FLASH_CFPA_Type *)FLASH_CFPA0_BASE)
   /** Peripheral FLASH_CFPA0 base pointer */
   #define FLASH_CFPA0_NS                           ((FLASH_CFPA_Type *)FLASH_CFPA0_BASE_NS)
   /** Peripheral FLASH_CFPA1 base address */
-  #define FLASH_CFPA1_BASE                         (0x1009E200u)
+  #define FLASH_CFPA1_BASE                         (0x1003E200u)
   /** Peripheral FLASH_CFPA1 base address */
-  #define FLASH_CFPA1_BASE_NS                      (0x9E200u)
+  #define FLASH_CFPA1_BASE_NS                      (0x3E200u)
   /** Peripheral FLASH_CFPA1 base pointer */
   #define FLASH_CFPA1                              ((FLASH_CFPA_Type *)FLASH_CFPA1_BASE)
   /** Peripheral FLASH_CFPA1 base pointer */
   #define FLASH_CFPA1_NS                           ((FLASH_CFPA_Type *)FLASH_CFPA1_BASE_NS)
   /** Peripheral FLASH_CFPA_SCRATCH base address */
-  #define FLASH_CFPA_SCRATCH_BASE                  (0x1009DE00u)
+  #define FLASH_CFPA_SCRATCH_BASE                  (0x1003DE00u)
   /** Peripheral FLASH_CFPA_SCRATCH base address */
-  #define FLASH_CFPA_SCRATCH_BASE_NS               (0x9DE00u)
+  #define FLASH_CFPA_SCRATCH_BASE_NS               (0x3DE00u)
   /** Peripheral FLASH_CFPA_SCRATCH base pointer */
   #define FLASH_CFPA_SCRATCH                       ((FLASH_CFPA_Type *)FLASH_CFPA_SCRATCH_BASE)
   /** Peripheral FLASH_CFPA_SCRATCH base pointer */
@@ -551,15 +618,15 @@ typedef enum IRQn {
   #define FLASH_CFPA_BASE_PTRS_NS                  { FLASH_CFPA0_NS, FLASH_CFPA1_NS, FLASH_CFPA_SCRATCH_NS }
 #else
   /** Peripheral FLASH_CFPA0 base address */
-  #define FLASH_CFPA0_BASE                         (0x9E000u)
+  #define FLASH_CFPA0_BASE                         (0x3E000u)
   /** Peripheral FLASH_CFPA0 base pointer */
   #define FLASH_CFPA0                              ((FLASH_CFPA_Type *)FLASH_CFPA0_BASE)
   /** Peripheral FLASH_CFPA1 base address */
-  #define FLASH_CFPA1_BASE                         (0x9E200u)
+  #define FLASH_CFPA1_BASE                         (0x3E200u)
   /** Peripheral FLASH_CFPA1 base pointer */
   #define FLASH_CFPA1                              ((FLASH_CFPA_Type *)FLASH_CFPA1_BASE)
   /** Peripheral FLASH_CFPA_SCRATCH base address */
-  #define FLASH_CFPA_SCRATCH_BASE                  (0x9DE00u)
+  #define FLASH_CFPA_SCRATCH_BASE                  (0x3DE00u)
   /** Peripheral FLASH_CFPA_SCRATCH base pointer */
   #define FLASH_CFPA_SCRATCH                       ((FLASH_CFPA_Type *)FLASH_CFPA_SCRATCH_BASE)
   /** Array initializer of FLASH_CFPA peripheral base addresses */
@@ -571,9 +638,9 @@ typedef enum IRQn {
 /* FLASH_CMPA - Peripheral instance base addresses */
 #if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE & 0x2))
   /** Peripheral FLASH_CMPA base address */
-  #define FLASH_CMPA_BASE                          (0x1009E400u)
+  #define FLASH_CMPA_BASE                          (0x1003E400u)
   /** Peripheral FLASH_CMPA base address */
-  #define FLASH_CMPA_BASE_NS                       (0x9E400u)
+  #define FLASH_CMPA_BASE_NS                       (0x3E400u)
   /** Peripheral FLASH_CMPA base pointer */
   #define FLASH_CMPA                               ((FLASH_CMPA_Type *)FLASH_CMPA_BASE)
   /** Peripheral FLASH_CMPA base pointer */
@@ -588,7 +655,7 @@ typedef enum IRQn {
   #define FLASH_CMPA_BASE_PTRS_NS                  { FLASH_CMPA_NS }
 #else
   /** Peripheral FLASH_CMPA base address */
-  #define FLASH_CMPA_BASE                          (0x9E400u)
+  #define FLASH_CMPA_BASE                          (0x3E400u)
   /** Peripheral FLASH_CMPA base pointer */
   #define FLASH_CMPA                               ((FLASH_CMPA_Type *)FLASH_CMPA_BASE)
   /** Array initializer of FLASH_CMPA peripheral base addresses */
@@ -600,9 +667,9 @@ typedef enum IRQn {
 /* FLASH_KEY_STORE - Peripheral instance base addresses */
 #if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE & 0x2))
   /** Peripheral FLASH_KEY_STORE base address */
-  #define FLASH_KEY_STORE_BASE                     (0x1009E600u)
+  #define FLASH_KEY_STORE_BASE                     (0x1003E600u)
   /** Peripheral FLASH_KEY_STORE base address */
-  #define FLASH_KEY_STORE_BASE_NS                  (0x9E600u)
+  #define FLASH_KEY_STORE_BASE_NS                  (0x3E600u)
   /** Peripheral FLASH_KEY_STORE base pointer */
   #define FLASH_KEY_STORE                          ((FLASH_KEY_STORE_Type *)FLASH_KEY_STORE_BASE)
   /** Peripheral FLASH_KEY_STORE base pointer */
@@ -617,13 +684,71 @@ typedef enum IRQn {
   #define FLASH_KEY_STORE_BASE_PTRS_NS             { FLASH_KEY_STORE_NS }
 #else
   /** Peripheral FLASH_KEY_STORE base address */
-  #define FLASH_KEY_STORE_BASE                     (0x9E600u)
+  #define FLASH_KEY_STORE_BASE                     (0x3E600u)
   /** Peripheral FLASH_KEY_STORE base pointer */
   #define FLASH_KEY_STORE                          ((FLASH_KEY_STORE_Type *)FLASH_KEY_STORE_BASE)
   /** Array initializer of FLASH_KEY_STORE peripheral base addresses */
   #define FLASH_KEY_STORE_BASE_ADDRS               { FLASH_KEY_STORE_BASE }
   /** Array initializer of FLASH_KEY_STORE peripheral base pointers */
   #define FLASH_KEY_STORE_BASE_PTRS                { FLASH_KEY_STORE }
+#endif
+
+/* FLASH_NMPA - Peripheral instance base addresses */
+#if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE & 0x2))
+  /** Peripheral FLASH_NMPA base address */
+  #define FLASH_NMPA_BASE                          (0x1003FC00u)
+  /** Peripheral FLASH_NMPA base address */
+  #define FLASH_NMPA_BASE_NS                       (0x3FC00u)
+  /** Peripheral FLASH_NMPA base pointer */
+  #define FLASH_NMPA                               ((FLASH_NMPA_Type *)FLASH_NMPA_BASE)
+  /** Peripheral FLASH_NMPA base pointer */
+  #define FLASH_NMPA_NS                            ((FLASH_NMPA_Type *)FLASH_NMPA_BASE_NS)
+  /** Array initializer of FLASH_NMPA peripheral base addresses */
+  #define FLASH_NMPA_BASE_ADDRS                    { FLASH_NMPA_BASE }
+  /** Array initializer of FLASH_NMPA peripheral base pointers */
+  #define FLASH_NMPA_BASE_PTRS                     { FLASH_NMPA }
+  /** Array initializer of FLASH_NMPA peripheral base addresses */
+  #define FLASH_NMPA_BASE_ADDRS_NS                 { FLASH_NMPA_BASE_NS }
+  /** Array initializer of FLASH_NMPA peripheral base pointers */
+  #define FLASH_NMPA_BASE_PTRS_NS                  { FLASH_NMPA_NS }
+#else
+  /** Peripheral FLASH_NMPA base address */
+  #define FLASH_NMPA_BASE                          (0x3FC00u)
+  /** Peripheral FLASH_NMPA base pointer */
+  #define FLASH_NMPA                               ((FLASH_NMPA_Type *)FLASH_NMPA_BASE)
+  /** Array initializer of FLASH_NMPA peripheral base addresses */
+  #define FLASH_NMPA_BASE_ADDRS                    { FLASH_NMPA_BASE }
+  /** Array initializer of FLASH_NMPA peripheral base pointers */
+  #define FLASH_NMPA_BASE_PTRS                     { FLASH_NMPA }
+#endif
+
+/* FLASH_ROMPATCH - Peripheral instance base addresses */
+#if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE & 0x2))
+  /** Peripheral FLASH_ROMPATCH base address */
+  #define FLASH_ROMPATCH_BASE                      (0x1003EC00u)
+  /** Peripheral FLASH_ROMPATCH base address */
+  #define FLASH_ROMPATCH_BASE_NS                   (0x3EC00u)
+  /** Peripheral FLASH_ROMPATCH base pointer */
+  #define FLASH_ROMPATCH                           ((FLASH_ROMPATCH_Type *)FLASH_ROMPATCH_BASE)
+  /** Peripheral FLASH_ROMPATCH base pointer */
+  #define FLASH_ROMPATCH_NS                        ((FLASH_ROMPATCH_Type *)FLASH_ROMPATCH_BASE_NS)
+  /** Array initializer of FLASH_ROMPATCH peripheral base addresses */
+  #define FLASH_ROMPATCH_BASE_ADDRS                { FLASH_ROMPATCH_BASE }
+  /** Array initializer of FLASH_ROMPATCH peripheral base pointers */
+  #define FLASH_ROMPATCH_BASE_PTRS                 { FLASH_ROMPATCH }
+  /** Array initializer of FLASH_ROMPATCH peripheral base addresses */
+  #define FLASH_ROMPATCH_BASE_ADDRS_NS             { FLASH_ROMPATCH_BASE_NS }
+  /** Array initializer of FLASH_ROMPATCH peripheral base pointers */
+  #define FLASH_ROMPATCH_BASE_PTRS_NS              { FLASH_ROMPATCH_NS }
+#else
+  /** Peripheral FLASH_ROMPATCH base address */
+  #define FLASH_ROMPATCH_BASE                      (0x3EC00u)
+  /** Peripheral FLASH_ROMPATCH base pointer */
+  #define FLASH_ROMPATCH                           ((FLASH_ROMPATCH_Type *)FLASH_ROMPATCH_BASE)
+  /** Array initializer of FLASH_ROMPATCH peripheral base addresses */
+  #define FLASH_ROMPATCH_BASE_ADDRS                { FLASH_ROMPATCH_BASE }
+  /** Array initializer of FLASH_ROMPATCH peripheral base pointers */
+  #define FLASH_ROMPATCH_BASE_PTRS                 { FLASH_ROMPATCH }
 #endif
 
 /* FLEXCOMM - Peripheral instance base addresses */
@@ -1288,35 +1413,6 @@ typedef enum IRQn {
   #define PMC_BASE_PTRS                            { PMC }
 #endif
 
-/* PRINCE - Peripheral instance base addresses */
-#if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE & 0x2))
-  /** Peripheral PRINCE base address */
-  #define PRINCE_BASE                              (0x50035000u)
-  /** Peripheral PRINCE base address */
-  #define PRINCE_BASE_NS                           (0x40035000u)
-  /** Peripheral PRINCE base pointer */
-  #define PRINCE                                   ((PRINCE_Type *)PRINCE_BASE)
-  /** Peripheral PRINCE base pointer */
-  #define PRINCE_NS                                ((PRINCE_Type *)PRINCE_BASE_NS)
-  /** Array initializer of PRINCE peripheral base addresses */
-  #define PRINCE_BASE_ADDRS                        { PRINCE_BASE }
-  /** Array initializer of PRINCE peripheral base pointers */
-  #define PRINCE_BASE_PTRS                         { PRINCE }
-  /** Array initializer of PRINCE peripheral base addresses */
-  #define PRINCE_BASE_ADDRS_NS                     { PRINCE_BASE_NS }
-  /** Array initializer of PRINCE peripheral base pointers */
-  #define PRINCE_BASE_PTRS_NS                      { PRINCE_NS }
-#else
-  /** Peripheral PRINCE base address */
-  #define PRINCE_BASE                              (0x40035000u)
-  /** Peripheral PRINCE base pointer */
-  #define PRINCE                                   ((PRINCE_Type *)PRINCE_BASE)
-  /** Array initializer of PRINCE peripheral base addresses */
-  #define PRINCE_BASE_ADDRS                        { PRINCE_BASE }
-  /** Array initializer of PRINCE peripheral base pointers */
-  #define PRINCE_BASE_PTRS                         { PRINCE }
-#endif
-
 /* RNG - Peripheral instance base addresses */
 #if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE & 0x2))
   /** Peripheral RNG base address */
@@ -1407,37 +1503,6 @@ typedef enum IRQn {
 #endif
 /** Interrupt vectors for the SCT peripheral type */
 #define SCT_IRQS                                 { SCT0_IRQn }
-
-/* SDIF - Peripheral instance base addresses */
-#if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE & 0x2))
-  /** Peripheral SDIF base address */
-  #define SDIF_BASE                                (0x5009B000u)
-  /** Peripheral SDIF base address */
-  #define SDIF_BASE_NS                             (0x4009B000u)
-  /** Peripheral SDIF base pointer */
-  #define SDIF                                     ((SDIF_Type *)SDIF_BASE)
-  /** Peripheral SDIF base pointer */
-  #define SDIF_NS                                  ((SDIF_Type *)SDIF_BASE_NS)
-  /** Array initializer of SDIF peripheral base addresses */
-  #define SDIF_BASE_ADDRS                          { SDIF_BASE }
-  /** Array initializer of SDIF peripheral base pointers */
-  #define SDIF_BASE_PTRS                           { SDIF }
-  /** Array initializer of SDIF peripheral base addresses */
-  #define SDIF_BASE_ADDRS_NS                       { SDIF_BASE_NS }
-  /** Array initializer of SDIF peripheral base pointers */
-  #define SDIF_BASE_PTRS_NS                        { SDIF_NS }
-#else
-  /** Peripheral SDIF base address */
-  #define SDIF_BASE                                (0x4009B000u)
-  /** Peripheral SDIF base pointer */
-  #define SDIF                                     ((SDIF_Type *)SDIF_BASE)
-  /** Array initializer of SDIF peripheral base addresses */
-  #define SDIF_BASE_ADDRS                          { SDIF_BASE }
-  /** Array initializer of SDIF peripheral base pointers */
-  #define SDIF_BASE_PTRS                           { SDIF }
-#endif
-/** Interrupt vectors for the SDIF peripheral type */
-#define SDIF_IRQS                                { SDIO_IRQn }
 
 /* SPI - Peripheral instance base addresses */
 #if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE & 0x2))
@@ -2015,5 +2080,5 @@ typedef enum IRQn {
  */ /* end of group SDK_Compatibility_Symbols */
 
 
-#endif  /* LPC5528_COMMON_H_ */
+#endif  /* LPC5514_COMMON_H_ */
 

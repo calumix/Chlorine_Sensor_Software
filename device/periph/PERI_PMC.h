@@ -1,42 +1,30 @@
 /*
 ** ###################################################################
-**     Processors:          LPC5526JBD100
-**                          LPC5526JBD64
-**                          LPC5526JEV98
-**                          LPC5528JBD100
-**                          LPC5528JBD64
-**                          LPC5528JEV59
-**                          LPC5528JEV98
-**                          LPC55S26JBD100
-**                          LPC55S26JBD64
-**                          LPC55S26JEV98
-**                          LPC55S28JBD100
-**                          LPC55S28JBD64
-**                          LPC55S28JEV59
-**                          LPC55S28JEV98
-**                          LPC55S66JBD100_cm33_core0
-**                          LPC55S66JBD100_cm33_core1
-**                          LPC55S66JBD64_cm33_core0
-**                          LPC55S66JBD64_cm33_core1
-**                          LPC55S66JEV98_cm33_core0
-**                          LPC55S66JEV98_cm33_core1
-**                          LPC55S69JBD100_cm33_core0
-**                          LPC55S69JBD100_cm33_core1
-**                          LPC55S69JBD64_cm33_core0
-**                          LPC55S69JBD64_cm33_core1
-**                          LPC55S69JEV59_cm33_core0
-**                          LPC55S69JEV59_cm33_core1
-**                          LPC55S69JEV98_cm33_core0
-**                          LPC55S69JEV98_cm33_core1
+**     Processors:          LPC5512JBD100
+**                          LPC5512JBD64
+**                          LPC5514JBD100
+**                          LPC5514JBD64
+**                          LPC5514JEV59
+**                          LPC5516JBD100
+**                          LPC5516JBD64
+**                          LPC5516JEV59
+**                          LPC5516JEV98
+**                          LPC55S14JBD100
+**                          LPC55S14JBD64
+**                          LPC55S14JEV59
+**                          LPC55S16JBD100
+**                          LPC55S16JBD64
+**                          LPC55S16JEV59
+**                          LPC55S16JEV98
 **
-**     Version:             rev. 1.1, 2019-05-16
-**     Build:               b240704
+**     Version:             rev. 2.0, 2024-10-29
+**     Build:               b250520
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for PMC
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -45,40 +33,37 @@
 **     Revisions:
 **     - rev. 1.0 (2018-08-22)
 **         Initial version based on v0.2UM
-**     - rev. 1.1 (2019-05-16)
-**         Initial A1 version based on v1.3UM
+**     - rev. 1.1 (2019-12-03)
+**         Initial version based on v0.6UM
+**     - rev. 2.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
 **
 ** ###################################################################
 */
 
 /*!
- * @file PMC.h
- * @version 1.1
- * @date 2019-05-16
+ * @file PERI_PMC.h
+ * @version 2.0
+ * @date 2024-10-29
  * @brief CMSIS Peripheral Access Layer for PMC
  *
  * CMSIS Peripheral Access Layer for PMC
  */
 
-#if !defined(PMC_H_)
-#define PMC_H_                                   /**< Symbol preventing repeated inclusion */
+#if !defined(PERI_PMC_H_)
+#define PERI_PMC_H_                              /**< Symbol preventing repeated inclusion */
 
-#if (defined(CPU_LPC5526JBD100) || defined(CPU_LPC5526JBD64) || defined(CPU_LPC5526JEV98))
-#include "LPC5526_COMMON.h"
-#elif (defined(CPU_LPC5528JBD100) || defined(CPU_LPC5528JBD64) || defined(CPU_LPC5528JEV59) || defined(CPU_LPC5528JEV98))
-#include "LPC5528_COMMON.h"
-#elif (defined(CPU_LPC55S26JBD100) || defined(CPU_LPC55S26JBD64) || defined(CPU_LPC55S26JEV98))
-#include "LPC55S26_COMMON.h"
-#elif (defined(CPU_LPC55S28JBD100) || defined(CPU_LPC55S28JBD64) || defined(CPU_LPC55S28JEV59) || defined(CPU_LPC55S28JEV98))
-#include "LPC55S28_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core0) || defined(CPU_LPC55S66JBD64_cm33_core0) || defined(CPU_LPC55S66JEV98_cm33_core0))
-#include "LPC55S66_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core1) || defined(CPU_LPC55S66JBD64_cm33_core1) || defined(CPU_LPC55S66JEV98_cm33_core1))
-#include "LPC55S66_cm33_core1_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core0) || defined(CPU_LPC55S69JBD64_cm33_core0) || defined(CPU_LPC55S69JEV59_cm33_core0) || defined(CPU_LPC55S69JEV98_cm33_core0))
-#include "LPC55S69_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core1) || defined(CPU_LPC55S69JBD64_cm33_core1) || defined(CPU_LPC55S69JEV59_cm33_core1) || defined(CPU_LPC55S69JEV98_cm33_core1))
-#include "LPC55S69_cm33_core1_COMMON.h"
+#if (defined(CPU_LPC5512JBD100) || defined(CPU_LPC5512JBD64))
+#include "LPC5512_COMMON.h"
+#elif (defined(CPU_LPC5514JBD100) || defined(CPU_LPC5514JBD64) || defined(CPU_LPC5514JEV59))
+#include "LPC5514_COMMON.h"
+#elif (defined(CPU_LPC5516JBD100) || defined(CPU_LPC5516JBD64) || defined(CPU_LPC5516JEV59) || defined(CPU_LPC5516JEV98))
+#include "LPC5516_COMMON.h"
+#elif (defined(CPU_LPC55S14JBD100) || defined(CPU_LPC55S14JBD64) || defined(CPU_LPC55S14JEV59))
+#include "LPC55S14_COMMON.h"
+#elif (defined(CPU_LPC55S16JBD100) || defined(CPU_LPC55S16JBD64) || defined(CPU_LPC55S16JEV59) || defined(CPU_LPC55S16JEV98))
+#include "LPC55S16_COMMON.h"
 #else
   #error "No valid CPU defined!"
 #endif
@@ -172,15 +157,52 @@ typedef struct {
 /*! @name STATUS - Power Management Controller FSM (Finite State Machines) status */
 /*! @{ */
 
+#define PMC_STATUS_FSMMAIN_MASK                  (0x7U)
+#define PMC_STATUS_FSMMAIN_SHIFT                 (0U)
+/*! FSMMAIN - Power Management Controller Main Finite State Machine (FSM) status.
+ *  0b000..POWER UP : The IC is powering up.
+ *  0b001..ACTIVE : Power up is completed. The IC is in normal functional operation mode.
+ *  0b010..POWER DOWN : the IC has entered POWER DOWN mode.
+ *  0b011..DEEP SLEEP: The IC has entered DEEP SLEEP mode.
+ *  0b110..DEEP POWER DOWN : The IC entred DEEP POWER DOWN mode.
+ *  0b111..IC Structural TEST Mode : The IC has entered in IC Test mode.
+ */
+#define PMC_STATUS_FSMMAIN(x)                    (((uint32_t)(((uint32_t)(x)) << PMC_STATUS_FSMMAIN_SHIFT)) & PMC_STATUS_FSMMAIN_MASK)
+
+#define PMC_STATUS_FSMPWUP_MASK                  (0x78U)
+#define PMC_STATUS_FSMPWUP_SHIFT                 (3U)
+/*! FSMPWUP - POWER UP Finite State Machine (FSM) status. */
+#define PMC_STATUS_FSMPWUP(x)                    (((uint32_t)(((uint32_t)(x)) << PMC_STATUS_FSMPWUP_SHIFT)) & PMC_STATUS_FSMPWUP_MASK)
+
+#define PMC_STATUS_FSMDSLP_MASK                  (0x780U)
+#define PMC_STATUS_FSMDSLP_SHIFT                 (7U)
+/*! FSMDSLP - DEEP SLEEP Finite State Machine (FSM) status. */
+#define PMC_STATUS_FSMDSLP(x)                    (((uint32_t)(((uint32_t)(x)) << PMC_STATUS_FSMDSLP_SHIFT)) & PMC_STATUS_FSMDSLP_MASK)
+
+#define PMC_STATUS_FSMPWDN_MASK                  (0x7800U)
+#define PMC_STATUS_FSMPWDN_SHIFT                 (11U)
+/*! FSMPWDN - POWER DOWN Finite State Machine (FSM) status. */
+#define PMC_STATUS_FSMPWDN(x)                    (((uint32_t)(((uint32_t)(x)) << PMC_STATUS_FSMPWDN_SHIFT)) & PMC_STATUS_FSMPWDN_MASK)
+
+#define PMC_STATUS_FSMDPWD_MASK                  (0x38000U)
+#define PMC_STATUS_FSMDPWD_SHIFT                 (15U)
+/*! FSMDPWD - DEEP POWER DOWN Finite State Machine (FSM) status. */
+#define PMC_STATUS_FSMDPWD(x)                    (((uint32_t)(((uint32_t)(x)) << PMC_STATUS_FSMDPWD_SHIFT)) & PMC_STATUS_FSMDPWD_MASK)
+
 #define PMC_STATUS_BOOTMODE_MASK                 (0xC0000U)
 #define PMC_STATUS_BOOTMODE_SHIFT                (18U)
 /*! BOOTMODE - Latest IC Boot cause:.
  *  0b00..Latest IC boot was a Full power cycle boot sequence (PoR, Pin Reset, Brown Out Detectors Reset, Software Reset).
- *  0b01..Latest IC boot was from DEEP SLEEP low power mode.
- *  0b10..Latest IC boot was from POWER DOWN low power mode.
- *  0b11..Latest IC boot was from DEEP POWER DOWN low power mode.
+ *  0b01..Latest IC boot was from DEEP SLEEP low power mode..
+ *  0b10..Latest IC boot was from POWER DOWN low power mode..
+ *  0b11..Latest IC boot was from DEEP POWER DOWN low power mode..
  */
 #define PMC_STATUS_BOOTMODE(x)                   (((uint32_t)(((uint32_t)(x)) << PMC_STATUS_BOOTMODE_SHIFT)) & PMC_STATUS_BOOTMODE_MASK)
+
+#define PMC_STATUS_WAFERTESTDONEVECT_MASK        (0xF0000000U)
+#define PMC_STATUS_WAFERTESTDONEVECT_SHIFT       (28U)
+/*! WAFERTESTDONEVECT - Indicates cuurent status of wafer test level. */
+#define PMC_STATUS_WAFERTESTDONEVECT(x)          (((uint32_t)(((uint32_t)(x)) << PMC_STATUS_WAFERTESTDONEVECT_SHIFT)) & PMC_STATUS_WAFERTESTDONEVECT_MASK)
 /*! @} */
 
 /*! @name RESETCTRL - Reset Control [Reset by: PoR, Pin Reset, Brown Out Detectors Reset, Deep Power Down Reset, Software Reset] */
@@ -194,22 +216,6 @@ typedef struct {
  */
 #define PMC_RESETCTRL_DPDWAKEUPRESETENABLE(x)    (((uint32_t)(((uint32_t)(x)) << PMC_RESETCTRL_DPDWAKEUPRESETENABLE_SHIFT)) & PMC_RESETCTRL_DPDWAKEUPRESETENABLE_MASK)
 
-#define PMC_RESETCTRL_BODVBATRESETENABLE_MASK    (0x2U)
-#define PMC_RESETCTRL_BODVBATRESETENABLE_SHIFT   (1U)
-/*! BODVBATRESETENABLE - BOD VBAT reset enable.
- *  0b0..BOD VBAT reset is disable.
- *  0b1..BOD VBAT reset is enable.
- */
-#define PMC_RESETCTRL_BODVBATRESETENABLE(x)      (((uint32_t)(((uint32_t)(x)) << PMC_RESETCTRL_BODVBATRESETENABLE_SHIFT)) & PMC_RESETCTRL_BODVBATRESETENABLE_MASK)
-
-#define PMC_RESETCTRL_BODCORERESETENABLE_MASK    (0x4U)
-#define PMC_RESETCTRL_BODCORERESETENABLE_SHIFT   (2U)
-/*! BODCORERESETENABLE - BOD CORE reset enable.
- *  0b0..BOD CORE reset is disable.
- *  0b1..BOD CORE reset is enable.
- */
-#define PMC_RESETCTRL_BODCORERESETENABLE(x)      (((uint32_t)(((uint32_t)(x)) << PMC_RESETCTRL_BODCORERESETENABLE_SHIFT)) & PMC_RESETCTRL_BODCORERESETENABLE_MASK)
-
 #define PMC_RESETCTRL_SWRRESETENABLE_MASK        (0x8U)
 #define PMC_RESETCTRL_SWRRESETENABLE_SHIFT       (3U)
 /*! SWRRESETENABLE - Software reset enable.
@@ -217,6 +223,38 @@ typedef struct {
  *  0b1..Software reset is enable.
  */
 #define PMC_RESETCTRL_SWRRESETENABLE(x)          (((uint32_t)(((uint32_t)(x)) << PMC_RESETCTRL_SWRRESETENABLE_SHIFT)) & PMC_RESETCTRL_SWRRESETENABLE_MASK)
+
+#define PMC_RESETCTRL_BODVBATRESETENA_SECURE_MASK (0x30U)
+#define PMC_RESETCTRL_BODVBATRESETENA_SECURE_SHIFT (4U)
+/*! BODVBATRESETENA_SECURE - BOD VBAT reset enable.
+ *  0b01..Any other value than b10, BOD VBAT reset is enable.
+ *  0b10..BOD VBAT reset is disable.
+ */
+#define PMC_RESETCTRL_BODVBATRESETENA_SECURE(x)  (((uint32_t)(((uint32_t)(x)) << PMC_RESETCTRL_BODVBATRESETENA_SECURE_SHIFT)) & PMC_RESETCTRL_BODVBATRESETENA_SECURE_MASK)
+
+#define PMC_RESETCTRL_BODCORERESETENA_SECURE_MASK (0xC0U)
+#define PMC_RESETCTRL_BODCORERESETENA_SECURE_SHIFT (6U)
+/*! BODCORERESETENA_SECURE - BOD Core reset enable.
+ *  0b01..Any other value than b10, BOD Core reset is enable.
+ *  0b10..BOD Core reset is disable.
+ */
+#define PMC_RESETCTRL_BODCORERESETENA_SECURE(x)  (((uint32_t)(((uint32_t)(x)) << PMC_RESETCTRL_BODCORERESETENA_SECURE_SHIFT)) & PMC_RESETCTRL_BODCORERESETENA_SECURE_MASK)
+
+#define PMC_RESETCTRL_BODVBATRESETENA_SECURE_DP_MASK (0x30000000U)
+#define PMC_RESETCTRL_BODVBATRESETENA_SECURE_DP_SHIFT (28U)
+/*! BODVBATRESETENA_SECURE_DP - BOD VBAT reset enable.
+ *  0b01..Any other value than b10, BOD VBAT reset is enable.
+ *  0b10..BOD VBAT reset is disable.
+ */
+#define PMC_RESETCTRL_BODVBATRESETENA_SECURE_DP(x) (((uint32_t)(((uint32_t)(x)) << PMC_RESETCTRL_BODVBATRESETENA_SECURE_DP_SHIFT)) & PMC_RESETCTRL_BODVBATRESETENA_SECURE_DP_MASK)
+
+#define PMC_RESETCTRL_BODCORERESETENA_SECURE_DP_MASK (0xC0000000U)
+#define PMC_RESETCTRL_BODCORERESETENA_SECURE_DP_SHIFT (30U)
+/*! BODCORERESETENA_SECURE_DP - BOD Core reset enable.
+ *  0b01..Any other value than b10, BOD Core reset is enable.
+ *  0b10..BOD Core reset is disable.
+ */
+#define PMC_RESETCTRL_BODCORERESETENA_SECURE_DP(x) (((uint32_t)(((uint32_t)(x)) << PMC_RESETCTRL_BODCORERESETENA_SECURE_DP_SHIFT)) & PMC_RESETCTRL_BODCORERESETENA_SECURE_DP_MASK)
 /*! @} */
 
 /*! @name DCDC0 - DCDC (first) control register [Reset by: PoR, Pin Reset, Brown Out Detectors Reset, Deep Power Down Reset, Software Reset] */
@@ -409,6 +447,14 @@ typedef struct {
 #define PMC_LDOPMU_VADJ_BOOST_PWD_SHIFT          (15U)
 /*! VADJ_BOOST_PWD - Sets the Always-On domain LDO Boost output level in all power down modes. */
 #define PMC_LDOPMU_VADJ_BOOST_PWD(x)             (((uint32_t)(((uint32_t)(x)) << PMC_LDOPMU_VADJ_BOOST_PWD_SHIFT)) & PMC_LDOPMU_VADJ_BOOST_PWD_MASK)
+
+#define PMC_LDOPMU_BLEED_MASK                    (0x100000U)
+#define PMC_LDOPMU_BLEED_SHIFT                   (20U)
+/*! BLEED - Controls LDOMEM bleed current.
+ *  0b0..Bleed current is disable.
+ *  0b1..Bleed current is enable.
+ */
+#define PMC_LDOPMU_BLEED(x)                      (((uint32_t)(((uint32_t)(x)) << PMC_LDOPMU_BLEED_SHIFT)) & PMC_LDOPMU_BLEED_MASK)
 
 #define PMC_LDOPMU_BOOST_ENA_MASK                (0x1000000U)
 #define PMC_LDOPMU_BOOST_ENA_SHIFT               (24U)
@@ -707,25 +753,61 @@ typedef struct {
  */
 #define PMC_WAKEUPIOCTRL_FALLINGEDGEWAKEUP3(x)   (((uint32_t)(((uint32_t)(x)) << PMC_WAKEUPIOCTRL_FALLINGEDGEWAKEUP3_SHIFT)) & PMC_WAKEUPIOCTRL_FALLINGEDGEWAKEUP3_MASK)
 
-#define PMC_WAKEUPIOCTRL_MODEWAKEUP0_MASK        (0x100U)
-#define PMC_WAKEUPIOCTRL_MODEWAKEUP0_SHIFT       (8U)
-/*! MODEWAKEUP0 - Configure wake up I/O 0 in Deep Power Down mode */
-#define PMC_WAKEUPIOCTRL_MODEWAKEUP0(x)          (((uint32_t)(((uint32_t)(x)) << PMC_WAKEUPIOCTRL_MODEWAKEUP0_SHIFT)) & PMC_WAKEUPIOCTRL_MODEWAKEUP0_MASK)
+#define PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD0_MASK   (0x3000U)
+#define PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD0_SHIFT  (12U)
+/*! MODEWAKEUPIOPAD0 - Selects function mode (on-chip pull-up/pull-down resistor control).
+ *  0b00..Inactive. Inactive (no pull-down/pull-up resistor enabled).
+ *  0b01..Pull-down. Pull-down resistor enabled.
+ *  0b10..Pull-up. Pull-up resistor enabled.
+ *  0b11..Repeater. Repeater mode.
+ */
+#define PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD0(x)     (((uint32_t)(((uint32_t)(x)) << PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD0_SHIFT)) & PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD0_MASK)
 
-#define PMC_WAKEUPIOCTRL_MODEWAKEUP1_MASK        (0x200U)
-#define PMC_WAKEUPIOCTRL_MODEWAKEUP1_SHIFT       (9U)
-/*! MODEWAKEUP1 - Configure wake up I/O 1 in Deep Power Down mode */
-#define PMC_WAKEUPIOCTRL_MODEWAKEUP1(x)          (((uint32_t)(((uint32_t)(x)) << PMC_WAKEUPIOCTRL_MODEWAKEUP1_SHIFT)) & PMC_WAKEUPIOCTRL_MODEWAKEUP1_MASK)
+#define PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD1_MASK   (0xC000U)
+#define PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD1_SHIFT  (14U)
+/*! MODEWAKEUPIOPAD1 - Selects function mode (on-chip pull-up/pull-down resistor control).
+ *  0b00..Inactive. Inactive (no pull-down/pull-up resistor enabled).
+ *  0b01..Pull-down. Pull-down resistor enabled.
+ *  0b10..Pull-up. Pull-up resistor enabled.
+ *  0b11..Repeater. Repeater mode.
+ */
+#define PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD1(x)     (((uint32_t)(((uint32_t)(x)) << PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD1_SHIFT)) & PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD1_MASK)
 
-#define PMC_WAKEUPIOCTRL_MODEWAKEUP2_MASK        (0x400U)
-#define PMC_WAKEUPIOCTRL_MODEWAKEUP2_SHIFT       (10U)
-/*! MODEWAKEUP2 - Configure wake up I/O 2 in Deep Power Down mode */
-#define PMC_WAKEUPIOCTRL_MODEWAKEUP2(x)          (((uint32_t)(((uint32_t)(x)) << PMC_WAKEUPIOCTRL_MODEWAKEUP2_SHIFT)) & PMC_WAKEUPIOCTRL_MODEWAKEUP2_MASK)
+#define PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD2_MASK   (0x30000U)
+#define PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD2_SHIFT  (16U)
+/*! MODEWAKEUPIOPAD2 - Selects function mode (on-chip pull-up/pull-down resistor control).
+ *  0b00..Inactive. Inactive (no pull-down/pull-up resistor enabled).
+ *  0b01..Pull-down. Pull-down resistor enabled.
+ *  0b10..Pull-up. Pull-up resistor enabled.
+ *  0b11..Repeater. Repeater mode.
+ */
+#define PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD2(x)     (((uint32_t)(((uint32_t)(x)) << PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD2_SHIFT)) & PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD2_MASK)
 
-#define PMC_WAKEUPIOCTRL_MODEWAKEUP3_MASK        (0x800U)
-#define PMC_WAKEUPIOCTRL_MODEWAKEUP3_SHIFT       (11U)
-/*! MODEWAKEUP3 - Configure wake up I/O 3 in Deep Power Down mode */
-#define PMC_WAKEUPIOCTRL_MODEWAKEUP3(x)          (((uint32_t)(((uint32_t)(x)) << PMC_WAKEUPIOCTRL_MODEWAKEUP3_SHIFT)) & PMC_WAKEUPIOCTRL_MODEWAKEUP3_MASK)
+#define PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD3_MASK   (0xC0000U)
+#define PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD3_SHIFT  (18U)
+/*! MODEWAKEUPIOPAD3 - Selects function mode (on-chip pull-up/pull-down resistor control).
+ *  0b00..Inactive. Inactive (no pull-down/pull-up resistor enabled).
+ *  0b01..Pull-down. Pull-down resistor enabled.
+ *  0b10..Pull-up. Pull-up resistor enabled.
+ *  0b11..Repeater. Repeater mode.
+ */
+#define PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD3(x)     (((uint32_t)(((uint32_t)(x)) << PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD3_SHIFT)) & PMC_WAKEUPIOCTRL_MODEWAKEUPIOPAD3_MASK)
+
+#define PMC_WAKEUPIOCTRL_WAKEUPIO_ENABLE_CTRL_MASK (0x100000U)
+#define PMC_WAKEUPIOCTRL_WAKEUPIO_ENABLE_CTRL_SHIFT (20U)
+/*! WAKEUPIO_ENABLE_CTRL - Enable WAKEUP IO PAD control from MODEWAKEUPIOPAD (bits 12 to 19).
+ *  0b0..WAKEUP IO PAD mode control comes from IOCON.
+ *  0b1..WAKEUP IO PAD mode control comes from MODEWAKEUPIOPAD (bits 12 to 19).
+ */
+#define PMC_WAKEUPIOCTRL_WAKEUPIO_ENABLE_CTRL(x) (((uint32_t)(((uint32_t)(x)) << PMC_WAKEUPIOCTRL_WAKEUPIO_ENABLE_CTRL_SHIFT)) & PMC_WAKEUPIOCTRL_WAKEUPIO_ENABLE_CTRL_MASK)
+
+#define PMC_WAKEUPIOCTRL_WAKEUPIO_RSTN_MASK      (0x200000U)
+#define PMC_WAKEUPIOCTRL_WAKEUPIO_RSTN_SHIFT     (21U)
+/*! WAKEUPIO_RSTN - WAKEUP IO event detector reset control.
+ *  0b0..Bloc is reset.
+ *  0b1..Bloc is not reset.
+ */
+#define PMC_WAKEUPIOCTRL_WAKEUPIO_RSTN(x)        (((uint32_t)(((uint32_t)(x)) << PMC_WAKEUPIOCTRL_WAKEUPIO_RSTN_SHIFT)) & PMC_WAKEUPIOCTRL_WAKEUPIO_RSTN_MASK)
 /*! @} */
 
 /*! @name WAKEIOCAUSE - Allows to identify the Wake-up I/O source from Deep Power Down mode */
@@ -829,6 +911,11 @@ typedef struct {
 /*! DPDRESET_OSTIMER - The last chip reset was caused by an OS Event Timer reset event during a Deep Power-Down mode. */
 #define PMC_AOREG1_DPDRESET_OSTIMER(x)           (((uint32_t)(((uint32_t)(x)) << PMC_AOREG1_DPDRESET_OSTIMER_SHIFT)) & PMC_AOREG1_DPDRESET_OSTIMER_MASK)
 
+#define PMC_AOREG1_CDOGRESET_MASK                (0x2000U)
+#define PMC_AOREG1_CDOGRESET_SHIFT               (13U)
+/*! CDOGRESET - The last chip reset was caused by the code Watchdog. */
+#define PMC_AOREG1_CDOGRESET(x)                  (((uint32_t)(((uint32_t)(x)) << PMC_AOREG1_CDOGRESET_SHIFT)) & PMC_AOREG1_CDOGRESET_MASK)
+
 #define PMC_AOREG1_BOOTERRORCOUNTER_MASK         (0xF0000U)
 #define PMC_AOREG1_BOOTERRORCOUNTER_SHIFT        (16U)
 /*! BOOTERRORCOUNTER - ROM Boot Fatal Error Counter. */
@@ -858,30 +945,10 @@ typedef struct {
 #define PMC_MISCCTRL_LOWPWR_FLASH_BUF_SHIFT      (2U)
 #define PMC_MISCCTRL_LOWPWR_FLASH_BUF(x)         (((uint32_t)(((uint32_t)(x)) << PMC_MISCCTRL_LOWPWR_FLASH_BUF_SHIFT)) & PMC_MISCCTRL_LOWPWR_FLASH_BUF_MASK)
 
-#define PMC_MISCCTRL_MISCCTRL_3_8_MASK           (0xF8U)
-#define PMC_MISCCTRL_MISCCTRL_3_8_SHIFT          (3U)
-/*! MISCCTRL_3_8 - Reserved. */
-#define PMC_MISCCTRL_MISCCTRL_3_8(x)             (((uint32_t)(((uint32_t)(x)) << PMC_MISCCTRL_MISCCTRL_3_8_SHIFT)) & PMC_MISCCTRL_MISCCTRL_3_8_MASK)
-
-#define PMC_MISCCTRL_MODEWAKEUP0_MASK            (0x100U)
-#define PMC_MISCCTRL_MODEWAKEUP0_SHIFT           (8U)
-/*! MODEWAKEUP0 - Configure wake up I/O 0 in Deep Power Down mode */
-#define PMC_MISCCTRL_MODEWAKEUP0(x)              (((uint32_t)(((uint32_t)(x)) << PMC_MISCCTRL_MODEWAKEUP0_SHIFT)) & PMC_MISCCTRL_MODEWAKEUP0_MASK)
-
-#define PMC_MISCCTRL_MODEWAKEUP1_MASK            (0x200U)
-#define PMC_MISCCTRL_MODEWAKEUP1_SHIFT           (9U)
-/*! MODEWAKEUP1 - Configure wake up I/O 1 in Deep Power Down mode */
-#define PMC_MISCCTRL_MODEWAKEUP1(x)              (((uint32_t)(((uint32_t)(x)) << PMC_MISCCTRL_MODEWAKEUP1_SHIFT)) & PMC_MISCCTRL_MODEWAKEUP1_MASK)
-
-#define PMC_MISCCTRL_MODEWAKEUP2_MASK            (0x400U)
-#define PMC_MISCCTRL_MODEWAKEUP2_SHIFT           (10U)
-/*! MODEWAKEUP2 - Configure wake up I/O 2 in Deep Power Down mode */
-#define PMC_MISCCTRL_MODEWAKEUP2(x)              (((uint32_t)(((uint32_t)(x)) << PMC_MISCCTRL_MODEWAKEUP2_SHIFT)) & PMC_MISCCTRL_MODEWAKEUP2_MASK)
-
-#define PMC_MISCCTRL_MODEWAKEUP3_MASK            (0x800U)
-#define PMC_MISCCTRL_MODEWAKEUP3_SHIFT           (11U)
-/*! MODEWAKEUP3 - Configure wake up I/O 3 in Deep Power Down mode */
-#define PMC_MISCCTRL_MODEWAKEUP3(x)              (((uint32_t)(((uint32_t)(x)) << PMC_MISCCTRL_MODEWAKEUP3_SHIFT)) & PMC_MISCCTRL_MODEWAKEUP3_MASK)
+#define PMC_MISCCTRL_MISCCTRL_3_11_MASK          (0xFF8U)
+#define PMC_MISCCTRL_MISCCTRL_3_11_SHIFT         (3U)
+/*! MISCCTRL_3_11 - Reserved. */
+#define PMC_MISCCTRL_MISCCTRL_3_11(x)            (((uint32_t)(((uint32_t)(x)) << PMC_MISCCTRL_MISCCTRL_3_11_SHIFT)) & PMC_MISCCTRL_MISCCTRL_3_11_MASK)
 
 #define PMC_MISCCTRL_DISABLE_BLEED_MASK          (0x1000U)
 #define PMC_MISCCTRL_DISABLE_BLEED_SHIFT         (12U)
@@ -893,18 +960,10 @@ typedef struct {
  */
 #define PMC_MISCCTRL_DISABLE_BLEED(x)            (((uint32_t)(((uint32_t)(x)) << PMC_MISCCTRL_DISABLE_BLEED_SHIFT)) & PMC_MISCCTRL_DISABLE_BLEED_MASK)
 
-#define PMC_MISCCTRL_MISCCTRL_13_14_MASK         (0x6000U)
-#define PMC_MISCCTRL_MISCCTRL_13_14_SHIFT        (13U)
-/*! MISCCTRL_13_14 - Reserved. */
-#define PMC_MISCCTRL_MISCCTRL_13_14(x)           (((uint32_t)(((uint32_t)(x)) << PMC_MISCCTRL_MISCCTRL_13_14_SHIFT)) & PMC_MISCCTRL_MISCCTRL_13_14_MASK)
-
-#define PMC_MISCCTRL_WAKUPIO_RST_MASK            (0x8000U)
-#define PMC_MISCCTRL_WAKUPIO_RST_SHIFT           (15U)
-/*! WAKUPIO_RST - WAKEUP IO event detector reset control.
- *  0b1..Wakeup IO is reset.
- *  0b0..Wakeup IO is not reset.
- */
-#define PMC_MISCCTRL_WAKUPIO_RST(x)              (((uint32_t)(((uint32_t)(x)) << PMC_MISCCTRL_WAKUPIO_RST_SHIFT)) & PMC_MISCCTRL_WAKUPIO_RST_MASK)
+#define PMC_MISCCTRL_MISCCTRL_13_15_MASK         (0xE000U)
+#define PMC_MISCCTRL_MISCCTRL_13_15_SHIFT        (13U)
+/*! MISCCTRL_13_15 - Reserved. */
+#define PMC_MISCCTRL_MISCCTRL_13_15(x)           (((uint32_t)(((uint32_t)(x)) << PMC_MISCCTRL_MISCCTRL_13_15_SHIFT)) & PMC_MISCCTRL_MISCCTRL_13_15_MASK)
 /*! @} */
 
 /*! @name RTCOSC32K - RTC 1 KHZ and 1 Hz clocks source control register [Reset by: PoR, Brown Out Detectors Reset] */
@@ -954,7 +1013,7 @@ typedef struct {
 
 #define PMC_OSTIMER_CLOCKENABLE_MASK             (0x2U)
 #define PMC_OSTIMER_CLOCKENABLE_SHIFT            (1U)
-/*! CLOCKENABLE - Enable OSTIMER 32 KHz clock. */
+/*! CLOCKENABLE - Enable OS event timer clock. */
 #define PMC_OSTIMER_CLOCKENABLE(x)               (((uint32_t)(((uint32_t)(x)) << PMC_OSTIMER_CLOCKENABLE_SHIFT)) & PMC_OSTIMER_CLOCKENABLE_MASK)
 
 #define PMC_OSTIMER_DPDWAKEUPENABLE_MASK         (0x4U)
@@ -966,6 +1025,16 @@ typedef struct {
 #define PMC_OSTIMER_OSC32KPD_SHIFT               (3U)
 /*! OSC32KPD - Oscilator 32KHz (either FRO32KHz or XTAL32KHz according to RTCOSC32K. */
 #define PMC_OSTIMER_OSC32KPD(x)                  (((uint32_t)(((uint32_t)(x)) << PMC_OSTIMER_OSC32KPD_SHIFT)) & PMC_OSTIMER_OSC32KPD_MASK)
+
+#define PMC_OSTIMER_OSTIMERCLKSEL_MASK           (0x30U)
+#define PMC_OSTIMER_OSTIMERCLKSEL_SHIFT          (4U)
+/*! OSTIMERCLKSEL - OS event timer clock select.
+ *  0b00..Oscillator 32 kHz clock.
+ *  0b01..FRO 1MHz clock.
+ *  0b10..Main clock for OS timer.
+ *  0b11..No clock.
+ */
+#define PMC_OSTIMER_OSTIMERCLKSEL(x)             (((uint32_t)(((uint32_t)(x)) << PMC_OSTIMER_OSTIMERCLKSEL_SHIFT)) & PMC_OSTIMER_OSTIMERCLKSEL_MASK)
 /*! @} */
 
 /*! @name PDRUNCFG0 - Controls the power to various analog blocks [Reset by: PoR, Pin Reset, Brown Out Detectors Reset, Deep Power Down Reset, Software Reset] */
@@ -1165,5 +1234,5 @@ typedef struct {
  */ /* end of group Peripheral_access_layer */
 
 
-#endif  /* PMC_H_ */
+#endif  /* PERI_PMC_H_ */
 

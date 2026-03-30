@@ -1,18 +1,17 @@
 /*
 ** ###################################################################
-**     Processors:          LPC5528JBD100
-**                          LPC5528JBD64
-**                          LPC5528JEV59
-**                          LPC5528JEV98
+**     Processors:          LPC5514JBD100
+**                          LPC5514JBD64
+**                          LPC5514JEV59
 **
 **     Compilers:           GNU C Compiler
 **                          IAR ANSI C/C++ Compiler for ARM
 **                          Keil ARM C/C++ Compiler
 **                          MCUXpresso Compiler
 **
-**     Reference manual:    LPC55S6x/LPC55S2x/LPC552x User manual(UM11126) Rev.1.3  16 May 2019
-**     Version:             rev. 1.1, 2019-05-16
-**     Build:               b240704
+**     Reference manual:    LPC55S1x/LPC551x User manual Rev.0.6  15 November 2019
+**     Version:             rev. 2.0, 2024-10-29
+**     Build:               b251010
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -20,7 +19,7 @@
 **         the oscillator (PLL) that is part of the microcontroller device.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -29,25 +28,28 @@
 **     Revisions:
 **     - rev. 1.0 (2018-08-22)
 **         Initial version based on v0.2UM
-**     - rev. 1.1 (2019-05-16)
-**         Initial A1 version based on v1.3UM
+**     - rev. 1.1 (2019-12-03)
+**         Initial version based on v0.6UM
+**     - rev. 2.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
 **
 ** ###################################################################
 */
 
 /*!
- * @file LPC5528
- * @version 1.1
- * @date 2019-05-16
- * @brief Device specific configuration file for LPC5528 (header file)
+ * @file LPC5514
+ * @version 2.0
+ * @date 2024-10-29
+ * @brief Device specific configuration file for LPC5514 (header file)
  *
  * Provides a system configuration function and a global variable that contains
  * the system frequency. It configures the device and initializes the oscillator
  * (PLL) that is part of the microcontroller device.
  */
 
-#ifndef _SYSTEM_LPC5528_H_
-#define _SYSTEM_LPC5528_H_                       /**< Symbol preventing repeated inclusion */
+#ifndef _SYSTEM_LPC5514_H_
+#define _SYSTEM_LPC5514_H_                       /**< Symbol preventing repeated inclusion */
 
 #ifdef __cplusplus
 extern "C" {
@@ -60,7 +62,10 @@ extern "C" {
 #define CLK_FRO_12MHZ                  12000000u           /* FRO 12 MHz (fro_12m) */
 #define CLK_FRO_48MHZ                  48000000u           /* FRO 48 MHz (fro_48m) */
 #define CLK_FRO_96MHZ                  96000000u           /* FRO 96 MHz (fro_96m) */
+
+#ifndef CLK_CLK_IN
 #define CLK_CLK_IN                     16000000u           /* Default CLK_IN pin clock */
+#endif /* CLK_CLK_IN */
 
 
 /**
@@ -108,4 +113,4 @@ void SystemInitHook (void);
 }
 #endif
 
-#endif  /* _SYSTEM_LPC5528_H_ */
+#endif  /* _SYSTEM_LPC5514_H_ */

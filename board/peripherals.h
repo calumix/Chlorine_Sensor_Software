@@ -15,12 +15,11 @@
 #include "fsl_i2c_freertos.h"
 #include "fsl_spi.h"
 #include "fsl_spi_freertos.h"
-#include "fsl_lpadc.h"
-#include "fsl_power.h"
 #include "fsl_reset.h"
 #include "fsl_usart.h"
 #include "fsl_clock.h"
 #include "fsl_crc.h"
+#include "fsl_mcan.h"
 
 #if defined(__cplusplus)
 extern "C" {
@@ -62,7 +61,7 @@ extern "C" {
 /* Definition of peripheral ID */
 #define FLEXCOMM_I2C_PERIPHERAL ((I2C_Type *)FLEXCOMM1)
 /* Definition of the clock source frequency */
-#define FLEXCOMM_I2C_CLOCK_SOURCE 15014662UL
+#define FLEXCOMM_I2C_CLOCK_SOURCE 37536656UL
 /* FLEXCOMM_I2C interrupt vector ID (number). */
 #define FLEXCOMM_I2C_FLEXCOMM_IRQN FLEXCOMM1_IRQn
 /* FLEXCOMM_I2C interrupt vector priority. */
@@ -71,33 +70,29 @@ extern "C" {
 /* Definition of peripheral ID */
 #define FLEXCOMM_SPI_PERIPHERAL ((SPI_Type *)FLEXCOMM3)
 /* Definition of the clock source frequency */
-#define FLEXCOMM_SPI_CLOCK_SOURCE 15014662UL
+#define FLEXCOMM_SPI_CLOCK_SOURCE 37536656UL
 /* FLEXCOMM_SPI interrupt vector ID (number). */
 #define FLEXCOMM_SPI_FLEXCOMM_IRQN FLEXCOMM3_IRQn
 /* FLEXCOMM_SPI interrupt vector priority. */
 #define FLEXCOMM_SPI_FLEXCOMM_IRQ_PRIORITY 2
-/* Alias for ADC0 peripheral */
-#define ADC0_PERIPHERAL ADC0
-/* Command 1 - THERMISTOR */
-#define ADC0_THERMISTOR 1U
-/* Command 2 - ECHO */
-#define ADC0_ECHO 2U
-/* Command 3 - CPU_TEMP */
-#define ADC0_CPU_TEMP 3U
-/* Trigger 2 - ECHO_TRIGGER */
-#define ADC0_ECHO_TRIGGER 2U
-/* Trigger 0 - THERM_TRIGGER */
-#define ADC0_THERM_TRIGGER 0U
 /* Definition of peripheral ID */
-#define FLEXCOMM_USART_PERIPHERAL ((USART_Type *)FLEXCOMM2)
+#define FLEXCOMM_UART_PERIPHERAL ((USART_Type *)FLEXCOMM0)
 /* Definition of the clock source frequency */
-#define FLEXCOMM_USART_CLOCK_SOURCE 15014662UL
-/* Definition of peripheral ID */
-#define FLEXCOMM_NMEA_PERIPHERAL ((USART_Type *)FLEXCOMM0)
-/* Definition of the clock source frequency */
-#define FLEXCOMM_NMEA_CLOCK_SOURCE 15014662UL
+#define FLEXCOMM_UART_CLOCK_SOURCE 37536656UL
 /* Definition of peripheral ID */
 #define CRC_ENGINE_PERIPHERAL CRC_ENGINE
+/* Definition of peripheral ID */
+#define CAN0_PERIPHERAL CAN0
+/* Definition of the clock source frequency */
+#define CAN0_CLOCK_SOURCE 1500000UL
+/* Definition of the base address alignment */
+#define CAN0_BASE_ADDRESS_ALIGN_SIZE (0x10000)
+/* Definition of the message RAM size in words */
+#define CAN0_MESSAGE_RAM_SIZE 9
+/* Nominal baud rate value (calculated) */
+#define CAN0_NOMINAL_BAUD_RATE_VALUE 93750
+/* Mask of enabled TX buffer interrupts */
+#define CAN0_TX_BUFFERS_IRQ_MASK 0
 
 /***********************************************************************************************************************
  * Global variables
@@ -107,12 +102,17 @@ extern i2c_rtos_handle_t FLEXCOMM_I2C_rtosHandle;
 extern const i2c_master_config_t FLEXCOMM_I2C_config;
 extern spi_rtos_handle_t FLEXCOMM_SPI_rtosHandle;
 extern const spi_master_config_t FLEXCOMM_SPI_config;
-extern const lpadc_config_t ADC0_config;
-extern lpadc_conv_command_config_t ADC0_commandsConfig[3];
-extern lpadc_conv_trigger_config_t ADC0_triggersConfig[2];
-extern const usart_config_t FLEXCOMM_USART_config;
-extern const usart_config_t FLEXCOMM_NMEA_config;
+extern const usart_config_t FLEXCOMM_UART_config;
 extern const crc_config_t CRC_ENGINE_config;
+extern const mcan_config_t CAN0_config;
+extern uint32_t CAN0_RAM_BASE_ADDRESS[CAN0_MESSAGE_RAM_SIZE];
+extern const mcan_frame_filter_config_t CAN0_std_filter_config;
+extern const mcan_frame_filter_config_t CAN0_ext_filter_config;
+extern const mcan_rx_fifo_config_t CAN0_rx_fifo0_config;
+extern const mcan_rx_fifo_config_t CAN0_rx_fifo1_config;
+extern const mcan_rx_buffer_config_t CAN0_rx_buffers_config;
+extern const mcan_tx_fifo_config_t CAN0_tx_event_fifo_config;
+extern const mcan_tx_buffer_config_t CAN0_tx_buffers_config;
 
 /***********************************************************************************************************************
  * Initialization functions

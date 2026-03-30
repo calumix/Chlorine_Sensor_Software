@@ -1,42 +1,30 @@
 /*
 ** ###################################################################
-**     Processors:          LPC5526JBD100
-**                          LPC5526JBD64
-**                          LPC5526JEV98
-**                          LPC5528JBD100
-**                          LPC5528JBD64
-**                          LPC5528JEV59
-**                          LPC5528JEV98
-**                          LPC55S26JBD100
-**                          LPC55S26JBD64
-**                          LPC55S26JEV98
-**                          LPC55S28JBD100
-**                          LPC55S28JBD64
-**                          LPC55S28JEV59
-**                          LPC55S28JEV98
-**                          LPC55S66JBD100_cm33_core0
-**                          LPC55S66JBD100_cm33_core1
-**                          LPC55S66JBD64_cm33_core0
-**                          LPC55S66JBD64_cm33_core1
-**                          LPC55S66JEV98_cm33_core0
-**                          LPC55S66JEV98_cm33_core1
-**                          LPC55S69JBD100_cm33_core0
-**                          LPC55S69JBD100_cm33_core1
-**                          LPC55S69JBD64_cm33_core0
-**                          LPC55S69JBD64_cm33_core1
-**                          LPC55S69JEV59_cm33_core0
-**                          LPC55S69JEV59_cm33_core1
-**                          LPC55S69JEV98_cm33_core0
-**                          LPC55S69JEV98_cm33_core1
+**     Processors:          LPC5512JBD100
+**                          LPC5512JBD64
+**                          LPC5514JBD100
+**                          LPC5514JBD64
+**                          LPC5514JEV59
+**                          LPC5516JBD100
+**                          LPC5516JBD64
+**                          LPC5516JEV59
+**                          LPC5516JEV98
+**                          LPC55S14JBD100
+**                          LPC55S14JBD64
+**                          LPC55S14JEV59
+**                          LPC55S16JBD100
+**                          LPC55S16JBD64
+**                          LPC55S16JEV59
+**                          LPC55S16JEV98
 **
-**     Version:             rev. 1.1, 2019-05-16
-**     Build:               b240704
+**     Version:             rev. 2.0, 2024-10-29
+**     Build:               b250520
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for ANACTRL
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -45,40 +33,37 @@
 **     Revisions:
 **     - rev. 1.0 (2018-08-22)
 **         Initial version based on v0.2UM
-**     - rev. 1.1 (2019-05-16)
-**         Initial A1 version based on v1.3UM
+**     - rev. 1.1 (2019-12-03)
+**         Initial version based on v0.6UM
+**     - rev. 2.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
 **
 ** ###################################################################
 */
 
 /*!
- * @file ANACTRL.h
- * @version 1.1
- * @date 2019-05-16
+ * @file PERI_ANACTRL.h
+ * @version 2.0
+ * @date 2024-10-29
  * @brief CMSIS Peripheral Access Layer for ANACTRL
  *
  * CMSIS Peripheral Access Layer for ANACTRL
  */
 
-#if !defined(ANACTRL_H_)
-#define ANACTRL_H_                               /**< Symbol preventing repeated inclusion */
+#if !defined(PERI_ANACTRL_H_)
+#define PERI_ANACTRL_H_                          /**< Symbol preventing repeated inclusion */
 
-#if (defined(CPU_LPC5526JBD100) || defined(CPU_LPC5526JBD64) || defined(CPU_LPC5526JEV98))
-#include "LPC5526_COMMON.h"
-#elif (defined(CPU_LPC5528JBD100) || defined(CPU_LPC5528JBD64) || defined(CPU_LPC5528JEV59) || defined(CPU_LPC5528JEV98))
-#include "LPC5528_COMMON.h"
-#elif (defined(CPU_LPC55S26JBD100) || defined(CPU_LPC55S26JBD64) || defined(CPU_LPC55S26JEV98))
-#include "LPC55S26_COMMON.h"
-#elif (defined(CPU_LPC55S28JBD100) || defined(CPU_LPC55S28JBD64) || defined(CPU_LPC55S28JEV59) || defined(CPU_LPC55S28JEV98))
-#include "LPC55S28_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core0) || defined(CPU_LPC55S66JBD64_cm33_core0) || defined(CPU_LPC55S66JEV98_cm33_core0))
-#include "LPC55S66_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core1) || defined(CPU_LPC55S66JBD64_cm33_core1) || defined(CPU_LPC55S66JEV98_cm33_core1))
-#include "LPC55S66_cm33_core1_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core0) || defined(CPU_LPC55S69JBD64_cm33_core0) || defined(CPU_LPC55S69JEV59_cm33_core0) || defined(CPU_LPC55S69JEV98_cm33_core0))
-#include "LPC55S69_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core1) || defined(CPU_LPC55S69JBD64_cm33_core1) || defined(CPU_LPC55S69JEV59_cm33_core1) || defined(CPU_LPC55S69JEV98_cm33_core1))
-#include "LPC55S69_cm33_core1_COMMON.h"
+#if (defined(CPU_LPC5512JBD100) || defined(CPU_LPC5512JBD64))
+#include "LPC5512_COMMON.h"
+#elif (defined(CPU_LPC5514JBD100) || defined(CPU_LPC5514JBD64) || defined(CPU_LPC5514JEV59))
+#include "LPC5514_COMMON.h"
+#elif (defined(CPU_LPC5516JBD100) || defined(CPU_LPC5516JBD64) || defined(CPU_LPC5516JEV59) || defined(CPU_LPC5516JEV98))
+#include "LPC5516_COMMON.h"
+#elif (defined(CPU_LPC55S14JBD100) || defined(CPU_LPC55S14JBD64) || defined(CPU_LPC55S14JEV59))
+#include "LPC55S14_COMMON.h"
+#elif (defined(CPU_LPC55S16JBD100) || defined(CPU_LPC55S16JBD64) || defined(CPU_LPC55S16JEV59) || defined(CPU_LPC55S16JEV98))
+#include "LPC55S16_COMMON.h"
 #else
   #error "No valid CPU defined!"
 #endif
@@ -143,7 +128,9 @@ typedef struct {
        uint8_t RESERVED_4[100];
   __IO uint32_t LDO_XO32M;                         /**< High Speed Crystal Oscillator (12 MHz - 32 MHz) Voltage Source Supply Control register, offset: 0xB0 */
   __IO uint32_t AUX_BIAS;                          /**< AUX_BIAS, offset: 0xB4 */
-       uint8_t RESERVED_5[72];
+       uint8_t RESERVED_5[64];
+  __IO uint32_t DUMMY_CTRL;                        /**< Dummy Control bus to analog modules, offset: 0xF8 */
+       uint8_t RESERVED_6[4];
   __IO uint32_t USBHS_PHY_CTRL;                    /**< USB High Speed Phy Control, offset: 0x100 */
   __IO uint32_t USBHS_PHY_TRIM;                    /**< USB High Speed Phy Trim values, offset: 0x104 */
 } ANACTRL_Type;
@@ -216,14 +203,6 @@ typedef struct {
  *  0b1..12 MHz clock is enabled.
  */
 #define ANACTRL_FRO192M_CTRL_ENA_12MHZCLK(x)     (((uint32_t)(((uint32_t)(x)) << ANACTRL_FRO192M_CTRL_ENA_12MHZCLK_SHIFT)) & ANACTRL_FRO192M_CTRL_ENA_12MHZCLK_MASK)
-
-#define ANACTRL_FRO192M_CTRL_ENA_48MHZCLK_MASK   (0x8000U)
-#define ANACTRL_FRO192M_CTRL_ENA_48MHZCLK_SHIFT  (15U)
-/*! ENA_48MHZCLK - 48 MHz clock control.
- *  0b0..Reserved.
- *  0b1..48 MHz clock is enabled.
- */
-#define ANACTRL_FRO192M_CTRL_ENA_48MHZCLK(x)     (((uint32_t)(((uint32_t)(x)) << ANACTRL_FRO192M_CTRL_ENA_48MHZCLK_SHIFT)) & ANACTRL_FRO192M_CTRL_ENA_48MHZCLK_MASK)
 
 #define ANACTRL_FRO192M_CTRL_DAC_TRIM_MASK       (0xFF0000U)
 #define ANACTRL_FRO192M_CTRL_DAC_TRIM_SHIFT      (16U)
@@ -840,6 +819,18 @@ typedef struct {
 #define ANACTRL_AUX_BIAS_ITRIMCTRL1(x)           (((uint32_t)(((uint32_t)(x)) << ANACTRL_AUX_BIAS_ITRIMCTRL1_SHIFT)) & ANACTRL_AUX_BIAS_ITRIMCTRL1_MASK)
 /*! @} */
 
+/*! @name DUMMY_CTRL - Dummy Control bus to analog modules */
+/*! @{ */
+
+#define ANACTRL_DUMMY_CTRL_XO32M_ADC_CLK_MODE_MASK (0xC00U)
+#define ANACTRL_DUMMY_CTRL_XO32M_ADC_CLK_MODE_SHIFT (10U)
+/*! XO32M_ADC_CLK_MODE - Control High speed Crystal oscillator mode of the ADC clock.
+ *  0b00..High speed Crystal oscillator output to ADC is disabled.
+ *  0b01..High speed Crystal oscillator output to ADC is enable.
+ */
+#define ANACTRL_DUMMY_CTRL_XO32M_ADC_CLK_MODE(x) (((uint32_t)(((uint32_t)(x)) << ANACTRL_DUMMY_CTRL_XO32M_ADC_CLK_MODE_SHIFT)) & ANACTRL_DUMMY_CTRL_XO32M_ADC_CLK_MODE_MASK)
+/*! @} */
+
 /*! @name USBHS_PHY_CTRL - USB High Speed Phy Control */
 /*! @{ */
 
@@ -852,6 +843,11 @@ typedef struct {
 #define ANACTRL_USBHS_PHY_CTRL_usb_id_ext_SHIFT  (1U)
 /*! usb_id_ext - Override value for ID if using external detectors. */
 #define ANACTRL_USBHS_PHY_CTRL_usb_id_ext(x)     (((uint32_t)(((uint32_t)(x)) << ANACTRL_USBHS_PHY_CTRL_usb_id_ext_SHIFT)) & ANACTRL_USBHS_PHY_CTRL_usb_id_ext_MASK)
+
+#define ANACTRL_USBHS_PHY_CTRL_iso_atx_MASK      (0x8U)
+#define ANACTRL_USBHS_PHY_CTRL_iso_atx_SHIFT     (3U)
+/*! iso_atx - . */
+#define ANACTRL_USBHS_PHY_CTRL_iso_atx(x)        (((uint32_t)(((uint32_t)(x)) << ANACTRL_USBHS_PHY_CTRL_iso_atx_SHIFT)) & ANACTRL_USBHS_PHY_CTRL_iso_atx_MASK)
 /*! @} */
 
 /*! @name USBHS_PHY_TRIM - USB High Speed Phy Trim values */
@@ -927,5 +923,5 @@ typedef struct {
  */ /* end of group Peripheral_access_layer */
 
 
-#endif  /* ANACTRL_H_ */
+#endif  /* PERI_ANACTRL_H_ */
 

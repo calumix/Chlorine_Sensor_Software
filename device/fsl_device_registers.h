@@ -1,6 +1,6 @@
 /*
  * Copyright 2014-2016 Freescale Semiconductor, Inc.
- * Copyright 2016-2024 NXP
+ * Copyright 2016-2025 NXP
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
@@ -13,8 +13,8 @@
  *
  * The CPU macro should be declared in the project or makefile.
  */
-#if (defined(CPU_LPC5528JBD100) || defined(CPU_LPC5528JBD64) || defined(CPU_LPC5528JEV59) || defined(CPU_LPC5528JEV98))
-#include "LPC5528.h"
+#if (defined(CPU_LPC5514JBD100) || defined(CPU_LPC5514JBD64) || defined(CPU_LPC5514JEV59))
+#include "LPC5514.h"
 #else
   #error "No valid CPU defined!"
 #endif

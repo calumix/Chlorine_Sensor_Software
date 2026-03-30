@@ -18,8 +18,8 @@
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
 product: Clocks v15.0
-processor: LPC5528
-package_id: LPC5528JBD64
+processor: LPC5514
+package_id: LPC5514JBD64
 mcu_data: ksdk2_0
 processor_version: 24.12.10
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
@@ -53,6 +53,7 @@ void BOARD_InitBootClocks(void)
 !!Configuration
 name: BOARD_BootClockFRO12M
 outputs:
+- {id: FRO_12MHz_clock.outFreq, value: 12 MHz}
 - {id: System_clock.outFreq, value: 12 MHz}
 settings:
 - {id: ANALOG_CONTROL_FRO192M_CTRL_ENDI_FRO_96M_CFG, value: Enable}
@@ -100,6 +101,7 @@ void BOARD_BootClockFRO12M(void)
 !!Configuration
 name: BOARD_BootClockFROHF96M
 outputs:
+- {id: FRO_12MHz_clock.outFreq, value: 12 MHz}
 - {id: System_clock.outFreq, value: 96 MHz}
 settings:
 - {id: ANALOG_CONTROL_FRO192M_CTRL_ENDI_FRO_96M_CFG, value: Enable}
@@ -148,6 +150,7 @@ void BOARD_BootClockFROHF96M(void)
 !!Configuration
 name: BOARD_BootClockPLL100M
 outputs:
+- {id: FRO_12MHz_clock.outFreq, value: 12 MHz}
 - {id: System_clock.outFreq, value: 100 MHz}
 settings:
 - {id: PLL0_Mode, value: Normal}
@@ -187,7 +190,7 @@ void BOARD_BootClockPLL100M(void)
     POWER_DisablePD(kPDRUNCFG_PD_LDOXO32M);                       /* Ensure XTAL32M is powered */
     CLOCK_SetupExtClocking(16000000U);                            /* Enable clk_in clock */
     SYSCON->CLOCK_CTRL |= SYSCON_CLOCK_CTRL_CLKIN_ENA_MASK;       /* Enable clk_in from XTAL32M clock  */
-    ANACTRL->XO32M_CTRL |= ANACTRL_XO32M_CTRL_ENABLE_SYSTEM_CLK_OUT_MASK;    /* Enable clk_in to system  */
+    ANACTRL->XO32M_CTRL |= ANACTRL_XO32M_CTRL_ENABLE_SYSTEM_CLK_OUT_MASK;    /* Enable High speed Crystal oscillator output to system  */
 
     POWER_SetVoltageForFreq(100000000U);                  /*!< Set voltage for the one of the fastest clock outputs: System clock output */
     CLOCK_SetFLASHAccessCyclesForFreq(100000000U);          /*!< Set FLASH wait states for core */
@@ -226,28 +229,29 @@ void BOARD_BootClockPLL100M(void)
 name: BOARD_BootClockPLL150M
 called_from_default_init: true
 outputs:
-- {id: ASYNCADC_clock.outFreq, value: 20 MHz}
-- {id: CTIMER0_clock.outFreq, value: 60 MHz}
-- {id: FXCOM0_clock.outFreq, value: 15 MHz, locked: true, accuracy: '0.001'}
-- {id: FXCOM1_clock.outFreq, value: 15 MHz, locked: true, accuracy: '0.001'}
-- {id: FXCOM2_clock.outFreq, value: 15 MHz, locked: true, accuracy: '0.001'}
-- {id: FXCOM3_clock.outFreq, value: 15 MHz, locked: true, accuracy: '0.001'}
+- {id: CAN_clock.outFreq, value: 1.5 MHz}
+- {id: CTIMER0_clock.outFreq, value: 150 MHz}
+- {id: FRO_12MHz_clock.outFreq, value: 12 MHz}
+- {id: FXCOM0_clock.outFreq, value: 12800/341 MHz}
+- {id: FXCOM1_clock.outFreq, value: 12800/341 MHz}
+- {id: FXCOM2_clock.outFreq, value: 12800/341 MHz}
+- {id: FXCOM3_clock.outFreq, value: 12800/341 MHz}
+- {id: HSUSB1_32K_clock.outFreq, value: 32.768 kHz}
 - {id: OSC32KHZ_clock.outFreq, value: 32.768 kHz}
-- {id: OSTIMER32KHZ_clock.outFreq, value: 32.768 kHz}
-- {id: SCT_clock.outFreq, value: 60 MHz}
 - {id: SYSTICK0_clock.outFreq, value: 32.768 kHz}
-- {id: System_clock.outFreq, value: 60 MHz, locked: true, accuracy: '0.001'}
+- {id: System_clock.outFreq, value: 150 MHz, locked: true, accuracy: '0.001'}
 - {id: USB1_PHY_clock.outFreq, value: 16 MHz}
 settings:
 - {id: PLL0_Mode, value: Normal}
+- {id: CANCLKDIV_HALT, value: Enable}
 - {id: ENABLE_CLKIN_ENA, value: Enabled}
 - {id: ENABLE_PLL_USB_OUT, value: Enabled}
 - {id: ENABLE_SYSTEM_CLK_OUT, value: Enabled}
-- {id: OSTIMER32K_EN_CFG, value: Enable}
+- {id: PLL0CLKDIV_HALT, value: Enable}
 - {id: PMC_PDRUNCFG_PDEN_FRO32K_CFG, value: Power_up}
 - {id: SYSCON.ADCCLKDIV.scale, value: '3', locked: true}
-- {id: SYSCON.ADCCLKSEL.sel, value: SYSCON.MAINCLKSELB}
-- {id: SYSCON.AHBCLKDIV.scale, value: '1', locked: true}
+- {id: SYSCON.CANCLKDIV.scale, value: '100'}
+- {id: SYSCON.CANCLKSEL.sel, value: SYSCON.CANCLKDIV}
 - {id: SYSCON.CTIMERCLKSEL0.sel, value: SYSCON.MAINCLKSELB}
 - {id: SYSCON.FCCLKSEL0.sel, value: SYSCON.PLL0DIV}
 - {id: SYSCON.FCCLKSEL1.sel, value: SYSCON.PLL0DIV}
@@ -261,9 +265,9 @@ settings:
 - {id: SYSCON.MAINCLKSELB.sel, value: SYSCON.PLL0_BYPASS}
 - {id: SYSCON.PLL0CLKSEL.sel, value: SYSCON.CLK_IN_EN}
 - {id: SYSCON.PLL0DIV.scale, value: '3'}
-- {id: SYSCON.PLL0M_MULT.scale, value: '30'}
-- {id: SYSCON.PLL0_PDEC.scale, value: '8'}
-- {id: SYSCON.SCTCLKSEL.sel, value: SYSCON.PLL0_BYPASS}
+- {id: SYSCON.PLL0M_MULT.scale, value: '75'}
+- {id: SYSCON.PLL0N_DIV.scale, value: '4'}
+- {id: SYSCON.PLL0_PDEC.scale, value: '2'}
 - {id: SYSCON.SYSTICKCLKSEL0.sel, value: RTC.rtc_osc_32k_clk}
 sources:
 - {id: RTC.fro_32k.outFreq, value: 32.768 kHz}
@@ -291,8 +295,8 @@ void BOARD_BootClockPLL150M(void)
     POWER_DisablePD(kPDRUNCFG_PD_LDOXO32M);                       /* Ensure XTAL32M is powered */
     CLOCK_SetupExtClocking(16000000U);                            /* Enable clk_in clock */
     SYSCON->CLOCK_CTRL |= SYSCON_CLOCK_CTRL_CLKIN_ENA_MASK;       /* Enable clk_in from XTAL32M clock  */
-    ANACTRL->XO32M_CTRL |= ANACTRL_XO32M_CTRL_ENABLE_SYSTEM_CLK_OUT_MASK;    /* Enable clk_in to system  */
-    ANACTRL->XO32M_CTRL |= ANACTRL_XO32M_CTRL_ENABLE_PLL_USB_OUT_MASK;       /* Enable clk_in to HS USB  */
+    ANACTRL->XO32M_CTRL |= ANACTRL_XO32M_CTRL_ENABLE_SYSTEM_CLK_OUT_MASK;    /* Enable High speed Crystal oscillator output to system  */
+    ANACTRL->XO32M_CTRL |= ANACTRL_XO32M_CTRL_ENABLE_PLL_USB_OUT_MASK;       /* Enable High speed Crystal oscillator output to HS USB  */
 
     /*!< Configure RTC OSC */
     POWER_EnablePD(kPDRUNCFG_PD_XTAL32K);                /*!< Powered down the XTAL 32 kHz RTC oscillator */
@@ -301,26 +305,25 @@ void BOARD_BootClockPLL150M(void)
     CLOCK_EnableClock(kCLOCK_Rtc);                       /*!< Enable the RTC peripheral clock */
     RTC->CTRL &= ~RTC_CTRL_SWRESET_MASK;                 /*!< Make sure the reset bit is cleared */
 
-    PMC->OSTIMERr |= PMC_OSTIMER_CLOCKENABLE_MASK;               /* The OSTIMER 32KHz clock is enabled. */
-
-    POWER_SetVoltageForFreq(60000000U);                  /*!< Set voltage for the one of the fastest clock outputs: System clock output */
-    CLOCK_SetFLASHAccessCyclesForFreq(60000000U);          /*!< Set FLASH wait states for core */
+    POWER_SetVoltageForFreq(150000000U);                  /*!< Set voltage for the one of the fastest clock outputs: System clock output */
+    CLOCK_SetFLASHAccessCyclesForFreq(150000000U);          /*!< Set FLASH wait states for core */
 
     /*!< Set up PLL */
     CLOCK_AttachClk(kEXT_CLK_to_PLL0);                    /*!< Switch PLL0CLKSEL to EXT_CLK */
     POWER_DisablePD(kPDRUNCFG_PD_PLL0);                  /* Ensure PLL is on  */
     POWER_DisablePD(kPDRUNCFG_PD_PLL0_SSCG);
     const pll_setup_t pll0Setup = {
-        .pllctrl = SYSCON_PLL0CTRL_CLKEN_MASK | SYSCON_PLL0CTRL_SELI(17U) | SYSCON_PLL0CTRL_SELP(8U),
-        .pllndec = SYSCON_PLL0NDEC_NDIV(1U),
-        .pllpdec = SYSCON_PLL0PDEC_PDIV(4U),
-        .pllsscg = {0x0U,(SYSCON_PLL0SSCG1_MDIV_EXT(30U) | SYSCON_PLL0SSCG1_SEL_EXT_MASK)},
-        .pllRate = 60000000U,
+        .pllctrl = SYSCON_PLL0CTRL_CLKEN_MASK | SYSCON_PLL0CTRL_SELI(39U) | SYSCON_PLL0CTRL_SELP(19U),
+        .pllndec = SYSCON_PLL0NDEC_NDIV(4U),
+        .pllpdec = SYSCON_PLL0PDEC_PDIV(1U),
+        .pllsscg = {0x0U,(SYSCON_PLL0SSCG1_MDIV_EXT(75U) | SYSCON_PLL0SSCG1_SEL_EXT_MASK)},
+        .pllRate = 150000000U,
         .flags =  PLL_SETUPFLAG_WAITLOCK
     };
     CLOCK_SetPLL0Freq(&pll0Setup);                       /*!< Configure PLL0 to the desired values */
 
     /*!< Set up dividers */
+    CLOCK_SetClkDiv(kCLOCK_DivAhbClk, 1U, false);         /*!< Set AHBCLKDIV divider to value 1 */
     #if FSL_CLOCK_DRIVER_VERSION >= MAKE_VERSION(2, 3, 4)
       CLOCK_SetClkDiv(kCLOCK_DivFlexFrg0, 85U, false);         /*!< Set DIV to value 0xFF and MULT to value 85U in related FLEXFRGCTRL register */
     #else
@@ -341,24 +344,22 @@ void BOARD_BootClockPLL150M(void)
     #else
       CLOCK_SetClkDiv(kCLOCK_DivFlexFrg3, 22016U, false);         /*!< Set DIV to value 0xFF and MULT to value 85U in related FLEXFRGCTRL register */
     #endif
-    CLOCK_SetClkDiv(kCLOCK_DivAhbClk, 1U, false);         /*!< Set AHBCLKDIV divider to value 1 */
-    CLOCK_SetClkDiv(kCLOCK_DivAdcAsyncClk, 0U, true);               /*!< Reset ADCCLKDIV divider counter and halt it */
-    CLOCK_SetClkDiv(kCLOCK_DivAdcAsyncClk, 3U, false);         /*!< Set ADCCLKDIV divider to value 3 */
-    CLOCK_SetClkDiv(kCLOCK_DivSctClk, 0U, true);               /*!< Reset SCTCLKDIV divider counter and halt it */
-    CLOCK_SetClkDiv(kCLOCK_DivSctClk, 1U, false);         /*!< Set SCTCLKDIV divider to value 1 */
     CLOCK_SetClkDiv(kCLOCK_DivPll0Clk, 0U, true);               /*!< Reset PLL0DIV divider counter and halt it */
     CLOCK_SetClkDiv(kCLOCK_DivPll0Clk, 3U, false);         /*!< Set PLL0DIV divider to value 3 */
+    CLOCK_SetClkDiv(kCLOCK_DivCanClk, 0U, true);               /*!< Reset CANCLKDIV divider counter and halt it */
+    CLOCK_SetClkDiv(kCLOCK_DivCanClk, 100U, false);         /*!< Set CANCLKDIV divider to value 100 */
 
     /*!< Set up clock selectors - Attach clocks to the peripheries */
     CLOCK_AttachClk(kPLL0_to_MAIN_CLK);                 /*!< Switch MAIN_CLK to PLL0 */
-    CLOCK_AttachClk(kMAIN_CLK_to_ADC_CLK);                 /*!< Switch ADC_CLK to MAIN_CLK */
     CLOCK_AttachClk(kPLL0_DIV_to_FLEXCOMM0);                 /*!< Switch FLEXCOMM0 to PLL0_DIV */
     CLOCK_AttachClk(kPLL0_DIV_to_FLEXCOMM1);                 /*!< Switch FLEXCOMM1 to PLL0_DIV */
     CLOCK_AttachClk(kPLL0_DIV_to_FLEXCOMM2);                 /*!< Switch FLEXCOMM2 to PLL0_DIV */
     CLOCK_AttachClk(kPLL0_DIV_to_FLEXCOMM3);                 /*!< Switch FLEXCOMM3 to PLL0_DIV */
-    CLOCK_AttachClk(kPLL0_to_SCT_CLK);                 /*!< Switch SCT_CLK to PLL0 */
     CLOCK_AttachClk(kOSC32K_to_SYSTICK0);                 /*!< Switch SYSTICK0 to OSC32K */
     CLOCK_AttachClk(kMAIN_CLK_to_CTIMER0);                 /*!< Switch CTIMER0 to MAIN_CLK */
+    CLOCK_AttachClk(kOSC32K_to_CLK32K);                 /*!< Switch CLK32K to OSC32K */
+    CLOCK_AttachClk(kOSC32K_to_OSTIMER);                 /*!< Switch OSTIMER to OSC32K */
+    CLOCK_AttachClk(kMCAN_DIV_to_MCAN);                 /*!< Switch MCAN to MCAN_DIV */
     SYSCON->MAINCLKSELA = ((SYSCON->MAINCLKSELA & ~SYSCON_MAINCLKSELA_SEL_MASK) | SYSCON_MAINCLKSELA_SEL(1U));    /*!< Switch MAINCLKSELA to EXT_CLK even it is not used for MAINCLKSELB */
 
     /*!< Set SystemCoreClock variable. */
@@ -374,6 +375,7 @@ void BOARD_BootClockPLL150M(void)
 !!Configuration
 name: BOARD_BootClockPLL1_150M
 outputs:
+- {id: FRO_12MHz_clock.outFreq, value: 12 MHz}
 - {id: System_clock.outFreq, value: 150 MHz}
 settings:
 - {id: PLL1_Mode, value: Normal}
@@ -409,7 +411,7 @@ void BOARD_BootClockPLL1_150M(void)
     POWER_DisablePD(kPDRUNCFG_PD_LDOXO32M);                       /* Ensure XTAL32M is powered */
     CLOCK_SetupExtClocking(16000000U);                            /* Enable clk_in clock */
     SYSCON->CLOCK_CTRL |= SYSCON_CLOCK_CTRL_CLKIN_ENA_MASK;       /* Enable clk_in from XTAL32M clock  */
-    ANACTRL->XO32M_CTRL |= ANACTRL_XO32M_CTRL_ENABLE_SYSTEM_CLK_OUT_MASK;    /* Enable clk_in to system  */
+    ANACTRL->XO32M_CTRL |= ANACTRL_XO32M_CTRL_ENABLE_SYSTEM_CLK_OUT_MASK;    /* Enable High speed Crystal oscillator output to system  */
 
     POWER_SetVoltageForFreq(150000000U);                  /*!< Set voltage for the one of the fastest clock outputs: System clock output */
     CLOCK_SetFLASHAccessCyclesForFreq(150000000U);          /*!< Set FLASH wait states for core */

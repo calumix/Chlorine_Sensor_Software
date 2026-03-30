@@ -1,42 +1,30 @@
 /*
 ** ###################################################################
-**     Processors:          LPC5526JBD100
-**                          LPC5526JBD64
-**                          LPC5526JEV98
-**                          LPC5528JBD100
-**                          LPC5528JBD64
-**                          LPC5528JEV59
-**                          LPC5528JEV98
-**                          LPC55S26JBD100
-**                          LPC55S26JBD64
-**                          LPC55S26JEV98
-**                          LPC55S28JBD100
-**                          LPC55S28JBD64
-**                          LPC55S28JEV59
-**                          LPC55S28JEV98
-**                          LPC55S66JBD100_cm33_core0
-**                          LPC55S66JBD100_cm33_core1
-**                          LPC55S66JBD64_cm33_core0
-**                          LPC55S66JBD64_cm33_core1
-**                          LPC55S66JEV98_cm33_core0
-**                          LPC55S66JEV98_cm33_core1
-**                          LPC55S69JBD100_cm33_core0
-**                          LPC55S69JBD100_cm33_core1
-**                          LPC55S69JBD64_cm33_core0
-**                          LPC55S69JBD64_cm33_core1
-**                          LPC55S69JEV59_cm33_core0
-**                          LPC55S69JEV59_cm33_core1
-**                          LPC55S69JEV98_cm33_core0
-**                          LPC55S69JEV98_cm33_core1
+**     Processors:          LPC5512JBD100
+**                          LPC5512JBD64
+**                          LPC5514JBD100
+**                          LPC5514JBD64
+**                          LPC5514JEV59
+**                          LPC5516JBD100
+**                          LPC5516JBD64
+**                          LPC5516JEV59
+**                          LPC5516JEV98
+**                          LPC55S14JBD100
+**                          LPC55S14JBD64
+**                          LPC55S14JEV59
+**                          LPC55S16JBD100
+**                          LPC55S16JBD64
+**                          LPC55S16JEV59
+**                          LPC55S16JEV98
 **
-**     Version:             rev. 1.1, 2019-05-16
-**     Build:               b240704
+**     Version:             rev. 2.0, 2024-10-29
+**     Build:               b250520
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for RNG
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -45,40 +33,37 @@
 **     Revisions:
 **     - rev. 1.0 (2018-08-22)
 **         Initial version based on v0.2UM
-**     - rev. 1.1 (2019-05-16)
-**         Initial A1 version based on v1.3UM
+**     - rev. 1.1 (2019-12-03)
+**         Initial version based on v0.6UM
+**     - rev. 2.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
 **
 ** ###################################################################
 */
 
 /*!
- * @file RNG.h
- * @version 1.1
- * @date 2019-05-16
+ * @file PERI_RNG.h
+ * @version 2.0
+ * @date 2024-10-29
  * @brief CMSIS Peripheral Access Layer for RNG
  *
  * CMSIS Peripheral Access Layer for RNG
  */
 
-#if !defined(RNG_H_)
-#define RNG_H_                                   /**< Symbol preventing repeated inclusion */
+#if !defined(PERI_RNG_H_)
+#define PERI_RNG_H_                              /**< Symbol preventing repeated inclusion */
 
-#if (defined(CPU_LPC5526JBD100) || defined(CPU_LPC5526JBD64) || defined(CPU_LPC5526JEV98))
-#include "LPC5526_COMMON.h"
-#elif (defined(CPU_LPC5528JBD100) || defined(CPU_LPC5528JBD64) || defined(CPU_LPC5528JEV59) || defined(CPU_LPC5528JEV98))
-#include "LPC5528_COMMON.h"
-#elif (defined(CPU_LPC55S26JBD100) || defined(CPU_LPC55S26JBD64) || defined(CPU_LPC55S26JEV98))
-#include "LPC55S26_COMMON.h"
-#elif (defined(CPU_LPC55S28JBD100) || defined(CPU_LPC55S28JBD64) || defined(CPU_LPC55S28JEV59) || defined(CPU_LPC55S28JEV98))
-#include "LPC55S28_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core0) || defined(CPU_LPC55S66JBD64_cm33_core0) || defined(CPU_LPC55S66JEV98_cm33_core0))
-#include "LPC55S66_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core1) || defined(CPU_LPC55S66JBD64_cm33_core1) || defined(CPU_LPC55S66JEV98_cm33_core1))
-#include "LPC55S66_cm33_core1_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core0) || defined(CPU_LPC55S69JBD64_cm33_core0) || defined(CPU_LPC55S69JEV59_cm33_core0) || defined(CPU_LPC55S69JEV98_cm33_core0))
-#include "LPC55S69_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core1) || defined(CPU_LPC55S69JBD64_cm33_core1) || defined(CPU_LPC55S69JEV59_cm33_core1) || defined(CPU_LPC55S69JEV98_cm33_core1))
-#include "LPC55S69_cm33_core1_COMMON.h"
+#if (defined(CPU_LPC5512JBD100) || defined(CPU_LPC5512JBD64))
+#include "LPC5512_COMMON.h"
+#elif (defined(CPU_LPC5514JBD100) || defined(CPU_LPC5514JBD64) || defined(CPU_LPC5514JEV59))
+#include "LPC5514_COMMON.h"
+#elif (defined(CPU_LPC5516JBD100) || defined(CPU_LPC5516JBD64) || defined(CPU_LPC5516JEV59) || defined(CPU_LPC5516JEV98))
+#include "LPC5516_COMMON.h"
+#elif (defined(CPU_LPC55S14JBD100) || defined(CPU_LPC55S14JBD64) || defined(CPU_LPC55S14JEV59))
+#include "LPC55S14_COMMON.h"
+#elif (defined(CPU_LPC55S16JBD100) || defined(CPU_LPC55S16JBD64) || defined(CPU_LPC55S16JEV59) || defined(CPU_LPC55S16JEV98))
+#include "LPC55S16_COMMON.h"
 #else
   #error "No valid CPU defined!"
 #endif
@@ -124,12 +109,16 @@
 /** RNG - Register Layout Typedef */
 typedef struct {
   __I  uint32_t RANDOM_NUMBER;                     /**< This register contains a random 32 bit number which is computed on demand, at each time it is read, offset: 0x0 */
-       uint8_t RESERVED_0[4];
+  __IO uint32_t ENCRYPTED_NUMBER;                  /**< This register contains a random 32 bit number which is pre-computed, offset: 0x4 */
   __I  uint32_t COUNTER_VAL;                       /**< offset: 0x8 */
   __IO uint32_t COUNTER_CFG;                       /**< offset: 0xC */
   __IO uint32_t ONLINE_TEST_CFG;                   /**< offset: 0x10 */
   __I  uint32_t ONLINE_TEST_VAL;                   /**< offset: 0x14 */
-       uint8_t RESERVED_1[4068];
+  __IO uint32_t ENTROPY_INJECT;                    /**< offset: 0x18 */
+  __IO uint32_t MISC_CFG;                          /**< offset: 0x1C */
+       uint8_t RESERVED_0[4052];
+  __IO uint32_t POWERDOWN;                         /**< Powerdown mode (standard but certainly useless here), offset: 0xFF4 */
+       uint8_t RESERVED_1[4];
   __I  uint32_t MODULEID;                          /**< IP identifier, offset: 0xFFC */
 } RNG_Type;
 
@@ -151,6 +140,15 @@ typedef struct {
 #define RNG_RANDOM_NUMBER_RANDOM_NUMBER(x)       (((uint32_t)(((uint32_t)(x)) << RNG_RANDOM_NUMBER_RANDOM_NUMBER_SHIFT)) & RNG_RANDOM_NUMBER_RANDOM_NUMBER_MASK)
 /*! @} */
 
+/*! @name ENCRYPTED_NUMBER - This register contains a random 32 bit number which is pre-computed */
+/*! @{ */
+
+#define RNG_ENCRYPTED_NUMBER_ENCRYPTED_NUMBER_MASK (0xFFFFFFFFU)
+#define RNG_ENCRYPTED_NUMBER_ENCRYPTED_NUMBER_SHIFT (0U)
+/*! ENCRYPTED_NUMBER - This register contains a random 32 bit number which is pre-computed. */
+#define RNG_ENCRYPTED_NUMBER_ENCRYPTED_NUMBER(x) (((uint32_t)(((uint32_t)(x)) << RNG_ENCRYPTED_NUMBER_ENCRYPTED_NUMBER_SHIFT)) & RNG_ENCRYPTED_NUMBER_ENCRYPTED_NUMBER_MASK)
+/*! @} */
+
 /*! @name COUNTER_VAL -  */
 /*! @{ */
 
@@ -161,7 +159,7 @@ typedef struct {
  */
 #define RNG_COUNTER_VAL_CLK_RATIO(x)             (((uint32_t)(((uint32_t)(x)) << RNG_COUNTER_VAL_CLK_RATIO_SHIFT)) & RNG_COUNTER_VAL_CLK_RATIO_MASK)
 
-#define RNG_COUNTER_VAL_REFRESH_CNT_MASK         (0x1F00U)
+#define RNG_COUNTER_VAL_REFRESH_CNT_MASK         (0x3FFF00U)
 #define RNG_COUNTER_VAL_REFRESH_CNT_SHIFT        (8U)
 /*! REFRESH_CNT - Incremented (till max possible value) each time COUNTER was updated since last reading to any *_NUMBER. */
 #define RNG_COUNTER_VAL_REFRESH_CNT(x)           (((uint32_t)(((uint32_t)(x)) << RNG_COUNTER_VAL_REFRESH_CNT_SHIFT)) & RNG_COUNTER_VAL_REFRESH_CNT_MASK)
@@ -223,6 +221,62 @@ typedef struct {
 #define RNG_ONLINE_TEST_VAL_MAX_CHI_SQUARED(x)   (((uint32_t)(((uint32_t)(x)) << RNG_ONLINE_TEST_VAL_MAX_CHI_SQUARED_SHIFT)) & RNG_ONLINE_TEST_VAL_MAX_CHI_SQUARED_MASK)
 /*! @} */
 
+/*! @name ENTROPY_INJECT -  */
+/*! @{ */
+
+#define RNG_ENTROPY_INJECT_ENTROPY_MASK          (0xFFFFFFFFU)
+#define RNG_ENTROPY_INJECT_ENTROPY_SHIFT         (0U)
+/*! ENTROPY - Use this register to inject or restore entropy 32 bits at a time. Writing is blocking
+ *    thus see to it to have analog clocks activated. Injection can be usefull to add contribution
+ *    from an external source of entropy, like for example LSBs of an ADC or of a temperature sensor.
+ *    Restore can be usefull to store N random numbers in central memory before going powerdown
+ *    then restore this entropy to RNG IP after power-up. It is useless to inject or restore more than
+ *    1*(number of RNGs) 32b words consecutively. Recommendation is to inject 1*(number of RNGs)
+ *    words, and possibly later (2*32 clock cycles of slowest analog clock) inject again 1*(number of
+ *    RNGs) words. Then maximum capacity of restoration is reached: about 44 bits per RNG (not to be
+ *    mistaken with maximum capacity of entropy accumulation which is about 100 bits per RNG). You
+ *    can inject less than 32 bits words (let unused bits to 0). Injection cannot degrade overall
+ *    performance due to the fact that some internal PRNGs are excluded on purpose from this external
+ *    action.
+ */
+#define RNG_ENTROPY_INJECT_ENTROPY(x)            (((uint32_t)(((uint32_t)(x)) << RNG_ENTROPY_INJECT_ENTROPY_SHIFT)) & RNG_ENTROPY_INJECT_ENTROPY_MASK)
+/*! @} */
+
+/*! @name MISC_CFG -  */
+/*! @{ */
+
+#define RNG_MISC_CFG_AES_RESEED_MASK             (0x1U)
+#define RNG_MISC_CFG_AES_RESEED_SHIFT            (0U)
+/*! AES_RESEED - If set, ENCRYPTED_NUMBER generation becomes predictable, provided all secrets and
+ *    current internal state are known: independant from entropy source.
+ */
+#define RNG_MISC_CFG_AES_RESEED(x)               (((uint32_t)(((uint32_t)(x)) << RNG_MISC_CFG_AES_RESEED_SHIFT)) & RNG_MISC_CFG_AES_RESEED_MASK)
+
+#define RNG_MISC_CFG_AES_DT_CFG_MASK             (0x2U)
+#define RNG_MISC_CFG_AES_DT_CFG_SHIFT            (1U)
+/*! AES_DT_CFG - Set this bit to re-seed AES. */
+#define RNG_MISC_CFG_AES_DT_CFG(x)               (((uint32_t)(((uint32_t)(x)) << RNG_MISC_CFG_AES_DT_CFG_SHIFT)) & RNG_MISC_CFG_AES_DT_CFG_MASK)
+/*! @} */
+
+/*! @name POWERDOWN - Powerdown mode (standard but certainly useless here) */
+/*! @{ */
+
+#define RNG_POWERDOWN_SOFT_RESET_MASK            (0x1U)
+#define RNG_POWERDOWN_SOFT_RESET_SHIFT           (0U)
+/*! SOFT_RESET - Request softreset that will go low automaticaly after acknowledge from CORE. */
+#define RNG_POWERDOWN_SOFT_RESET(x)              (((uint32_t)(((uint32_t)(x)) << RNG_POWERDOWN_SOFT_RESET_SHIFT)) & RNG_POWERDOWN_SOFT_RESET_MASK)
+
+#define RNG_POWERDOWN_FORCE_SOFT_RESET_MASK      (0x2U)
+#define RNG_POWERDOWN_FORCE_SOFT_RESET_SHIFT     (1U)
+/*! FORCE_SOFT_RESET - When used with softreset it forces CORE_RESETN to low on acknowledge from CORE. */
+#define RNG_POWERDOWN_FORCE_SOFT_RESET(x)        (((uint32_t)(((uint32_t)(x)) << RNG_POWERDOWN_FORCE_SOFT_RESET_SHIFT)) & RNG_POWERDOWN_FORCE_SOFT_RESET_MASK)
+
+#define RNG_POWERDOWN_POWERDOWN_MASK             (0x80000000U)
+#define RNG_POWERDOWN_POWERDOWN_SHIFT            (31U)
+/*! POWERDOWN - When set all accesses to standard registers are blocked. */
+#define RNG_POWERDOWN_POWERDOWN(x)               (((uint32_t)(((uint32_t)(x)) << RNG_POWERDOWN_POWERDOWN_SHIFT)) & RNG_POWERDOWN_POWERDOWN_MASK)
+/*! @} */
+
 /*! @name MODULEID - IP identifier */
 /*! @{ */
 
@@ -281,5 +335,5 @@ typedef struct {
  */ /* end of group Peripheral_access_layer */
 
 
-#endif  /* RNG_H_ */
+#endif  /* PERI_RNG_H_ */
 

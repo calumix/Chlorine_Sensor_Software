@@ -1,18 +1,17 @@
 /*
 ** ###################################################################
-**     Processors:          LPC5528JBD100
-**                          LPC5528JBD64
-**                          LPC5528JEV59
-**                          LPC5528JEV98
+**     Processors:          LPC5514JBD100
+**                          LPC5514JBD64
+**                          LPC5514JEV59
 **
 **     Compilers:           GNU C Compiler
 **                          IAR ANSI C/C++ Compiler for ARM
 **                          Keil ARM C/C++ Compiler
 **                          MCUXpresso Compiler
 **
-**     Reference manual:    LPC55S6x/LPC55S2x/LPC552x User manual(UM11126) Rev.1.3  16 May 2019
-**     Version:             rev. 1.1, 2019-05-16
-**     Build:               b240704
+**     Reference manual:    LPC55S1x/LPC551x User manual Rev.0.6  15 November 2019
+**     Version:             rev. 2.0, 2024-10-29
+**     Build:               b251010
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -20,7 +19,7 @@
 **         the oscillator (PLL) that is part of the microcontroller device.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -29,17 +28,20 @@
 **     Revisions:
 **     - rev. 1.0 (2018-08-22)
 **         Initial version based on v0.2UM
-**     - rev. 1.1 (2019-05-16)
-**         Initial A1 version based on v1.3UM
+**     - rev. 1.1 (2019-12-03)
+**         Initial version based on v0.6UM
+**     - rev. 2.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
 **
 ** ###################################################################
 */
 
 /*!
- * @file LPC5528
- * @version 1.1
- * @date 2019-05-16
- * @brief Device specific configuration file for LPC5528 (implementation file)
+ * @file LPC5514
+ * @version 2.0
+ * @date 2024-10-29
+ * @brief Device specific configuration file for LPC5514 (implementation file)
  *
  * Provides a system configuration function and a global variable that contains
  * the system frequency. It configures the device and initializes the oscillator
@@ -261,8 +263,26 @@ __attribute__ ((weak)) void SystemInit (void) {
     SYSCON->TRACECLKDIV = 0;
 /* Optionally enable RAM banks that may be off by default at reset */
 #if !defined(DONT_ENABLE_DISABLED_RAMBANKS)
-    SYSCON->AHBCLKCTRLSET[0] = SYSCON_AHBCLKCTRL0_SRAM_CTRL1_MASK | SYSCON_AHBCLKCTRL0_SRAM_CTRL2_MASK
-                          | SYSCON_AHBCLKCTRL0_SRAM_CTRL3_MASK | SYSCON_AHBCLKCTRL0_SRAM_CTRL4_MASK;
+    SYSCON->AHBCLKCTRLSET[0] = SYSCON_AHBCLKCTRL0_SRAM_CTRL1_MASK | SYSCON_AHBCLKCTRL0_SRAM_CTRL2_MASK;
+#endif
+    /* Following code is to reset PUF to remove over consumption */
+    /* Enable PUF register clock to access register */
+    SYSCON->AHBCLKCTRLSET[2] = SYSCON_AHBCLKCTRL2_PUF_MASK;
+    /* Release PUF reset */
+    SYSCON->PRESETCTRLCLR[2] = SYSCON_PRESETCTRL2_PUF_RST_MASK ;
+    /* Enable PUF SRAM */
+    #define PUF_SRAM_CTRL_CFG  (*((volatile uint32_t*)(0x4003B000u + 0x300u)))
+    #define PUF_SRAM_CTRL_INT_STATUS  (*((volatile uint32_t*)(0x4003B000u + 0x3E0u)))
+    PUF_SRAM_CTRL_CFG |= 0x01 | 0x04 ;
+    /* Disable PUF register clock. */
+    // Delaying the line of code below until the PUF State Machine execution is completed:
+    // Shutting down the clock to early will prevent the state machine from reaching the end.
+    // => Wait for status bit in PUF Controller Registers before stop PUF clock.
+    while(!(PUF_SRAM_CTRL_INT_STATUS & 0x1));
+    SYSCON->AHBCLKCTRLCLR[2] = SYSCON_AHBCLKCTRL2_PUF_MASK ;
+/* Optionally enable prefetch */
+#if !defined(DONT_ENABLE_FLASH_PREFETCH)
+    SYSCON->FMCCR |= SYSCON_FMCCR_PREFEN_MASK;
 #endif
   SystemInitHook();
 }
@@ -323,7 +343,7 @@ void SystemCoreClockUpdate (void) {
                 clkRate = clkRate / prediv;
                 /* MDEC used for rate */
                 workRate = (uint64_t)clkRate * (uint64_t)findPll0MMult();
-                clkRate = (uint32_t)(workRate / ((uint64_t)postdiv));
+                clkRate = (uint32_t)((workRate / ((uint64_t)postdiv)) & 0xFFFFFFFFUL);
             }
             break;
         case 0x02: /* PLL1 clock (pll1_clk)*/
@@ -355,7 +375,7 @@ void SystemCoreClockUpdate (void) {
 
                 /* MDEC used for rate */
                 workRate1 = (uint64_t)clkRate * (uint64_t)findPll1MMult();
-                clkRate = (uint32_t)(workRate1 / ((uint64_t)postdiv));
+                clkRate = (uint32_t)((workRate1 / ((uint64_t)postdiv)) & 0xFFFFFFFFUL);
             }
             break;
         case 0x03: /* RTC oscillator 32 kHz output (32k_clk) */

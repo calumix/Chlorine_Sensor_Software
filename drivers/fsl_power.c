@@ -7,6 +7,7 @@
  */
 #include "fsl_common.h"
 #include "fsl_power.h"
+
 /* Component ID definition, used by tools. */
 #ifndef FSL_COMPONENT_ID
 #define FSL_COMPONENT_ID "platform.drivers.power"
@@ -230,9 +231,6 @@ typedef enum _v_ao
     1 /*!< All SRAM instances use "Voltage Scaling" as low power mode technic (it is recommended to set LDO_MEM as low \
          as possible -- down to 0.7V -- during low power mode) */
 
-#define LOWPOWER_CFG_LDODEEPSLEEPREF_FLASHBUFFER 0 /*!< LDO DEEP SLEEP uses Flash Buffer as reference  */
-#define LOWPOWER_CFG_LDODEEPSLEEPREF_BANDGAG0P8V 1 /*!< LDO DEEP SLEEP uses Band Gap 0.8V as reference */
-
 /* CPU Retention Control*/
 #define LOWPOWER_CPURETCTRL_ENA_INDEX           0
 #define LOWPOWER_CPURETCTRL_ENA_MASK            (0x1UL << LOWPOWER_CPURETCTRL_ENA_INDEX)
@@ -243,9 +241,9 @@ typedef enum _v_ao
 
 /* Voltgae setting*/
 #define DCDC_POWER_PROFILE_LOW_MAX_FREQ_HZ \
-    (100000000U) /* Maximum System Frequency allowed with DCDC Power Profile LOW */
+    (72000000U) /* Maximum System Frequency allowed with DCDC Power Profile LOW */
 #define DCDC_POWER_PROFILE_MEDIUM_MAX_FREQ_HZ \
-    (130000000U) /* Maximum System Frequency allowed with DCDC Power Profile MEDIUM */
+    (100000000U) /* Maximum System Frequency allowed with DCDC Power Profile MEDIUM */
 #define DCDC_POWER_PROFILE_HIGH_MAX_FREQ_HZ \
     (150000000U)                       /* Maximum System Frequency allowed with DCDC Power Profile HIGH */
 #define PROCESS_NNN_AVG_HZ (19300000U) /* Average Ring OScillator value for Nominal (NNN) Manufacturing Process */
@@ -261,11 +259,11 @@ typedef enum _v_ao
     (PROCESS_NNN_AVG_HZ +  \
      (PROCESS_NNN_LIMITS * \
       PROCESS_NNN_STD_HZ))         /* Maximum Ring OScillator value for Nominal (NNN) Manufacturing Process */
-#define VOLTAGE_SSS_LOW_MV (1075U) /* Voltage Settings for : Process=SSS, DCDC Power Profile=LOW */
+#define VOLTAGE_SSS_LOW_MV (1100U) /* Voltage Settings for : Process=SSS, DCDC Power Profile=LOW */
 #define VOLTAGE_SSS_MED_MV (1150U) /* Voltage Settings for : Process=SSS, DCDC Power Profile=MEDIUM */
 #define VOLTAGE_SSS_HIG_MV (1200U) /* Voltage Settings for : Process=SSS, DCDC Power Profile=HIGH */
-#define VOLTAGE_NNN_LOW_MV (1000U) /* Voltage Settings for : Process=NNN, DCDC Power Profile=LOW */
-#define VOLTAGE_NNN_MED_MV (1100U) /* Voltage Settings for : Process=NNN, DCDC Power Profile=MEDIUM */
+#define VOLTAGE_NNN_LOW_MV (1050U) /* Voltage Settings for : Process=NNN, DCDC Power Profile=LOW */
+#define VOLTAGE_NNN_MED_MV (1075U) /* Voltage Settings for : Process=NNN, DCDC Power Profile=MEDIUM */
 #define VOLTAGE_NNN_HIG_MV (1150U) /* Voltage Settings for : Process=NNN, DCDC Power Profile=HIGH */
 #define VOLTAGE_FFF_LOW_MV (1000U) /* Voltage Settings for : Process=FFF, DCDC Power Profile=LOW */
 #define VOLTAGE_FFF_MED_MV (1025U) /* Voltage Settings for : Process=FFF, DCDC Power Profile=MEDIUM */
@@ -291,12 +289,25 @@ typedef enum _v_ao
 #define U32_SET_BITS(P, B) ((*(uint32_t *)P) |= (B))
 #define U32_CLR_BITS(P, B) ((*(uint32_t *)P) &= ~(B))
 /* Return values from Config (N-2) page of flash */
-#define GET_16MXO_TRIM() (*(uint32_t *)0x9FCC8)
-#define GET_32KXO_TRIM() (*(uint32_t *)0x9FCCC)
+#define GET_16MXO_TRIM() (*(uint32_t *)(FLASH_NMPA_BASE + 0xC8U)) // (0x3FCC8)
+#define GET_32KXO_TRIM() (*(uint32_t *)(FLASH_NMPA_BASE + 0xCCU)) // (0x3FCCC)
 
-#define CPU_RETENTION_RAMX_STORAGE_START_ADDR (0x04006000)
+#define CPU_RETENTION_RAMX_STORAGE_START_ADDR (0x04002000)
 
 #define XO_SLAVE_EN (1)
+
+#define INT32_MULTIPLY_OVERFLOW(a, b) ( \
+    ((a) == 0 || (b) == 0) ? false : \
+    (((a) > 0) ? \
+        (((b) > 0) ? ((a) > INT32_MAX / (b)) : ((b) < INT32_MIN / (a))) : \
+        (((b) > 0) ? ((a) < INT32_MIN / (b)) : ((a) < INT32_MAX / (b))) \
+    ) \
+)
+
+#define INT32_ADD_OVERFLOW(a, b) ( \
+    (((b) > 0) && ((a) > INT32_MAX - (b))) || \
+    (((b) < 0) && ((a) < INT32_MIN - (b))) \
+)
 /*******************************************************************************
  * Codes
  ******************************************************************************/
@@ -312,6 +323,7 @@ static uint8_t CLOCK_u8OscCapConvert(uint8_t u8OscCap, uint8_t u8CapBankDisconti
 static void lowpower_set_dcdc_power_profile(lowpower_dcdc_power_profile_enum dcdc_power_profile);
 static lowpower_process_corner_enum lowpower_get_part_process_corner(void);
 static void lowpower_set_voltage_for_process(lowpower_dcdc_power_profile_enum dcdc_power_profile);
+static lowpower_driver_interface_t *s_lowpowerDriver = (lowpower_driver_interface_t *)(0x130050e4);
 
 /**
  * @brief   Configures and enters in low power mode
@@ -335,8 +347,8 @@ static void POWER_EnterLowPower(LPC_LOWPOWER_T *p_lowpower_cfg);
  */
 static void lf_set_dcdc_power_profile_low(void)
 {
-#define DCDC_POWER_PROFILE_LOW_0_ADDRS (0x9FCE0U)
-#define DCDC_POWER_PROFILE_LOW_1_ADDRS (0x9FCE4U)
+#define DCDC_POWER_PROFILE_LOW_0_ADDRS (FLASH_NMPA_BASE + 0xE0U) // N4M (0x3FCE0U) / N4S (0x9FCE0U)
+#define DCDC_POWER_PROFILE_LOW_1_ADDRS (FLASH_NMPA_BASE + 0xE4U) // N4M (0x3FCE4U) / N4S (0x9FCE4U)
 
     uint32_t dcdcTrimValue0 = (*((volatile unsigned int *)(DCDC_POWER_PROFILE_LOW_0_ADDRS)));
     uint32_t dcdcTrimValue1 = (*((volatile unsigned int *)(DCDC_POWER_PROFILE_LOW_1_ADDRS)));
@@ -355,16 +367,6 @@ static void lf_set_dcdc_power_profile_low(void)
  */
 static void POWER_EnterLowPower(LPC_LOWPOWER_T *p_lowpower_cfg)
 {
-    lowpower_driver_interface_t *s_lowpowerDriver;
-    /* Judging the core and call the corresponding API base address*/
-    if (0UL == Chip_GetVersion())
-    {
-        s_lowpowerDriver = (lowpower_driver_interface_t *)(0x130010d4UL);
-    }
-    else
-    {
-        s_lowpowerDriver = (lowpower_driver_interface_t *)(0x13001204UL);
-    }
     /* PMC clk set to 12 MHZ */
     p_lowpower_cfg->CFG |= (uint32_t)LOWPOWER_CFG_SELCLOCK_12MHZ << LOWPOWER_CFG_SELCLOCK_INDEX;
 
@@ -402,16 +404,6 @@ static void POWER_EnterLowPower(LPC_LOWPOWER_T *p_lowpower_cfg)
  */
 void POWER_CycleCpuAndFlash(void)
 {
-    /* Judging the core and call the corresponding API base address*/
-    lowpower_driver_interface_t *s_lowpowerDriver;
-    if (0UL == Chip_GetVersion())
-    {
-        s_lowpowerDriver = (lowpower_driver_interface_t *)(0x130010d4UL);
-    }
-    else
-    {
-        s_lowpowerDriver = (lowpower_driver_interface_t *)(0x13001204UL);
-    }
     (*(s_lowpowerDriver->power_cycle_cpu_and_flash))();
 };
 
@@ -424,7 +416,7 @@ void POWER_EnterDeepSleep(uint32_t exclude_from_pd,
                           uint64_t wakeup_interrupts,
                           uint32_t hardware_wake_ctrl)
 {
-    static LPC_LOWPOWER_T lv_low_power_mode_cfg; /* Low Power Mode configuration structure */
+    LPC_LOWPOWER_T lv_low_power_mode_cfg; /* Low Power Mode configuration structure */
     uint32_t cpu0_nmi_enable;
     uint32_t cpu0_int_enable_0;
     uint32_t cpu0_int_enable_1;
@@ -479,15 +471,20 @@ void POWER_EnterDeepSleep(uint32_t exclude_from_pd,
     cpu0_int_enable_1 = NVIC->ISER[1];
 
     pmc_reset_ctrl = PMC->RESETCTRL;
-    if (0UL != (pmc_reset_ctrl & PMC_RESETCTRL_BODCORERESETENABLE_MASK))
+
+    if ((pmc_reset_ctrl & (PMC_RESETCTRL_BODCORERESETENA_SECURE_MASK | PMC_RESETCTRL_BODCORERESETENA_SECURE_DP_MASK)) ==
+        ((0x1UL << PMC_RESETCTRL_BODCORERESETENA_SECURE_SHIFT) |
+         (0x1UL << PMC_RESETCTRL_BODCORERESETENA_SECURE_DP_SHIFT)))
     {
-        /* BoD CORE reset is activated, so make sure BoD Core won't be shutdown */
-        lv_low_power_mode_cfg.PDCTRL0 &= ~(uint32_t)kPDRUNCFG_PD_BODCORE;
+        /* BoD CORE reset is activated, so make sure BoD Core and Biasing won't be shutdown */
+        lv_low_power_mode_cfg.PDCTRL0 &= ~(uint32_t)kPDRUNCFG_PD_BODCORE & ~(uint32_t)kPDRUNCFG_PD_BIAS;
     }
-    if (0UL != (pmc_reset_ctrl & PMC_RESETCTRL_BODVBATRESETENABLE_MASK))
+    if ((pmc_reset_ctrl & (PMC_RESETCTRL_BODVBATRESETENA_SECURE_MASK | PMC_RESETCTRL_BODVBATRESETENA_SECURE_DP_MASK)) ==
+        ((0x1UL << PMC_RESETCTRL_BODVBATRESETENA_SECURE_SHIFT) |
+         (0x1UL << PMC_RESETCTRL_BODVBATRESETENA_SECURE_DP_SHIFT)))
     {
-        /* BoD VBAT reset is activated, so make sure BoD VBAT won't be shutdown */
-        lv_low_power_mode_cfg.PDCTRL0 &= ~(uint32_t)kPDRUNCFG_PD_BODVBAT;
+        /* BoD VBAT reset is activated, so make sure BoD VBAT and Biasing won't be shutdown */
+        lv_low_power_mode_cfg.PDCTRL0 &= ~(uint32_t)kPDRUNCFG_PD_BODVBAT & ~(uint32_t)kPDRUNCFG_PD_BIAS;
     }
 
     /* Enter low power mode */
@@ -517,6 +514,7 @@ void POWER_EnterPowerDown(uint32_t exclude_from_pd,
     uint32_t cpu0_int_enable_1;
     uint64_t wakeup_src_int;
     uint32_t pmc_reset_ctrl;
+    uint32_t rng_entropy_save[6];
 
     uint32_t analog_ctrl_regs[12]; /* To store Analog Controller Regristers */
 
@@ -532,22 +530,22 @@ void POWER_EnterPowerDown(uint32_t exclude_from_pd,
     lv_low_power_mode_cfg.PDCTRL0 = (~exclude_from_pd) | (uint32_t)kPDRUNCFG_PD_BODVBAT | (uint32_t)kPDRUNCFG_PD_FRO1M |
                                     (uint32_t)kPDRUNCFG_PD_LDODEEPSLEEP;
 
-    /* SRAM retention control during POWERDOWN */
-    lv_low_power_mode_cfg.SRAMRETCTRL = sram_retention_ctrl;
-
-    /* Sanity check: If retention is required for any of SRAM instances, make sure LDO MEM will stay powered */
-    if ((sram_retention_ctrl & 0x7FFFUL) != 0UL)
+    /* @TODO Guillaume: add save/restore entropy during PowerDown */
+    /* Entropy for RNG need to saved */
+    if ((exclude_from_pd & (uint32_t)kPDRUNCFG_PD_RNG) != 0UL)
     {
-        lv_low_power_mode_cfg.PDCTRL0 &= ~(uint32_t)kPDRUNCFG_PD_LDOMEM;
+        CLOCK_EnableClock(kCLOCK_Rng);
+        RESET_ClearPeripheralReset(kRNG_RST_SHIFT_RSTn);
+        for (int i = 0; i < 6; i++)
+        {
+            rng_entropy_save[i] = RNG->RANDOM_NUMBER;
+        }
     }
-
-    /* Voltage control in Low Power Modes */
-    /* The Memories Voltage settings below are for voltage scaling */
-    lv_low_power_mode_cfg.VOLTAGE = lf_set_ldo_ao_ldo_mem_voltage(LOWPOWER_CFG_LPMODE_POWERDOWN, 0);
 
     /* CPU0 retention Ctrl.
      * For the time being, we do not allow customer to relocate the CPU retention area in SRAMX, meaning that the
-     * retention area range is [0x0400_6000 - 0x0400_6600] (beginning of RAMX2) If required by customer,
+     * retention area range is [0x0400_6000 - 0x0400_6600] (beginning of RAMX2 for N4S) If required by customer,
+     * retention area range is [0x0400_2000 - 0x0400_2600] (beginning of RAMX2 for N4M) If required by customer,
      * cpu_retention_ctrl[13:1] will be used for that to modify the default retention area
      */
     lv_low_power_mode_cfg.CPURETCTRL =
@@ -556,6 +554,8 @@ void POWER_EnterPowerDown(uint32_t exclude_from_pd,
          LOWPOWER_CPURETCTRL_MEMBASE_MASK);
     if (0UL != (cpu_retention_ctrl & 0x1UL))
     {
+        /* Add RAMX2 for retention */
+        sram_retention_ctrl |= LOWPOWER_SRAMRETCTRL_RETEN_RAMX2;
         /* CPU retention is required: store Analog Controller Registers */
         analog_ctrl_regs[0]  = ANACTRL->FRO192M_CTRL;
         analog_ctrl_regs[1]  = ANACTRL->ANALOG_CTRL_CFG;
@@ -571,9 +571,22 @@ void POWER_EnterPowerDown(uint32_t exclude_from_pd,
         analog_ctrl_regs[11] = ANACTRL->USBHS_PHY_TRIM;
     }
 
+    /* SRAM retention control during POWERDOWN */
+    lv_low_power_mode_cfg.SRAMRETCTRL = sram_retention_ctrl;
+
+    /* Sanity check: If retention is required for any of SRAM instances, make sure LDO MEM will stay powered */
+    if ((sram_retention_ctrl & 0x7FFFUL) != 0UL)
+    {
+        lv_low_power_mode_cfg.PDCTRL0 &= ~(uint32_t)kPDRUNCFG_PD_LDOMEM;
+    }
+
+    /* Voltage control in Low Power Modes */
+    /* The Memories Voltage settings below are for voltage scaling */
+    lv_low_power_mode_cfg.VOLTAGE = lf_set_ldo_ao_ldo_mem_voltage(LOWPOWER_CFG_LPMODE_POWERDOWN, 0);
+
     /* CPU Wake up & Interrupt sources control : only WAKEUP_GPIO_GLOBALINT0, WAKEUP_GPIO_GLOBALINT1, WAKEUP_FLEXCOMM3,
      * WAKEUP_ACMP_CAPT, WAKEUP_RTC_LITE_ALARM_WAKEUP, WAKEUP_OS_EVENT_TIMER, WAKEUP_ALLWAKEUPIOS */
-    wakeup_src_int = (uint64_t)(WAKEUP_GPIO_GLOBALINT0 | WAKEUP_GPIO_GLOBALINT1 | WAKEUP_FLEXCOMM3 | WAKEUP_ACMP_CAPT |
+    wakeup_src_int = (uint64_t)(WAKEUP_GPIO_GLOBALINT0 | WAKEUP_GPIO_GLOBALINT1 | WAKEUP_FLEXCOMM3 | WAKEUP_ACMP |
                                 WAKEUP_RTC_LITE_ALARM_WAKEUP | WAKEUP_OS_EVENT_TIMER | WAKEUP_ALLWAKEUPIOS);
     lv_low_power_mode_cfg.WAKEUPINT = wakeup_interrupts & wakeup_src_int;
     lv_low_power_mode_cfg.WAKEUPSRC = wakeup_interrupts & wakeup_src_int;
@@ -586,10 +599,19 @@ void POWER_EnterPowerDown(uint32_t exclude_from_pd,
     cpu0_int_enable_0 = NVIC->ISER[0];
     cpu0_int_enable_1 = NVIC->ISER[1];
 
+    /* Save the configuration of the PMC RESETCTRL register */
     pmc_reset_ctrl = PMC->RESETCTRL;
+
     /* Disable BoD VBAT and BoD Core resets */
-    PMC->RESETCTRL =
-        pmc_reset_ctrl & (~(PMC_RESETCTRL_BODVBATRESETENABLE_MASK | PMC_RESETCTRL_BODCORERESETENABLE_MASK));
+    /* BOD VBAT disable reset */
+    PMC->RESETCTRL &= (~(PMC_RESETCTRL_BODVBATRESETENA_SECURE_MASK | PMC_RESETCTRL_BODVBATRESETENA_SECURE_DP_MASK));
+    PMC->RESETCTRL |= (0x2UL << PMC_RESETCTRL_BODVBATRESETENA_SECURE_SHIFT) |
+                      (0x2UL << PMC_RESETCTRL_BODVBATRESETENA_SECURE_DP_SHIFT);
+
+    /* BOD CORE disable reset */
+    PMC->RESETCTRL &= (~(PMC_RESETCTRL_BODCORERESETENA_SECURE_MASK | PMC_RESETCTRL_BODCORERESETENA_SECURE_DP_MASK));
+    PMC->RESETCTRL |= (0x2UL << PMC_RESETCTRL_BODCORERESETENA_SECURE_SHIFT) |
+                      (0x2UL << PMC_RESETCTRL_BODCORERESETENA_SECURE_DP_SHIFT);
 
     /* Enter low power mode */
     POWER_EnterLowPower(&lv_low_power_mode_cfg);
@@ -598,6 +620,25 @@ void POWER_EnterPowerDown(uint32_t exclude_from_pd,
       instance because an interrupt is pending). In case of CPU retention, assumption is that the SRAM containing the
       stack used to call this function shall be preserved during low power ***/
 
+#if defined(PUF_SRAM_CTRL_CFG_ENABLE_MASK)
+    /* Following code is to reset PUF to remove over consumption */
+    /* Enable PUF register clock to access register */
+    SYSCON->AHBCLKCTRLSET[2] = SYSCON_AHBCLKCTRL2_PUF_MASK;
+    /* Release PUF reset */
+    SYSCON->PRESETCTRLCLR[2] = SYSCON_PRESETCTRL2_PUF_RST_MASK;
+    /* Enable PUF SRAM */
+    PUF_SRAM_CTRL->CFG |= PUF_SRAM_CTRL_CFG_ENABLE_MASK | PUF_SRAM_CTRL_CFG_CKGATING_MASK;
+
+    /* Disable PUF register clock. */
+    // Delaying the line of code below until the PUF State Machine execution is completed:
+    // Shuting down the clock to early will prevent the state machine from reaching the end.
+    // => Wait for status bit in PUF Controller Registers before stop PUF clock.
+    while (0UL == (PUF_SRAM_CTRL->INT_STATUS & PUF_SRAM_CTRL_INT_STATUS_READY_MASK))
+    {
+    }
+
+    SYSCON->AHBCLKCTRLCLR[2] = SYSCON_AHBCLKCTRL2_PUF_MASK;
+#endif
     /* Restore the configuration of the NMI Register */
     SYSCON->NMISRC |= cpu0_nmi_enable;
 
@@ -609,7 +650,7 @@ void POWER_EnterPowerDown(uint32_t exclude_from_pd,
     NVIC->ISER[0] = cpu0_int_enable_0;
     NVIC->ISER[1] = cpu0_int_enable_1;
 
-    if (0UL != (cpu_retention_ctrl & 0x1UL))
+    if ((cpu_retention_ctrl & 0x1UL) != 0UL)
     {
         /* Restore Analog Controller Registers */
         ANACTRL->FRO192M_CTRL      = analog_ctrl_regs[0] | ANACTRL_FRO192M_CTRL_WRTRIM_MASK;
@@ -624,6 +665,17 @@ void POWER_EnterPowerDown(uint32_t exclude_from_pd,
         ANACTRL->AUX_BIAS          = analog_ctrl_regs[9];
         ANACTRL->USBHS_PHY_CTRL    = analog_ctrl_regs[10];
         ANACTRL->USBHS_PHY_TRIM    = analog_ctrl_regs[11];
+    }
+
+    /* @TODO Guillaume: add save/restore entropy during PowerDown */
+    /* Restore Entropy for RNG */
+    if ((exclude_from_pd & (uint32_t)kPDRUNCFG_PD_RNG) != 0UL)
+    {
+        RNG->POWERDOWN &= ~RNG_POWERDOWN_POWERDOWN_MASK;
+        for (int i = 0; i < 6; i++)
+        {
+            RNG->ENTROPY_INJECT = rng_entropy_save[i];
+        }
     }
 }
 
@@ -655,9 +707,8 @@ void POWER_EnterDeepPowerDown(uint32_t exclude_from_pd,
                                     (uint32_t)kPDRUNCFG_PD_FRO1M | (uint32_t)kPDRUNCFG_PD_COMP;
 
     /* SRAM retention control during DEEPPOWERDOWN */
-    sram_retention_ctrl =
-        sram_retention_ctrl &
-        (~(LOWPOWER_SRAMRETCTRL_RETEN_RAMX0 | LOWPOWER_SRAMRETCTRL_RETEN_RAMX1 | LOWPOWER_SRAMRETCTRL_RETEN_RAM00));
+    /* RAM00 used by ROM code to restart. */
+    sram_retention_ctrl = sram_retention_ctrl & (~(LOWPOWER_SRAMRETCTRL_RETEN_RAM00));
 
     /* SRAM retention control during DEEPPOWERDOWN */
     lv_low_power_mode_cfg.SRAMRETCTRL = sram_retention_ctrl;
@@ -688,21 +739,30 @@ void POWER_EnterDeepPowerDown(uint32_t exclude_from_pd,
     cpu0_nmi_enable = SYSCON->NMISRC & SYSCON_NMISRC_NMIENCPU0_MASK; /* Save the configuration of the NMI Register */
     SYSCON->NMISRC &= ~SYSCON_NMISRC_NMIENCPU0_MASK;                 /* Disable NMI of CPU0 */
 
-    /* Save the configuration of the CPU interrupt enable Registers */
+    /* Save the configuration of the CPU interrupt enable Registers (because they are overwritten inside the low power
+     * API */
     cpu0_int_enable_0 = NVIC->ISER[0];
     cpu0_int_enable_1 = NVIC->ISER[1];
 
     /* Save the configuration of the PMC RESETCTRL register */
     pmc_reset_ctrl = PMC->RESETCTRL;
-    /* Disable BoD VBAT and BoD Core resets */
-    PMC->RESETCTRL =
-        pmc_reset_ctrl & (~(PMC_RESETCTRL_BODVBATRESETENABLE_MASK | PMC_RESETCTRL_BODCORERESETENABLE_MASK));
 
-    /* Disable LDO MEM bleed current */
-    // PMC->MISCCTRL |= PMC_MISCCTRL_DISABLE_BLEED_MASK;
+    /* Disable BoD VBAT and BoD Core resets */
+    /* BOD VBAT disable reset */
+    PMC->RESETCTRL &= (~(PMC_RESETCTRL_BODVBATRESETENA_SECURE_MASK | PMC_RESETCTRL_BODVBATRESETENA_SECURE_DP_MASK));
+    PMC->RESETCTRL |= (0x2UL << PMC_RESETCTRL_BODVBATRESETENA_SECURE_SHIFT) |
+                      (0x2UL << PMC_RESETCTRL_BODVBATRESETENA_SECURE_DP_SHIFT);
+
+    /* BOD CORE disable reset */
+    PMC->RESETCTRL &= (~(PMC_RESETCTRL_BODCORERESETENA_SECURE_MASK | PMC_RESETCTRL_BODCORERESETENA_SECURE_DP_MASK));
+    PMC->RESETCTRL |= (0x2UL << PMC_RESETCTRL_BODCORERESETENA_SECURE_SHIFT) |
+                      (0x2UL << PMC_RESETCTRL_BODCORERESETENA_SECURE_DP_SHIFT);
 
     /* Enter low power mode */
     POWER_EnterLowPower(&lv_low_power_mode_cfg);
+
+    /*** We'll reach this point ONLY and ONLY if the DEEPPOWERDOWN has not been taken (for instance because an RTC or
+     * OSTIMER interrupt is pending) ***/
 
     /* Restore the configuration of the NMI Register */
     SYSCON->NMISRC |= cpu0_nmi_enable;
@@ -710,7 +770,8 @@ void POWER_EnterDeepPowerDown(uint32_t exclude_from_pd,
     /* Restore PMC RESETCTRL register */
     PMC->RESETCTRL = pmc_reset_ctrl;
 
-    /* Restore the configuration of the CPU interrupt enable Registers */
+    /* Restore the configuration of the CPU interrupt enable Registers (because they have been overwritten inside the
+     * low power API */
     NVIC->ISER[0] = cpu0_int_enable_0;
     NVIC->ISER[1] = cpu0_int_enable_1;
 }
@@ -758,7 +819,7 @@ static void lf_get_deepsleep_core_supply_cfg(uint32_t exclude_from_pd, uint32_t 
  */
 static uint32_t lf_set_ldo_ao_ldo_mem_voltage(uint32_t p_lp_mode, uint32_t p_dcdc_voltage)
 {
-#define FLASH_NMPA_LDO_AO_ADDRS                (0x9FCF4U)
+#define FLASH_NMPA_LDO_AO_ADDRS                (FLASH_NMPA_BASE + 0x0F4U) // N4M (0x3FCF4U) / N4S (0x9FCF4U)
 #define FLASH_NMPA_LDO_AO_DSLP_TRIM_VALID_MASK (0x100U)
 #define FLASH_NMPA_LDO_AO_DSLP_TRIM_MASK       (0x3E00U)
 #define FLASH_NMPA_LDO_AO_DSLP_TRIM_SHIFT      (9U)
@@ -782,6 +843,7 @@ static uint32_t lf_set_ldo_ao_ldo_mem_voltage(uint32_t p_lp_mode, uint32_t p_dcd
             {
                 /* Apply settings coming from Flash */
                 lv_v_ldo_pmu = (ldo_ao_trim & FLASH_NMPA_LDO_AO_DSLP_TRIM_MASK) >> FLASH_NMPA_LDO_AO_DSLP_TRIM_SHIFT;
+                assert(lv_v_ldo_pmu >= 2UL);
                 lv_v_ldo_pmu_boost = lv_v_ldo_pmu - 2UL; /* - 50 mV */
             }
             else
@@ -799,6 +861,7 @@ static uint32_t lf_set_ldo_ao_ldo_mem_voltage(uint32_t p_lp_mode, uint32_t p_dcd
             {
                 /* Apply settings coming from Flash */
                 lv_v_ldo_pmu = (ldo_ao_trim & FLASH_NMPA_LDO_AO_PDWN_TRIM_MASK) >> FLASH_NMPA_LDO_AO_PDWN_TRIM_SHIFT;
+                assert(lv_v_ldo_pmu >= 2UL);
                 lv_v_ldo_pmu_boost = lv_v_ldo_pmu - 2UL; /* - 50 mV */
             }
             else
@@ -816,6 +879,7 @@ static uint32_t lf_set_ldo_ao_ldo_mem_voltage(uint32_t p_lp_mode, uint32_t p_dcd
             {
                 /* Apply settings coming from Flash */
                 lv_v_ldo_pmu = (ldo_ao_trim & FLASH_NMPA_LDO_AO_DPDW_TRIM_MASK) >> FLASH_NMPA_LDO_AO_DPDW_TRIM_SHIFT;
+                assert(lv_v_ldo_pmu >= 2UL);
                 lv_v_ldo_pmu_boost = lv_v_ldo_pmu - 2UL; /* - 50 mV */
             }
             else
@@ -856,16 +920,17 @@ static uint32_t lf_set_ldo_ao_ldo_mem_voltage(uint32_t p_lp_mode, uint32_t p_dcd
 static uint32_t lf_wakeup_io_ctrl(uint32_t p_wakeup_io_ctrl)
 {
     uint32_t wake_up_type;
-    uint32_t misc_ctrl_reg;
+    uint32_t wakeup_io_ctrl_reg;
     uint8_t use_external_pullupdown = 0;
 
     /* Configure Pull up & Pull down based on the required wake-up edge */
     CLOCK_EnableClock(kCLOCK_Iocon);
 
-    misc_ctrl_reg = 0UL;
+    wakeup_io_ctrl_reg = 0UL;
 
     /* Wake-up I/O 0 */
-    wake_up_type            = (p_wakeup_io_ctrl & 0x3UL) >> LOWPOWER_WAKEUPIOSRC_PIO0_INDEX;
+    wake_up_type = (p_wakeup_io_ctrl & 0x3UL) >> LOWPOWER_WAKEUPIOSRC_PIO0_INDEX;
+    wakeup_io_ctrl_reg |= (wake_up_type << LOWPOWER_WAKEUPIOSRC_PIO0_INDEX);
     use_external_pullupdown = (uint8_t)((p_wakeup_io_ctrl & LOWPOWER_WAKEUPIO_PIO0_USEEXTERNALPULLUPDOWN_MASK) >>
                                         LOWPOWER_WAKEUPIO_PIO0_USEEXTERNALPULLUPDOWN_INDEX);
 
@@ -875,8 +940,8 @@ static uint32_t lf_wakeup_io_ctrl(uint32_t p_wakeup_io_ctrl)
         {
             /* Rising edge and both rising and falling edges */
             IOCON->PIO[1][1] = IOCON_PIO_DIGIMODE(1) | IOCON_PIO_MODE(1); /* Pull down */
-            misc_ctrl_reg |= LOWPOWER_WAKEUPIO_PIO0_PULLUPDOWN_MASK;
-            p_wakeup_io_ctrl &= ~LOWPOWER_WAKEUPIO_PIO0_PULLUPDOWN_MASK;
+            wakeup_io_ctrl_reg |=
+                ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLDOWN << LOWPOWER_WAKEUPIOSRC_PIO0MODE_INDEX);
         }
         else
         {
@@ -884,8 +949,8 @@ static uint32_t lf_wakeup_io_ctrl(uint32_t p_wakeup_io_ctrl)
             {
                 /* Falling edge only */
                 IOCON->PIO[1][1] = IOCON_PIO_DIGIMODE(1) | IOCON_PIO_MODE(2); /* Pull up */
-                misc_ctrl_reg &= ~LOWPOWER_WAKEUPIO_PIO0_PULLUPDOWN_MASK;
-                p_wakeup_io_ctrl |= LOWPOWER_WAKEUPIO_PIO0_PULLUPDOWN_MASK;
+                wakeup_io_ctrl_reg |=
+                    ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLUP << LOWPOWER_WAKEUPIOSRC_PIO0MODE_INDEX);
             }
             else
             {
@@ -893,25 +958,38 @@ static uint32_t lf_wakeup_io_ctrl(uint32_t p_wakeup_io_ctrl)
                 if ((p_wakeup_io_ctrl & LOWPOWER_WAKEUPIO_PIO0_DISABLEPULLUPDOWN_MASK) != 0UL)
                 {
                     /* Wake-up I/O is configured as Plain Input */
-                    p_wakeup_io_ctrl &= ~LOWPOWER_WAKEUPIO_PIO0_PULLUPDOWN_MASK;
+                    // @TODO not used               p_wakeup_io_ctrl &= ~LOWPOWER_WAKEUPIO_PIO0_PULLUPDOWN_MASK;
+                    wakeup_io_ctrl_reg |=
+                        ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PLAIN << LOWPOWER_WAKEUPIOSRC_PIO0MODE_INDEX);
                 }
                 else
                 {
                     /* Wake-up I/O is configured as pull-up or pull-down */
-                    misc_ctrl_reg |= (~p_wakeup_io_ctrl) & LOWPOWER_WAKEUPIO_PIO0_PULLUPDOWN_MASK;
+                    // @TODO update for mask name
+                    if ((p_wakeup_io_ctrl & LOWPOWER_WAKEUPIO_PIO0_PULLUPDOWN_MASK) != 0UL)
+                    {
+                        /* Wake-up I/O is configured as pull-up */
+                        wakeup_io_ctrl_reg |=
+                            ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLUP << LOWPOWER_WAKEUPIOSRC_PIO0MODE_INDEX);
+                    }
+                    else
+                    {
+                        /* Wake-up I/O is configured as pull-down */
+                        wakeup_io_ctrl_reg |=
+                            ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLDOWN << LOWPOWER_WAKEUPIOSRC_PIO0MODE_INDEX);
+                    }
                 }
             }
         }
     }
     else
     {
-        /* MISCCTRL[8]:WAKEUPIOCTRL[8]:00 -no pullup,pulldown, 10 - pulldown, 01 - pullup, 11 - reserved */
-        p_wakeup_io_ctrl &= ~LOWPOWER_WAKEUPIO_PIO0_PULLUPDOWN_MASK;
-        misc_ctrl_reg &= ~LOWPOWER_WAKEUPIO_PIO0_PULLUPDOWN_MASK;
+        wakeup_io_ctrl_reg |= ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PLAIN << LOWPOWER_WAKEUPIOSRC_PIO0MODE_INDEX);
     }
 
     /* Wake-up I/O 1 */
-    wake_up_type            = (p_wakeup_io_ctrl & 0xCUL) >> LOWPOWER_WAKEUPIOSRC_PIO1_INDEX;
+    wake_up_type = (p_wakeup_io_ctrl & 0xCUL) >> LOWPOWER_WAKEUPIOSRC_PIO1_INDEX;
+    wakeup_io_ctrl_reg |= (wake_up_type << LOWPOWER_WAKEUPIOSRC_PIO1_INDEX);
     use_external_pullupdown = (uint8_t)((p_wakeup_io_ctrl & LOWPOWER_WAKEUPIO_PIO1_USEEXTERNALPULLUPDOWN_MASK) >>
                                         LOWPOWER_WAKEUPIO_PIO1_USEEXTERNALPULLUPDOWN_INDEX);
 
@@ -921,8 +999,8 @@ static uint32_t lf_wakeup_io_ctrl(uint32_t p_wakeup_io_ctrl)
         {
             /* Rising edge  and both rising and falling edges */
             IOCON->PIO[0][28] = IOCON_PIO_DIGIMODE(1) | IOCON_PIO_MODE(1); /* Pull down */
-            misc_ctrl_reg |= LOWPOWER_WAKEUPIO_PIO1_PULLUPDOWN_MASK;
-            p_wakeup_io_ctrl &= ~LOWPOWER_WAKEUPIO_PIO1_PULLUPDOWN_MASK;
+            wakeup_io_ctrl_reg |=
+                ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLDOWN << LOWPOWER_WAKEUPIOSRC_PIO1MODE_INDEX);
         }
         else
         {
@@ -930,8 +1008,8 @@ static uint32_t lf_wakeup_io_ctrl(uint32_t p_wakeup_io_ctrl)
             {
                 /* Falling edge only */
                 IOCON->PIO[0][28] = IOCON_PIO_DIGIMODE(1) | IOCON_PIO_MODE(2); /* Pull up */
-                misc_ctrl_reg &= ~LOWPOWER_WAKEUPIO_PIO1_PULLUPDOWN_MASK;
-                p_wakeup_io_ctrl |= LOWPOWER_WAKEUPIO_PIO1_PULLUPDOWN_MASK;
+                wakeup_io_ctrl_reg |=
+                    ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLUP << LOWPOWER_WAKEUPIOSRC_PIO1MODE_INDEX);
             }
             else
             {
@@ -939,25 +1017,38 @@ static uint32_t lf_wakeup_io_ctrl(uint32_t p_wakeup_io_ctrl)
                 if ((p_wakeup_io_ctrl & LOWPOWER_WAKEUPIO_PIO1_DISABLEPULLUPDOWN_MASK) != 0UL)
                 {
                     /* Wake-up I/O is configured as Plain Input */
-                    p_wakeup_io_ctrl &= ~LOWPOWER_WAKEUPIO_PIO1_PULLUPDOWN_MASK;
+                    // @TODO not used                p_wakeup_io_ctrl &= ~LOWPOWER_WAKEUPIO_PIO1_PULLUPDOWN_MASK;
+                    wakeup_io_ctrl_reg |=
+                        ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PLAIN << LOWPOWER_WAKEUPIOSRC_PIO1MODE_INDEX);
                 }
                 else
                 {
                     /* Wake-up I/O is configured as pull-up or pull-down */
-                    misc_ctrl_reg |= (~p_wakeup_io_ctrl) & LOWPOWER_WAKEUPIO_PIO1_PULLUPDOWN_MASK;
+                    // @TODO update for mask name
+                    if ((p_wakeup_io_ctrl & LOWPOWER_WAKEUPIO_PIO1_PULLUPDOWN_MASK) != 0UL)
+                    {
+                        /* Wake-up I/O is configured as pull-up */
+                        wakeup_io_ctrl_reg |=
+                            ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLUP << LOWPOWER_WAKEUPIOSRC_PIO1MODE_INDEX);
+                    }
+                    else
+                    {
+                        /* Wake-up I/O is configured as pull-down */
+                        wakeup_io_ctrl_reg |=
+                            ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLDOWN << LOWPOWER_WAKEUPIOSRC_PIO1MODE_INDEX);
+                    }
                 }
             }
         }
     }
     else
     {
-        /* MISCCTRL[9]:WAKEUPIOCTRL[9]:00 -no pullup,pulldown, 10 - pulldown, 01 - pullup, 11 - reserved */
-        p_wakeup_io_ctrl &= ~LOWPOWER_WAKEUPIO_PIO1_PULLUPDOWN_MASK;
-        misc_ctrl_reg &= ~LOWPOWER_WAKEUPIO_PIO1_PULLUPDOWN_MASK;
+        wakeup_io_ctrl_reg |= ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PLAIN << LOWPOWER_WAKEUPIOSRC_PIO1MODE_INDEX);
     }
 
     /* Wake-up I/O 2 */
-    wake_up_type            = (p_wakeup_io_ctrl & 0x30UL) >> LOWPOWER_WAKEUPIOSRC_PIO2_INDEX;
+    wake_up_type = (p_wakeup_io_ctrl & 0x30UL) >> LOWPOWER_WAKEUPIOSRC_PIO2_INDEX;
+    wakeup_io_ctrl_reg |= (wake_up_type << LOWPOWER_WAKEUPIOSRC_PIO2_INDEX);
     use_external_pullupdown = (uint8_t)((p_wakeup_io_ctrl & LOWPOWER_WAKEUPIO_PIO2_USEEXTERNALPULLUPDOWN_MASK) >>
                                         LOWPOWER_WAKEUPIO_PIO2_USEEXTERNALPULLUPDOWN_INDEX);
 
@@ -967,8 +1058,8 @@ static uint32_t lf_wakeup_io_ctrl(uint32_t p_wakeup_io_ctrl)
         {
             /* Rising edge  and both rising and falling edges */
             IOCON->PIO[1][18] = IOCON_PIO_DIGIMODE(1) | IOCON_PIO_MODE(1); /* Pull down */
-            misc_ctrl_reg |= LOWPOWER_WAKEUPIO_PIO2_PULLUPDOWN_MASK;
-            p_wakeup_io_ctrl &= ~LOWPOWER_WAKEUPIO_PIO2_PULLUPDOWN_MASK;
+            wakeup_io_ctrl_reg |=
+                ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLDOWN << LOWPOWER_WAKEUPIOSRC_PIO2MODE_INDEX);
         }
         else
         {
@@ -976,8 +1067,8 @@ static uint32_t lf_wakeup_io_ctrl(uint32_t p_wakeup_io_ctrl)
             {
                 /* Falling edge only */
                 IOCON->PIO[1][18] = IOCON_PIO_DIGIMODE(1) | IOCON_PIO_MODE(2); /* Pull up */
-                misc_ctrl_reg &= ~LOWPOWER_WAKEUPIO_PIO2_PULLUPDOWN_MASK;
-                p_wakeup_io_ctrl |= LOWPOWER_WAKEUPIO_PIO2_PULLUPDOWN_MASK;
+                wakeup_io_ctrl_reg |=
+                    ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLUP << LOWPOWER_WAKEUPIOSRC_PIO2MODE_INDEX);
             }
             else
             {
@@ -985,25 +1076,38 @@ static uint32_t lf_wakeup_io_ctrl(uint32_t p_wakeup_io_ctrl)
                 if ((p_wakeup_io_ctrl & LOWPOWER_WAKEUPIO_PIO2_DISABLEPULLUPDOWN_MASK) != 0UL)
                 {
                     /* Wake-up I/O is configured as Plain Input */
-                    p_wakeup_io_ctrl &= ~LOWPOWER_WAKEUPIO_PIO2_PULLUPDOWN_MASK;
+                    // @TODO not used                p_wakeup_io_ctrl &= ~LOWPOWER_WAKEUPIO_PIO2_PULLUPDOWN_MASK;
+                    wakeup_io_ctrl_reg |=
+                        ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PLAIN << LOWPOWER_WAKEUPIOSRC_PIO2MODE_INDEX);
                 }
                 else
                 {
                     /* Wake-up I/O is configured as pull-up or pull-down */
-                    misc_ctrl_reg |= (~p_wakeup_io_ctrl) & LOWPOWER_WAKEUPIO_PIO2_PULLUPDOWN_MASK;
+                    // @TODO update for mask name
+                    if ((p_wakeup_io_ctrl & LOWPOWER_WAKEUPIO_PIO2_PULLUPDOWN_MASK) != 0UL)
+                    {
+                        /* Wake-up I/O is configured as pull-up */
+                        wakeup_io_ctrl_reg |=
+                            ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLUP << LOWPOWER_WAKEUPIOSRC_PIO2MODE_INDEX);
+                    }
+                    else
+                    {
+                        /* Wake-up I/O is configured as pull-down */
+                        wakeup_io_ctrl_reg |=
+                            ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLDOWN << LOWPOWER_WAKEUPIOSRC_PIO2MODE_INDEX);
+                    }
                 }
             }
         }
     }
     else
     {
-        /* MISCCTRL[10]:WAKEUPIOCTRL[10]:00 -no pullup,pulldown, 10 - pulldown, 01 - pullup, 11 - reserved */
-        p_wakeup_io_ctrl &= ~LOWPOWER_WAKEUPIO_PIO2_PULLUPDOWN_MASK;
-        misc_ctrl_reg &= ~LOWPOWER_WAKEUPIO_PIO2_PULLUPDOWN_MASK;
+        wakeup_io_ctrl_reg |= ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PLAIN << LOWPOWER_WAKEUPIOSRC_PIO2MODE_INDEX);
     }
 
     /* Wake-up I/O 3 */
-    wake_up_type            = (p_wakeup_io_ctrl & 0xC0UL) >> LOWPOWER_WAKEUPIOSRC_PIO3_INDEX;
+    wake_up_type = (p_wakeup_io_ctrl & 0xC0UL) >> LOWPOWER_WAKEUPIOSRC_PIO3_INDEX;
+    wakeup_io_ctrl_reg |= (wake_up_type << LOWPOWER_WAKEUPIOSRC_PIO3_INDEX);
     use_external_pullupdown = (uint8_t)((p_wakeup_io_ctrl & LOWPOWER_WAKEUPIO_PIO3_USEEXTERNALPULLUPDOWN_MASK) >>
                                         LOWPOWER_WAKEUPIO_PIO3_USEEXTERNALPULLUPDOWN_INDEX);
 
@@ -1013,8 +1117,8 @@ static uint32_t lf_wakeup_io_ctrl(uint32_t p_wakeup_io_ctrl)
         {
             /* Rising edge  and both rising and falling edges */
             IOCON->PIO[1][30] = IOCON_PIO_DIGIMODE(1) | IOCON_PIO_MODE(1); /* Pull down */
-            misc_ctrl_reg |= LOWPOWER_WAKEUPIO_PIO3_PULLUPDOWN_MASK;
-            p_wakeup_io_ctrl &= ~LOWPOWER_WAKEUPIO_PIO3_PULLUPDOWN_MASK;
+            wakeup_io_ctrl_reg |=
+                ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLDOWN << LOWPOWER_WAKEUPIOSRC_PIO3MODE_INDEX);
         }
         else
         {
@@ -1022,8 +1126,8 @@ static uint32_t lf_wakeup_io_ctrl(uint32_t p_wakeup_io_ctrl)
             {
                 /* Falling edge only */
                 IOCON->PIO[1][30] = IOCON_PIO_DIGIMODE(1) | IOCON_PIO_MODE(2); /* Pull up */
-                misc_ctrl_reg &= ~LOWPOWER_WAKEUPIO_PIO3_PULLUPDOWN_MASK;
-                p_wakeup_io_ctrl |= LOWPOWER_WAKEUPIO_PIO3_PULLUPDOWN_MASK;
+                wakeup_io_ctrl_reg |=
+                    ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLUP << LOWPOWER_WAKEUPIOSRC_PIO3MODE_INDEX);
             }
             else
             {
@@ -1031,32 +1135,36 @@ static uint32_t lf_wakeup_io_ctrl(uint32_t p_wakeup_io_ctrl)
                 if ((p_wakeup_io_ctrl & LOWPOWER_WAKEUPIO_PIO3_DISABLEPULLUPDOWN_MASK) != 0UL)
                 {
                     /* Wake-up I/O is configured as Plain Input */
-                    p_wakeup_io_ctrl &= ~LOWPOWER_WAKEUPIO_PIO3_PULLUPDOWN_MASK;
+                    // @TODO not used                p_wakeup_io_ctrl &= ~LOWPOWER_WAKEUPIO_PIO3_PULLUPDOWN_MASK;
+                    wakeup_io_ctrl_reg |=
+                        ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PLAIN << LOWPOWER_WAKEUPIOSRC_PIO3MODE_INDEX);
                 }
                 else
                 {
                     /* Wake-up I/O is configured as pull-up or pull-down */
-                    misc_ctrl_reg |= (~p_wakeup_io_ctrl) & LOWPOWER_WAKEUPIO_PIO3_PULLUPDOWN_MASK;
+                    // @TODO update for mask name
+                    if ((p_wakeup_io_ctrl & LOWPOWER_WAKEUPIO_PIO3_PULLUPDOWN_MASK) != 0UL)
+                    {
+                        /* Wake-up I/O is configured as pull-up */
+                        wakeup_io_ctrl_reg |=
+                            ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLUP << LOWPOWER_WAKEUPIOSRC_PIO3MODE_INDEX);
+                    }
+                    else
+                    {
+                        /* Wake-up I/O is configured as pull-down */
+                        wakeup_io_ctrl_reg |=
+                            ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PULLDOWN << LOWPOWER_WAKEUPIOSRC_PIO3MODE_INDEX);
+                    }
                 }
             }
         }
     }
     else
     {
-        /* MISCCTRL[11]:WAKEUPIOCTRL[11]:00 -no pullup,pulldown, 10 - pulldown, 01 - pullup, 11 - reserved */
-        p_wakeup_io_ctrl &= ~LOWPOWER_WAKEUPIO_PIO3_PULLUPDOWN_MASK;
-        misc_ctrl_reg &= ~LOWPOWER_WAKEUPIO_PIO3_PULLUPDOWN_MASK;
+        wakeup_io_ctrl_reg |= ((uint32_t)LOWPOWER_WAKEUPIOSRC_IO_MODE_PLAIN << LOWPOWER_WAKEUPIOSRC_PIO3MODE_INDEX);
     }
 
-    PMC->MISCCTRL     = (PMC->MISCCTRL & 0xFFFFF0FFUL) | misc_ctrl_reg;
-    PMC->WAKEUPIOCTRL = p_wakeup_io_ctrl & 0xFFFUL;
-
-    /*
-     * Defined according to :
-     * - LOWPOWER_WAKEUPIOSRC_<DISABLE,RISING,FALLING,RISING_FALLING> in fsl_power.h
-     * - LOWPOWER_WAKEUPIO_PIO0_PULLUPDOWN_<...> in fsl_power.h
-     */
-    return (p_wakeup_io_ctrl & 0xFFFUL);
+    return (wakeup_io_ctrl_reg);
 }
 
 /**
@@ -1066,6 +1174,8 @@ static uint32_t lf_wakeup_io_ctrl(uint32_t p_wakeup_io_ctrl)
  */
 static uint8_t CLOCK_u8OscCapConvert(uint8_t u8OscCap, uint8_t u8CapBankDiscontinuity)
 {
+    uint16_t uint16Tmp;
+
     /* Compensate for discontinuity in the capacitor banks */
     if (u8OscCap < 64U)
     {
@@ -1080,9 +1190,11 @@ static uint8_t CLOCK_u8OscCapConvert(uint8_t u8OscCap, uint8_t u8CapBankDisconti
     }
     else
     {
+        assert(u8CapBankDiscontinuity <= 127U);
         if (u8OscCap <= (127U - u8CapBankDiscontinuity))
         {
-            u8OscCap += u8CapBankDiscontinuity;
+            uint16Tmp = u8OscCap + u8CapBankDiscontinuity;
+            u8OscCap = (uint8_t)(uint16Tmp & 0xFFU);
         }
         else
         {
@@ -1188,13 +1300,12 @@ static void lowpower_set_system_voltage(uint32_t system_voltage_mv)
  */
 static void lowpower_set_dcdc_power_profile(lowpower_dcdc_power_profile_enum dcdc_power_profile)
 {
-#define FLASH_NMPA_BASE                              (0x9FC00u)
-#define FLASH_NMPA_DCDC_POWER_PROFILE_LOW_0_ADDRS    (FLASH_NMPA_BASE + 0xE0U) // (0x9FCE0U)
-#define FLASH_NMPA_DCDC_POWER_PROFILE_LOW_1_ADDRS    (FLASH_NMPA_BASE + 0xE4U) // (0x9FCE4U)
-#define FLASH_NMPA_DCDC_POWER_PROFILE_MEDIUM_0_ADDRS (FLASH_NMPA_BASE + 0xE8U) // (0x9FCE8U)
-#define FLASH_NMPA_DCDC_POWER_PROFILE_MEDIUM_1_ADDRS (FLASH_NMPA_BASE + 0xECU) // (0x9FCECU)
-#define FLASH_NMPA_DCDC_POWER_PROFILE_HIGH_0_ADDRS   (FLASH_NMPA_BASE + 0xD8U) // (0x9FCD8U)
-#define FLASH_NMPA_DCDC_POWER_PROFILE_HIGH_1_ADDRS   (FLASH_NMPA_BASE + 0xDCU) // (0x9FCDCU)
+#define FLASH_NMPA_DCDC_POWER_PROFILE_LOW_0_ADDRS    (FLASH_NMPA_BASE + 0xE0U)
+#define FLASH_NMPA_DCDC_POWER_PROFILE_LOW_1_ADDRS    (FLASH_NMPA_BASE + 0xE4U)
+#define FLASH_NMPA_DCDC_POWER_PROFILE_MEDIUM_0_ADDRS (FLASH_NMPA_BASE + 0xE8U)
+#define FLASH_NMPA_DCDC_POWER_PROFILE_MEDIUM_1_ADDRS (FLASH_NMPA_BASE + 0xECU)
+#define FLASH_NMPA_DCDC_POWER_PROFILE_HIGH_0_ADDRS   (FLASH_NMPA_BASE + 0xD8U)
+#define FLASH_NMPA_DCDC_POWER_PROFILE_HIGH_1_ADDRS   (FLASH_NMPA_BASE + 0xDCU)
 
     const uint32_t PMC_DCDC0_DEFAULT = 0x010C4E68;
     const uint32_t PMC_DCDC1_DEFAULT = 0x01803A98;
@@ -1494,6 +1605,7 @@ void POWER_Xtal16mhzCapabankTrim(int32_t pi32_16MfXtalIecLoadpF_x100,
     uint8_t u8XOCapInCtrl, u8XOCapOutCtrl;
     uint32_t u32RegVal;
     int32_t i32Tmp;
+    int64_t i64Tmp;
 
     /* Enable and set LDO, if not already done */
     POWER_SetXtal16mhzLdo();
@@ -1524,14 +1636,27 @@ void POWER_Xtal16mhzCapabankTrim(int32_t pi32_16MfXtalIecLoadpF_x100,
         u8XOSlave = 0;
     }
     /* In & out load cap calculation with derating */
-    iXOCapInpF_x100 = 2 * pi32_16MfXtalIecLoadpF_x100 - pi32_16MfXtalNPcbParCappF_x100 +
-                      39 * ((int32_t)XO_SLAVE_EN - (int32_t)u8XOSlave) - 15;
-    iXOCapOutpF_x100 = 2 * pi32_16MfXtalIecLoadpF_x100 - pi32_16MfXtalPPcbParCappF_x100 - 21;
+    i64Tmp = 2 * (int64_t)pi32_16MfXtalIecLoadpF_x100 - (int64_t)pi32_16MfXtalNPcbParCappF_x100 +
+             39 * ((int64_t)XO_SLAVE_EN - (int64_t)u8XOSlave) - 15;
+    assert((i64Tmp <= INT32_MAX) && (i64Tmp >= INT32_MIN));
+    iXOCapInpF_x100 = (int32_t)i64Tmp;
+    i64Tmp = 2 * (int64_t)pi32_16MfXtalIecLoadpF_x100 - (int64_t)pi32_16MfXtalPPcbParCappF_x100 - 21;
+    assert((i64Tmp <= INT32_MAX) && (i64Tmp >= INT32_MIN));    
+    iXOCapOutpF_x100 = (int32_t)i64Tmp;
+
     /* In & out XO_OSC_CAP_Code_CTRL calculation, with rounding */
+    assert(INT32_MULTIPLY_OVERFLOW(iXOCapInpF_x100, iaXin_x4));
+    assert(!INT32_ADD_OVERFLOW(iXOCapInpF_x100 * iaXin_x4, ibXin * 400));
     i32Tmp         = ((iXOCapInpF_x100 * iaXin_x4 + ibXin * 400) + 200) / 400;
+    assert((i32Tmp >= 0) && (i32Tmp <= UINT8_MAX));
     u8XOCapInCtrl  = (uint8_t)i32Tmp;
+
+    assert(!INT32_MULTIPLY_OVERFLOW(iXOCapOutpF_x100, iaXout_x4));
+    assert(!INT32_ADD_OVERFLOW(iXOCapOutpF_x100 * iaXout_x4, ibXout * 400));
     i32Tmp         = ((iXOCapOutpF_x100 * iaXout_x4 + ibXout * 400) + 200) / 400;
+    assert((i32Tmp >= 0) && (i32Tmp <= UINT8_MAX));
     u8XOCapOutCtrl = (uint8_t)i32Tmp;
+
     /* Read register and clear fields to be written */
     u32RegVal = ANACTRL->XO32M_CTRL;
     u32RegVal &= ~(ANACTRL_XO32M_CTRL_OSC_CAP_IN_MASK | ANACTRL_XO32M_CTRL_OSC_CAP_OUT_MASK);
@@ -1559,6 +1684,7 @@ void POWER_Xtal32khzCapabankTrim(int32_t pi32_32kfXtalIecLoadpF_x100,
     uint8_t u8XOCapInCtrl, u8XOCapOutCtrl;
     uint32_t u32RegVal;
     int32_t i32Tmp;
+    int64_t i64Tmp;
     /* Get Cal values from Flash */
     u32XOTrimValue = GET_32KXO_TRIM();
     /* check validity and apply */
@@ -1584,13 +1710,24 @@ void POWER_Xtal32khzCapabankTrim(int32_t pi32_32kfXtalIecLoadpF_x100,
     }
 
     /* In & out load cap calculation with derating */
-    iXOCapInpF_x100  = 2 * pi32_32kfXtalIecLoadpF_x100 - pi32_32kfXtalNPcbParCappF_x100 - 130;
-    iXOCapOutpF_x100 = 2 * pi32_32kfXtalIecLoadpF_x100 - pi32_32kfXtalPPcbParCappF_x100 - 41;
+    i64Tmp = 2 * (int64_t)pi32_32kfXtalIecLoadpF_x100 - (int64_t)pi32_32kfXtalNPcbParCappF_x100 - 130;
+    assert((i64Tmp <= INT32_MAX) && (i64Tmp >= INT32_MIN));
+    iXOCapInpF_x100  = (int32_t)i64Tmp;
+    i64Tmp = 2 * (int64_t)pi32_32kfXtalIecLoadpF_x100 - (int64_t)pi32_32kfXtalPPcbParCappF_x100 - 41;
+    assert((i64Tmp <= INT32_MAX) && (i64Tmp >= INT32_MIN));
+    iXOCapOutpF_x100 = (int32_t)i64Tmp;
 
     /* In & out XO_OSC_CAP_Code_CTRL calculation, with rounding */
+    assert(!INT32_MULTIPLY_OVERFLOW(iXOCapInpF_x100, iaXin_x4));
+    assert(!INT32_ADD_OVERFLOW(iXOCapInpF_x100 * iaXin_x4, ibXin * 400));
     i32Tmp         = ((iXOCapInpF_x100 * iaXin_x4 + ibXin * 400) + 200) / 400;
+    assert((i32Tmp >= 0) && (i32Tmp <= UINT8_MAX));
     u8XOCapInCtrl  = (uint8_t)i32Tmp;
+
+    assert(!INT32_MULTIPLY_OVERFLOW(iXOCapOutpF_x100, iaXout_x4));
+    assert(!INT32_ADD_OVERFLOW(iXOCapOutpF_x100 * iaXout_x4, ibXout * 400));
     i32Tmp         = ((iXOCapOutpF_x100 * iaXout_x4 + ibXout * 400) + 200) / 400;
+    assert((i32Tmp >= 0) && (i32Tmp <= UINT8_MAX));
     u8XOCapOutCtrl = (uint8_t)i32Tmp;
 
     /* Read register and clear fields to be written */
@@ -1638,6 +1775,70 @@ void POWER_SetXtal16mhzLdo(void)
     /* Enable LDO XO32M */
     PMC->PDRUNCFGCLR0 = PMC_PDRUNCFG0_PDEN_LDOXO32M_MASK;
 }
+
+/*!
+ * @brief set BOD VBAT level.
+ *
+ * @param level BOD detect level
+ * @param hyst BoD Hysteresis control
+ * @param enBodVbatReset VBAT brown out detect reset
+ */
+void POWER_SetBodVbatLevel(power_bod_vbat_level_t level, power_bod_hyst_t hyst, bool enBodVbatReset)
+{
+    uint32_t pmc_reset_ctrl;
+    /* BOD VBAT disable reset */
+    pmc_reset_ctrl =
+        PMC->RESETCTRL & (~(PMC_RESETCTRL_BODVBATRESETENA_SECURE_MASK | PMC_RESETCTRL_BODVBATRESETENA_SECURE_DP_MASK));
+    pmc_reset_ctrl |= (0x2UL << PMC_RESETCTRL_BODVBATRESETENA_SECURE_SHIFT) |
+                      (0x2UL << PMC_RESETCTRL_BODVBATRESETENA_SECURE_DP_SHIFT);
+
+    PMC->RESETCTRL = pmc_reset_ctrl;
+
+    PMC->BODVBAT = (PMC->BODVBAT & (~(PMC_BODVBAT_TRIGLVL_MASK | PMC_BODVBAT_HYST_MASK))) | PMC_BODVBAT_TRIGLVL(level) |
+                   PMC_BODVBAT_HYST(hyst);
+
+    /* BOD VBAT enable reset */
+    if (enBodVbatReset)
+    {
+        pmc_reset_ctrl &= (~(PMC_RESETCTRL_BODVBATRESETENA_SECURE_MASK | PMC_RESETCTRL_BODVBATRESETENA_SECURE_DP_MASK));
+        pmc_reset_ctrl |= (0x1UL << PMC_RESETCTRL_BODVBATRESETENA_SECURE_SHIFT) |
+                          (0x1UL << PMC_RESETCTRL_BODVBATRESETENA_SECURE_DP_SHIFT);
+        PMC->RESETCTRL = pmc_reset_ctrl;
+    }
+}
+
+#if defined(PMC_BODCORE_TRIGLVL_MASK)
+/*!
+ * @brief set BOD core level.
+ *
+ * @param level BOD detect level
+ * @param hyst BoD Hysteresis control
+ * @param enBodCoreReset core brown out detect reset
+ */
+void POWER_SetBodCoreLevel(power_bod_core_level_t level, power_bod_hyst_t hyst, bool enBodCoreReset)
+{
+    uint32_t pmc_reset_ctrl;
+    /* BOD CORE disable reset */
+    pmc_reset_ctrl =
+        PMC->RESETCTRL & (~(PMC_RESETCTRL_BODCORERESETENA_SECURE_MASK | PMC_RESETCTRL_BODCORERESETENA_SECURE_DP_MASK));
+    pmc_reset_ctrl |=
+        (0x2 << PMC_RESETCTRL_BODCORERESETENA_SECURE_SHIFT) | (0x2 << PMC_RESETCTRL_BODCORERESETENA_SECURE_DP_SHIFT);
+
+    PMC->RESETCTRL = pmc_reset_ctrl;
+
+    PMC->BODCORE = (PMC->BODCORE & (~(PMC_BODCORE_TRIGLVL_MASK | PMC_BODCORE_HYST_MASK))) | PMC_BODCORE_TRIGLVL(level) |
+                   PMC_BODCORE_HYST(hyst);
+
+    /* BOD CORE enable reset */
+    if (enBodCoreReset == 1)
+    {
+        pmc_reset_ctrl &= (~(PMC_RESETCTRL_BODCORERESETENA_SECURE_MASK | PMC_RESETCTRL_BODCORERESETENA_SECURE_DP_MASK));
+        pmc_reset_ctrl |= (0x1 << PMC_RESETCTRL_BODCORERESETENA_SECURE_SHIFT) |
+                          (0x1 << PMC_RESETCTRL_BODCORERESETENA_SECURE_DP_SHIFT);
+        PMC->RESETCTRL = pmc_reset_ctrl;
+    }
+}
+#endif
 
 /**
  * @brief   Return some key information related to the device reset causes / wake-up sources, for all power modes.

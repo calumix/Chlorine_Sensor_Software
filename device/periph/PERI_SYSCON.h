@@ -1,42 +1,30 @@
 /*
 ** ###################################################################
-**     Processors:          LPC5526JBD100
-**                          LPC5526JBD64
-**                          LPC5526JEV98
-**                          LPC5528JBD100
-**                          LPC5528JBD64
-**                          LPC5528JEV59
-**                          LPC5528JEV98
-**                          LPC55S26JBD100
-**                          LPC55S26JBD64
-**                          LPC55S26JEV98
-**                          LPC55S28JBD100
-**                          LPC55S28JBD64
-**                          LPC55S28JEV59
-**                          LPC55S28JEV98
-**                          LPC55S66JBD100_cm33_core0
-**                          LPC55S66JBD100_cm33_core1
-**                          LPC55S66JBD64_cm33_core0
-**                          LPC55S66JBD64_cm33_core1
-**                          LPC55S66JEV98_cm33_core0
-**                          LPC55S66JEV98_cm33_core1
-**                          LPC55S69JBD100_cm33_core0
-**                          LPC55S69JBD100_cm33_core1
-**                          LPC55S69JBD64_cm33_core0
-**                          LPC55S69JBD64_cm33_core1
-**                          LPC55S69JEV59_cm33_core0
-**                          LPC55S69JEV59_cm33_core1
-**                          LPC55S69JEV98_cm33_core0
-**                          LPC55S69JEV98_cm33_core1
+**     Processors:          LPC5512JBD100
+**                          LPC5512JBD64
+**                          LPC5514JBD100
+**                          LPC5514JBD64
+**                          LPC5514JEV59
+**                          LPC5516JBD100
+**                          LPC5516JBD64
+**                          LPC5516JEV59
+**                          LPC5516JEV98
+**                          LPC55S14JBD100
+**                          LPC55S14JBD64
+**                          LPC55S14JEV59
+**                          LPC55S16JBD100
+**                          LPC55S16JBD64
+**                          LPC55S16JEV59
+**                          LPC55S16JEV98
 **
-**     Version:             rev. 1.1, 2019-05-16
-**     Build:               b240704
+**     Version:             rev. 2.0, 2024-10-29
+**     Build:               b250520
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for SYSCON
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -45,40 +33,37 @@
 **     Revisions:
 **     - rev. 1.0 (2018-08-22)
 **         Initial version based on v0.2UM
-**     - rev. 1.1 (2019-05-16)
-**         Initial A1 version based on v1.3UM
+**     - rev. 1.1 (2019-12-03)
+**         Initial version based on v0.6UM
+**     - rev. 2.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
 **
 ** ###################################################################
 */
 
 /*!
- * @file SYSCON.h
- * @version 1.1
- * @date 2019-05-16
+ * @file PERI_SYSCON.h
+ * @version 2.0
+ * @date 2024-10-29
  * @brief CMSIS Peripheral Access Layer for SYSCON
  *
  * CMSIS Peripheral Access Layer for SYSCON
  */
 
-#if !defined(SYSCON_H_)
-#define SYSCON_H_                                /**< Symbol preventing repeated inclusion */
+#if !defined(PERI_SYSCON_H_)
+#define PERI_SYSCON_H_                           /**< Symbol preventing repeated inclusion */
 
-#if (defined(CPU_LPC5526JBD100) || defined(CPU_LPC5526JBD64) || defined(CPU_LPC5526JEV98))
-#include "LPC5526_COMMON.h"
-#elif (defined(CPU_LPC5528JBD100) || defined(CPU_LPC5528JBD64) || defined(CPU_LPC5528JEV59) || defined(CPU_LPC5528JEV98))
-#include "LPC5528_COMMON.h"
-#elif (defined(CPU_LPC55S26JBD100) || defined(CPU_LPC55S26JBD64) || defined(CPU_LPC55S26JEV98))
-#include "LPC55S26_COMMON.h"
-#elif (defined(CPU_LPC55S28JBD100) || defined(CPU_LPC55S28JBD64) || defined(CPU_LPC55S28JEV59) || defined(CPU_LPC55S28JEV98))
-#include "LPC55S28_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core0) || defined(CPU_LPC55S66JBD64_cm33_core0) || defined(CPU_LPC55S66JEV98_cm33_core0))
-#include "LPC55S66_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core1) || defined(CPU_LPC55S66JBD64_cm33_core1) || defined(CPU_LPC55S66JEV98_cm33_core1))
-#include "LPC55S66_cm33_core1_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core0) || defined(CPU_LPC55S69JBD64_cm33_core0) || defined(CPU_LPC55S69JEV59_cm33_core0) || defined(CPU_LPC55S69JEV98_cm33_core0))
-#include "LPC55S69_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core1) || defined(CPU_LPC55S69JBD64_cm33_core1) || defined(CPU_LPC55S69JEV59_cm33_core1) || defined(CPU_LPC55S69JEV98_cm33_core1))
-#include "LPC55S69_cm33_core1_COMMON.h"
+#if (defined(CPU_LPC5512JBD100) || defined(CPU_LPC5512JBD64))
+#include "LPC5512_COMMON.h"
+#elif (defined(CPU_LPC5514JBD100) || defined(CPU_LPC5514JBD64) || defined(CPU_LPC5514JEV59))
+#include "LPC5514_COMMON.h"
+#elif (defined(CPU_LPC5516JBD100) || defined(CPU_LPC5516JBD64) || defined(CPU_LPC5516JEV59) || defined(CPU_LPC5516JEV98))
+#include "LPC5516_COMMON.h"
+#elif (defined(CPU_LPC55S14JBD100) || defined(CPU_LPC55S14JBD64) || defined(CPU_LPC55S14JEV59))
+#include "LPC55S14_COMMON.h"
+#elif (defined(CPU_LPC55S16JBD100) || defined(CPU_LPC55S16JBD64) || defined(CPU_LPC55S16JEV59) || defined(CPU_LPC55S16JEV98))
+#include "LPC55S16_COMMON.h"
 #else
   #error "No valid CPU defined!"
 #endif
@@ -128,7 +113,7 @@
 #define SYSCON_AHBCLKCTRL_AHBCLKCTRLX_AHBCLKCTRLX_COUNT 3u
 #define SYSCON_AHBCLKCTRLSET_COUNT                3u
 #define SYSCON_AHBCLKCTRLCLR_COUNT                3u
-#define SYSCON_SYSTICKCLKSEL_SYSTICKCLKSELX_SYSTICKCLKSELX_COUNT 2u
+#define SYSCON_SYSTICKCLKSEL_SYSTICKCLKSELX_SYSTICKCLKSELX_COUNT 1u
 #define SYSCON_CTIMERCLKSEL_CTIMERCLKSELX_CTIMERCLKSELX_COUNT 5u
 #define SYSCON_FCCLKSEL_FCCLKSELX_FCCLKSELX_COUNT 8u
 #define SYSCON_FLEXFRGCTRL_FLEXFRGXCTRL_FLEXFRGXCTRL_COUNT 8u
@@ -141,8 +126,7 @@ typedef struct {
        uint8_t RESERVED_1[36];
   __IO uint32_t CPU0STCKCAL;                       /**< System tick calibration for secure part of CPU0, offset: 0x38 */
   __IO uint32_t CPU0NSTCKCAL;                      /**< System tick calibration for non-secure part of CPU0, offset: 0x3C */
-  __IO uint32_t CPU1STCKCAL;                       /**< System tick calibration for CPU1, offset: 0x40 */
-       uint8_t RESERVED_2[4];
+       uint8_t RESERVED_2[8];
   __IO uint32_t NMISRC;                            /**< NMI Source Select, offset: 0x48 */
        uint8_t RESERVED_3[180];
   union {                                          /* offset: 0x100 */
@@ -174,12 +158,10 @@ typedef struct {
   __IO uint32_t AHBCLKCTRLCLR[SYSCON_AHBCLKCTRLCLR_COUNT]; /**< Peripheral reset control register, array offset: 0x240, array step: 0x4 */
        uint8_t RESERVED_10[20];
   union {                                          /* offset: 0x260 */
-    struct {                                         /* offset: 0x260 */
-      __IO uint32_t SYSTICKCLKSEL0;                    /**< System Tick Timer for CPU0 source select, offset: 0x260 */
-      __IO uint32_t SYSTICKCLKSEL1;                    /**< System Tick Timer for CPU1 source select, offset: 0x264, not available in all instances (available on 7 out of 21) */
-    } SYSTICKCLKSEL;
-    __IO uint32_t SYSTICKCLKSELX[SYSCON_SYSTICKCLKSEL_SYSTICKCLKSELX_SYSTICKCLKSELX_COUNT];   /**< Peripheral reset control register, array offset: 0x260, array step: 0x4, irregular array, not all indices are valid */
+    __IO uint32_t SYSTICKCLKSEL0;                    /**< System Tick Timer for CPU0 source select, offset: 0x260 */
+    __IO uint32_t SYSTICKCLKSELX[SYSCON_SYSTICKCLKSEL_SYSTICKCLKSELX_SYSTICKCLKSELX_COUNT];   /**< Peripheral reset control register, array offset: 0x260, array step: 0x4 */
   };
+       uint8_t RESERVED_11[4];
   __IO uint32_t TRACECLKSEL;                       /**< Trace clock source select, offset: 0x268 */
   union {                                          /* offset: 0x26C */
     struct {                                         /* offset: 0x26C */
@@ -194,13 +176,14 @@ typedef struct {
   __IO uint32_t MAINCLKSELA;                       /**< Main clock A source select, offset: 0x280 */
   __IO uint32_t MAINCLKSELB;                       /**< Main clock source select, offset: 0x284 */
   __IO uint32_t CLKOUTSEL;                         /**< CLKOUT clock source select, offset: 0x288 */
-       uint8_t RESERVED_11[4];
+       uint8_t RESERVED_12[4];
   __IO uint32_t PLL0CLKSEL;                        /**< PLL0 clock source select, offset: 0x290 */
   __IO uint32_t PLL1CLKSEL;                        /**< PLL1 clock source select, offset: 0x294 */
-       uint8_t RESERVED_12[12];
+       uint8_t RESERVED_13[8];
+  __IO uint32_t CANCLKSEL;                         /**< CAN clock source select, offset: 0x2A0 */
   __IO uint32_t ADCCLKSEL;                         /**< ADC clock source select, offset: 0x2A4 */
   __IO uint32_t USB0CLKSEL;                        /**< FS USB clock source select, offset: 0x2A8 */
-       uint8_t RESERVED_13[4];
+  __IO uint32_t CLK32KCLKSEL;                      /**< clock low speed source select for HS USB., offset: 0x2AC */
   union {                                          /* offset: 0x2B0 */
     struct {                                         /* offset: 0x2B0 */
       __IO uint32_t FCCLKSEL0;                         /**< Flexcomm Interface 0 clock source select for Fractional Rate Divider, offset: 0x2B0 */
@@ -219,13 +202,12 @@ typedef struct {
   __IO uint32_t MCLKCLKSEL;                        /**< MCLK clock source select, offset: 0x2E0 */
        uint8_t RESERVED_15[12];
   __IO uint32_t SCTCLKSEL;                         /**< SCTimer/PWM clock source select, offset: 0x2F0 */
-       uint8_t RESERVED_16[4];
-  __IO uint32_t SDIOCLKSEL;                        /**< SDIO clock source select, offset: 0x2F8 */
-       uint8_t RESERVED_17[4];
+       uint8_t RESERVED_16[12];
   __IO uint32_t SYSTICKCLKDIV0;                    /**< System Tick Timer divider for CPU0, offset: 0x300 */
-  __IO uint32_t SYSTICKCLKDIV1;                    /**< System Tick Timer divider for CPU1, offset: 0x304 */
+       uint8_t RESERVED_17[4];
   __IO uint32_t TRACECLKDIV;                       /**< TRACE clock divider, offset: 0x308 */
-       uint8_t RESERVED_18[20];
+  __IO uint32_t CANCLKDIV;                         /**< CAN clock divider, offset: 0x30C */
+       uint8_t RESERVED_18[16];
   union {                                          /* offset: 0x320 */
     struct {                                         /* offset: 0x320 */
       __IO uint32_t FLEXFRG0CTRL;                      /**< Fractional rate divider for flexcomm 0, offset: 0x320 */
@@ -246,66 +228,90 @@ typedef struct {
   __IO uint32_t WDTCLKDIV;                         /**< WDT clock divider, offset: 0x38C */
        uint8_t RESERVED_20[4];
   __IO uint32_t ADCCLKDIV;                         /**< ADC clock divider, offset: 0x394 */
-  __IO uint32_t USB0CLKDIV;                        /**< USB0 Clock divider, offset: 0x398 */
-       uint8_t RESERVED_21[16];
+  __IO uint32_t USB0CLKDIV;                        /**< USB0-FS Clock divider, offset: 0x398 */
+       uint8_t RESERVED_21[4];
+  __IO uint32_t FRO1MCLKDIV;                       /**< FRO1MHz Clock divider (FRO1M_divided), offset: 0x3A0 */
+       uint8_t RESERVED_22[8];
   __IO uint32_t MCLKDIV;                           /**< I2S MCLK clock divider, offset: 0x3AC */
-       uint8_t RESERVED_22[4];
-  __IO uint32_t SCTCLKDIV;                         /**< SCT/PWM clock divider, offset: 0x3B4 */
        uint8_t RESERVED_23[4];
-  __IO uint32_t SDIOCLKDIV;                        /**< SDIO clock divider, offset: 0x3BC */
-       uint8_t RESERVED_24[4];
+  __IO uint32_t SCTCLKDIV;                         /**< SCT/PWM clock divider, offset: 0x3B4 */
+       uint8_t RESERVED_24[12];
   __IO uint32_t PLL0CLKDIV;                        /**< PLL0 clock divider, offset: 0x3C4 */
        uint8_t RESERVED_25[52];
   __IO uint32_t CLOCKGENUPDATELOCKOUT;             /**< Control clock configuration registers access (like xxxDIV, xxxSEL), offset: 0x3FC */
   __IO uint32_t FMCCR;                             /**< FMC configuration register, offset: 0x400 */
        uint8_t RESERVED_26[8];
-  __IO uint32_t USB0NEEDCLKCTRL;                   /**< USB0 need clock control, offset: 0x40C */
-  __I  uint32_t USB0NEEDCLKSTAT;                   /**< USB0 need clock status, offset: 0x410 */
+  __IO uint32_t USB0NEEDCLKCTRL;                   /**< USB0-FS need clock control, offset: 0x40C */
+  __I  uint32_t USB0NEEDCLKSTAT;                   /**< USB0-FS need clock status, offset: 0x410 */
        uint8_t RESERVED_27[8];
   __O  uint32_t FMCFLUSH;                          /**< FMCflush control, offset: 0x41C */
   __IO uint32_t MCLKIO;                            /**< MCLK control, offset: 0x420 */
-  __IO uint32_t USB1NEEDCLKCTRL;                   /**< USB1 need clock control, offset: 0x424 */
-  __I  uint32_t USB1NEEDCLKSTAT;                   /**< USB1 need clock status, offset: 0x428 */
-       uint8_t RESERVED_28[52];
-  __IO uint32_t SDIOCLKCTRL;                       /**< SDIO CCLKIN phase and delay control, offset: 0x460 */
-       uint8_t RESERVED_29[252];
+  __IO uint32_t USB1NEEDCLKCTRL;                   /**< USB1-HS need clock control, offset: 0x424 */
+  __I  uint32_t USB1NEEDCLKSTAT;                   /**< USB1-HS need clock status, offset: 0x428 */
+       uint8_t RESERVED_28[20];
+  __IO uint32_t FLASHREMAP_SIZE;                   /**< This 32-bit register contains the size of the image to remap, in bytes. The 12 LSBs are ignored, so the size granularity is 4KB., offset: 0x440 */
+  __IO uint32_t FLASHREMAP_SIZE_DP;                /**< This 32-bit register is a duplicate of FLASHREMAPSIZE for increased security., offset: 0x444 */
+  __IO uint32_t FLASHREMAP_OFFSET;                 /**< This 32-bit register contains the offset by which the image is to be remapped. The 12 LSBs are ignored, so the remap granularity is 4KB., offset: 0x448 */
+  __IO uint32_t FLASHREMAP_OFFSET_DP;              /**< This 32-bit register is a duplicate of FLASHREMAPOFFSET for increased security., offset: 0x44C */
+       uint8_t RESERVED_29[12];
+  __IO uint32_t FLASHREMAP_LOCK;                   /**< Control write access to FLASHREMAP_SIZE and FLASHREMAP_OFFSET registers., offset: 0x45C */
+       uint8_t RESERVED_30[16];
+  __IO uint32_t CASPER_CTRL;                       /**< Control CASPER integration., offset: 0x470 */
+       uint8_t RESERVED_31[236];
   __IO uint32_t PLL1CTRL;                          /**< PLL1 550m control, offset: 0x560 */
   __I  uint32_t PLL1STAT;                          /**< PLL1 550m status, offset: 0x564 */
   __IO uint32_t PLL1NDEC;                          /**< PLL1 550m N divider, offset: 0x568 */
   __IO uint32_t PLL1MDEC;                          /**< PLL1 550m M divider, offset: 0x56C */
   __IO uint32_t PLL1PDEC;                          /**< PLL1 550m P divider, offset: 0x570 */
-       uint8_t RESERVED_30[12];
+       uint8_t RESERVED_32[12];
   __IO uint32_t PLL0CTRL;                          /**< PLL0 550m control, offset: 0x580 */
   __I  uint32_t PLL0STAT;                          /**< PLL0 550m status, offset: 0x584 */
   __IO uint32_t PLL0NDEC;                          /**< PLL0 550m N divider, offset: 0x588 */
   __IO uint32_t PLL0PDEC;                          /**< PLL0 550m P divider, offset: 0x58C */
   __IO uint32_t PLL0SSCG0;                         /**< PLL0 Spread Spectrum Wrapper control register 0, offset: 0x590 */
   __IO uint32_t PLL0SSCG1;                         /**< PLL0 Spread Spectrum Wrapper control register 1, offset: 0x594 */
-       uint8_t RESERVED_31[364];
+       uint8_t RESERVED_33[364];
   __IO uint32_t FUNCRETENTIONCTRL;                 /**< Functional retention control register, offset: 0x704 */
-       uint8_t RESERVED_32[248];
-  __IO uint32_t CPUCTRL;                           /**< CPU Control for multiple processors, offset: 0x800 */
-  __IO uint32_t CPBOOT;                            /**< Coprocessor Boot Address, offset: 0x804 */
-       uint8_t RESERVED_33[4];
+       uint8_t RESERVED_34[260];
   __I  uint32_t CPSTAT;                            /**< CPU Status, offset: 0x80C */
-       uint8_t RESERVED_34[520];
+       uint8_t RESERVED_35[272];
+  __IO uint32_t BOOT_SEED_REG0;                    /**< boot seed (256-bit random value), offset: 0x920 */
+  __IO uint32_t BOOT_SEED_REG1;                    /**< boot seed (256-bit random value), offset: 0x924 */
+  __IO uint32_t BOOT_SEED_REG2;                    /**< boot seed (256-bit random value), offset: 0x928 */
+  __IO uint32_t BOOT_SEED_REG3;                    /**< boot seed (256-bit random value), offset: 0x92C */
+  __IO uint32_t BOOT_SEED_REG4;                    /**< boot seed (256-bit random value), offset: 0x930 */
+  __IO uint32_t BOOT_SEED_REG5;                    /**< boot seed (256-bit random value), offset: 0x934 */
+  __IO uint32_t BOOT_SEED_REG6;                    /**< boot seed (256-bit random value), offset: 0x938 */
+  __IO uint32_t BOOT_SEED_REG7;                    /**< boot seed (256-bit random value), offset: 0x93C */
+  __IO uint32_t HMAC_REG0;                         /**< HMAC, offset: 0x940 */
+  __IO uint32_t HMAC_REG1;                         /**< HMAC, offset: 0x944 */
+  __IO uint32_t HMAC_REG2;                         /**< HMAC, offset: 0x948 */
+  __IO uint32_t HMAC_REG3;                         /**< HMAC, offset: 0x94C */
+  __IO uint32_t HMAC_REG4;                         /**< HMAC, offset: 0x950 */
+  __IO uint32_t HMAC_REG5;                         /**< HMAC, offset: 0x954 */
+  __IO uint32_t HMAC_REG6;                         /**< HMAC, offset: 0x958 */
+  __IO uint32_t HMAC_REG7;                         /**< HMAC, offset: 0x95C */
+  __IO uint32_t BOOT_LOCK;                         /**< Control write access to boot seed security registers., offset: 0x960 */
+       uint8_t RESERVED_36[180];
   __IO uint32_t CLOCK_CTRL;                        /**< Various system clock controls : Flash clock (48 MHz) control, clocks to Frequency Measures, offset: 0xA18 */
-       uint8_t RESERVED_35[244];
+       uint8_t RESERVED_37[244];
   __IO uint32_t COMP_INT_CTRL;                     /**< Comparator Interrupt control, offset: 0xB10 */
   __I  uint32_t COMP_INT_STATUS;                   /**< Comparator Interrupt status, offset: 0xB14 */
-       uint8_t RESERVED_36[748];
+       uint8_t RESERVED_38[748];
   __IO uint32_t AUTOCLKGATEOVERRIDE;               /**< Control automatic clock gating, offset: 0xE04 */
   __IO uint32_t GPIOPSYNC;                         /**< Enable bypass of the first stage of synchonization inside GPIO_INT module, offset: 0xE08 */
-       uint8_t RESERVED_37[404];
+       uint8_t RESERVED_39[380];
+  __IO uint32_t HASHRESTHWKEY;                     /**< Controls whether the HASH AES hardware secret key is restricted to use by secure code, offset: 0xF88 */
+       uint8_t RESERVED_40[20];
   __IO uint32_t DEBUG_LOCK_EN;                     /**< Control write access to security registers., offset: 0xFA0 */
-  __IO uint32_t DEBUG_FEATURES;                    /**< Cortex M33 (CPU0) and micro Cortex M33 (CPU1) debug features control., offset: 0xFA4 */
-  __IO uint32_t DEBUG_FEATURES_DP;                 /**< Cortex M33 (CPU0) and micro Cortex M33 (CPU1) debug features control DUPLICATE register., offset: 0xFA8 */
-       uint8_t RESERVED_38[16];
+  __IO uint32_t DEBUG_FEATURES;                    /**< Cortex debug features control., offset: 0xFA4 */
+  __IO uint32_t DEBUG_FEATURES_DP;                 /**< Cortex debug features control. (duplicate), offset: 0xFA8 */
+       uint8_t RESERVED_41[8];
+  __IO uint32_t SWD_ACCESS_CPU0;                   /**< This register is used by ROM during DEBUG authentication mechanism to enable debug access port for CPU0., offset: 0xFB4 */
+       uint8_t RESERVED_42[4];
   __O  uint32_t KEY_BLOCK;                         /**< block quiddikey/PUF all index., offset: 0xFBC */
   __IO uint32_t DEBUG_AUTH_BEACON;                 /**< Debug authentication BEACON register, offset: 0xFC0 */
-       uint8_t RESERVED_39[16];
-  __IO uint32_t CPUCFG;                            /**< CPUs configuration register, offset: 0xFD4, not available in all instances (available on 7 out of 21) */
-       uint8_t RESERVED_40[32];
+       uint8_t RESERVED_43[52];
   __I  uint32_t DEVICE_ID0;                        /**< Device ID, offset: 0xFF8 */
   __I  uint32_t DIEID;                             /**< Chip revision ID and Number, offset: 0xFFC */
 } SYSCON_Type;
@@ -346,50 +352,35 @@ typedef struct {
 /*! PRI_CPU0_SBUS - CPU0 S-AHB bus. */
 #define SYSCON_AHBMATPRIO_PRI_CPU0_SBUS(x)       (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBMATPRIO_PRI_CPU0_SBUS_SHIFT)) & SYSCON_AHBMATPRIO_PRI_CPU0_SBUS_MASK)
 
-#define SYSCON_AHBMATPRIO_PRI_CPU1_CBUS_MASK     (0x30U)
-#define SYSCON_AHBMATPRIO_PRI_CPU1_CBUS_SHIFT    (4U)
-/*! PRI_CPU1_CBUS - CPU1 C-AHB bus. */
-#define SYSCON_AHBMATPRIO_PRI_CPU1_CBUS(x)       (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBMATPRIO_PRI_CPU1_CBUS_SHIFT)) & SYSCON_AHBMATPRIO_PRI_CPU1_CBUS_MASK)
-
-#define SYSCON_AHBMATPRIO_PRI_CPU1_SBUS_MASK     (0xC0U)
-#define SYSCON_AHBMATPRIO_PRI_CPU1_SBUS_SHIFT    (6U)
-/*! PRI_CPU1_SBUS - CPU1 S-AHB bus. */
-#define SYSCON_AHBMATPRIO_PRI_CPU1_SBUS(x)       (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBMATPRIO_PRI_CPU1_SBUS_SHIFT)) & SYSCON_AHBMATPRIO_PRI_CPU1_SBUS_MASK)
-
-#define SYSCON_AHBMATPRIO_PRI_USB_FS_MASK        (0x300U)
-#define SYSCON_AHBMATPRIO_PRI_USB_FS_SHIFT       (8U)
-/*! PRI_USB_FS - USB-FS.(USB0) */
-#define SYSCON_AHBMATPRIO_PRI_USB_FS(x)          (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBMATPRIO_PRI_USB_FS_SHIFT)) & SYSCON_AHBMATPRIO_PRI_USB_FS_MASK)
-
-#define SYSCON_AHBMATPRIO_PRI_SDMA0_MASK         (0xC00U)
-#define SYSCON_AHBMATPRIO_PRI_SDMA0_SHIFT        (10U)
+#define SYSCON_AHBMATPRIO_PRI_SDMA0_MASK         (0x30U)
+#define SYSCON_AHBMATPRIO_PRI_SDMA0_SHIFT        (4U)
 /*! PRI_SDMA0 - DMA0 controller priority. */
 #define SYSCON_AHBMATPRIO_PRI_SDMA0(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBMATPRIO_PRI_SDMA0_SHIFT)) & SYSCON_AHBMATPRIO_PRI_SDMA0_MASK)
 
-#define SYSCON_AHBMATPRIO_PRI_SDIO_MASK          (0x30000U)
-#define SYSCON_AHBMATPRIO_PRI_SDIO_SHIFT         (16U)
-/*! PRI_SDIO - SDIO. */
-#define SYSCON_AHBMATPRIO_PRI_SDIO(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBMATPRIO_PRI_SDIO_SHIFT)) & SYSCON_AHBMATPRIO_PRI_SDIO_MASK)
+#define SYSCON_AHBMATPRIO_PRI_SDMA1_MASK         (0xC0U)
+#define SYSCON_AHBMATPRIO_PRI_SDMA1_SHIFT        (6U)
+/*! PRI_SDMA1 - DMA1 controller priority. */
+#define SYSCON_AHBMATPRIO_PRI_SDMA1(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBMATPRIO_PRI_SDMA1_SHIFT)) & SYSCON_AHBMATPRIO_PRI_SDMA1_MASK)
 
-#define SYSCON_AHBMATPRIO_PRI_PQ_MASK            (0xC0000U)
-#define SYSCON_AHBMATPRIO_PRI_PQ_SHIFT           (18U)
-/*! PRI_PQ - PQ (HW Accelerator). */
-#define SYSCON_AHBMATPRIO_PRI_PQ(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBMATPRIO_PRI_PQ_SHIFT)) & SYSCON_AHBMATPRIO_PRI_PQ_MASK)
+#define SYSCON_AHBMATPRIO_PRI_USB_FSD_MASK       (0x300U)
+#define SYSCON_AHBMATPRIO_PRI_USB_FSD_SHIFT      (8U)
+/*! PRI_USB_FSD - USB0-FS Device.(USB0) */
+#define SYSCON_AHBMATPRIO_PRI_USB_FSD(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBMATPRIO_PRI_USB_FSD_SHIFT)) & SYSCON_AHBMATPRIO_PRI_USB_FSD_MASK)
 
-#define SYSCON_AHBMATPRIO_PRI_HASH_AES_MASK      (0x300000U)
-#define SYSCON_AHBMATPRIO_PRI_HASH_AES_SHIFT     (20U)
+#define SYSCON_AHBMATPRIO_PRI_USB_FSH_MASK       (0xC00U)
+#define SYSCON_AHBMATPRIO_PRI_USB_FSH_SHIFT      (10U)
+/*! PRI_USB_FSH - USB0-FS host.(USB0) */
+#define SYSCON_AHBMATPRIO_PRI_USB_FSH(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBMATPRIO_PRI_USB_FSH_SHIFT)) & SYSCON_AHBMATPRIO_PRI_USB_FSH_MASK)
+
+#define SYSCON_AHBMATPRIO_PRI_HASH_AES_MASK      (0x30000U)
+#define SYSCON_AHBMATPRIO_PRI_HASH_AES_SHIFT     (16U)
 /*! PRI_HASH_AES - HASH_AES. */
 #define SYSCON_AHBMATPRIO_PRI_HASH_AES(x)        (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBMATPRIO_PRI_HASH_AES_SHIFT)) & SYSCON_AHBMATPRIO_PRI_HASH_AES_MASK)
 
-#define SYSCON_AHBMATPRIO_PRI_USB_HS_MASK        (0xC00000U)
-#define SYSCON_AHBMATPRIO_PRI_USB_HS_SHIFT       (22U)
-/*! PRI_USB_HS - USB-HS.(USB1) */
-#define SYSCON_AHBMATPRIO_PRI_USB_HS(x)          (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBMATPRIO_PRI_USB_HS_SHIFT)) & SYSCON_AHBMATPRIO_PRI_USB_HS_MASK)
-
-#define SYSCON_AHBMATPRIO_PRI_SDMA1_MASK         (0x3000000U)
-#define SYSCON_AHBMATPRIO_PRI_SDMA1_SHIFT        (24U)
-/*! PRI_SDMA1 - DMA1 controller priority. */
-#define SYSCON_AHBMATPRIO_PRI_SDMA1(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBMATPRIO_PRI_SDMA1_SHIFT)) & SYSCON_AHBMATPRIO_PRI_SDMA1_MASK)
+#define SYSCON_AHBMATPRIO_PRI_CANFD_MASK         (0xC0000U)
+#define SYSCON_AHBMATPRIO_PRI_CANFD_SHIFT        (18U)
+/*! PRI_CANFD - CANFD. */
+#define SYSCON_AHBMATPRIO_PRI_CANFD(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBMATPRIO_PRI_CANFD_SHIFT)) & SYSCON_AHBMATPRIO_PRI_CANFD_MASK)
 /*! @} */
 
 /*! @name CPU0STCKCAL - System tick calibration for secure part of CPU0 */
@@ -436,29 +427,6 @@ typedef struct {
 #define SYSCON_CPU0NSTCKCAL_NOREF(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_CPU0NSTCKCAL_NOREF_SHIFT)) & SYSCON_CPU0NSTCKCAL_NOREF_MASK)
 /*! @} */
 
-/*! @name CPU1STCKCAL - System tick calibration for CPU1 */
-/*! @{ */
-
-#define SYSCON_CPU1STCKCAL_TENMS_MASK            (0xFFFFFFU)
-#define SYSCON_CPU1STCKCAL_TENMS_SHIFT           (0U)
-/*! TENMS - Reload value for 10ms (100Hz) timing, subject to system clock skew errors. If the value
- *    reads as zero, the calibration value is not known.
- */
-#define SYSCON_CPU1STCKCAL_TENMS(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_CPU1STCKCAL_TENMS_SHIFT)) & SYSCON_CPU1STCKCAL_TENMS_MASK)
-
-#define SYSCON_CPU1STCKCAL_SKEW_MASK             (0x1000000U)
-#define SYSCON_CPU1STCKCAL_SKEW_SHIFT            (24U)
-/*! SKEW - Indicates whether the TENMS value is exact: 0 = TENMS value is exact; 1 = TENMS value is inexact, or not given. */
-#define SYSCON_CPU1STCKCAL_SKEW(x)               (((uint32_t)(((uint32_t)(x)) << SYSCON_CPU1STCKCAL_SKEW_SHIFT)) & SYSCON_CPU1STCKCAL_SKEW_MASK)
-
-#define SYSCON_CPU1STCKCAL_NOREF_MASK            (0x2000000U)
-#define SYSCON_CPU1STCKCAL_NOREF_SHIFT           (25U)
-/*! NOREF - Indicates whether the device provides a reference clock to the processor: 0 = reference
- *    clock provided; 1 = no reference clock provided.
- */
-#define SYSCON_CPU1STCKCAL_NOREF(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_CPU1STCKCAL_NOREF_SHIFT)) & SYSCON_CPU1STCKCAL_NOREF_MASK)
-/*! @} */
-
 /*! @name NMISRC - NMI Source Select */
 /*! @{ */
 
@@ -466,16 +434,6 @@ typedef struct {
 #define SYSCON_NMISRC_IRQCPU0_SHIFT              (0U)
 /*! IRQCPU0 - The IRQ number of the interrupt that acts as the Non-Maskable Interrupt (NMI) for the CPU0, if enabled by NMIENCPU0. */
 #define SYSCON_NMISRC_IRQCPU0(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_NMISRC_IRQCPU0_SHIFT)) & SYSCON_NMISRC_IRQCPU0_MASK)
-
-#define SYSCON_NMISRC_IRQCPU1_MASK               (0x3F00U)
-#define SYSCON_NMISRC_IRQCPU1_SHIFT              (8U)
-/*! IRQCPU1 - The IRQ number of the interrupt that acts as the Non-Maskable Interrupt (NMI) for the CPU1, if enabled by NMIENCPU1. */
-#define SYSCON_NMISRC_IRQCPU1(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_NMISRC_IRQCPU1_SHIFT)) & SYSCON_NMISRC_IRQCPU1_MASK)
-
-#define SYSCON_NMISRC_NMIENCPU1_MASK             (0x40000000U)
-#define SYSCON_NMISRC_NMIENCPU1_SHIFT            (30U)
-/*! NMIENCPU1 - Write a 1 to this bit to enable the Non-Maskable Interrupt (NMI) source selected by IRQCPU1. */
-#define SYSCON_NMISRC_NMIENCPU1(x)               (((uint32_t)(((uint32_t)(x)) << SYSCON_NMISRC_NMIENCPU1_SHIFT)) & SYSCON_NMISRC_NMIENCPU1_MASK)
 
 #define SYSCON_NMISRC_NMIENCPU0_MASK             (0x80000000U)
 #define SYSCON_NMISRC_NMIENCPU0_SHIFT            (31U)
@@ -489,168 +447,136 @@ typedef struct {
 #define SYSCON_PRESETCTRL0_ROM_RST_MASK          (0x2U)
 #define SYSCON_PRESETCTRL0_ROM_RST_SHIFT         (1U)
 /*! ROM_RST - ROM reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL0_ROM_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_ROM_RST_SHIFT)) & SYSCON_PRESETCTRL0_ROM_RST_MASK)
 
 #define SYSCON_PRESETCTRL0_SRAM_CTRL1_RST_MASK   (0x8U)
 #define SYSCON_PRESETCTRL0_SRAM_CTRL1_RST_SHIFT  (3U)
 /*! SRAM_CTRL1_RST - SRAM Controller 1 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL0_SRAM_CTRL1_RST(x)     (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_SRAM_CTRL1_RST_SHIFT)) & SYSCON_PRESETCTRL0_SRAM_CTRL1_RST_MASK)
 
 #define SYSCON_PRESETCTRL0_SRAM_CTRL2_RST_MASK   (0x10U)
 #define SYSCON_PRESETCTRL0_SRAM_CTRL2_RST_SHIFT  (4U)
 /*! SRAM_CTRL2_RST - SRAM Controller 2 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL0_SRAM_CTRL2_RST(x)     (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_SRAM_CTRL2_RST_SHIFT)) & SYSCON_PRESETCTRL0_SRAM_CTRL2_RST_MASK)
-
-#define SYSCON_PRESETCTRL0_SRAM_CTRL3_RST_MASK   (0x20U)
-#define SYSCON_PRESETCTRL0_SRAM_CTRL3_RST_SHIFT  (5U)
-/*! SRAM_CTRL3_RST - SRAM Controller 3 reset control.
- *  0b1..Bloc is reset.
- *  0b0..Bloc is not reset.
- */
-#define SYSCON_PRESETCTRL0_SRAM_CTRL3_RST(x)     (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_SRAM_CTRL3_RST_SHIFT)) & SYSCON_PRESETCTRL0_SRAM_CTRL3_RST_MASK)
-
-#define SYSCON_PRESETCTRL0_SRAM_CTRL4_RST_MASK   (0x40U)
-#define SYSCON_PRESETCTRL0_SRAM_CTRL4_RST_SHIFT  (6U)
-/*! SRAM_CTRL4_RST - SRAM Controller 4 reset control.
- *  0b1..Bloc is reset.
- *  0b0..Bloc is not reset.
- */
-#define SYSCON_PRESETCTRL0_SRAM_CTRL4_RST(x)     (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_SRAM_CTRL4_RST_SHIFT)) & SYSCON_PRESETCTRL0_SRAM_CTRL4_RST_MASK)
 
 #define SYSCON_PRESETCTRL0_FLASH_RST_MASK        (0x80U)
 #define SYSCON_PRESETCTRL0_FLASH_RST_SHIFT       (7U)
 /*! FLASH_RST - Flash controller reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL0_FLASH_RST(x)          (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_FLASH_RST_SHIFT)) & SYSCON_PRESETCTRL0_FLASH_RST_MASK)
 
 #define SYSCON_PRESETCTRL0_FMC_RST_MASK          (0x100U)
 #define SYSCON_PRESETCTRL0_FMC_RST_SHIFT         (8U)
 /*! FMC_RST - FMC controller reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL0_FMC_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_FMC_RST_SHIFT)) & SYSCON_PRESETCTRL0_FMC_RST_MASK)
 
 #define SYSCON_PRESETCTRL0_MUX_RST_MASK          (0x800U)
 #define SYSCON_PRESETCTRL0_MUX_RST_SHIFT         (11U)
 /*! MUX_RST - Input Mux reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL0_MUX_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_MUX_RST_SHIFT)) & SYSCON_PRESETCTRL0_MUX_RST_MASK)
 
 #define SYSCON_PRESETCTRL0_IOCON_RST_MASK        (0x2000U)
 #define SYSCON_PRESETCTRL0_IOCON_RST_SHIFT       (13U)
 /*! IOCON_RST - I/O controller reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL0_IOCON_RST(x)          (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_IOCON_RST_SHIFT)) & SYSCON_PRESETCTRL0_IOCON_RST_MASK)
 
 #define SYSCON_PRESETCTRL0_GPIO0_RST_MASK        (0x4000U)
 #define SYSCON_PRESETCTRL0_GPIO0_RST_SHIFT       (14U)
 /*! GPIO0_RST - GPIO0 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL0_GPIO0_RST(x)          (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_GPIO0_RST_SHIFT)) & SYSCON_PRESETCTRL0_GPIO0_RST_MASK)
 
 #define SYSCON_PRESETCTRL0_GPIO1_RST_MASK        (0x8000U)
 #define SYSCON_PRESETCTRL0_GPIO1_RST_SHIFT       (15U)
 /*! GPIO1_RST - GPIO1 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL0_GPIO1_RST(x)          (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_GPIO1_RST_SHIFT)) & SYSCON_PRESETCTRL0_GPIO1_RST_MASK)
-
-#define SYSCON_PRESETCTRL0_GPIO2_RST_MASK        (0x10000U)
-#define SYSCON_PRESETCTRL0_GPIO2_RST_SHIFT       (16U)
-/*! GPIO2_RST - GPIO2 reset control.
- *  0b1..Bloc is reset.
- *  0b0..Bloc is not reset.
- */
-#define SYSCON_PRESETCTRL0_GPIO2_RST(x)          (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_GPIO2_RST_SHIFT)) & SYSCON_PRESETCTRL0_GPIO2_RST_MASK)
-
-#define SYSCON_PRESETCTRL0_GPIO3_RST_MASK        (0x20000U)
-#define SYSCON_PRESETCTRL0_GPIO3_RST_SHIFT       (17U)
-/*! GPIO3_RST - GPIO3 reset control.
- *  0b1..Bloc is reset.
- *  0b0..Bloc is not reset.
- */
-#define SYSCON_PRESETCTRL0_GPIO3_RST(x)          (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_GPIO3_RST_SHIFT)) & SYSCON_PRESETCTRL0_GPIO3_RST_MASK)
 
 #define SYSCON_PRESETCTRL0_PINT_RST_MASK         (0x40000U)
 #define SYSCON_PRESETCTRL0_PINT_RST_SHIFT        (18U)
 /*! PINT_RST - Pin interrupt (PINT) reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL0_PINT_RST(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_PINT_RST_SHIFT)) & SYSCON_PRESETCTRL0_PINT_RST_MASK)
 
 #define SYSCON_PRESETCTRL0_GINT_RST_MASK         (0x80000U)
 #define SYSCON_PRESETCTRL0_GINT_RST_SHIFT        (19U)
 /*! GINT_RST - Group interrupt (GINT) reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL0_GINT_RST(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_GINT_RST_SHIFT)) & SYSCON_PRESETCTRL0_GINT_RST_MASK)
 
 #define SYSCON_PRESETCTRL0_DMA0_RST_MASK         (0x100000U)
 #define SYSCON_PRESETCTRL0_DMA0_RST_SHIFT        (20U)
 /*! DMA0_RST - DMA0 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL0_DMA0_RST(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_DMA0_RST_SHIFT)) & SYSCON_PRESETCTRL0_DMA0_RST_MASK)
 
 #define SYSCON_PRESETCTRL0_CRCGEN_RST_MASK       (0x200000U)
 #define SYSCON_PRESETCTRL0_CRCGEN_RST_SHIFT      (21U)
 /*! CRCGEN_RST - CRCGEN reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL0_CRCGEN_RST(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_CRCGEN_RST_SHIFT)) & SYSCON_PRESETCTRL0_CRCGEN_RST_MASK)
 
 #define SYSCON_PRESETCTRL0_WWDT_RST_MASK         (0x400000U)
 #define SYSCON_PRESETCTRL0_WWDT_RST_SHIFT        (22U)
 /*! WWDT_RST - Watchdog Timer reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL0_WWDT_RST(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_WWDT_RST_SHIFT)) & SYSCON_PRESETCTRL0_WWDT_RST_MASK)
 
 #define SYSCON_PRESETCTRL0_RTC_RST_MASK          (0x800000U)
 #define SYSCON_PRESETCTRL0_RTC_RST_SHIFT         (23U)
 /*! RTC_RST - Real Time Clock (RTC) reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL0_RTC_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_RTC_RST_SHIFT)) & SYSCON_PRESETCTRL0_RTC_RST_MASK)
 
 #define SYSCON_PRESETCTRL0_MAILBOX_RST_MASK      (0x4000000U)
 #define SYSCON_PRESETCTRL0_MAILBOX_RST_SHIFT     (26U)
 /*! MAILBOX_RST - Inter CPU communication Mailbox reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL0_MAILBOX_RST(x)        (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_MAILBOX_RST_SHIFT)) & SYSCON_PRESETCTRL0_MAILBOX_RST_MASK)
 
 #define SYSCON_PRESETCTRL0_ADC_RST_MASK          (0x8000000U)
 #define SYSCON_PRESETCTRL0_ADC_RST_SHIFT         (27U)
 /*! ADC_RST - ADC reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL0_ADC_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL0_ADC_RST_SHIFT)) & SYSCON_PRESETCTRL0_ADC_RST_MASK)
 /*! @} */
@@ -661,136 +587,136 @@ typedef struct {
 #define SYSCON_PRESETCTRL1_MRT_RST_MASK          (0x1U)
 #define SYSCON_PRESETCTRL1_MRT_RST_SHIFT         (0U)
 /*! MRT_RST - MRT reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL1_MRT_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_MRT_RST_SHIFT)) & SYSCON_PRESETCTRL1_MRT_RST_MASK)
 
 #define SYSCON_PRESETCTRL1_OSTIMER_RST_MASK      (0x2U)
 #define SYSCON_PRESETCTRL1_OSTIMER_RST_SHIFT     (1U)
 /*! OSTIMER_RST - OS Event Timer reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL1_OSTIMER_RST(x)        (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_OSTIMER_RST_SHIFT)) & SYSCON_PRESETCTRL1_OSTIMER_RST_MASK)
 
 #define SYSCON_PRESETCTRL1_SCT_RST_MASK          (0x4U)
 #define SYSCON_PRESETCTRL1_SCT_RST_SHIFT         (2U)
 /*! SCT_RST - SCT reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL1_SCT_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_SCT_RST_SHIFT)) & SYSCON_PRESETCTRL1_SCT_RST_MASK)
 
-#define SYSCON_PRESETCTRL1_SCTIPU_RST_MASK       (0x40U)
-#define SYSCON_PRESETCTRL1_SCTIPU_RST_SHIFT      (6U)
-/*! SCTIPU_RST - SCTIPU reset control.
- *  0b1..Bloc is reset.
+#define SYSCON_PRESETCTRL1_CAN_RST_MASK          (0x80U)
+#define SYSCON_PRESETCTRL1_CAN_RST_SHIFT         (7U)
+/*! CAN_RST - CAN reset control.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
-#define SYSCON_PRESETCTRL1_SCTIPU_RST(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_SCTIPU_RST_SHIFT)) & SYSCON_PRESETCTRL1_SCTIPU_RST_MASK)
+#define SYSCON_PRESETCTRL1_CAN_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_CAN_RST_SHIFT)) & SYSCON_PRESETCTRL1_CAN_RST_MASK)
 
 #define SYSCON_PRESETCTRL1_UTICK_RST_MASK        (0x400U)
 #define SYSCON_PRESETCTRL1_UTICK_RST_SHIFT       (10U)
 /*! UTICK_RST - UTICK reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL1_UTICK_RST(x)          (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_UTICK_RST_SHIFT)) & SYSCON_PRESETCTRL1_UTICK_RST_MASK)
 
 #define SYSCON_PRESETCTRL1_FC0_RST_MASK          (0x800U)
 #define SYSCON_PRESETCTRL1_FC0_RST_SHIFT         (11U)
 /*! FC0_RST - FC0 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL1_FC0_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_FC0_RST_SHIFT)) & SYSCON_PRESETCTRL1_FC0_RST_MASK)
 
 #define SYSCON_PRESETCTRL1_FC1_RST_MASK          (0x1000U)
 #define SYSCON_PRESETCTRL1_FC1_RST_SHIFT         (12U)
 /*! FC1_RST - FC1 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL1_FC1_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_FC1_RST_SHIFT)) & SYSCON_PRESETCTRL1_FC1_RST_MASK)
 
 #define SYSCON_PRESETCTRL1_FC2_RST_MASK          (0x2000U)
 #define SYSCON_PRESETCTRL1_FC2_RST_SHIFT         (13U)
 /*! FC2_RST - FC2 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL1_FC2_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_FC2_RST_SHIFT)) & SYSCON_PRESETCTRL1_FC2_RST_MASK)
 
 #define SYSCON_PRESETCTRL1_FC3_RST_MASK          (0x4000U)
 #define SYSCON_PRESETCTRL1_FC3_RST_SHIFT         (14U)
 /*! FC3_RST - FC3 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL1_FC3_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_FC3_RST_SHIFT)) & SYSCON_PRESETCTRL1_FC3_RST_MASK)
 
 #define SYSCON_PRESETCTRL1_FC4_RST_MASK          (0x8000U)
 #define SYSCON_PRESETCTRL1_FC4_RST_SHIFT         (15U)
 /*! FC4_RST - FC4 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL1_FC4_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_FC4_RST_SHIFT)) & SYSCON_PRESETCTRL1_FC4_RST_MASK)
 
 #define SYSCON_PRESETCTRL1_FC5_RST_MASK          (0x10000U)
 #define SYSCON_PRESETCTRL1_FC5_RST_SHIFT         (16U)
 /*! FC5_RST - FC5 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL1_FC5_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_FC5_RST_SHIFT)) & SYSCON_PRESETCTRL1_FC5_RST_MASK)
 
 #define SYSCON_PRESETCTRL1_FC6_RST_MASK          (0x20000U)
 #define SYSCON_PRESETCTRL1_FC6_RST_SHIFT         (17U)
 /*! FC6_RST - FC6 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL1_FC6_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_FC6_RST_SHIFT)) & SYSCON_PRESETCTRL1_FC6_RST_MASK)
 
 #define SYSCON_PRESETCTRL1_FC7_RST_MASK          (0x40000U)
 #define SYSCON_PRESETCTRL1_FC7_RST_SHIFT         (18U)
 /*! FC7_RST - FC7 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL1_FC7_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_FC7_RST_SHIFT)) & SYSCON_PRESETCTRL1_FC7_RST_MASK)
 
 #define SYSCON_PRESETCTRL1_TIMER2_RST_MASK       (0x400000U)
 #define SYSCON_PRESETCTRL1_TIMER2_RST_SHIFT      (22U)
 /*! TIMER2_RST - Timer 2 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL1_TIMER2_RST(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_TIMER2_RST_SHIFT)) & SYSCON_PRESETCTRL1_TIMER2_RST_MASK)
 
 #define SYSCON_PRESETCTRL1_USB0_DEV_RST_MASK     (0x2000000U)
 #define SYSCON_PRESETCTRL1_USB0_DEV_RST_SHIFT    (25U)
-/*! USB0_DEV_RST - USB0 DEV reset control.
- *  0b1..Bloc is reset.
+/*! USB0_DEV_RST - USB0-FS DEV reset control.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL1_USB0_DEV_RST(x)       (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_USB0_DEV_RST_SHIFT)) & SYSCON_PRESETCTRL1_USB0_DEV_RST_MASK)
 
 #define SYSCON_PRESETCTRL1_TIMER0_RST_MASK       (0x4000000U)
 #define SYSCON_PRESETCTRL1_TIMER0_RST_SHIFT      (26U)
 /*! TIMER0_RST - Timer 0 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL1_TIMER0_RST(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_TIMER0_RST_SHIFT)) & SYSCON_PRESETCTRL1_TIMER0_RST_MASK)
 
 #define SYSCON_PRESETCTRL1_TIMER1_RST_MASK       (0x8000000U)
 #define SYSCON_PRESETCTRL1_TIMER1_RST_SHIFT      (27U)
 /*! TIMER1_RST - Timer 1 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL1_TIMER1_RST(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL1_TIMER1_RST_SHIFT)) & SYSCON_PRESETCTRL1_TIMER1_RST_MASK)
 /*! @} */
@@ -801,184 +727,176 @@ typedef struct {
 #define SYSCON_PRESETCTRL2_DMA1_RST_MASK         (0x2U)
 #define SYSCON_PRESETCTRL2_DMA1_RST_SHIFT        (1U)
 /*! DMA1_RST - DMA1 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_DMA1_RST(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_DMA1_RST_SHIFT)) & SYSCON_PRESETCTRL2_DMA1_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_COMP_RST_MASK         (0x4U)
 #define SYSCON_PRESETCTRL2_COMP_RST_SHIFT        (2U)
 /*! COMP_RST - Comparator reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_COMP_RST(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_COMP_RST_SHIFT)) & SYSCON_PRESETCTRL2_COMP_RST_MASK)
 
-#define SYSCON_PRESETCTRL2_SDIO_RST_MASK         (0x8U)
-#define SYSCON_PRESETCTRL2_SDIO_RST_SHIFT        (3U)
-/*! SDIO_RST - SDIO reset control.
- *  0b1..Bloc is reset.
- *  0b0..Bloc is not reset.
- */
-#define SYSCON_PRESETCTRL2_SDIO_RST(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_SDIO_RST_SHIFT)) & SYSCON_PRESETCTRL2_SDIO_RST_MASK)
-
 #define SYSCON_PRESETCTRL2_USB1_HOST_RST_MASK    (0x10U)
 #define SYSCON_PRESETCTRL2_USB1_HOST_RST_SHIFT   (4U)
-/*! USB1_HOST_RST - USB1 Host reset control.
- *  0b1..Bloc is reset.
+/*! USB1_HOST_RST - USB1-HS Host reset control.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_USB1_HOST_RST(x)      (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_USB1_HOST_RST_SHIFT)) & SYSCON_PRESETCTRL2_USB1_HOST_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_USB1_DEV_RST_MASK     (0x20U)
 #define SYSCON_PRESETCTRL2_USB1_DEV_RST_SHIFT    (5U)
-/*! USB1_DEV_RST - USB1 dev reset control.
- *  0b1..Bloc is reset.
+/*! USB1_DEV_RST - USB1-HS dev reset control.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_USB1_DEV_RST(x)       (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_USB1_DEV_RST_SHIFT)) & SYSCON_PRESETCTRL2_USB1_DEV_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_USB1_RAM_RST_MASK     (0x40U)
 #define SYSCON_PRESETCTRL2_USB1_RAM_RST_SHIFT    (6U)
-/*! USB1_RAM_RST - USB1 RAM reset control.
- *  0b1..Bloc is reset.
+/*! USB1_RAM_RST - USB1-HS RAM reset control.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_USB1_RAM_RST(x)       (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_USB1_RAM_RST_SHIFT)) & SYSCON_PRESETCTRL2_USB1_RAM_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_USB1_PHY_RST_MASK     (0x80U)
 #define SYSCON_PRESETCTRL2_USB1_PHY_RST_SHIFT    (7U)
-/*! USB1_PHY_RST - USB1 PHY reset control.
- *  0b1..Bloc is reset.
+/*! USB1_PHY_RST - USB1-HS PHY reset control.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_USB1_PHY_RST(x)       (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_USB1_PHY_RST_SHIFT)) & SYSCON_PRESETCTRL2_USB1_PHY_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_FREQME_RST_MASK       (0x100U)
 #define SYSCON_PRESETCTRL2_FREQME_RST_SHIFT      (8U)
 /*! FREQME_RST - Frequency meter reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_FREQME_RST(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_FREQME_RST_SHIFT)) & SYSCON_PRESETCTRL2_FREQME_RST_MASK)
+
+#define SYSCON_PRESETCTRL2_CDOG_RST_MASK         (0x800U)
+#define SYSCON_PRESETCTRL2_CDOG_RST_SHIFT        (11U)
+/*! CDOG_RST - Code Watchdog reset control.
+ *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
+ */
+#define SYSCON_PRESETCTRL2_CDOG_RST(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_CDOG_RST_SHIFT)) & SYSCON_PRESETCTRL2_CDOG_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_RNG_RST_MASK          (0x2000U)
 #define SYSCON_PRESETCTRL2_RNG_RST_SHIFT         (13U)
 /*! RNG_RST - RNG reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_RNG_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_RNG_RST_SHIFT)) & SYSCON_PRESETCTRL2_RNG_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_SYSCTL_RST_MASK       (0x8000U)
 #define SYSCON_PRESETCTRL2_SYSCTL_RST_SHIFT      (15U)
 /*! SYSCTL_RST - SYSCTL Block reset.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_SYSCTL_RST(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_SYSCTL_RST_SHIFT)) & SYSCON_PRESETCTRL2_SYSCTL_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_USB0_HOSTM_RST_MASK   (0x10000U)
 #define SYSCON_PRESETCTRL2_USB0_HOSTM_RST_SHIFT  (16U)
-/*! USB0_HOSTM_RST - USB0 Host Master reset control.
- *  0b1..Bloc is reset.
+/*! USB0_HOSTM_RST - USB0-FS Host Master reset control.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_USB0_HOSTM_RST(x)     (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_USB0_HOSTM_RST_SHIFT)) & SYSCON_PRESETCTRL2_USB0_HOSTM_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_USB0_HOSTS_RST_MASK   (0x20000U)
 #define SYSCON_PRESETCTRL2_USB0_HOSTS_RST_SHIFT  (17U)
-/*! USB0_HOSTS_RST - USB0 Host Slave reset control.
- *  0b1..Bloc is reset.
+/*! USB0_HOSTS_RST - USB0-FS Host Slave reset control.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_USB0_HOSTS_RST(x)     (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_USB0_HOSTS_RST_SHIFT)) & SYSCON_PRESETCTRL2_USB0_HOSTS_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_HASH_AES_RST_MASK     (0x40000U)
 #define SYSCON_PRESETCTRL2_HASH_AES_RST_SHIFT    (18U)
 /*! HASH_AES_RST - HASH_AES reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_HASH_AES_RST(x)       (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_HASH_AES_RST_SHIFT)) & SYSCON_PRESETCTRL2_HASH_AES_RST_MASK)
-
-#define SYSCON_PRESETCTRL2_PQ_RST_MASK           (0x80000U)
-#define SYSCON_PRESETCTRL2_PQ_RST_SHIFT          (19U)
-/*! PQ_RST - Power Quad reset control.
- *  0b1..Bloc is reset.
- *  0b0..Bloc is not reset.
- */
-#define SYSCON_PRESETCTRL2_PQ_RST(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_PQ_RST_SHIFT)) & SYSCON_PRESETCTRL2_PQ_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_PLULUT_RST_MASK       (0x100000U)
 #define SYSCON_PRESETCTRL2_PLULUT_RST_SHIFT      (20U)
 /*! PLULUT_RST - PLU LUT reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_PLULUT_RST(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_PLULUT_RST_SHIFT)) & SYSCON_PRESETCTRL2_PLULUT_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_TIMER3_RST_MASK       (0x200000U)
 #define SYSCON_PRESETCTRL2_TIMER3_RST_SHIFT      (21U)
 /*! TIMER3_RST - Timer 3 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_TIMER3_RST(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_TIMER3_RST_SHIFT)) & SYSCON_PRESETCTRL2_TIMER3_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_TIMER4_RST_MASK       (0x400000U)
 #define SYSCON_PRESETCTRL2_TIMER4_RST_SHIFT      (22U)
 /*! TIMER4_RST - Timer 4 reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_TIMER4_RST(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_TIMER4_RST_SHIFT)) & SYSCON_PRESETCTRL2_TIMER4_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_PUF_RST_MASK          (0x800000U)
 #define SYSCON_PRESETCTRL2_PUF_RST_SHIFT         (23U)
 /*! PUF_RST - PUF reset control reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_PUF_RST(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_PUF_RST_SHIFT)) & SYSCON_PRESETCTRL2_PUF_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_CASPER_RST_MASK       (0x1000000U)
 #define SYSCON_PRESETCTRL2_CASPER_RST_SHIFT      (24U)
 /*! CASPER_RST - Casper reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_CASPER_RST(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_CASPER_RST_SHIFT)) & SYSCON_PRESETCTRL2_CASPER_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_ANALOG_CTRL_RST_MASK  (0x8000000U)
 #define SYSCON_PRESETCTRL2_ANALOG_CTRL_RST_SHIFT (27U)
 /*! ANALOG_CTRL_RST - analog control reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_ANALOG_CTRL_RST(x)    (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_ANALOG_CTRL_RST_SHIFT)) & SYSCON_PRESETCTRL2_ANALOG_CTRL_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_HS_LSPI_RST_MASK      (0x10000000U)
 #define SYSCON_PRESETCTRL2_HS_LSPI_RST_SHIFT     (28U)
 /*! HS_LSPI_RST - HS LSPI reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_HS_LSPI_RST(x)        (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_HS_LSPI_RST_SHIFT)) & SYSCON_PRESETCTRL2_HS_LSPI_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_GPIO_SEC_RST_MASK     (0x20000000U)
 #define SYSCON_PRESETCTRL2_GPIO_SEC_RST_SHIFT    (29U)
 /*! GPIO_SEC_RST - GPIO secure reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_GPIO_SEC_RST(x)       (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_GPIO_SEC_RST_SHIFT)) & SYSCON_PRESETCTRL2_GPIO_SEC_RST_MASK)
 
 #define SYSCON_PRESETCTRL2_GPIO_SEC_INT_RST_MASK (0x40000000U)
 #define SYSCON_PRESETCTRL2_GPIO_SEC_INT_RST_SHIFT (30U)
 /*! GPIO_SEC_INT_RST - GPIO secure int reset control.
- *  0b1..Bloc is reset.
  *  0b0..Bloc is not reset.
+ *  0b1..Bloc is reset.
  */
 #define SYSCON_PRESETCTRL2_GPIO_SEC_INT_RST(x)   (((uint32_t)(((uint32_t)(x)) << SYSCON_PRESETCTRL2_GPIO_SEC_INT_RST_SHIFT)) & SYSCON_PRESETCTRL2_GPIO_SEC_INT_RST_MASK)
 /*! @} */
@@ -1019,8 +937,8 @@ typedef struct {
 #define SYSCON_SWR_RESET_SWR_RESET_MASK          (0xFFFFFFFFU)
 #define SYSCON_SWR_RESET_SWR_RESET_SHIFT         (0U)
 /*! SWR_RESET - Write 0x5A00_0001 to generate a software_reset.
- *  0b01011010000000000000000000000001..Generate a software reset.
  *  0b00000000000000000000000000000000..Bloc is not reset.
+ *  0b01011010000000000000000000000001..Generate a software reset.
  */
 #define SYSCON_SWR_RESET_SWR_RESET(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_SWR_RESET_SWR_RESET_SHIFT)) & SYSCON_SWR_RESET_SWR_RESET_MASK)
 /*! @} */
@@ -1031,168 +949,136 @@ typedef struct {
 #define SYSCON_AHBCLKCTRL0_ROM_MASK              (0x2U)
 #define SYSCON_AHBCLKCTRL0_ROM_SHIFT             (1U)
 /*! ROM - Enables the clock for the ROM.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL0_ROM(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_ROM_SHIFT)) & SYSCON_AHBCLKCTRL0_ROM_MASK)
 
 #define SYSCON_AHBCLKCTRL0_SRAM_CTRL1_MASK       (0x8U)
 #define SYSCON_AHBCLKCTRL0_SRAM_CTRL1_SHIFT      (3U)
 /*! SRAM_CTRL1 - Enables the clock for the SRAM Controller 1.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL0_SRAM_CTRL1(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_SRAM_CTRL1_SHIFT)) & SYSCON_AHBCLKCTRL0_SRAM_CTRL1_MASK)
 
 #define SYSCON_AHBCLKCTRL0_SRAM_CTRL2_MASK       (0x10U)
 #define SYSCON_AHBCLKCTRL0_SRAM_CTRL2_SHIFT      (4U)
 /*! SRAM_CTRL2 - Enables the clock for the SRAM Controller 2.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL0_SRAM_CTRL2(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_SRAM_CTRL2_SHIFT)) & SYSCON_AHBCLKCTRL0_SRAM_CTRL2_MASK)
-
-#define SYSCON_AHBCLKCTRL0_SRAM_CTRL3_MASK       (0x20U)
-#define SYSCON_AHBCLKCTRL0_SRAM_CTRL3_SHIFT      (5U)
-/*! SRAM_CTRL3 - Enables the clock for the SRAM Controller 3.
- *  0b1..Enable Clock.
- *  0b0..Disable Clock.
- */
-#define SYSCON_AHBCLKCTRL0_SRAM_CTRL3(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_SRAM_CTRL3_SHIFT)) & SYSCON_AHBCLKCTRL0_SRAM_CTRL3_MASK)
-
-#define SYSCON_AHBCLKCTRL0_SRAM_CTRL4_MASK       (0x40U)
-#define SYSCON_AHBCLKCTRL0_SRAM_CTRL4_SHIFT      (6U)
-/*! SRAM_CTRL4 - Enables the clock for the SRAM Controller 4.
- *  0b1..Enable Clock.
- *  0b0..Disable Clock.
- */
-#define SYSCON_AHBCLKCTRL0_SRAM_CTRL4(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_SRAM_CTRL4_SHIFT)) & SYSCON_AHBCLKCTRL0_SRAM_CTRL4_MASK)
 
 #define SYSCON_AHBCLKCTRL0_FLASH_MASK            (0x80U)
 #define SYSCON_AHBCLKCTRL0_FLASH_SHIFT           (7U)
 /*! FLASH - Enables the clock for the Flash controller.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL0_FLASH(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_FLASH_SHIFT)) & SYSCON_AHBCLKCTRL0_FLASH_MASK)
 
 #define SYSCON_AHBCLKCTRL0_FMC_MASK              (0x100U)
 #define SYSCON_AHBCLKCTRL0_FMC_SHIFT             (8U)
 /*! FMC - Enables the clock for the FMC controller.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL0_FMC(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_FMC_SHIFT)) & SYSCON_AHBCLKCTRL0_FMC_MASK)
 
 #define SYSCON_AHBCLKCTRL0_MUX_MASK              (0x800U)
 #define SYSCON_AHBCLKCTRL0_MUX_SHIFT             (11U)
 /*! MUX - Enables the clock for the Input Mux.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL0_MUX(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_MUX_SHIFT)) & SYSCON_AHBCLKCTRL0_MUX_MASK)
 
 #define SYSCON_AHBCLKCTRL0_IOCON_MASK            (0x2000U)
 #define SYSCON_AHBCLKCTRL0_IOCON_SHIFT           (13U)
 /*! IOCON - Enables the clock for the I/O controller.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL0_IOCON(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_IOCON_SHIFT)) & SYSCON_AHBCLKCTRL0_IOCON_MASK)
 
 #define SYSCON_AHBCLKCTRL0_GPIO0_MASK            (0x4000U)
 #define SYSCON_AHBCLKCTRL0_GPIO0_SHIFT           (14U)
 /*! GPIO0 - Enables the clock for the GPIO0.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL0_GPIO0(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_GPIO0_SHIFT)) & SYSCON_AHBCLKCTRL0_GPIO0_MASK)
 
 #define SYSCON_AHBCLKCTRL0_GPIO1_MASK            (0x8000U)
 #define SYSCON_AHBCLKCTRL0_GPIO1_SHIFT           (15U)
 /*! GPIO1 - Enables the clock for the GPIO1.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL0_GPIO1(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_GPIO1_SHIFT)) & SYSCON_AHBCLKCTRL0_GPIO1_MASK)
-
-#define SYSCON_AHBCLKCTRL0_GPIO2_MASK            (0x10000U)
-#define SYSCON_AHBCLKCTRL0_GPIO2_SHIFT           (16U)
-/*! GPIO2 - Enables the clock for the GPIO2.
- *  0b1..Enable Clock.
- *  0b0..Disable Clock.
- */
-#define SYSCON_AHBCLKCTRL0_GPIO2(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_GPIO2_SHIFT)) & SYSCON_AHBCLKCTRL0_GPIO2_MASK)
-
-#define SYSCON_AHBCLKCTRL0_GPIO3_MASK            (0x20000U)
-#define SYSCON_AHBCLKCTRL0_GPIO3_SHIFT           (17U)
-/*! GPIO3 - Enables the clock for the GPIO3.
- *  0b1..Enable Clock.
- *  0b0..Disable Clock.
- */
-#define SYSCON_AHBCLKCTRL0_GPIO3(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_GPIO3_SHIFT)) & SYSCON_AHBCLKCTRL0_GPIO3_MASK)
 
 #define SYSCON_AHBCLKCTRL0_PINT_MASK             (0x40000U)
 #define SYSCON_AHBCLKCTRL0_PINT_SHIFT            (18U)
 /*! PINT - Enables the clock for the Pin interrupt (PINT).
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL0_PINT(x)               (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_PINT_SHIFT)) & SYSCON_AHBCLKCTRL0_PINT_MASK)
 
 #define SYSCON_AHBCLKCTRL0_GINT_MASK             (0x80000U)
 #define SYSCON_AHBCLKCTRL0_GINT_SHIFT            (19U)
 /*! GINT - Enables the clock for the Group interrupt (GINT).
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL0_GINT(x)               (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_GINT_SHIFT)) & SYSCON_AHBCLKCTRL0_GINT_MASK)
 
 #define SYSCON_AHBCLKCTRL0_DMA0_MASK             (0x100000U)
 #define SYSCON_AHBCLKCTRL0_DMA0_SHIFT            (20U)
 /*! DMA0 - Enables the clock for the DMA0.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL0_DMA0(x)               (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_DMA0_SHIFT)) & SYSCON_AHBCLKCTRL0_DMA0_MASK)
 
 #define SYSCON_AHBCLKCTRL0_CRCGEN_MASK           (0x200000U)
 #define SYSCON_AHBCLKCTRL0_CRCGEN_SHIFT          (21U)
 /*! CRCGEN - Enables the clock for the CRCGEN.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL0_CRCGEN(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_CRCGEN_SHIFT)) & SYSCON_AHBCLKCTRL0_CRCGEN_MASK)
 
 #define SYSCON_AHBCLKCTRL0_WWDT_MASK             (0x400000U)
 #define SYSCON_AHBCLKCTRL0_WWDT_SHIFT            (22U)
 /*! WWDT - Enables the clock for the Watchdog Timer.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL0_WWDT(x)               (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_WWDT_SHIFT)) & SYSCON_AHBCLKCTRL0_WWDT_MASK)
 
 #define SYSCON_AHBCLKCTRL0_RTC_MASK              (0x800000U)
 #define SYSCON_AHBCLKCTRL0_RTC_SHIFT             (23U)
 /*! RTC - Enables the clock for the Real Time Clock (RTC).
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL0_RTC(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_RTC_SHIFT)) & SYSCON_AHBCLKCTRL0_RTC_MASK)
 
 #define SYSCON_AHBCLKCTRL0_MAILBOX_MASK          (0x4000000U)
 #define SYSCON_AHBCLKCTRL0_MAILBOX_SHIFT         (26U)
 /*! MAILBOX - Enables the clock for the Inter CPU communication Mailbox.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL0_MAILBOX(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_MAILBOX_SHIFT)) & SYSCON_AHBCLKCTRL0_MAILBOX_MASK)
 
 #define SYSCON_AHBCLKCTRL0_ADC_MASK              (0x8000000U)
 #define SYSCON_AHBCLKCTRL0_ADC_SHIFT             (27U)
 /*! ADC - Enables the clock for the ADC.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL0_ADC(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL0_ADC_SHIFT)) & SYSCON_AHBCLKCTRL0_ADC_MASK)
 /*! @} */
@@ -1203,128 +1089,136 @@ typedef struct {
 #define SYSCON_AHBCLKCTRL1_MRT_MASK              (0x1U)
 #define SYSCON_AHBCLKCTRL1_MRT_SHIFT             (0U)
 /*! MRT - Enables the clock for the MRT.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL1_MRT(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL1_MRT_SHIFT)) & SYSCON_AHBCLKCTRL1_MRT_MASK)
 
 #define SYSCON_AHBCLKCTRL1_OSTIMER_MASK          (0x2U)
 #define SYSCON_AHBCLKCTRL1_OSTIMER_SHIFT         (1U)
 /*! OSTIMER - Enables the clock for the OS Event Timer.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL1_OSTIMER(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL1_OSTIMER_SHIFT)) & SYSCON_AHBCLKCTRL1_OSTIMER_MASK)
 
 #define SYSCON_AHBCLKCTRL1_SCT_MASK              (0x4U)
 #define SYSCON_AHBCLKCTRL1_SCT_SHIFT             (2U)
 /*! SCT - Enables the clock for the SCT.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL1_SCT(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL1_SCT_SHIFT)) & SYSCON_AHBCLKCTRL1_SCT_MASK)
+
+#define SYSCON_AHBCLKCTRL1_CAN_MASK              (0x80U)
+#define SYSCON_AHBCLKCTRL1_CAN_SHIFT             (7U)
+/*! CAN - Enables the clock for the CAN.
+ *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
+ */
+#define SYSCON_AHBCLKCTRL1_CAN(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL1_CAN_SHIFT)) & SYSCON_AHBCLKCTRL1_CAN_MASK)
 
 #define SYSCON_AHBCLKCTRL1_UTICK_MASK            (0x400U)
 #define SYSCON_AHBCLKCTRL1_UTICK_SHIFT           (10U)
 /*! UTICK - Enables the clock for the UTICK.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL1_UTICK(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL1_UTICK_SHIFT)) & SYSCON_AHBCLKCTRL1_UTICK_MASK)
 
 #define SYSCON_AHBCLKCTRL1_FC0_MASK              (0x800U)
 #define SYSCON_AHBCLKCTRL1_FC0_SHIFT             (11U)
 /*! FC0 - Enables the clock for the FC0.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL1_FC0(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL1_FC0_SHIFT)) & SYSCON_AHBCLKCTRL1_FC0_MASK)
 
 #define SYSCON_AHBCLKCTRL1_FC1_MASK              (0x1000U)
 #define SYSCON_AHBCLKCTRL1_FC1_SHIFT             (12U)
 /*! FC1 - Enables the clock for the FC1.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL1_FC1(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL1_FC1_SHIFT)) & SYSCON_AHBCLKCTRL1_FC1_MASK)
 
 #define SYSCON_AHBCLKCTRL1_FC2_MASK              (0x2000U)
 #define SYSCON_AHBCLKCTRL1_FC2_SHIFT             (13U)
 /*! FC2 - Enables the clock for the FC2.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL1_FC2(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL1_FC2_SHIFT)) & SYSCON_AHBCLKCTRL1_FC2_MASK)
 
 #define SYSCON_AHBCLKCTRL1_FC3_MASK              (0x4000U)
 #define SYSCON_AHBCLKCTRL1_FC3_SHIFT             (14U)
 /*! FC3 - Enables the clock for the FC3.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL1_FC3(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL1_FC3_SHIFT)) & SYSCON_AHBCLKCTRL1_FC3_MASK)
 
 #define SYSCON_AHBCLKCTRL1_FC4_MASK              (0x8000U)
 #define SYSCON_AHBCLKCTRL1_FC4_SHIFT             (15U)
 /*! FC4 - Enables the clock for the FC4.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL1_FC4(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL1_FC4_SHIFT)) & SYSCON_AHBCLKCTRL1_FC4_MASK)
 
 #define SYSCON_AHBCLKCTRL1_FC5_MASK              (0x10000U)
 #define SYSCON_AHBCLKCTRL1_FC5_SHIFT             (16U)
 /*! FC5 - Enables the clock for the FC5.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL1_FC5(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL1_FC5_SHIFT)) & SYSCON_AHBCLKCTRL1_FC5_MASK)
 
 #define SYSCON_AHBCLKCTRL1_FC6_MASK              (0x20000U)
 #define SYSCON_AHBCLKCTRL1_FC6_SHIFT             (17U)
 /*! FC6 - Enables the clock for the FC6.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL1_FC6(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL1_FC6_SHIFT)) & SYSCON_AHBCLKCTRL1_FC6_MASK)
 
 #define SYSCON_AHBCLKCTRL1_FC7_MASK              (0x40000U)
 #define SYSCON_AHBCLKCTRL1_FC7_SHIFT             (18U)
 /*! FC7 - Enables the clock for the FC7.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL1_FC7(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL1_FC7_SHIFT)) & SYSCON_AHBCLKCTRL1_FC7_MASK)
 
 #define SYSCON_AHBCLKCTRL1_TIMER2_MASK           (0x400000U)
 #define SYSCON_AHBCLKCTRL1_TIMER2_SHIFT          (22U)
 /*! TIMER2 - Enables the clock for the Timer 2.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL1_TIMER2(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL1_TIMER2_SHIFT)) & SYSCON_AHBCLKCTRL1_TIMER2_MASK)
 
 #define SYSCON_AHBCLKCTRL1_USB0_DEV_MASK         (0x2000000U)
 #define SYSCON_AHBCLKCTRL1_USB0_DEV_SHIFT        (25U)
-/*! USB0_DEV - Enables the clock for the USB0 DEV.
- *  0b1..Enable Clock.
+/*! USB0_DEV - Enables the clock for the USB0-FS device.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL1_USB0_DEV(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL1_USB0_DEV_SHIFT)) & SYSCON_AHBCLKCTRL1_USB0_DEV_MASK)
 
 #define SYSCON_AHBCLKCTRL1_TIMER0_MASK           (0x4000000U)
 #define SYSCON_AHBCLKCTRL1_TIMER0_SHIFT          (26U)
 /*! TIMER0 - Enables the clock for the Timer 0.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL1_TIMER0(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL1_TIMER0_SHIFT)) & SYSCON_AHBCLKCTRL1_TIMER0_MASK)
 
 #define SYSCON_AHBCLKCTRL1_TIMER1_MASK           (0x8000000U)
 #define SYSCON_AHBCLKCTRL1_TIMER1_SHIFT          (27U)
 /*! TIMER1 - Enables the clock for the Timer 1.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL1_TIMER1(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL1_TIMER1_SHIFT)) & SYSCON_AHBCLKCTRL1_TIMER1_MASK)
 /*! @} */
@@ -1335,184 +1229,176 @@ typedef struct {
 #define SYSCON_AHBCLKCTRL2_DMA1_MASK             (0x2U)
 #define SYSCON_AHBCLKCTRL2_DMA1_SHIFT            (1U)
 /*! DMA1 - Enables the clock for the DMA1.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_DMA1(x)               (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_DMA1_SHIFT)) & SYSCON_AHBCLKCTRL2_DMA1_MASK)
 
 #define SYSCON_AHBCLKCTRL2_COMP_MASK             (0x4U)
 #define SYSCON_AHBCLKCTRL2_COMP_SHIFT            (2U)
 /*! COMP - Enables the clock for the Comparator.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_COMP(x)               (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_COMP_SHIFT)) & SYSCON_AHBCLKCTRL2_COMP_MASK)
 
-#define SYSCON_AHBCLKCTRL2_SDIO_MASK             (0x8U)
-#define SYSCON_AHBCLKCTRL2_SDIO_SHIFT            (3U)
-/*! SDIO - Enables the clock for the SDIO.
- *  0b1..Enable Clock.
- *  0b0..Disable Clock.
- */
-#define SYSCON_AHBCLKCTRL2_SDIO(x)               (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_SDIO_SHIFT)) & SYSCON_AHBCLKCTRL2_SDIO_MASK)
-
 #define SYSCON_AHBCLKCTRL2_USB1_HOST_MASK        (0x10U)
 #define SYSCON_AHBCLKCTRL2_USB1_HOST_SHIFT       (4U)
-/*! USB1_HOST - Enables the clock for the USB1 Host.
- *  0b1..Enable Clock.
+/*! USB1_HOST - Enables the clock for the USB1-HS Host.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_USB1_HOST(x)          (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_USB1_HOST_SHIFT)) & SYSCON_AHBCLKCTRL2_USB1_HOST_MASK)
 
 #define SYSCON_AHBCLKCTRL2_USB1_DEV_MASK         (0x20U)
 #define SYSCON_AHBCLKCTRL2_USB1_DEV_SHIFT        (5U)
-/*! USB1_DEV - Enables the clock for the USB1 dev.
- *  0b1..Enable Clock.
+/*! USB1_DEV - Enables the clock for the USB1-HS device.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_USB1_DEV(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_USB1_DEV_SHIFT)) & SYSCON_AHBCLKCTRL2_USB1_DEV_MASK)
 
 #define SYSCON_AHBCLKCTRL2_USB1_RAM_MASK         (0x40U)
 #define SYSCON_AHBCLKCTRL2_USB1_RAM_SHIFT        (6U)
-/*! USB1_RAM - Enables the clock for the USB1 RAM.
- *  0b1..Enable Clock.
+/*! USB1_RAM - Enables the clock for the USB1-HS RAM.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_USB1_RAM(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_USB1_RAM_SHIFT)) & SYSCON_AHBCLKCTRL2_USB1_RAM_MASK)
 
 #define SYSCON_AHBCLKCTRL2_USB1_PHY_MASK         (0x80U)
 #define SYSCON_AHBCLKCTRL2_USB1_PHY_SHIFT        (7U)
-/*! USB1_PHY - Enables the clock for the USB1 PHY.
- *  0b1..Enable Clock.
+/*! USB1_PHY - Enables the clock for the USB1-HS PHY.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_USB1_PHY(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_USB1_PHY_SHIFT)) & SYSCON_AHBCLKCTRL2_USB1_PHY_MASK)
 
 #define SYSCON_AHBCLKCTRL2_FREQME_MASK           (0x100U)
 #define SYSCON_AHBCLKCTRL2_FREQME_SHIFT          (8U)
 /*! FREQME - Enables the clock for the Frequency meter.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_FREQME(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_FREQME_SHIFT)) & SYSCON_AHBCLKCTRL2_FREQME_MASK)
+
+#define SYSCON_AHBCLKCTRL2_CDOG_MASK             (0x800U)
+#define SYSCON_AHBCLKCTRL2_CDOG_SHIFT            (11U)
+/*! CDOG - Enables the clock for the code watchdog.
+ *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
+ */
+#define SYSCON_AHBCLKCTRL2_CDOG(x)               (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_CDOG_SHIFT)) & SYSCON_AHBCLKCTRL2_CDOG_MASK)
 
 #define SYSCON_AHBCLKCTRL2_RNG_MASK              (0x2000U)
 #define SYSCON_AHBCLKCTRL2_RNG_SHIFT             (13U)
 /*! RNG - Enables the clock for the RNG.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_RNG(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_RNG_SHIFT)) & SYSCON_AHBCLKCTRL2_RNG_MASK)
 
 #define SYSCON_AHBCLKCTRL2_SYSCTL_MASK           (0x8000U)
 #define SYSCON_AHBCLKCTRL2_SYSCTL_SHIFT          (15U)
 /*! SYSCTL - SYSCTL block clock.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_SYSCTL(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_SYSCTL_SHIFT)) & SYSCON_AHBCLKCTRL2_SYSCTL_MASK)
 
 #define SYSCON_AHBCLKCTRL2_USB0_HOSTM_MASK       (0x10000U)
 #define SYSCON_AHBCLKCTRL2_USB0_HOSTM_SHIFT      (16U)
-/*! USB0_HOSTM - Enables the clock for the USB0 Host Master.
- *  0b1..Enable Clock.
+/*! USB0_HOSTM - Enables the clock for the USB0-FS Host Master.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_USB0_HOSTM(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_USB0_HOSTM_SHIFT)) & SYSCON_AHBCLKCTRL2_USB0_HOSTM_MASK)
 
 #define SYSCON_AHBCLKCTRL2_USB0_HOSTS_MASK       (0x20000U)
 #define SYSCON_AHBCLKCTRL2_USB0_HOSTS_SHIFT      (17U)
-/*! USB0_HOSTS - Enables the clock for the USB0 Host Slave.
- *  0b1..Enable Clock.
+/*! USB0_HOSTS - Enables the clock for the USB0-FS Host Slave.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_USB0_HOSTS(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_USB0_HOSTS_SHIFT)) & SYSCON_AHBCLKCTRL2_USB0_HOSTS_MASK)
 
 #define SYSCON_AHBCLKCTRL2_HASH_AES_MASK         (0x40000U)
 #define SYSCON_AHBCLKCTRL2_HASH_AES_SHIFT        (18U)
 /*! HASH_AES - Enables the clock for the HASH_AES.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_HASH_AES(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_HASH_AES_SHIFT)) & SYSCON_AHBCLKCTRL2_HASH_AES_MASK)
-
-#define SYSCON_AHBCLKCTRL2_PQ_MASK               (0x80000U)
-#define SYSCON_AHBCLKCTRL2_PQ_SHIFT              (19U)
-/*! PQ - Enables the clock for the Power Quad.
- *  0b1..Enable Clock.
- *  0b0..Disable Clock.
- */
-#define SYSCON_AHBCLKCTRL2_PQ(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_PQ_SHIFT)) & SYSCON_AHBCLKCTRL2_PQ_MASK)
 
 #define SYSCON_AHBCLKCTRL2_PLULUT_MASK           (0x100000U)
 #define SYSCON_AHBCLKCTRL2_PLULUT_SHIFT          (20U)
 /*! PLULUT - Enables the clock for the PLU LUT.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_PLULUT(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_PLULUT_SHIFT)) & SYSCON_AHBCLKCTRL2_PLULUT_MASK)
 
 #define SYSCON_AHBCLKCTRL2_TIMER3_MASK           (0x200000U)
 #define SYSCON_AHBCLKCTRL2_TIMER3_SHIFT          (21U)
 /*! TIMER3 - Enables the clock for the Timer 3.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_TIMER3(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_TIMER3_SHIFT)) & SYSCON_AHBCLKCTRL2_TIMER3_MASK)
 
 #define SYSCON_AHBCLKCTRL2_TIMER4_MASK           (0x400000U)
 #define SYSCON_AHBCLKCTRL2_TIMER4_SHIFT          (22U)
 /*! TIMER4 - Enables the clock for the Timer 4.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_TIMER4(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_TIMER4_SHIFT)) & SYSCON_AHBCLKCTRL2_TIMER4_MASK)
 
 #define SYSCON_AHBCLKCTRL2_PUF_MASK              (0x800000U)
 #define SYSCON_AHBCLKCTRL2_PUF_SHIFT             (23U)
 /*! PUF - Enables the clock for the PUF reset control.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_PUF(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_PUF_SHIFT)) & SYSCON_AHBCLKCTRL2_PUF_MASK)
 
 #define SYSCON_AHBCLKCTRL2_CASPER_MASK           (0x1000000U)
 #define SYSCON_AHBCLKCTRL2_CASPER_SHIFT          (24U)
 /*! CASPER - Enables the clock for the Casper.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_CASPER(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_CASPER_SHIFT)) & SYSCON_AHBCLKCTRL2_CASPER_MASK)
 
 #define SYSCON_AHBCLKCTRL2_ANALOG_CTRL_MASK      (0x8000000U)
 #define SYSCON_AHBCLKCTRL2_ANALOG_CTRL_SHIFT     (27U)
 /*! ANALOG_CTRL - Enables the clock for the analog control.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_ANALOG_CTRL(x)        (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_ANALOG_CTRL_SHIFT)) & SYSCON_AHBCLKCTRL2_ANALOG_CTRL_MASK)
 
 #define SYSCON_AHBCLKCTRL2_HS_LSPI_MASK          (0x10000000U)
 #define SYSCON_AHBCLKCTRL2_HS_LSPI_SHIFT         (28U)
 /*! HS_LSPI - Enables the clock for the HS LSPI.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_HS_LSPI(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_HS_LSPI_SHIFT)) & SYSCON_AHBCLKCTRL2_HS_LSPI_MASK)
 
 #define SYSCON_AHBCLKCTRL2_GPIO_SEC_MASK         (0x20000000U)
 #define SYSCON_AHBCLKCTRL2_GPIO_SEC_SHIFT        (29U)
 /*! GPIO_SEC - Enables the clock for the GPIO secure.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_GPIO_SEC(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_GPIO_SEC_SHIFT)) & SYSCON_AHBCLKCTRL2_GPIO_SEC_MASK)
 
 #define SYSCON_AHBCLKCTRL2_GPIO_SEC_INT_MASK     (0x40000000U)
 #define SYSCON_AHBCLKCTRL2_GPIO_SEC_INT_SHIFT    (30U)
 /*! GPIO_SEC_INT - Enables the clock for the GPIO secure int.
- *  0b1..Enable Clock.
  *  0b0..Disable Clock.
+ *  0b1..Enable Clock.
  */
 #define SYSCON_AHBCLKCTRL2_GPIO_SEC_INT(x)       (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKCTRL2_GPIO_SEC_INT_SHIFT)) & SYSCON_AHBCLKCTRL2_GPIO_SEC_INT_MASK)
 /*! @} */
@@ -1565,24 +1451,6 @@ typedef struct {
 #define SYSCON_SYSTICKCLKSEL0_SEL(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_SYSTICKCLKSEL0_SEL_SHIFT)) & SYSCON_SYSTICKCLKSEL0_SEL_MASK)
 /*! @} */
 
-/*! @name SYSTICKCLKSEL1 - System Tick Timer for CPU1 source select */
-/*! @{ */
-
-#define SYSCON_SYSTICKCLKSEL1_SEL_MASK           (0x7U)
-#define SYSCON_SYSTICKCLKSEL1_SEL_SHIFT          (0U)
-/*! SEL - System Tick Timer for CPU1 source select.
- *  0b000..System Tick 1 divided clock.
- *  0b001..FRO 1MHz clock.
- *  0b010..Oscillator 32 kHz clock.
- *  0b011..No clock.
- *  0b100..No clock.
- *  0b101..No clock.
- *  0b110..No clock.
- *  0b111..No clock.
- */
-#define SYSCON_SYSTICKCLKSEL1_SEL(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_SYSTICKCLKSEL1_SEL_SHIFT)) & SYSCON_SYSTICKCLKSEL1_SEL_MASK)
-/*! @} */
-
 /*! @name SYSTICKCLKSELX - Peripheral reset control register */
 /*! @{ */
 
@@ -1593,7 +1461,7 @@ typedef struct {
 /*! @} */
 
 /* The count of SYSCON_SYSTICKCLKSELX */
-#define SYSCON_SYSTICKCLKSELX_COUNT              (2U)
+#define SYSCON_SYSTICKCLKSELX_COUNT              (1U)
 
 /*! @name TRACECLKSEL - Trace clock source select */
 /*! @{ */
@@ -1754,17 +1622,25 @@ typedef struct {
 /*! @name CLKOUTSEL - CLKOUT clock source select */
 /*! @{ */
 
-#define SYSCON_CLKOUTSEL_SEL_MASK                (0x7U)
+#define SYSCON_CLKOUTSEL_SEL_MASK                (0xFU)
 #define SYSCON_CLKOUTSEL_SEL_SHIFT               (0U)
 /*! SEL - CLKOUT clock source select.
- *  0b000..Main clock.
- *  0b001..PLL0 clock.
- *  0b010..CLKIN clock.
- *  0b011..FRO 96 MHz clock.
- *  0b100..FRO 1MHz clock.
- *  0b101..PLL1 clock.
- *  0b110..Oscillator 32kHz clock.
- *  0b111..No clock.
+ *  0b0000..Main clock.
+ *  0b0001..PLL0 clock.
+ *  0b0010..CLKIN clock.
+ *  0b0011..FRO 96 MHz clock.
+ *  0b0100..FRO 1MHz clock.
+ *  0b0101..PLL1 clock.
+ *  0b0110..Oscillator 32kHz clock.
+ *  0b0111..No clock.
+ *  0b1000..Reserved.
+ *  0b1001..Reserved.
+ *  0b1010..Reserved.
+ *  0b1011..Reserved.
+ *  0b1100..No clock.
+ *  0b1101..No clock.
+ *  0b1110..No clock.
+ *  0b1111..No clock.
  */
 #define SYSCON_CLKOUTSEL_SEL(x)                  (((uint32_t)(((uint32_t)(x)) << SYSCON_CLKOUTSEL_SEL_SHIFT)) & SYSCON_CLKOUTSEL_SEL_MASK)
 /*! @} */
@@ -1805,6 +1681,24 @@ typedef struct {
 #define SYSCON_PLL1CLKSEL_SEL(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL1CLKSEL_SEL_SHIFT)) & SYSCON_PLL1CLKSEL_SEL_MASK)
 /*! @} */
 
+/*! @name CANCLKSEL - CAN clock source select */
+/*! @{ */
+
+#define SYSCON_CANCLKSEL_SEL_MASK                (0x7U)
+#define SYSCON_CANCLKSEL_SEL_SHIFT               (0U)
+/*! SEL - CAN clock source select.
+ *  0b000..CAN divided clock.
+ *  0b001..FRO 1MHz clock.
+ *  0b010..Oscillator 32 kHz clock.
+ *  0b011..No clock.
+ *  0b100..No clock.
+ *  0b101..No clock.
+ *  0b110..No clock.
+ *  0b111..No clock.
+ */
+#define SYSCON_CANCLKSEL_SEL(x)                  (((uint32_t)(((uint32_t)(x)) << SYSCON_CANCLKSEL_SEL_SHIFT)) & SYSCON_CANCLKSEL_SEL_MASK)
+/*! @} */
+
 /*! @name ADCCLKSEL - ADC clock source select */
 /*! @{ */
 
@@ -1815,7 +1709,7 @@ typedef struct {
  *  0b001..PLL0 clock.
  *  0b010..FRO 96 MHz clock.
  *  0b011..Reserved.
- *  0b100..No clock.
+ *  0b100..Xtal clock coming directly.
  *  0b101..No clock.
  *  0b110..No clock.
  *  0b111..No clock.
@@ -1839,6 +1733,18 @@ typedef struct {
  *  0b111..No clock.
  */
 #define SYSCON_USB0CLKSEL_SEL(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_USB0CLKSEL_SEL_SHIFT)) & SYSCON_USB0CLKSEL_SEL_MASK)
+/*! @} */
+
+/*! @name CLK32KCLKSEL - clock low speed source select for HS USB. */
+/*! @{ */
+
+#define SYSCON_CLK32KCLKSEL_SEL_MASK             (0x8U)
+#define SYSCON_CLK32KCLKSEL_SEL_SHIFT            (3U)
+/*! SEL - clock low speed source select for HS USB.
+ *  0b0..Oscillator 32 kHz clock.
+ *  0b1..FRO1MHz_divided clock.
+ */
+#define SYSCON_CLK32KCLKSEL_SEL(x)               (((uint32_t)(((uint32_t)(x)) << SYSCON_CLK32KCLKSEL_SEL_SHIFT)) & SYSCON_CLK32KCLKSEL_SEL_MASK)
 /*! @} */
 
 /*! @name FCCLKSEL0 - Flexcomm Interface 0 clock source select for Fractional Rate Divider */
@@ -2051,24 +1957,6 @@ typedef struct {
 #define SYSCON_SCTCLKSEL_SEL(x)                  (((uint32_t)(((uint32_t)(x)) << SYSCON_SCTCLKSEL_SEL_SHIFT)) & SYSCON_SCTCLKSEL_SEL_MASK)
 /*! @} */
 
-/*! @name SDIOCLKSEL - SDIO clock source select */
-/*! @{ */
-
-#define SYSCON_SDIOCLKSEL_SEL_MASK               (0x7U)
-#define SYSCON_SDIOCLKSEL_SEL_SHIFT              (0U)
-/*! SEL - SDIO clock source select.
- *  0b000..Main clock.
- *  0b001..PLL0 clock.
- *  0b010..No clock.
- *  0b011..FRO 96 MHz clock.
- *  0b100..No clock.
- *  0b101..PLL1 clock.
- *  0b110..No clock.
- *  0b111..No clock.
- */
-#define SYSCON_SDIOCLKSEL_SEL(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_SDIOCLKSEL_SEL_SHIFT)) & SYSCON_SDIOCLKSEL_SEL_MASK)
-/*! @} */
-
 /*! @name SYSTICKCLKDIV0 - System Tick Timer divider for CPU0 */
 /*! @{ */
 
@@ -2080,59 +1968,26 @@ typedef struct {
 #define SYSCON_SYSTICKCLKDIV0_RESET_MASK         (0x20000000U)
 #define SYSCON_SYSTICKCLKDIV0_RESET_SHIFT        (29U)
 /*! RESET - Resets the divider counter.
- *  0b1..Divider is reset.
  *  0b0..Divider is not reset.
+ *  0b1..Divider is reset.
  */
 #define SYSCON_SYSTICKCLKDIV0_RESET(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_SYSTICKCLKDIV0_RESET_SHIFT)) & SYSCON_SYSTICKCLKDIV0_RESET_MASK)
 
 #define SYSCON_SYSTICKCLKDIV0_HALT_MASK          (0x40000000U)
 #define SYSCON_SYSTICKCLKDIV0_HALT_SHIFT         (30U)
 /*! HALT - Halts the divider counter.
- *  0b1..Divider clock is stoped.
  *  0b0..Divider clock is running.
+ *  0b1..Divider clock is stoped.
  */
 #define SYSCON_SYSTICKCLKDIV0_HALT(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_SYSTICKCLKDIV0_HALT_SHIFT)) & SYSCON_SYSTICKCLKDIV0_HALT_MASK)
 
 #define SYSCON_SYSTICKCLKDIV0_REQFLAG_MASK       (0x80000000U)
 #define SYSCON_SYSTICKCLKDIV0_REQFLAG_SHIFT      (31U)
 /*! REQFLAG - Divider status flag.
- *  0b1..Clock frequency is not stable.
  *  0b0..Divider clock is stable.
+ *  0b1..Clock frequency is not stable.
  */
 #define SYSCON_SYSTICKCLKDIV0_REQFLAG(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_SYSTICKCLKDIV0_REQFLAG_SHIFT)) & SYSCON_SYSTICKCLKDIV0_REQFLAG_MASK)
-/*! @} */
-
-/*! @name SYSTICKCLKDIV1 - System Tick Timer divider for CPU1 */
-/*! @{ */
-
-#define SYSCON_SYSTICKCLKDIV1_DIV_MASK           (0xFFU)
-#define SYSCON_SYSTICKCLKDIV1_DIV_SHIFT          (0U)
-/*! DIV - Clock divider value. */
-#define SYSCON_SYSTICKCLKDIV1_DIV(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_SYSTICKCLKDIV1_DIV_SHIFT)) & SYSCON_SYSTICKCLKDIV1_DIV_MASK)
-
-#define SYSCON_SYSTICKCLKDIV1_RESET_MASK         (0x20000000U)
-#define SYSCON_SYSTICKCLKDIV1_RESET_SHIFT        (29U)
-/*! RESET - Resets the divider counter.
- *  0b1..Divider is reset.
- *  0b0..Divider is not reset.
- */
-#define SYSCON_SYSTICKCLKDIV1_RESET(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_SYSTICKCLKDIV1_RESET_SHIFT)) & SYSCON_SYSTICKCLKDIV1_RESET_MASK)
-
-#define SYSCON_SYSTICKCLKDIV1_HALT_MASK          (0x40000000U)
-#define SYSCON_SYSTICKCLKDIV1_HALT_SHIFT         (30U)
-/*! HALT - Halts the divider counter.
- *  0b1..Divider clock is stoped.
- *  0b0..Divider clock is running.
- */
-#define SYSCON_SYSTICKCLKDIV1_HALT(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_SYSTICKCLKDIV1_HALT_SHIFT)) & SYSCON_SYSTICKCLKDIV1_HALT_MASK)
-
-#define SYSCON_SYSTICKCLKDIV1_REQFLAG_MASK       (0x80000000U)
-#define SYSCON_SYSTICKCLKDIV1_REQFLAG_SHIFT      (31U)
-/*! REQFLAG - Divider status flag.
- *  0b1..Clock frequency is not stable.
- *  0b0..Divider clock is stable.
- */
-#define SYSCON_SYSTICKCLKDIV1_REQFLAG(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_SYSTICKCLKDIV1_REQFLAG_SHIFT)) & SYSCON_SYSTICKCLKDIV1_REQFLAG_MASK)
 /*! @} */
 
 /*! @name TRACECLKDIV - TRACE clock divider */
@@ -2146,26 +2001,59 @@ typedef struct {
 #define SYSCON_TRACECLKDIV_RESET_MASK            (0x20000000U)
 #define SYSCON_TRACECLKDIV_RESET_SHIFT           (29U)
 /*! RESET - Resets the divider counter.
- *  0b1..Divider is reset.
  *  0b0..Divider is not reset.
+ *  0b1..Divider is reset.
  */
 #define SYSCON_TRACECLKDIV_RESET(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_TRACECLKDIV_RESET_SHIFT)) & SYSCON_TRACECLKDIV_RESET_MASK)
 
 #define SYSCON_TRACECLKDIV_HALT_MASK             (0x40000000U)
 #define SYSCON_TRACECLKDIV_HALT_SHIFT            (30U)
 /*! HALT - Halts the divider counter.
- *  0b1..Divider clock is stoped.
  *  0b0..Divider clock is running.
+ *  0b1..Divider clock is stoped.
  */
 #define SYSCON_TRACECLKDIV_HALT(x)               (((uint32_t)(((uint32_t)(x)) << SYSCON_TRACECLKDIV_HALT_SHIFT)) & SYSCON_TRACECLKDIV_HALT_MASK)
 
 #define SYSCON_TRACECLKDIV_REQFLAG_MASK          (0x80000000U)
 #define SYSCON_TRACECLKDIV_REQFLAG_SHIFT         (31U)
 /*! REQFLAG - Divider status flag.
- *  0b1..Clock frequency is not stable.
  *  0b0..Divider clock is stable.
+ *  0b1..Clock frequency is not stable.
  */
 #define SYSCON_TRACECLKDIV_REQFLAG(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_TRACECLKDIV_REQFLAG_SHIFT)) & SYSCON_TRACECLKDIV_REQFLAG_MASK)
+/*! @} */
+
+/*! @name CANCLKDIV - CAN clock divider */
+/*! @{ */
+
+#define SYSCON_CANCLKDIV_DIV_MASK                (0xFFU)
+#define SYSCON_CANCLKDIV_DIV_SHIFT               (0U)
+/*! DIV - Clock divider value. */
+#define SYSCON_CANCLKDIV_DIV(x)                  (((uint32_t)(((uint32_t)(x)) << SYSCON_CANCLKDIV_DIV_SHIFT)) & SYSCON_CANCLKDIV_DIV_MASK)
+
+#define SYSCON_CANCLKDIV_RESET_MASK              (0x20000000U)
+#define SYSCON_CANCLKDIV_RESET_SHIFT             (29U)
+/*! RESET - Resets the divider counter.
+ *  0b0..Divider is not reset.
+ *  0b1..Divider is reset.
+ */
+#define SYSCON_CANCLKDIV_RESET(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_CANCLKDIV_RESET_SHIFT)) & SYSCON_CANCLKDIV_RESET_MASK)
+
+#define SYSCON_CANCLKDIV_HALT_MASK               (0x40000000U)
+#define SYSCON_CANCLKDIV_HALT_SHIFT              (30U)
+/*! HALT - Halts the divider counter.
+ *  0b0..Divider clock is running.
+ *  0b1..Divider clock is stoped.
+ */
+#define SYSCON_CANCLKDIV_HALT(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_CANCLKDIV_HALT_SHIFT)) & SYSCON_CANCLKDIV_HALT_MASK)
+
+#define SYSCON_CANCLKDIV_REQFLAG_MASK            (0x80000000U)
+#define SYSCON_CANCLKDIV_REQFLAG_SHIFT           (31U)
+/*! REQFLAG - Divider status flag.
+ *  0b0..Divider clock is stable.
+ *  0b1..Clock frequency is not stable.
+ */
+#define SYSCON_CANCLKDIV_REQFLAG(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_CANCLKDIV_REQFLAG_SHIFT)) & SYSCON_CANCLKDIV_REQFLAG_MASK)
 /*! @} */
 
 /*! @name FLEXFRG0CTRL - Fractional rate divider for flexcomm 0 */
@@ -2303,24 +2191,24 @@ typedef struct {
 #define SYSCON_AHBCLKDIV_RESET_MASK              (0x20000000U)
 #define SYSCON_AHBCLKDIV_RESET_SHIFT             (29U)
 /*! RESET - Resets the divider counter.
- *  0b1..Divider is reset.
  *  0b0..Divider is not reset.
+ *  0b1..Divider is reset.
  */
 #define SYSCON_AHBCLKDIV_RESET(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKDIV_RESET_SHIFT)) & SYSCON_AHBCLKDIV_RESET_MASK)
 
 #define SYSCON_AHBCLKDIV_HALT_MASK               (0x40000000U)
 #define SYSCON_AHBCLKDIV_HALT_SHIFT              (30U)
 /*! HALT - Halts the divider counter.
- *  0b1..Divider clock is stoped.
  *  0b0..Divider clock is running.
+ *  0b1..Divider clock is stoped.
  */
 #define SYSCON_AHBCLKDIV_HALT(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKDIV_HALT_SHIFT)) & SYSCON_AHBCLKDIV_HALT_MASK)
 
 #define SYSCON_AHBCLKDIV_REQFLAG_MASK            (0x80000000U)
 #define SYSCON_AHBCLKDIV_REQFLAG_SHIFT           (31U)
 /*! REQFLAG - Divider status flag.
- *  0b1..Clock frequency is not stable.
  *  0b0..Divider clock is stable.
+ *  0b1..Clock frequency is not stable.
  */
 #define SYSCON_AHBCLKDIV_REQFLAG(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_AHBCLKDIV_REQFLAG_SHIFT)) & SYSCON_AHBCLKDIV_REQFLAG_MASK)
 /*! @} */
@@ -2336,24 +2224,24 @@ typedef struct {
 #define SYSCON_CLKOUTDIV_RESET_MASK              (0x20000000U)
 #define SYSCON_CLKOUTDIV_RESET_SHIFT             (29U)
 /*! RESET - Resets the divider counter.
- *  0b1..Divider is reset.
  *  0b0..Divider is not reset.
+ *  0b1..Divider is reset.
  */
 #define SYSCON_CLKOUTDIV_RESET(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_CLKOUTDIV_RESET_SHIFT)) & SYSCON_CLKOUTDIV_RESET_MASK)
 
 #define SYSCON_CLKOUTDIV_HALT_MASK               (0x40000000U)
 #define SYSCON_CLKOUTDIV_HALT_SHIFT              (30U)
 /*! HALT - Halts the divider counter.
- *  0b1..Divider clock is stoped.
  *  0b0..Divider clock is running.
+ *  0b1..Divider clock is stoped.
  */
 #define SYSCON_CLKOUTDIV_HALT(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_CLKOUTDIV_HALT_SHIFT)) & SYSCON_CLKOUTDIV_HALT_MASK)
 
 #define SYSCON_CLKOUTDIV_REQFLAG_MASK            (0x80000000U)
 #define SYSCON_CLKOUTDIV_REQFLAG_SHIFT           (31U)
 /*! REQFLAG - Divider status flag.
- *  0b1..Clock frequency is not stable.
  *  0b0..Divider clock is stable.
+ *  0b1..Clock frequency is not stable.
  */
 #define SYSCON_CLKOUTDIV_REQFLAG(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_CLKOUTDIV_REQFLAG_SHIFT)) & SYSCON_CLKOUTDIV_REQFLAG_MASK)
 /*! @} */
@@ -2369,24 +2257,24 @@ typedef struct {
 #define SYSCON_FROHFDIV_RESET_MASK               (0x20000000U)
 #define SYSCON_FROHFDIV_RESET_SHIFT              (29U)
 /*! RESET - Resets the divider counter.
- *  0b1..Divider is reset.
  *  0b0..Divider is not reset.
+ *  0b1..Divider is reset.
  */
 #define SYSCON_FROHFDIV_RESET(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_FROHFDIV_RESET_SHIFT)) & SYSCON_FROHFDIV_RESET_MASK)
 
 #define SYSCON_FROHFDIV_HALT_MASK                (0x40000000U)
 #define SYSCON_FROHFDIV_HALT_SHIFT               (30U)
 /*! HALT - Halts the divider counter.
- *  0b1..Divider clock is stoped.
  *  0b0..Divider clock is running.
+ *  0b1..Divider clock is stoped.
  */
 #define SYSCON_FROHFDIV_HALT(x)                  (((uint32_t)(((uint32_t)(x)) << SYSCON_FROHFDIV_HALT_SHIFT)) & SYSCON_FROHFDIV_HALT_MASK)
 
 #define SYSCON_FROHFDIV_REQFLAG_MASK             (0x80000000U)
 #define SYSCON_FROHFDIV_REQFLAG_SHIFT            (31U)
 /*! REQFLAG - Divider status flag.
- *  0b1..Clock frequency is not stable.
  *  0b0..Divider clock is stable.
+ *  0b1..Clock frequency is not stable.
  */
 #define SYSCON_FROHFDIV_REQFLAG(x)               (((uint32_t)(((uint32_t)(x)) << SYSCON_FROHFDIV_REQFLAG_SHIFT)) & SYSCON_FROHFDIV_REQFLAG_MASK)
 /*! @} */
@@ -2402,24 +2290,24 @@ typedef struct {
 #define SYSCON_WDTCLKDIV_RESET_MASK              (0x20000000U)
 #define SYSCON_WDTCLKDIV_RESET_SHIFT             (29U)
 /*! RESET - Resets the divider counter.
- *  0b1..Divider is reset.
  *  0b0..Divider is not reset.
+ *  0b1..Divider is reset.
  */
 #define SYSCON_WDTCLKDIV_RESET(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_WDTCLKDIV_RESET_SHIFT)) & SYSCON_WDTCLKDIV_RESET_MASK)
 
 #define SYSCON_WDTCLKDIV_HALT_MASK               (0x40000000U)
 #define SYSCON_WDTCLKDIV_HALT_SHIFT              (30U)
 /*! HALT - Halts the divider counter.
- *  0b1..Divider clock is stoped.
  *  0b0..Divider clock is running.
+ *  0b1..Divider clock is stoped.
  */
 #define SYSCON_WDTCLKDIV_HALT(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_WDTCLKDIV_HALT_SHIFT)) & SYSCON_WDTCLKDIV_HALT_MASK)
 
 #define SYSCON_WDTCLKDIV_REQFLAG_MASK            (0x80000000U)
 #define SYSCON_WDTCLKDIV_REQFLAG_SHIFT           (31U)
 /*! REQFLAG - Divider status flag.
- *  0b1..Clock frequency is not stable.
  *  0b0..Divider clock is stable.
+ *  0b1..Clock frequency is not stable.
  */
 #define SYSCON_WDTCLKDIV_REQFLAG(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_WDTCLKDIV_REQFLAG_SHIFT)) & SYSCON_WDTCLKDIV_REQFLAG_MASK)
 /*! @} */
@@ -2435,29 +2323,29 @@ typedef struct {
 #define SYSCON_ADCCLKDIV_RESET_MASK              (0x20000000U)
 #define SYSCON_ADCCLKDIV_RESET_SHIFT             (29U)
 /*! RESET - Resets the divider counter.
- *  0b1..Divider is reset.
  *  0b0..Divider is not reset.
+ *  0b1..Divider is reset.
  */
 #define SYSCON_ADCCLKDIV_RESET(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_ADCCLKDIV_RESET_SHIFT)) & SYSCON_ADCCLKDIV_RESET_MASK)
 
 #define SYSCON_ADCCLKDIV_HALT_MASK               (0x40000000U)
 #define SYSCON_ADCCLKDIV_HALT_SHIFT              (30U)
 /*! HALT - Halts the divider counter.
- *  0b1..Divider clock is stoped.
  *  0b0..Divider clock is running.
+ *  0b1..Divider clock is stoped.
  */
 #define SYSCON_ADCCLKDIV_HALT(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_ADCCLKDIV_HALT_SHIFT)) & SYSCON_ADCCLKDIV_HALT_MASK)
 
 #define SYSCON_ADCCLKDIV_REQFLAG_MASK            (0x80000000U)
 #define SYSCON_ADCCLKDIV_REQFLAG_SHIFT           (31U)
 /*! REQFLAG - Divider status flag.
- *  0b1..Clock frequency is not stable.
  *  0b0..Divider clock is stable.
+ *  0b1..Clock frequency is not stable.
  */
 #define SYSCON_ADCCLKDIV_REQFLAG(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_ADCCLKDIV_REQFLAG_SHIFT)) & SYSCON_ADCCLKDIV_REQFLAG_MASK)
 /*! @} */
 
-/*! @name USB0CLKDIV - USB0 Clock divider */
+/*! @name USB0CLKDIV - USB0-FS Clock divider */
 /*! @{ */
 
 #define SYSCON_USB0CLKDIV_DIV_MASK               (0xFFU)
@@ -2468,26 +2356,59 @@ typedef struct {
 #define SYSCON_USB0CLKDIV_RESET_MASK             (0x20000000U)
 #define SYSCON_USB0CLKDIV_RESET_SHIFT            (29U)
 /*! RESET - Resets the divider counter.
- *  0b1..Divider is reset.
  *  0b0..Divider is not reset.
+ *  0b1..Divider is reset.
  */
 #define SYSCON_USB0CLKDIV_RESET(x)               (((uint32_t)(((uint32_t)(x)) << SYSCON_USB0CLKDIV_RESET_SHIFT)) & SYSCON_USB0CLKDIV_RESET_MASK)
 
 #define SYSCON_USB0CLKDIV_HALT_MASK              (0x40000000U)
 #define SYSCON_USB0CLKDIV_HALT_SHIFT             (30U)
 /*! HALT - Halts the divider counter.
- *  0b1..Divider clock is stoped.
  *  0b0..Divider clock is running.
+ *  0b1..Divider clock is stoped.
  */
 #define SYSCON_USB0CLKDIV_HALT(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_USB0CLKDIV_HALT_SHIFT)) & SYSCON_USB0CLKDIV_HALT_MASK)
 
 #define SYSCON_USB0CLKDIV_REQFLAG_MASK           (0x80000000U)
 #define SYSCON_USB0CLKDIV_REQFLAG_SHIFT          (31U)
 /*! REQFLAG - Divider status flag.
- *  0b1..Clock frequency is not stable.
  *  0b0..Divider clock is stable.
+ *  0b1..Clock frequency is not stable.
  */
 #define SYSCON_USB0CLKDIV_REQFLAG(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_USB0CLKDIV_REQFLAG_SHIFT)) & SYSCON_USB0CLKDIV_REQFLAG_MASK)
+/*! @} */
+
+/*! @name FRO1MCLKDIV - FRO1MHz Clock divider (FRO1M_divided) */
+/*! @{ */
+
+#define SYSCON_FRO1MCLKDIV_DIV_MASK              (0xFFU)
+#define SYSCON_FRO1MCLKDIV_DIV_SHIFT             (0U)
+/*! DIV - Clock divider value. */
+#define SYSCON_FRO1MCLKDIV_DIV(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_FRO1MCLKDIV_DIV_SHIFT)) & SYSCON_FRO1MCLKDIV_DIV_MASK)
+
+#define SYSCON_FRO1MCLKDIV_RESET_MASK            (0x20000000U)
+#define SYSCON_FRO1MCLKDIV_RESET_SHIFT           (29U)
+/*! RESET - Resets the divider counter.
+ *  0b0..Divider is not reset.
+ *  0b1..Divider is reset.
+ */
+#define SYSCON_FRO1MCLKDIV_RESET(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_FRO1MCLKDIV_RESET_SHIFT)) & SYSCON_FRO1MCLKDIV_RESET_MASK)
+
+#define SYSCON_FRO1MCLKDIV_HALT_MASK             (0x40000000U)
+#define SYSCON_FRO1MCLKDIV_HALT_SHIFT            (30U)
+/*! HALT - Halts the divider counter.
+ *  0b0..Divider clock is running.
+ *  0b1..Divider clock is stoped.
+ */
+#define SYSCON_FRO1MCLKDIV_HALT(x)               (((uint32_t)(((uint32_t)(x)) << SYSCON_FRO1MCLKDIV_HALT_SHIFT)) & SYSCON_FRO1MCLKDIV_HALT_MASK)
+
+#define SYSCON_FRO1MCLKDIV_REQFLAG_MASK          (0x80000000U)
+#define SYSCON_FRO1MCLKDIV_REQFLAG_SHIFT         (31U)
+/*! REQFLAG - Divider status flag.
+ *  0b0..Divider clock is stable.
+ *  0b1..Clock frequency is not stable.
+ */
+#define SYSCON_FRO1MCLKDIV_REQFLAG(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_FRO1MCLKDIV_REQFLAG_SHIFT)) & SYSCON_FRO1MCLKDIV_REQFLAG_MASK)
 /*! @} */
 
 /*! @name MCLKDIV - I2S MCLK clock divider */
@@ -2501,24 +2422,24 @@ typedef struct {
 #define SYSCON_MCLKDIV_RESET_MASK                (0x20000000U)
 #define SYSCON_MCLKDIV_RESET_SHIFT               (29U)
 /*! RESET - Resets the divider counter.
- *  0b1..Divider is reset.
  *  0b0..Divider is not reset.
+ *  0b1..Divider is reset.
  */
 #define SYSCON_MCLKDIV_RESET(x)                  (((uint32_t)(((uint32_t)(x)) << SYSCON_MCLKDIV_RESET_SHIFT)) & SYSCON_MCLKDIV_RESET_MASK)
 
 #define SYSCON_MCLKDIV_HALT_MASK                 (0x40000000U)
 #define SYSCON_MCLKDIV_HALT_SHIFT                (30U)
 /*! HALT - Halts the divider counter.
- *  0b1..Divider clock is stoped.
  *  0b0..Divider clock is running.
+ *  0b1..Divider clock is stoped.
  */
 #define SYSCON_MCLKDIV_HALT(x)                   (((uint32_t)(((uint32_t)(x)) << SYSCON_MCLKDIV_HALT_SHIFT)) & SYSCON_MCLKDIV_HALT_MASK)
 
 #define SYSCON_MCLKDIV_REQFLAG_MASK              (0x80000000U)
 #define SYSCON_MCLKDIV_REQFLAG_SHIFT             (31U)
 /*! REQFLAG - Divider status flag.
- *  0b1..Clock frequency is not stable.
  *  0b0..Divider clock is stable.
+ *  0b1..Clock frequency is not stable.
  */
 #define SYSCON_MCLKDIV_REQFLAG(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_MCLKDIV_REQFLAG_SHIFT)) & SYSCON_MCLKDIV_REQFLAG_MASK)
 /*! @} */
@@ -2534,59 +2455,26 @@ typedef struct {
 #define SYSCON_SCTCLKDIV_RESET_MASK              (0x20000000U)
 #define SYSCON_SCTCLKDIV_RESET_SHIFT             (29U)
 /*! RESET - Resets the divider counter.
- *  0b1..Divider is reset.
  *  0b0..Divider is not reset.
+ *  0b1..Divider is reset.
  */
 #define SYSCON_SCTCLKDIV_RESET(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_SCTCLKDIV_RESET_SHIFT)) & SYSCON_SCTCLKDIV_RESET_MASK)
 
 #define SYSCON_SCTCLKDIV_HALT_MASK               (0x40000000U)
 #define SYSCON_SCTCLKDIV_HALT_SHIFT              (30U)
 /*! HALT - Halts the divider counter.
- *  0b1..Divider clock is stoped.
  *  0b0..Divider clock is running.
+ *  0b1..Divider clock is stoped.
  */
 #define SYSCON_SCTCLKDIV_HALT(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_SCTCLKDIV_HALT_SHIFT)) & SYSCON_SCTCLKDIV_HALT_MASK)
 
 #define SYSCON_SCTCLKDIV_REQFLAG_MASK            (0x80000000U)
 #define SYSCON_SCTCLKDIV_REQFLAG_SHIFT           (31U)
 /*! REQFLAG - Divider status flag.
- *  0b1..Clock frequency is not stable.
  *  0b0..Divider clock is stable.
+ *  0b1..Clock frequency is not stable.
  */
 #define SYSCON_SCTCLKDIV_REQFLAG(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_SCTCLKDIV_REQFLAG_SHIFT)) & SYSCON_SCTCLKDIV_REQFLAG_MASK)
-/*! @} */
-
-/*! @name SDIOCLKDIV - SDIO clock divider */
-/*! @{ */
-
-#define SYSCON_SDIOCLKDIV_DIV_MASK               (0xFFU)
-#define SYSCON_SDIOCLKDIV_DIV_SHIFT              (0U)
-/*! DIV - Clock divider value. */
-#define SYSCON_SDIOCLKDIV_DIV(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_SDIOCLKDIV_DIV_SHIFT)) & SYSCON_SDIOCLKDIV_DIV_MASK)
-
-#define SYSCON_SDIOCLKDIV_RESET_MASK             (0x20000000U)
-#define SYSCON_SDIOCLKDIV_RESET_SHIFT            (29U)
-/*! RESET - Resets the divider counter.
- *  0b1..Divider is reset.
- *  0b0..Divider is not reset.
- */
-#define SYSCON_SDIOCLKDIV_RESET(x)               (((uint32_t)(((uint32_t)(x)) << SYSCON_SDIOCLKDIV_RESET_SHIFT)) & SYSCON_SDIOCLKDIV_RESET_MASK)
-
-#define SYSCON_SDIOCLKDIV_HALT_MASK              (0x40000000U)
-#define SYSCON_SDIOCLKDIV_HALT_SHIFT             (30U)
-/*! HALT - Halts the divider counter.
- *  0b1..Divider clock is stoped.
- *  0b0..Divider clock is running.
- */
-#define SYSCON_SDIOCLKDIV_HALT(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_SDIOCLKDIV_HALT_SHIFT)) & SYSCON_SDIOCLKDIV_HALT_MASK)
-
-#define SYSCON_SDIOCLKDIV_REQFLAG_MASK           (0x80000000U)
-#define SYSCON_SDIOCLKDIV_REQFLAG_SHIFT          (31U)
-/*! REQFLAG - Divider status flag.
- *  0b1..Clock frequency is not stable.
- *  0b0..Divider clock is stable.
- */
-#define SYSCON_SDIOCLKDIV_REQFLAG(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_SDIOCLKDIV_REQFLAG_SHIFT)) & SYSCON_SDIOCLKDIV_REQFLAG_MASK)
 /*! @} */
 
 /*! @name PLL0CLKDIV - PLL0 clock divider */
@@ -2600,24 +2488,24 @@ typedef struct {
 #define SYSCON_PLL0CLKDIV_RESET_MASK             (0x20000000U)
 #define SYSCON_PLL0CLKDIV_RESET_SHIFT            (29U)
 /*! RESET - Resets the divider counter.
- *  0b1..Divider is reset.
  *  0b0..Divider is not reset.
+ *  0b1..Divider is reset.
  */
 #define SYSCON_PLL0CLKDIV_RESET(x)               (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL0CLKDIV_RESET_SHIFT)) & SYSCON_PLL0CLKDIV_RESET_MASK)
 
 #define SYSCON_PLL0CLKDIV_HALT_MASK              (0x40000000U)
 #define SYSCON_PLL0CLKDIV_HALT_SHIFT             (30U)
 /*! HALT - Halts the divider counter.
- *  0b1..Divider clock is stoped.
  *  0b0..Divider clock is running.
+ *  0b1..Divider clock is stoped.
  */
 #define SYSCON_PLL0CLKDIV_HALT(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL0CLKDIV_HALT_SHIFT)) & SYSCON_PLL0CLKDIV_HALT_MASK)
 
 #define SYSCON_PLL0CLKDIV_REQFLAG_MASK           (0x80000000U)
 #define SYSCON_PLL0CLKDIV_REQFLAG_SHIFT          (31U)
 /*! REQFLAG - Divider status flag.
- *  0b1..Clock frequency is not stable.
  *  0b0..Divider clock is stable.
+ *  0b1..Clock frequency is not stable.
  */
 #define SYSCON_PLL0CLKDIV_REQFLAG(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL0CLKDIV_REQFLAG_SHIFT)) & SYSCON_PLL0CLKDIV_REQFLAG_MASK)
 /*! @} */
@@ -2627,9 +2515,9 @@ typedef struct {
 
 #define SYSCON_CLOCKGENUPDATELOCKOUT_CLOCKGENUPDATELOCKOUT_MASK (0xFFFFFFFFU)
 #define SYSCON_CLOCKGENUPDATELOCKOUT_CLOCKGENUPDATELOCKOUT_SHIFT (0U)
-/*! CLOCKGENUPDATELOCKOUT - Control clock configuration registers access (like xxxDIV, xxxSEL).
- *  0b00000000000000000000000000000001..update all clock configuration.
+/*! CLOCKGENUPDATELOCKOUT - Control clock configuration registers access (for example, xxxDIV, xxxSEL).
  *  0b00000000000000000000000000000000..all hardware clock configruration are freeze.
+ *  0b00000000000000000000000000000001..update all clock configuration.
  */
 #define SYSCON_CLOCKGENUPDATELOCKOUT_CLOCKGENUPDATELOCKOUT(x) (((uint32_t)(((uint32_t)(x)) << SYSCON_CLOCKGENUPDATELOCKOUT_CLOCKGENUPDATELOCKOUT_SHIFT)) & SYSCON_CLOCKGENUPDATELOCKOUT_CLOCKGENUPDATELOCKOUT_MASK)
 /*! @} */
@@ -2689,22 +2577,22 @@ typedef struct {
  *  0b0011..4 system clocks flash access time (for system clock rates up to 44 MHz).
  *  0b0100..5 system clocks flash access time (for system clock rates up to 55 MHz).
  *  0b0101..6 system clocks flash access time (for system clock rates up to 66 MHz).
- *  0b0110..7 system clocks flash access time (for system clock rates up to 77 MHz).
- *  0b0111..8 system clocks flash access time (for system clock rates up to 88 MHz).
- *  0b1000..9 system clocks flash access time (for system clock rates up to 100 MHz).
- *  0b1001..10 system clocks flash access time (for system clock rates up to 115 MHz).
- *  0b1010..11 system clocks flash access time (for system clock rates up to 130 MHz).
+ *  0b0110..7 system clocks flash access time (for system clock rates up to 84 MHz).
+ *  0b0111..8 system clocks flash access time (for system clock rates up to 104 MHz).
+ *  0b1000..9 system clocks flash access time (for system clock rates up to 119 MHz).
+ *  0b1001..10 system clocks flash access time (for system clock rates up to 129 MHz).
+ *  0b1010..11 system clocks flash access time (for system clock rates up to 144 MHz).
  *  0b1011..12 system clocks flash access time (for system clock rates up to 150 MHz).
  */
 #define SYSCON_FMCCR_FLASHTIM(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_FMCCR_FLASHTIM_SHIFT)) & SYSCON_FMCCR_FLASHTIM_MASK)
 /*! @} */
 
-/*! @name USB0NEEDCLKCTRL - USB0 need clock control */
+/*! @name USB0NEEDCLKCTRL - USB0-FS need clock control */
 /*! @{ */
 
 #define SYSCON_USB0NEEDCLKCTRL_AP_FS_DEV_NEEDCLK_MASK (0x1U)
 #define SYSCON_USB0NEEDCLKCTRL_AP_FS_DEV_NEEDCLK_SHIFT (0U)
-/*! AP_FS_DEV_NEEDCLK - USB0 Device USB0_NEEDCLK signal control:.
+/*! AP_FS_DEV_NEEDCLK - USB0-FS Device USB0_NEEDCLK signal control:.
  *  0b0..Under hardware control.
  *  0b1..Forced high.
  */
@@ -2712,7 +2600,7 @@ typedef struct {
 
 #define SYSCON_USB0NEEDCLKCTRL_POL_FS_DEV_NEEDCLK_MASK (0x2U)
 #define SYSCON_USB0NEEDCLKCTRL_POL_FS_DEV_NEEDCLK_SHIFT (1U)
-/*! POL_FS_DEV_NEEDCLK - USB0 Device USB0_NEEDCLK polarity for triggering the USB0 wake-up interrupt:.
+/*! POL_FS_DEV_NEEDCLK - USB0-FS Device USB0_NEEDCLK polarity for triggering the USB0-FS wake-up interrupt:.
  *  0b0..Falling edge of device USB0_NEEDCLK triggers wake-up.
  *  0b1..Rising edge of device USB0_NEEDCLK triggers wake-up.
  */
@@ -2720,7 +2608,7 @@ typedef struct {
 
 #define SYSCON_USB0NEEDCLKCTRL_AP_FS_HOST_NEEDCLK_MASK (0x4U)
 #define SYSCON_USB0NEEDCLKCTRL_AP_FS_HOST_NEEDCLK_SHIFT (2U)
-/*! AP_FS_HOST_NEEDCLK - USB0 Host USB0_NEEDCLK signal control:.
+/*! AP_FS_HOST_NEEDCLK - USB0-FS Host USB0_NEEDCLK signal control:.
  *  0b0..Under hardware control.
  *  0b1..Forced high.
  */
@@ -2728,29 +2616,29 @@ typedef struct {
 
 #define SYSCON_USB0NEEDCLKCTRL_POL_FS_HOST_NEEDCLK_MASK (0x8U)
 #define SYSCON_USB0NEEDCLKCTRL_POL_FS_HOST_NEEDCLK_SHIFT (3U)
-/*! POL_FS_HOST_NEEDCLK - USB0 Host USB0_NEEDCLK polarity for triggering the USB0 wake-up interrupt:.
+/*! POL_FS_HOST_NEEDCLK - USB0-FS Host USB0_NEEDCLK polarity for triggering the USB0-FS wake-up interrupt:.
  *  0b0..Falling edge of device USB0_NEEDCLK triggers wake-up.
  *  0b1..Rising edge of device USB0_NEEDCLK triggers wake-up.
  */
 #define SYSCON_USB0NEEDCLKCTRL_POL_FS_HOST_NEEDCLK(x) (((uint32_t)(((uint32_t)(x)) << SYSCON_USB0NEEDCLKCTRL_POL_FS_HOST_NEEDCLK_SHIFT)) & SYSCON_USB0NEEDCLKCTRL_POL_FS_HOST_NEEDCLK_MASK)
 /*! @} */
 
-/*! @name USB0NEEDCLKSTAT - USB0 need clock status */
+/*! @name USB0NEEDCLKSTAT - USB0-FS need clock status */
 /*! @{ */
 
 #define SYSCON_USB0NEEDCLKSTAT_DEV_NEEDCLK_MASK  (0x1U)
 #define SYSCON_USB0NEEDCLKSTAT_DEV_NEEDCLK_SHIFT (0U)
-/*! DEV_NEEDCLK - USB0 Device USB0_NEEDCLK signal status:.
- *  0b1..USB0 Device clock is high.
- *  0b0..USB0 Device clock is low.
+/*! DEV_NEEDCLK - USB0-FS Device USB0_NEEDCLK signal status:.
+ *  0b0..USB0-FS Device clock is low.
+ *  0b1..USB0-FS Device clock is high.
  */
 #define SYSCON_USB0NEEDCLKSTAT_DEV_NEEDCLK(x)    (((uint32_t)(((uint32_t)(x)) << SYSCON_USB0NEEDCLKSTAT_DEV_NEEDCLK_SHIFT)) & SYSCON_USB0NEEDCLKSTAT_DEV_NEEDCLK_MASK)
 
 #define SYSCON_USB0NEEDCLKSTAT_HOST_NEEDCLK_MASK (0x2U)
 #define SYSCON_USB0NEEDCLKSTAT_HOST_NEEDCLK_SHIFT (1U)
-/*! HOST_NEEDCLK - USB0 Host USB0_NEEDCLK signal status:.
- *  0b1..USB0 Host clock is high.
- *  0b0..USB0 Host clock is low.
+/*! HOST_NEEDCLK - USB0-FS Host USB0_NEEDCLK signal status:.
+ *  0b0..USB0-FS Host clock is low.
+ *  0b1..USB0-FS Host clock is high.
  */
 #define SYSCON_USB0NEEDCLKSTAT_HOST_NEEDCLK(x)   (((uint32_t)(((uint32_t)(x)) << SYSCON_USB0NEEDCLKSTAT_HOST_NEEDCLK_SHIFT)) & SYSCON_USB0NEEDCLKSTAT_HOST_NEEDCLK_MASK)
 /*! @} */
@@ -2761,8 +2649,8 @@ typedef struct {
 #define SYSCON_FMCFLUSH_FLUSH_MASK               (0x1U)
 #define SYSCON_FMCFLUSH_FLUSH_SHIFT              (0U)
 /*! FLUSH - Flush control
- *  0b1..Flush the FMC buffer contents.
  *  0b0..No action is performed.
+ *  0b1..Flush the FMC buffer contents.
  */
 #define SYSCON_FMCFLUSH_FLUSH(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_FMCFLUSH_FLUSH_SHIFT)) & SYSCON_FMCFLUSH_FLUSH_MASK)
 /*! @} */
@@ -2779,12 +2667,12 @@ typedef struct {
 #define SYSCON_MCLKIO_MCLKIO(x)                  (((uint32_t)(((uint32_t)(x)) << SYSCON_MCLKIO_MCLKIO_SHIFT)) & SYSCON_MCLKIO_MCLKIO_MASK)
 /*! @} */
 
-/*! @name USB1NEEDCLKCTRL - USB1 need clock control */
+/*! @name USB1NEEDCLKCTRL - USB1-HS need clock control */
 /*! @{ */
 
 #define SYSCON_USB1NEEDCLKCTRL_AP_HS_DEV_NEEDCLK_MASK (0x1U)
 #define SYSCON_USB1NEEDCLKCTRL_AP_HS_DEV_NEEDCLK_SHIFT (0U)
-/*! AP_HS_DEV_NEEDCLK - USB1 Device need_clock signal control:
+/*! AP_HS_DEV_NEEDCLK - USB1-HS Device need_clock signal control:
  *  0b0..HOST_NEEDCLK is under hardware control.
  *  0b1..HOST_NEEDCLK is forced high.
  */
@@ -2792,7 +2680,7 @@ typedef struct {
 
 #define SYSCON_USB1NEEDCLKCTRL_POL_HS_DEV_NEEDCLK_MASK (0x2U)
 #define SYSCON_USB1NEEDCLKCTRL_POL_HS_DEV_NEEDCLK_SHIFT (1U)
-/*! POL_HS_DEV_NEEDCLK - USB1 device need clock polarity for triggering the USB1_NEEDCLK wake-up interrupt:
+/*! POL_HS_DEV_NEEDCLK - USB1-HS device need clock polarity for triggering the USB1_NEEDCLK wake-up interrupt:
  *  0b0..Falling edge of DEV_NEEDCLK triggers wake-up.
  *  0b1..Rising edge of DEV_NEEDCLK triggers wake-up.
  */
@@ -2800,7 +2688,7 @@ typedef struct {
 
 #define SYSCON_USB1NEEDCLKCTRL_AP_HS_HOST_NEEDCLK_MASK (0x4U)
 #define SYSCON_USB1NEEDCLKCTRL_AP_HS_HOST_NEEDCLK_SHIFT (2U)
-/*! AP_HS_HOST_NEEDCLK - USB1 Host need clock signal control:
+/*! AP_HS_HOST_NEEDCLK - USB1-HS Host need clock signal control:
  *  0b0..HOST_NEEDCLK is under hardware control.
  *  0b1..HOST_NEEDCLK is forced high.
  */
@@ -2808,7 +2696,7 @@ typedef struct {
 
 #define SYSCON_USB1NEEDCLKCTRL_POL_HS_HOST_NEEDCLK_MASK (0x8U)
 #define SYSCON_USB1NEEDCLKCTRL_POL_HS_HOST_NEEDCLK_SHIFT (3U)
-/*! POL_HS_HOST_NEEDCLK - USB1 host need clock polarity for triggering the USB1_NEEDCLK wake-up interrupt.
+/*! POL_HS_HOST_NEEDCLK - USB1-HS host need clock polarity for triggering the USB1_NEEDCLK wake-up interrupt.
  *  0b0..Falling edge of HOST_NEEDCLK triggers wake-up.
  *  0b1..Rising edge of HOST_NEEDCLK triggers wake-up.
  */
@@ -2823,82 +2711,81 @@ typedef struct {
 #define SYSCON_USB1NEEDCLKCTRL_HS_DEV_WAKEUP_N(x) (((uint32_t)(((uint32_t)(x)) << SYSCON_USB1NEEDCLKCTRL_HS_DEV_WAKEUP_N_SHIFT)) & SYSCON_USB1NEEDCLKCTRL_HS_DEV_WAKEUP_N_MASK)
 /*! @} */
 
-/*! @name USB1NEEDCLKSTAT - USB1 need clock status */
+/*! @name USB1NEEDCLKSTAT - USB1-HS need clock status */
 /*! @{ */
 
 #define SYSCON_USB1NEEDCLKSTAT_DEV_NEEDCLK_MASK  (0x1U)
 #define SYSCON_USB1NEEDCLKSTAT_DEV_NEEDCLK_SHIFT (0U)
-/*! DEV_NEEDCLK - USB1 Device need_clock signal status:.
- *  0b1..DEV_NEEDCLK is high.
+/*! DEV_NEEDCLK - USB1-HS Device need_clock signal status:.
  *  0b0..DEV_NEEDCLK is low.
+ *  0b1..DEV_NEEDCLK is high.
  */
 #define SYSCON_USB1NEEDCLKSTAT_DEV_NEEDCLK(x)    (((uint32_t)(((uint32_t)(x)) << SYSCON_USB1NEEDCLKSTAT_DEV_NEEDCLK_SHIFT)) & SYSCON_USB1NEEDCLKSTAT_DEV_NEEDCLK_MASK)
 
 #define SYSCON_USB1NEEDCLKSTAT_HOST_NEEDCLK_MASK (0x2U)
 #define SYSCON_USB1NEEDCLKSTAT_HOST_NEEDCLK_SHIFT (1U)
-/*! HOST_NEEDCLK - USB1 Host need_clock signal status:.
- *  0b1..HOST_NEEDCLK is high.
+/*! HOST_NEEDCLK - USB1-HS Host need_clock signal status:.
  *  0b0..HOST_NEEDCLK is low.
+ *  0b1..HOST_NEEDCLK is high.
  */
 #define SYSCON_USB1NEEDCLKSTAT_HOST_NEEDCLK(x)   (((uint32_t)(((uint32_t)(x)) << SYSCON_USB1NEEDCLKSTAT_HOST_NEEDCLK_SHIFT)) & SYSCON_USB1NEEDCLKSTAT_HOST_NEEDCLK_MASK)
 /*! @} */
 
-/*! @name SDIOCLKCTRL - SDIO CCLKIN phase and delay control */
+/*! @name FLASHREMAP_SIZE - This 32-bit register contains the size of the image to remap, in bytes. The 12 LSBs are ignored, so the size granularity is 4KB. */
 /*! @{ */
 
-#define SYSCON_SDIOCLKCTRL_CCLK_DRV_PHASE_MASK   (0x3U)
-#define SYSCON_SDIOCLKCTRL_CCLK_DRV_PHASE_SHIFT  (0U)
-/*! CCLK_DRV_PHASE - Programmable delay value by which cclk_in_drv is phase-shifted with regard to cclk_in.
- *  0b00..0 degree shift.
- *  0b01..90 degree shift.
- *  0b10..180 degree shift.
- *  0b11..270 degree shift.
+#define SYSCON_FLASHREMAP_SIZE_FLASHREMAP_SIZE_MASK (0xFFFFFFFFU)
+#define SYSCON_FLASHREMAP_SIZE_FLASHREMAP_SIZE_SHIFT (0U)
+#define SYSCON_FLASHREMAP_SIZE_FLASHREMAP_SIZE(x) (((uint32_t)(((uint32_t)(x)) << SYSCON_FLASHREMAP_SIZE_FLASHREMAP_SIZE_SHIFT)) & SYSCON_FLASHREMAP_SIZE_FLASHREMAP_SIZE_MASK)
+/*! @} */
+
+/*! @name FLASHREMAP_SIZE_DP - This 32-bit register is a duplicate of FLASHREMAPSIZE for increased security. */
+/*! @{ */
+
+#define SYSCON_FLASHREMAP_SIZE_DP_FLASHREMAP_SIZE_MASK (0xFFFFFFFFU)
+#define SYSCON_FLASHREMAP_SIZE_DP_FLASHREMAP_SIZE_SHIFT (0U)
+#define SYSCON_FLASHREMAP_SIZE_DP_FLASHREMAP_SIZE(x) (((uint32_t)(((uint32_t)(x)) << SYSCON_FLASHREMAP_SIZE_DP_FLASHREMAP_SIZE_SHIFT)) & SYSCON_FLASHREMAP_SIZE_DP_FLASHREMAP_SIZE_MASK)
+/*! @} */
+
+/*! @name FLASHREMAP_OFFSET - This 32-bit register contains the offset by which the image is to be remapped. The 12 LSBs are ignored, so the remap granularity is 4KB. */
+/*! @{ */
+
+#define SYSCON_FLASHREMAP_OFFSET_FLASHREMAP_OFFSET_MASK (0xFFFFFFFFU)
+#define SYSCON_FLASHREMAP_OFFSET_FLASHREMAP_OFFSET_SHIFT (0U)
+#define SYSCON_FLASHREMAP_OFFSET_FLASHREMAP_OFFSET(x) (((uint32_t)(((uint32_t)(x)) << SYSCON_FLASHREMAP_OFFSET_FLASHREMAP_OFFSET_SHIFT)) & SYSCON_FLASHREMAP_OFFSET_FLASHREMAP_OFFSET_MASK)
+/*! @} */
+
+/*! @name FLASHREMAP_OFFSET_DP - This 32-bit register is a duplicate of FLASHREMAPOFFSET for increased security. */
+/*! @{ */
+
+#define SYSCON_FLASHREMAP_OFFSET_DP_FLASHREMAP_OFFSET_MASK (0xFFFFFFFFU)
+#define SYSCON_FLASHREMAP_OFFSET_DP_FLASHREMAP_OFFSET_SHIFT (0U)
+#define SYSCON_FLASHREMAP_OFFSET_DP_FLASHREMAP_OFFSET(x) (((uint32_t)(((uint32_t)(x)) << SYSCON_FLASHREMAP_OFFSET_DP_FLASHREMAP_OFFSET_SHIFT)) & SYSCON_FLASHREMAP_OFFSET_DP_FLASHREMAP_OFFSET_MASK)
+/*! @} */
+
+/*! @name FLASHREMAP_LOCK - Control write access to FLASHREMAP_SIZE and FLASHREMAP_OFFSET registers. */
+/*! @{ */
+
+#define SYSCON_FLASHREMAP_LOCK_LOCK_MASK         (0xFFFFFFFFU)
+#define SYSCON_FLASHREMAP_LOCK_LOCK_SHIFT        (0U)
+/*! LOCK - Control write access to FLASHREMAP_SIZE and FLASHREMAP_OFFSET registers. Any value other
+ *    than 0xC33CA55A and 0x3CC35AA5 does not modify the state.
+ *  0b00111100110000110101101010100101..Write access to 4 registers FLASHREMAP_SIZE* and FLASHREMAP_OFFSET* is unlocked.
+ *  0b11000011001111001010010101011010..Write access to 4 registers FLASHREMAP_SIZE* and FLASHREMAP_OFFSET* is locked.
  */
-#define SYSCON_SDIOCLKCTRL_CCLK_DRV_PHASE(x)     (((uint32_t)(((uint32_t)(x)) << SYSCON_SDIOCLKCTRL_CCLK_DRV_PHASE_SHIFT)) & SYSCON_SDIOCLKCTRL_CCLK_DRV_PHASE_MASK)
+#define SYSCON_FLASHREMAP_LOCK_LOCK(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_FLASHREMAP_LOCK_LOCK_SHIFT)) & SYSCON_FLASHREMAP_LOCK_LOCK_MASK)
+/*! @} */
 
-#define SYSCON_SDIOCLKCTRL_CCLK_SAMPLE_PHASE_MASK (0xCU)
-#define SYSCON_SDIOCLKCTRL_CCLK_SAMPLE_PHASE_SHIFT (2U)
-/*! CCLK_SAMPLE_PHASE - Programmable delay value by which cclk_in_sample is delayed with regard to cclk_in.
- *  0b00..0 degree shift.
- *  0b01..90 degree shift.
- *  0b10..180 degree shift.
- *  0b11..270 degree shift.
+/*! @name CASPER_CTRL - Control CASPER integration. */
+/*! @{ */
+
+#define SYSCON_CASPER_CTRL_INTERLEAVE_MASK       (0x1U)
+#define SYSCON_CASPER_CTRL_INTERLEAVE_SHIFT      (0U)
+/*! INTERLEAVE - Control RAM access for RAMX0 and RAMX1.
+ *  0b0..RAM access to RAMX0 and RAMX1 is consecutive.
+ *  0b1..RAM access to RAMX0 and RAMX1 is interleaved.
  */
-#define SYSCON_SDIOCLKCTRL_CCLK_SAMPLE_PHASE(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_SDIOCLKCTRL_CCLK_SAMPLE_PHASE_SHIFT)) & SYSCON_SDIOCLKCTRL_CCLK_SAMPLE_PHASE_MASK)
-
-#define SYSCON_SDIOCLKCTRL_PHASE_ACTIVE_MASK     (0x80U)
-#define SYSCON_SDIOCLKCTRL_PHASE_ACTIVE_SHIFT    (7U)
-/*! PHASE_ACTIVE - Enables the delays CCLK_DRV_PHASE and CCLK_SAMPLE_PHASE.
- *  0b0..Bypassed.
- *  0b1..Activates phase shift logic. When active, the clock divider is active and phase delays are enabled.
- */
-#define SYSCON_SDIOCLKCTRL_PHASE_ACTIVE(x)       (((uint32_t)(((uint32_t)(x)) << SYSCON_SDIOCLKCTRL_PHASE_ACTIVE_SHIFT)) & SYSCON_SDIOCLKCTRL_PHASE_ACTIVE_MASK)
-
-#define SYSCON_SDIOCLKCTRL_CCLK_DRV_DELAY_MASK   (0x1F0000U)
-#define SYSCON_SDIOCLKCTRL_CCLK_DRV_DELAY_SHIFT  (16U)
-/*! CCLK_DRV_DELAY - Programmable delay value by which cclk_in_drv is delayed with regard to cclk_in. */
-#define SYSCON_SDIOCLKCTRL_CCLK_DRV_DELAY(x)     (((uint32_t)(((uint32_t)(x)) << SYSCON_SDIOCLKCTRL_CCLK_DRV_DELAY_SHIFT)) & SYSCON_SDIOCLKCTRL_CCLK_DRV_DELAY_MASK)
-
-#define SYSCON_SDIOCLKCTRL_CCLK_DRV_DELAY_ACTIVE_MASK (0x800000U)
-#define SYSCON_SDIOCLKCTRL_CCLK_DRV_DELAY_ACTIVE_SHIFT (23U)
-/*! CCLK_DRV_DELAY_ACTIVE - Enables drive delay, as controlled by the CCLK_DRV_DELAY field.
- *  0b1..Enable drive delay.
- *  0b0..Disable drive delay.
- */
-#define SYSCON_SDIOCLKCTRL_CCLK_DRV_DELAY_ACTIVE(x) (((uint32_t)(((uint32_t)(x)) << SYSCON_SDIOCLKCTRL_CCLK_DRV_DELAY_ACTIVE_SHIFT)) & SYSCON_SDIOCLKCTRL_CCLK_DRV_DELAY_ACTIVE_MASK)
-
-#define SYSCON_SDIOCLKCTRL_CCLK_SAMPLE_DELAY_MASK (0x1F000000U)
-#define SYSCON_SDIOCLKCTRL_CCLK_SAMPLE_DELAY_SHIFT (24U)
-/*! CCLK_SAMPLE_DELAY - Programmable delay value by which cclk_in_sample is delayed with regard to cclk_in. */
-#define SYSCON_SDIOCLKCTRL_CCLK_SAMPLE_DELAY(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_SDIOCLKCTRL_CCLK_SAMPLE_DELAY_SHIFT)) & SYSCON_SDIOCLKCTRL_CCLK_SAMPLE_DELAY_MASK)
-
-#define SYSCON_SDIOCLKCTRL_CCLK_SAMPLE_DELAY_ACTIVE_MASK (0x80000000U)
-#define SYSCON_SDIOCLKCTRL_CCLK_SAMPLE_DELAY_ACTIVE_SHIFT (31U)
-/*! CCLK_SAMPLE_DELAY_ACTIVE - Enables sample delay, as controlled by the CCLK_SAMPLE_DELAY field.
- *  0b1..Enables sample delay.
- *  0b0..Disables sample delay.
- */
-#define SYSCON_SDIOCLKCTRL_CCLK_SAMPLE_DELAY_ACTIVE(x) (((uint32_t)(((uint32_t)(x)) << SYSCON_SDIOCLKCTRL_CCLK_SAMPLE_DELAY_ACTIVE_SHIFT)) & SYSCON_SDIOCLKCTRL_CCLK_SAMPLE_DELAY_ACTIVE_MASK)
+#define SYSCON_CASPER_CTRL_INTERLEAVE(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_CASPER_CTRL_INTERLEAVE_SHIFT)) & SYSCON_CASPER_CTRL_INTERLEAVE_MASK)
 /*! @} */
 
 /*! @name PLL1CTRL - PLL1 550m control */
@@ -2922,16 +2809,16 @@ typedef struct {
 #define SYSCON_PLL1CTRL_BYPASSPLL_MASK           (0x8000U)
 #define SYSCON_PLL1CTRL_BYPASSPLL_SHIFT          (15U)
 /*! BYPASSPLL - Bypass PLL input clock is sent directly to the PLL output (default).
- *  0b1..PLL input clock is sent directly to the PLL output.
  *  0b0..use PLL.
+ *  0b1..PLL input clock is sent directly to the PLL output.
  */
 #define SYSCON_PLL1CTRL_BYPASSPLL(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL1CTRL_BYPASSPLL_SHIFT)) & SYSCON_PLL1CTRL_BYPASSPLL_MASK)
 
 #define SYSCON_PLL1CTRL_BYPASSPOSTDIV2_MASK      (0x10000U)
 #define SYSCON_PLL1CTRL_BYPASSPOSTDIV2_SHIFT     (16U)
 /*! BYPASSPOSTDIV2 - bypass of the divide-by-2 divider in the post-divider.
- *  0b1..bypass of the divide-by-2 divider in the post-divider.
  *  0b0..use the divide-by-2 divider in the post-divider.
+ *  0b1..bypass of the divide-by-2 divider in the post-divider.
  */
 #define SYSCON_PLL1CTRL_BYPASSPOSTDIV2(x)        (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL1CTRL_BYPASSPOSTDIV2_SHIFT)) & SYSCON_PLL1CTRL_BYPASSPOSTDIV2_MASK)
 
@@ -2943,32 +2830,32 @@ typedef struct {
 #define SYSCON_PLL1CTRL_BWDIRECT_MASK            (0x40000U)
 #define SYSCON_PLL1CTRL_BWDIRECT_SHIFT           (18U)
 /*! BWDIRECT - control of the bandwidth of the PLL.
- *  0b1..modify the bandwidth of the PLL directly.
  *  0b0..the bandwidth is changed synchronously with the feedback-divider.
+ *  0b1..modify the bandwidth of the PLL directly.
  */
 #define SYSCON_PLL1CTRL_BWDIRECT(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL1CTRL_BWDIRECT_SHIFT)) & SYSCON_PLL1CTRL_BWDIRECT_MASK)
 
 #define SYSCON_PLL1CTRL_BYPASSPREDIV_MASK        (0x80000U)
 #define SYSCON_PLL1CTRL_BYPASSPREDIV_SHIFT       (19U)
 /*! BYPASSPREDIV - bypass of the pre-divider.
- *  0b1..bypass of the pre-divider.
  *  0b0..use the pre-divider.
+ *  0b1..bypass of the pre-divider.
  */
 #define SYSCON_PLL1CTRL_BYPASSPREDIV(x)          (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL1CTRL_BYPASSPREDIV_SHIFT)) & SYSCON_PLL1CTRL_BYPASSPREDIV_MASK)
 
 #define SYSCON_PLL1CTRL_BYPASSPOSTDIV_MASK       (0x100000U)
 #define SYSCON_PLL1CTRL_BYPASSPOSTDIV_SHIFT      (20U)
 /*! BYPASSPOSTDIV - bypass of the post-divider.
- *  0b1..bypass of the post-divider.
  *  0b0..use the post-divider.
+ *  0b1..bypass of the post-divider.
  */
 #define SYSCON_PLL1CTRL_BYPASSPOSTDIV(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL1CTRL_BYPASSPOSTDIV_SHIFT)) & SYSCON_PLL1CTRL_BYPASSPOSTDIV_MASK)
 
 #define SYSCON_PLL1CTRL_CLKEN_MASK               (0x200000U)
 #define SYSCON_PLL1CTRL_CLKEN_SHIFT              (21U)
 /*! CLKEN - enable the output clock.
- *  0b1..Enable the output clock.
  *  0b0..Disable the output clock.
+ *  0b1..Enable the output clock.
  */
 #define SYSCON_PLL1CTRL_CLKEN(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL1CTRL_CLKEN_SHIFT)) & SYSCON_PLL1CTRL_CLKEN_MASK)
 
@@ -2985,8 +2872,8 @@ typedef struct {
 #define SYSCON_PLL1CTRL_SKEWEN_MASK              (0x1000000U)
 #define SYSCON_PLL1CTRL_SKEWEN_SHIFT             (24U)
 /*! SKEWEN - Skew mode.
- *  0b1..skewmode is enable.
  *  0b0..skewmode is disable.
+ *  0b1..skewmode is enable.
  */
 #define SYSCON_PLL1CTRL_SKEWEN(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL1CTRL_SKEWEN_SHIFT)) & SYSCON_PLL1CTRL_SKEWEN_MASK)
 /*! @} */
@@ -3083,16 +2970,16 @@ typedef struct {
 #define SYSCON_PLL0CTRL_BYPASSPLL_MASK           (0x8000U)
 #define SYSCON_PLL0CTRL_BYPASSPLL_SHIFT          (15U)
 /*! BYPASSPLL - Bypass PLL input clock is sent directly to the PLL output (default).
- *  0b1..Bypass PLL input clock is sent directly to the PLL output.
  *  0b0..use PLL.
+ *  0b1..Bypass PLL input clock is sent directly to the PLL output.
  */
 #define SYSCON_PLL0CTRL_BYPASSPLL(x)             (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL0CTRL_BYPASSPLL_SHIFT)) & SYSCON_PLL0CTRL_BYPASSPLL_MASK)
 
 #define SYSCON_PLL0CTRL_BYPASSPOSTDIV2_MASK      (0x10000U)
 #define SYSCON_PLL0CTRL_BYPASSPOSTDIV2_SHIFT     (16U)
 /*! BYPASSPOSTDIV2 - bypass of the divide-by-2 divider in the post-divider.
- *  0b1..bypass of the divide-by-2 divider in the post-divider.
  *  0b0..use the divide-by-2 divider in the post-divider.
+ *  0b1..bypass of the divide-by-2 divider in the post-divider.
  */
 #define SYSCON_PLL0CTRL_BYPASSPOSTDIV2(x)        (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL0CTRL_BYPASSPOSTDIV2_SHIFT)) & SYSCON_PLL0CTRL_BYPASSPOSTDIV2_MASK)
 
@@ -3104,40 +2991,40 @@ typedef struct {
 #define SYSCON_PLL0CTRL_BWDIRECT_MASK            (0x40000U)
 #define SYSCON_PLL0CTRL_BWDIRECT_SHIFT           (18U)
 /*! BWDIRECT - Control of the bandwidth of the PLL.
- *  0b1..modify the bandwidth of the PLL directly.
  *  0b0..the bandwidth is changed synchronously with the feedback-divider.
+ *  0b1..modify the bandwidth of the PLL directly.
  */
 #define SYSCON_PLL0CTRL_BWDIRECT(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL0CTRL_BWDIRECT_SHIFT)) & SYSCON_PLL0CTRL_BWDIRECT_MASK)
 
 #define SYSCON_PLL0CTRL_BYPASSPREDIV_MASK        (0x80000U)
 #define SYSCON_PLL0CTRL_BYPASSPREDIV_SHIFT       (19U)
 /*! BYPASSPREDIV - bypass of the pre-divider.
- *  0b1..bypass of the pre-divider.
  *  0b0..use the pre-divider.
+ *  0b1..bypass of the pre-divider.
  */
 #define SYSCON_PLL0CTRL_BYPASSPREDIV(x)          (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL0CTRL_BYPASSPREDIV_SHIFT)) & SYSCON_PLL0CTRL_BYPASSPREDIV_MASK)
 
 #define SYSCON_PLL0CTRL_BYPASSPOSTDIV_MASK       (0x100000U)
 #define SYSCON_PLL0CTRL_BYPASSPOSTDIV_SHIFT      (20U)
 /*! BYPASSPOSTDIV - bypass of the post-divider.
- *  0b1..bypass of the post-divider.
  *  0b0..use the post-divider.
+ *  0b1..bypass of the post-divider.
  */
 #define SYSCON_PLL0CTRL_BYPASSPOSTDIV(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL0CTRL_BYPASSPOSTDIV_SHIFT)) & SYSCON_PLL0CTRL_BYPASSPOSTDIV_MASK)
 
 #define SYSCON_PLL0CTRL_CLKEN_MASK               (0x200000U)
 #define SYSCON_PLL0CTRL_CLKEN_SHIFT              (21U)
 /*! CLKEN - enable the output clock.
- *  0b1..enable the output clock.
  *  0b0..disable the output clock.
+ *  0b1..enable the output clock.
  */
 #define SYSCON_PLL0CTRL_CLKEN(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL0CTRL_CLKEN_SHIFT)) & SYSCON_PLL0CTRL_CLKEN_MASK)
 
 #define SYSCON_PLL0CTRL_FRMEN_MASK               (0x400000U)
 #define SYSCON_PLL0CTRL_FRMEN_SHIFT              (22U)
 /*! FRMEN - free running mode.
- *  0b1..free running mode is enable.
  *  0b0..free running mode is disable.
+ *  0b1..free running mode is enable.
  */
 #define SYSCON_PLL0CTRL_FRMEN(x)                 (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL0CTRL_FRMEN_SHIFT)) & SYSCON_PLL0CTRL_FRMEN_MASK)
 
@@ -3149,8 +3036,8 @@ typedef struct {
 #define SYSCON_PLL0CTRL_SKEWEN_MASK              (0x1000000U)
 #define SYSCON_PLL0CTRL_SKEWEN_SHIFT             (24U)
 /*! SKEWEN - skew mode.
- *  0b1..skew mode is enable.
  *  0b0..skew mode is disable.
+ *  0b1..skew mode is enable.
  */
 #define SYSCON_PLL0CTRL_SKEWEN(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_PLL0CTRL_SKEWEN_SHIFT)) & SYSCON_PLL0CTRL_SKEWEN_MASK)
 /*! @} */
@@ -3283,8 +3170,8 @@ typedef struct {
 #define SYSCON_FUNCRETENTIONCTRL_FUNCRETENA_MASK (0x1U)
 #define SYSCON_FUNCRETENTIONCTRL_FUNCRETENA_SHIFT (0U)
 /*! FUNCRETENA - functional retention in power down only.
- *  0b1..enable functional retention.
  *  0b0..disable functional retention.
+ *  0b1..enable functional retention.
  */
 #define SYSCON_FUNCRETENTIONCTRL_FUNCRETENA(x)   (((uint32_t)(((uint32_t)(x)) << SYSCON_FUNCRETENTIONCTRL_FUNCRETENA_SHIFT)) & SYSCON_FUNCRETENTIONCTRL_FUNCRETENA_MASK)
 
@@ -3299,69 +3186,170 @@ typedef struct {
 #define SYSCON_FUNCRETENTIONCTRL_RET_LENTH(x)    (((uint32_t)(((uint32_t)(x)) << SYSCON_FUNCRETENTIONCTRL_RET_LENTH_SHIFT)) & SYSCON_FUNCRETENTIONCTRL_RET_LENTH_MASK)
 /*! @} */
 
-/*! @name CPUCTRL - CPU Control for multiple processors */
-/*! @{ */
-
-#define SYSCON_CPUCTRL_CPU1CLKEN_MASK            (0x8U)
-#define SYSCON_CPUCTRL_CPU1CLKEN_SHIFT           (3U)
-/*! CPU1CLKEN - CPU1 clock enable.
- *  0b1..The CPU1 clock is enabled.
- *  0b0..The CPU1 clock is not enabled.
- */
-#define SYSCON_CPUCTRL_CPU1CLKEN(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_CPUCTRL_CPU1CLKEN_SHIFT)) & SYSCON_CPUCTRL_CPU1CLKEN_MASK)
-
-#define SYSCON_CPUCTRL_CPU1RSTEN_MASK            (0x20U)
-#define SYSCON_CPUCTRL_CPU1RSTEN_SHIFT           (5U)
-/*! CPU1RSTEN - CPU1 reset.
- *  0b1..The CPU1 is being reset.
- *  0b0..The CPU1 is not being reset.
- */
-#define SYSCON_CPUCTRL_CPU1RSTEN(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_CPUCTRL_CPU1RSTEN_SHIFT)) & SYSCON_CPUCTRL_CPU1RSTEN_MASK)
-/*! @} */
-
-/*! @name CPBOOT - Coprocessor Boot Address */
-/*! @{ */
-
-#define SYSCON_CPBOOT_CPBOOT_MASK                (0xFFFFFFFFU)
-#define SYSCON_CPBOOT_CPBOOT_SHIFT               (0U)
-/*! CPBOOT - Coprocessor Boot Address for CPU1. */
-#define SYSCON_CPBOOT_CPBOOT(x)                  (((uint32_t)(((uint32_t)(x)) << SYSCON_CPBOOT_CPBOOT_SHIFT)) & SYSCON_CPBOOT_CPBOOT_MASK)
-/*! @} */
-
 /*! @name CPSTAT - CPU Status */
 /*! @{ */
 
 #define SYSCON_CPSTAT_CPU0SLEEPING_MASK          (0x1U)
 #define SYSCON_CPSTAT_CPU0SLEEPING_SHIFT         (0U)
 /*! CPU0SLEEPING - The CPU0 sleeping state.
- *  0b1..the CPU is sleeping.
  *  0b0..the CPU is not sleeping.
+ *  0b1..the CPU is sleeping.
  */
 #define SYSCON_CPSTAT_CPU0SLEEPING(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_CPSTAT_CPU0SLEEPING_SHIFT)) & SYSCON_CPSTAT_CPU0SLEEPING_MASK)
-
-#define SYSCON_CPSTAT_CPU1SLEEPING_MASK          (0x2U)
-#define SYSCON_CPSTAT_CPU1SLEEPING_SHIFT         (1U)
-/*! CPU1SLEEPING - The CPU1 sleeping state.
- *  0b1..the CPU is sleeping.
- *  0b0..the CPU is not sleeping.
- */
-#define SYSCON_CPSTAT_CPU1SLEEPING(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_CPSTAT_CPU1SLEEPING_SHIFT)) & SYSCON_CPSTAT_CPU1SLEEPING_MASK)
 
 #define SYSCON_CPSTAT_CPU0LOCKUP_MASK            (0x4U)
 #define SYSCON_CPSTAT_CPU0LOCKUP_SHIFT           (2U)
 /*! CPU0LOCKUP - The CPU0 lockup state.
- *  0b1..the CPU is in lockup.
  *  0b0..the CPU is not in lockup.
+ *  0b1..the CPU is in lockup.
  */
 #define SYSCON_CPSTAT_CPU0LOCKUP(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_CPSTAT_CPU0LOCKUP_SHIFT)) & SYSCON_CPSTAT_CPU0LOCKUP_MASK)
+/*! @} */
 
-#define SYSCON_CPSTAT_CPU1LOCKUP_MASK            (0x8U)
-#define SYSCON_CPSTAT_CPU1LOCKUP_SHIFT           (3U)
-/*! CPU1LOCKUP - The CPU1 lockup state.
- *  0b1..the CPU is in lockup.
- *  0b0..the CPU is not in lockup.
+/*! @name BOOT_SEED_REG0 - boot seed (256-bit random value) */
+/*! @{ */
+
+#define SYSCON_BOOT_SEED_REG0_BOOT_SEED_REG0_MASK (0xFFFFFFFFU)
+#define SYSCON_BOOT_SEED_REG0_BOOT_SEED_REG0_SHIFT (0U)
+#define SYSCON_BOOT_SEED_REG0_BOOT_SEED_REG0(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_BOOT_SEED_REG0_BOOT_SEED_REG0_SHIFT)) & SYSCON_BOOT_SEED_REG0_BOOT_SEED_REG0_MASK)
+/*! @} */
+
+/*! @name BOOT_SEED_REG1 - boot seed (256-bit random value) */
+/*! @{ */
+
+#define SYSCON_BOOT_SEED_REG1_BOOT_SEED_REG1_MASK (0xFFFFFFFFU)
+#define SYSCON_BOOT_SEED_REG1_BOOT_SEED_REG1_SHIFT (0U)
+#define SYSCON_BOOT_SEED_REG1_BOOT_SEED_REG1(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_BOOT_SEED_REG1_BOOT_SEED_REG1_SHIFT)) & SYSCON_BOOT_SEED_REG1_BOOT_SEED_REG1_MASK)
+/*! @} */
+
+/*! @name BOOT_SEED_REG2 - boot seed (256-bit random value) */
+/*! @{ */
+
+#define SYSCON_BOOT_SEED_REG2_BOOT_SEED_REG2_MASK (0xFFFFFFFFU)
+#define SYSCON_BOOT_SEED_REG2_BOOT_SEED_REG2_SHIFT (0U)
+#define SYSCON_BOOT_SEED_REG2_BOOT_SEED_REG2(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_BOOT_SEED_REG2_BOOT_SEED_REG2_SHIFT)) & SYSCON_BOOT_SEED_REG2_BOOT_SEED_REG2_MASK)
+/*! @} */
+
+/*! @name BOOT_SEED_REG3 - boot seed (256-bit random value) */
+/*! @{ */
+
+#define SYSCON_BOOT_SEED_REG3_BOOT_SEED_REG3_MASK (0xFFFFFFFFU)
+#define SYSCON_BOOT_SEED_REG3_BOOT_SEED_REG3_SHIFT (0U)
+#define SYSCON_BOOT_SEED_REG3_BOOT_SEED_REG3(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_BOOT_SEED_REG3_BOOT_SEED_REG3_SHIFT)) & SYSCON_BOOT_SEED_REG3_BOOT_SEED_REG3_MASK)
+/*! @} */
+
+/*! @name BOOT_SEED_REG4 - boot seed (256-bit random value) */
+/*! @{ */
+
+#define SYSCON_BOOT_SEED_REG4_BOOT_SEED_REG4_MASK (0xFFFFFFFFU)
+#define SYSCON_BOOT_SEED_REG4_BOOT_SEED_REG4_SHIFT (0U)
+#define SYSCON_BOOT_SEED_REG4_BOOT_SEED_REG4(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_BOOT_SEED_REG4_BOOT_SEED_REG4_SHIFT)) & SYSCON_BOOT_SEED_REG4_BOOT_SEED_REG4_MASK)
+/*! @} */
+
+/*! @name BOOT_SEED_REG5 - boot seed (256-bit random value) */
+/*! @{ */
+
+#define SYSCON_BOOT_SEED_REG5_BOOT_SEED_REG5_MASK (0xFFFFFFFFU)
+#define SYSCON_BOOT_SEED_REG5_BOOT_SEED_REG5_SHIFT (0U)
+#define SYSCON_BOOT_SEED_REG5_BOOT_SEED_REG5(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_BOOT_SEED_REG5_BOOT_SEED_REG5_SHIFT)) & SYSCON_BOOT_SEED_REG5_BOOT_SEED_REG5_MASK)
+/*! @} */
+
+/*! @name BOOT_SEED_REG6 - boot seed (256-bit random value) */
+/*! @{ */
+
+#define SYSCON_BOOT_SEED_REG6_BOOT_SEED_REG6_MASK (0xFFFFFFFFU)
+#define SYSCON_BOOT_SEED_REG6_BOOT_SEED_REG6_SHIFT (0U)
+#define SYSCON_BOOT_SEED_REG6_BOOT_SEED_REG6(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_BOOT_SEED_REG6_BOOT_SEED_REG6_SHIFT)) & SYSCON_BOOT_SEED_REG6_BOOT_SEED_REG6_MASK)
+/*! @} */
+
+/*! @name BOOT_SEED_REG7 - boot seed (256-bit random value) */
+/*! @{ */
+
+#define SYSCON_BOOT_SEED_REG7_BOOT_SEED_REG7_MASK (0xFFFFFFFFU)
+#define SYSCON_BOOT_SEED_REG7_BOOT_SEED_REG7_SHIFT (0U)
+#define SYSCON_BOOT_SEED_REG7_BOOT_SEED_REG7(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_BOOT_SEED_REG7_BOOT_SEED_REG7_SHIFT)) & SYSCON_BOOT_SEED_REG7_BOOT_SEED_REG7_MASK)
+/*! @} */
+
+/*! @name HMAC_REG0 - HMAC */
+/*! @{ */
+
+#define SYSCON_HMAC_REG0_HMAC_REG0_MASK          (0xFFFFFFFFU)
+#define SYSCON_HMAC_REG0_HMAC_REG0_SHIFT         (0U)
+#define SYSCON_HMAC_REG0_HMAC_REG0(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_HMAC_REG0_HMAC_REG0_SHIFT)) & SYSCON_HMAC_REG0_HMAC_REG0_MASK)
+/*! @} */
+
+/*! @name HMAC_REG1 - HMAC */
+/*! @{ */
+
+#define SYSCON_HMAC_REG1_HMAC_REG1_MASK          (0xFFFFFFFFU)
+#define SYSCON_HMAC_REG1_HMAC_REG1_SHIFT         (0U)
+#define SYSCON_HMAC_REG1_HMAC_REG1(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_HMAC_REG1_HMAC_REG1_SHIFT)) & SYSCON_HMAC_REG1_HMAC_REG1_MASK)
+/*! @} */
+
+/*! @name HMAC_REG2 - HMAC */
+/*! @{ */
+
+#define SYSCON_HMAC_REG2_HMAC_REG2_MASK          (0xFFFFFFFFU)
+#define SYSCON_HMAC_REG2_HMAC_REG2_SHIFT         (0U)
+#define SYSCON_HMAC_REG2_HMAC_REG2(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_HMAC_REG2_HMAC_REG2_SHIFT)) & SYSCON_HMAC_REG2_HMAC_REG2_MASK)
+/*! @} */
+
+/*! @name HMAC_REG3 - HMAC */
+/*! @{ */
+
+#define SYSCON_HMAC_REG3_HMAC_REG3_MASK          (0xFFFFFFFFU)
+#define SYSCON_HMAC_REG3_HMAC_REG3_SHIFT         (0U)
+#define SYSCON_HMAC_REG3_HMAC_REG3(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_HMAC_REG3_HMAC_REG3_SHIFT)) & SYSCON_HMAC_REG3_HMAC_REG3_MASK)
+/*! @} */
+
+/*! @name HMAC_REG4 - HMAC */
+/*! @{ */
+
+#define SYSCON_HMAC_REG4_HMAC_REG4_MASK          (0xFFFFFFFFU)
+#define SYSCON_HMAC_REG4_HMAC_REG4_SHIFT         (0U)
+#define SYSCON_HMAC_REG4_HMAC_REG4(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_HMAC_REG4_HMAC_REG4_SHIFT)) & SYSCON_HMAC_REG4_HMAC_REG4_MASK)
+/*! @} */
+
+/*! @name HMAC_REG5 - HMAC */
+/*! @{ */
+
+#define SYSCON_HMAC_REG5_HMAC_REG5_MASK          (0xFFFFFFFFU)
+#define SYSCON_HMAC_REG5_HMAC_REG5_SHIFT         (0U)
+#define SYSCON_HMAC_REG5_HMAC_REG5(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_HMAC_REG5_HMAC_REG5_SHIFT)) & SYSCON_HMAC_REG5_HMAC_REG5_MASK)
+/*! @} */
+
+/*! @name HMAC_REG6 - HMAC */
+/*! @{ */
+
+#define SYSCON_HMAC_REG6_HMAC_REG6_MASK          (0xFFFFFFFFU)
+#define SYSCON_HMAC_REG6_HMAC_REG6_SHIFT         (0U)
+#define SYSCON_HMAC_REG6_HMAC_REG6(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_HMAC_REG6_HMAC_REG6_SHIFT)) & SYSCON_HMAC_REG6_HMAC_REG6_MASK)
+/*! @} */
+
+/*! @name HMAC_REG7 - HMAC */
+/*! @{ */
+
+#define SYSCON_HMAC_REG7_HMAC_REG7_MASK          (0xFFFFFFFFU)
+#define SYSCON_HMAC_REG7_HMAC_REG7_SHIFT         (0U)
+#define SYSCON_HMAC_REG7_HMAC_REG7(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_HMAC_REG7_HMAC_REG7_SHIFT)) & SYSCON_HMAC_REG7_HMAC_REG7_MASK)
+/*! @} */
+
+/*! @name BOOT_LOCK - Control write access to boot seed security registers. */
+/*! @{ */
+
+#define SYSCON_BOOT_LOCK_LOCK_BOOT_SEED_MASK     (0x1U)
+#define SYSCON_BOOT_LOCK_LOCK_BOOT_SEED_SHIFT    (0U)
+/*! LOCK_BOOT_SEED - Control write access to BOOT_SEED_REG registers.
+ *  0b1..write access to all 8 registers BOOT_SEED_REG is locked. This register is write once.
  */
-#define SYSCON_CPSTAT_CPU1LOCKUP(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_CPSTAT_CPU1LOCKUP_SHIFT)) & SYSCON_CPSTAT_CPU1LOCKUP_MASK)
+#define SYSCON_BOOT_LOCK_LOCK_BOOT_SEED(x)       (((uint32_t)(((uint32_t)(x)) << SYSCON_BOOT_LOCK_LOCK_BOOT_SEED_SHIFT)) & SYSCON_BOOT_LOCK_LOCK_BOOT_SEED_MASK)
+
+#define SYSCON_BOOT_LOCK_LOCK_HMAC_MASK          (0x2U)
+#define SYSCON_BOOT_LOCK_LOCK_HMAC_SHIFT         (1U)
+/*! LOCK_HMAC - Control write access to HMAC_REG registers.
+ *  0b1..write access to all 8 registers HMAC_REG is locked. This register is write once.
+ */
+#define SYSCON_BOOT_LOCK_LOCK_HMAC(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_BOOT_LOCK_LOCK_HMAC_SHIFT)) & SYSCON_BOOT_LOCK_LOCK_HMAC_MASK)
 /*! @} */
 
 /*! @name CLOCK_CTRL - Various system clock controls : Flash clock (48 MHz) control, clocks to Frequency Measures */
@@ -3370,72 +3358,72 @@ typedef struct {
 #define SYSCON_CLOCK_CTRL_XTAL32MHZ_FREQM_ENA_MASK (0x2U)
 #define SYSCON_CLOCK_CTRL_XTAL32MHZ_FREQM_ENA_SHIFT (1U)
 /*! XTAL32MHZ_FREQM_ENA - Enable XTAL32MHz clock for Frequency Measure module.
- *  0b1..The clock is enabled.
  *  0b0..The clock is not enabled.
+ *  0b1..The clock is enabled.
  */
 #define SYSCON_CLOCK_CTRL_XTAL32MHZ_FREQM_ENA(x) (((uint32_t)(((uint32_t)(x)) << SYSCON_CLOCK_CTRL_XTAL32MHZ_FREQM_ENA_SHIFT)) & SYSCON_CLOCK_CTRL_XTAL32MHZ_FREQM_ENA_MASK)
 
 #define SYSCON_CLOCK_CTRL_FRO1MHZ_UTICK_ENA_MASK (0x4U)
 #define SYSCON_CLOCK_CTRL_FRO1MHZ_UTICK_ENA_SHIFT (2U)
 /*! FRO1MHZ_UTICK_ENA - Enable FRO 1MHz clock for Frequency Measure module and for UTICK.
- *  0b1..The clock is enabled.
  *  0b0..The clock is not enabled.
+ *  0b1..The clock is enabled.
  */
 #define SYSCON_CLOCK_CTRL_FRO1MHZ_UTICK_ENA(x)   (((uint32_t)(((uint32_t)(x)) << SYSCON_CLOCK_CTRL_FRO1MHZ_UTICK_ENA_SHIFT)) & SYSCON_CLOCK_CTRL_FRO1MHZ_UTICK_ENA_MASK)
 
 #define SYSCON_CLOCK_CTRL_FRO12MHZ_FREQM_ENA_MASK (0x8U)
 #define SYSCON_CLOCK_CTRL_FRO12MHZ_FREQM_ENA_SHIFT (3U)
 /*! FRO12MHZ_FREQM_ENA - Enable FRO 12MHz clock for Frequency Measure module.
- *  0b1..The clock is enabled.
  *  0b0..The clock is not enabled.
+ *  0b1..The clock is enabled.
  */
 #define SYSCON_CLOCK_CTRL_FRO12MHZ_FREQM_ENA(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_CLOCK_CTRL_FRO12MHZ_FREQM_ENA_SHIFT)) & SYSCON_CLOCK_CTRL_FRO12MHZ_FREQM_ENA_MASK)
 
 #define SYSCON_CLOCK_CTRL_FRO_HF_FREQM_ENA_MASK  (0x10U)
 #define SYSCON_CLOCK_CTRL_FRO_HF_FREQM_ENA_SHIFT (4U)
 /*! FRO_HF_FREQM_ENA - Enable FRO 96MHz clock for Frequency Measure module.
- *  0b1..The clock is enabled.
  *  0b0..The clock is not enabled.
+ *  0b1..The clock is enabled.
  */
 #define SYSCON_CLOCK_CTRL_FRO_HF_FREQM_ENA(x)    (((uint32_t)(((uint32_t)(x)) << SYSCON_CLOCK_CTRL_FRO_HF_FREQM_ENA_SHIFT)) & SYSCON_CLOCK_CTRL_FRO_HF_FREQM_ENA_MASK)
 
 #define SYSCON_CLOCK_CTRL_CLKIN_ENA_MASK         (0x20U)
 #define SYSCON_CLOCK_CTRL_CLKIN_ENA_SHIFT        (5U)
 /*! CLKIN_ENA - Enable clock_in clock for clock module.
- *  0b1..The clock is enabled.
  *  0b0..The clock is not enabled.
+ *  0b1..The clock is enabled.
  */
 #define SYSCON_CLOCK_CTRL_CLKIN_ENA(x)           (((uint32_t)(((uint32_t)(x)) << SYSCON_CLOCK_CTRL_CLKIN_ENA_SHIFT)) & SYSCON_CLOCK_CTRL_CLKIN_ENA_MASK)
 
 #define SYSCON_CLOCK_CTRL_FRO1MHZ_CLK_ENA_MASK   (0x40U)
 #define SYSCON_CLOCK_CTRL_FRO1MHZ_CLK_ENA_SHIFT  (6U)
 /*! FRO1MHZ_CLK_ENA - Enable FRO 1MHz clock for clock muxing in clock gen.
- *  0b1..The clock is enabled.
  *  0b0..The clock is not enabled.
+ *  0b1..The clock is enabled.
  */
 #define SYSCON_CLOCK_CTRL_FRO1MHZ_CLK_ENA(x)     (((uint32_t)(((uint32_t)(x)) << SYSCON_CLOCK_CTRL_FRO1MHZ_CLK_ENA_SHIFT)) & SYSCON_CLOCK_CTRL_FRO1MHZ_CLK_ENA_MASK)
 
 #define SYSCON_CLOCK_CTRL_ANA_FRO12M_CLK_ENA_MASK (0x80U)
 #define SYSCON_CLOCK_CTRL_ANA_FRO12M_CLK_ENA_SHIFT (7U)
 /*! ANA_FRO12M_CLK_ENA - Enable FRO 12MHz clock for analog control of the FRO 192MHz.
- *  0b1..The clock is enabled.
  *  0b0..The clock is not enabled.
+ *  0b1..The clock is enabled.
  */
 #define SYSCON_CLOCK_CTRL_ANA_FRO12M_CLK_ENA(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_CLOCK_CTRL_ANA_FRO12M_CLK_ENA_SHIFT)) & SYSCON_CLOCK_CTRL_ANA_FRO12M_CLK_ENA_MASK)
 
 #define SYSCON_CLOCK_CTRL_XO_CAL_CLK_ENA_MASK    (0x100U)
 #define SYSCON_CLOCK_CTRL_XO_CAL_CLK_ENA_SHIFT   (8U)
 /*! XO_CAL_CLK_ENA - Enable clock for cristal oscilator calibration.
- *  0b1..The clock is enabled.
  *  0b0..The clock is not enabled.
+ *  0b1..The clock is enabled.
  */
 #define SYSCON_CLOCK_CTRL_XO_CAL_CLK_ENA(x)      (((uint32_t)(((uint32_t)(x)) << SYSCON_CLOCK_CTRL_XO_CAL_CLK_ENA_SHIFT)) & SYSCON_CLOCK_CTRL_XO_CAL_CLK_ENA_MASK)
 
 #define SYSCON_CLOCK_CTRL_PLU_DEGLITCH_CLK_ENA_MASK (0x200U)
 #define SYSCON_CLOCK_CTRL_PLU_DEGLITCH_CLK_ENA_SHIFT (9U)
 /*! PLU_DEGLITCH_CLK_ENA - Enable clocks FRO_1MHz and FRO_12MHz for PLU deglitching.
- *  0b1..The clock is enabled.
  *  0b0..The clock is not enabled.
+ *  0b1..The clock is enabled.
  */
 #define SYSCON_CLOCK_CTRL_PLU_DEGLITCH_CLK_ENA(x) (((uint32_t)(((uint32_t)(x)) << SYSCON_CLOCK_CTRL_PLU_DEGLITCH_CLK_ENA_SHIFT)) & SYSCON_CLOCK_CTRL_PLU_DEGLITCH_CLK_ENA_MASK)
 /*! @} */
@@ -3446,8 +3434,8 @@ typedef struct {
 #define SYSCON_COMP_INT_CTRL_INT_ENABLE_MASK     (0x1U)
 #define SYSCON_COMP_INT_CTRL_INT_ENABLE_SHIFT    (0U)
 /*! INT_ENABLE - Analog Comparator interrupt enable control:.
- *  0b1..interrupt enable.
  *  0b0..interrupt disable.
+ *  0b1..interrupt enable.
  */
 #define SYSCON_COMP_INT_CTRL_INT_ENABLE(x)       (((uint32_t)(((uint32_t)(x)) << SYSCON_COMP_INT_CTRL_INT_ENABLE_SHIFT)) & SYSCON_COMP_INT_CTRL_INT_ENABLE_MASK)
 
@@ -3463,12 +3451,12 @@ typedef struct {
 #define SYSCON_COMP_INT_CTRL_INT_CTRL_SHIFT      (2U)
 /*! INT_CTRL - Comparator interrupt type selector:.
  *  0b000..The analog comparator interrupt edge sensitive is disabled.
- *  0b010..analog comparator interrupt is rising edge sensitive.
- *  0b100..analog comparator interrupt is falling edge sensitive.
- *  0b110..analog comparator interrupt is rising and falling edge sensitive.
  *  0b001..The analog comparator interrupt level sensitive is disabled.
+ *  0b010..analog comparator interrupt is rising edge sensitive.
  *  0b011..Analog Comparator interrupt is high level sensitive.
+ *  0b100..analog comparator interrupt is falling edge sensitive.
  *  0b101..Analog Comparator interrupt is low level sensitive.
+ *  0b110..analog comparator interrupt is rising and falling edge sensitive.
  *  0b111..The analog comparator interrupt level sensitive is disabled.
  */
 #define SYSCON_COMP_INT_CTRL_INT_CTRL(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_COMP_INT_CTRL_INT_CTRL_SHIFT)) & SYSCON_COMP_INT_CTRL_INT_CTRL_MASK)
@@ -3505,8 +3493,8 @@ typedef struct {
 #define SYSCON_COMP_INT_STATUS_VAL_MASK          (0x4U)
 #define SYSCON_COMP_INT_STATUS_VAL_SHIFT         (2U)
 /*! VAL - comparator analog output.
- *  0b1..P+ is greater than P-.
  *  0b0..P+ is smaller than P-.
+ *  0b1..P+ is greater than P-.
  */
 #define SYSCON_COMP_INT_STATUS_VAL(x)            (((uint32_t)(((uint32_t)(x)) << SYSCON_COMP_INT_STATUS_VAL_SHIFT)) & SYSCON_COMP_INT_STATUS_VAL_MASK)
 /*! @} */
@@ -3517,120 +3505,104 @@ typedef struct {
 #define SYSCON_AUTOCLKGATEOVERRIDE_ROM_MASK      (0x1U)
 #define SYSCON_AUTOCLKGATEOVERRIDE_ROM_SHIFT     (0U)
 /*! ROM - Control automatic clock gating of ROM controller.
- *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  *  0b0..Automatic clock gating is not overridden.
+ *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  */
 #define SYSCON_AUTOCLKGATEOVERRIDE_ROM(x)        (((uint32_t)(((uint32_t)(x)) << SYSCON_AUTOCLKGATEOVERRIDE_ROM_SHIFT)) & SYSCON_AUTOCLKGATEOVERRIDE_ROM_MASK)
 
 #define SYSCON_AUTOCLKGATEOVERRIDE_RAMX_CTRL_MASK (0x2U)
 #define SYSCON_AUTOCLKGATEOVERRIDE_RAMX_CTRL_SHIFT (1U)
 /*! RAMX_CTRL - Control automatic clock gating of RAMX controller.
- *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  *  0b0..Automatic clock gating is not overridden.
+ *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  */
 #define SYSCON_AUTOCLKGATEOVERRIDE_RAMX_CTRL(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_AUTOCLKGATEOVERRIDE_RAMX_CTRL_SHIFT)) & SYSCON_AUTOCLKGATEOVERRIDE_RAMX_CTRL_MASK)
 
 #define SYSCON_AUTOCLKGATEOVERRIDE_RAM0_CTRL_MASK (0x4U)
 #define SYSCON_AUTOCLKGATEOVERRIDE_RAM0_CTRL_SHIFT (2U)
 /*! RAM0_CTRL - Control automatic clock gating of RAM0 controller.
- *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  *  0b0..Automatic clock gating is not overridden.
+ *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  */
 #define SYSCON_AUTOCLKGATEOVERRIDE_RAM0_CTRL(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_AUTOCLKGATEOVERRIDE_RAM0_CTRL_SHIFT)) & SYSCON_AUTOCLKGATEOVERRIDE_RAM0_CTRL_MASK)
 
 #define SYSCON_AUTOCLKGATEOVERRIDE_RAM1_CTRL_MASK (0x8U)
 #define SYSCON_AUTOCLKGATEOVERRIDE_RAM1_CTRL_SHIFT (3U)
 /*! RAM1_CTRL - Control automatic clock gating of RAM1 controller.
- *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  *  0b0..Automatic clock gating is not overridden.
+ *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  */
 #define SYSCON_AUTOCLKGATEOVERRIDE_RAM1_CTRL(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_AUTOCLKGATEOVERRIDE_RAM1_CTRL_SHIFT)) & SYSCON_AUTOCLKGATEOVERRIDE_RAM1_CTRL_MASK)
 
 #define SYSCON_AUTOCLKGATEOVERRIDE_RAM2_CTRL_MASK (0x10U)
 #define SYSCON_AUTOCLKGATEOVERRIDE_RAM2_CTRL_SHIFT (4U)
 /*! RAM2_CTRL - Control automatic clock gating of RAM2 controller.
- *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  *  0b0..Automatic clock gating is not overridden.
+ *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  */
 #define SYSCON_AUTOCLKGATEOVERRIDE_RAM2_CTRL(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_AUTOCLKGATEOVERRIDE_RAM2_CTRL_SHIFT)) & SYSCON_AUTOCLKGATEOVERRIDE_RAM2_CTRL_MASK)
-
-#define SYSCON_AUTOCLKGATEOVERRIDE_RAM3_CTRL_MASK (0x20U)
-#define SYSCON_AUTOCLKGATEOVERRIDE_RAM3_CTRL_SHIFT (5U)
-/*! RAM3_CTRL - Control automatic clock gating of RAM3 controller.
- *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
- *  0b0..Automatic clock gating is not overridden.
- */
-#define SYSCON_AUTOCLKGATEOVERRIDE_RAM3_CTRL(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_AUTOCLKGATEOVERRIDE_RAM3_CTRL_SHIFT)) & SYSCON_AUTOCLKGATEOVERRIDE_RAM3_CTRL_MASK)
-
-#define SYSCON_AUTOCLKGATEOVERRIDE_RAM4_CTRL_MASK (0x40U)
-#define SYSCON_AUTOCLKGATEOVERRIDE_RAM4_CTRL_SHIFT (6U)
-/*! RAM4_CTRL - Control automatic clock gating of RAM4 controller.
- *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
- *  0b0..Automatic clock gating is not overridden.
- */
-#define SYSCON_AUTOCLKGATEOVERRIDE_RAM4_CTRL(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_AUTOCLKGATEOVERRIDE_RAM4_CTRL_SHIFT)) & SYSCON_AUTOCLKGATEOVERRIDE_RAM4_CTRL_MASK)
 
 #define SYSCON_AUTOCLKGATEOVERRIDE_SYNC0_APB_MASK (0x80U)
 #define SYSCON_AUTOCLKGATEOVERRIDE_SYNC0_APB_SHIFT (7U)
 /*! SYNC0_APB - Control automatic clock gating of synchronous bridge controller 0.
- *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  *  0b0..Automatic clock gating is not overridden.
+ *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  */
 #define SYSCON_AUTOCLKGATEOVERRIDE_SYNC0_APB(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_AUTOCLKGATEOVERRIDE_SYNC0_APB_SHIFT)) & SYSCON_AUTOCLKGATEOVERRIDE_SYNC0_APB_MASK)
 
 #define SYSCON_AUTOCLKGATEOVERRIDE_SYNC1_APB_MASK (0x100U)
 #define SYSCON_AUTOCLKGATEOVERRIDE_SYNC1_APB_SHIFT (8U)
 /*! SYNC1_APB - Control automatic clock gating of synchronous bridge controller 1.
- *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  *  0b0..Automatic clock gating is not overridden.
+ *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  */
 #define SYSCON_AUTOCLKGATEOVERRIDE_SYNC1_APB(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_AUTOCLKGATEOVERRIDE_SYNC1_APB_SHIFT)) & SYSCON_AUTOCLKGATEOVERRIDE_SYNC1_APB_MASK)
 
 #define SYSCON_AUTOCLKGATEOVERRIDE_CRCGEN_MASK   (0x800U)
 #define SYSCON_AUTOCLKGATEOVERRIDE_CRCGEN_SHIFT  (11U)
 /*! CRCGEN - Control automatic clock gating of CRCGEN controller.
- *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  *  0b0..Automatic clock gating is not overridden.
+ *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  */
 #define SYSCON_AUTOCLKGATEOVERRIDE_CRCGEN(x)     (((uint32_t)(((uint32_t)(x)) << SYSCON_AUTOCLKGATEOVERRIDE_CRCGEN_SHIFT)) & SYSCON_AUTOCLKGATEOVERRIDE_CRCGEN_MASK)
 
 #define SYSCON_AUTOCLKGATEOVERRIDE_SDMA0_MASK    (0x1000U)
 #define SYSCON_AUTOCLKGATEOVERRIDE_SDMA0_SHIFT   (12U)
 /*! SDMA0 - Control automatic clock gating of DMA0 controller.
- *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  *  0b0..Automatic clock gating is not overridden.
+ *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  */
 #define SYSCON_AUTOCLKGATEOVERRIDE_SDMA0(x)      (((uint32_t)(((uint32_t)(x)) << SYSCON_AUTOCLKGATEOVERRIDE_SDMA0_SHIFT)) & SYSCON_AUTOCLKGATEOVERRIDE_SDMA0_MASK)
 
 #define SYSCON_AUTOCLKGATEOVERRIDE_SDMA1_MASK    (0x2000U)
 #define SYSCON_AUTOCLKGATEOVERRIDE_SDMA1_SHIFT   (13U)
 /*! SDMA1 - Control automatic clock gating of DMA1 controller.
- *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  *  0b0..Automatic clock gating is not overridden.
+ *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  */
 #define SYSCON_AUTOCLKGATEOVERRIDE_SDMA1(x)      (((uint32_t)(((uint32_t)(x)) << SYSCON_AUTOCLKGATEOVERRIDE_SDMA1_SHIFT)) & SYSCON_AUTOCLKGATEOVERRIDE_SDMA1_MASK)
 
 #define SYSCON_AUTOCLKGATEOVERRIDE_USB0_MASK     (0x4000U)
 #define SYSCON_AUTOCLKGATEOVERRIDE_USB0_SHIFT    (14U)
 /*! USB0 - Control automatic clock gating of USB controller.
- *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  *  0b0..Automatic clock gating is not overridden.
+ *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  */
 #define SYSCON_AUTOCLKGATEOVERRIDE_USB0(x)       (((uint32_t)(((uint32_t)(x)) << SYSCON_AUTOCLKGATEOVERRIDE_USB0_SHIFT)) & SYSCON_AUTOCLKGATEOVERRIDE_USB0_MASK)
 
 #define SYSCON_AUTOCLKGATEOVERRIDE_SYSCON_MASK   (0x8000U)
 #define SYSCON_AUTOCLKGATEOVERRIDE_SYSCON_SHIFT  (15U)
 /*! SYSCON - Control automatic clock gating of synchronous system controller registers bank.
- *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  *  0b0..Automatic clock gating is not overridden.
+ *  0b1..Automatic clock gating is overridden (Clock gating is disabled).
  */
 #define SYSCON_AUTOCLKGATEOVERRIDE_SYSCON(x)     (((uint32_t)(((uint32_t)(x)) << SYSCON_AUTOCLKGATEOVERRIDE_SYSCON_SHIFT)) & SYSCON_AUTOCLKGATEOVERRIDE_SYSCON_MASK)
 
 #define SYSCON_AUTOCLKGATEOVERRIDE_ENABLEUPDATE_MASK (0xFFFF0000U)
 #define SYSCON_AUTOCLKGATEOVERRIDE_ENABLEUPDATE_SHIFT (16U)
 /*! ENABLEUPDATE - The value 0xC0DE must be written for AUTOCLKGATEOVERRIDE registers fields updates to have effect.
- *  0b1100000011011110..Bit Fields 0 - 15 of this register are updated
  *  0b0000000000000000..Bit Fields 0 - 15 of this register are not updated
+ *  0b1100000011011110..Bit Fields 0 - 15 of this register are updated
  */
 #define SYSCON_AUTOCLKGATEOVERRIDE_ENABLEUPDATE(x) (((uint32_t)(((uint32_t)(x)) << SYSCON_AUTOCLKGATEOVERRIDE_ENABLEUPDATE_SHIFT)) & SYSCON_AUTOCLKGATEOVERRIDE_ENABLEUPDATE_MASK)
 /*! @} */
@@ -3641,10 +3613,23 @@ typedef struct {
 #define SYSCON_GPIOPSYNC_PSYNC_MASK              (0x1U)
 #define SYSCON_GPIOPSYNC_PSYNC_SHIFT             (0U)
 /*! PSYNC - Enable bypass of the first stage of synchonization inside GPIO_INT module.
- *  0b1..bypass of the first stage of synchonization inside GPIO_INT module.
  *  0b0..use the first stage of synchonization inside GPIO_INT module.
+ *  0b1..bypass of the first stage of synchonization inside GPIO_INT module.
  */
 #define SYSCON_GPIOPSYNC_PSYNC(x)                (((uint32_t)(((uint32_t)(x)) << SYSCON_GPIOPSYNC_PSYNC_SHIFT)) & SYSCON_GPIOPSYNC_PSYNC_MASK)
+/*! @} */
+
+/*! @name HASHRESTHWKEY - Controls whether the HASH AES hardware secret key is restricted to use by secure code */
+/*! @{ */
+
+#define SYSCON_HASHRESTHWKEY_UNLOCKCODE_MASK     (0xFFFFFFFFU)
+#define SYSCON_HASHRESTHWKEY_UNLOCKCODE_SHIFT    (0U)
+/*! UNLOCKCODE - Code value that controls whether HASH AES hardware secret key is unlocked
+ *  0b11000011001111001010010101011010..HASH AES hardware secret key is unlocked for use by non-secure code. Any
+ *                                      other value means that the hardware secret key is restricted to use by
+ *                                      secure code only.
+ */
+#define SYSCON_HASHRESTHWKEY_UNLOCKCODE(x)       (((uint32_t)(((uint32_t)(x)) << SYSCON_HASHRESTHWKEY_UNLOCKCODE_SHIFT)) & SYSCON_HASHRESTHWKEY_UNLOCKCODE_MASK)
 /*! @} */
 
 /*! @name DEBUG_LOCK_EN - Control write access to security registers. */
@@ -3652,116 +3637,95 @@ typedef struct {
 
 #define SYSCON_DEBUG_LOCK_EN_LOCK_ALL_MASK       (0xFU)
 #define SYSCON_DEBUG_LOCK_EN_LOCK_ALL_SHIFT      (0U)
-/*! LOCK_ALL - Control write access to CODESECURITYPROTTEST, CODESECURITYPROTCPU0,
- *    CODESECURITYPROTCPU1, CPU0_DEBUG_FEATURES, CPU1_DEBUG_FEATURES and DBG_AUTH_SCRATCH registers.
- *  0b1010..1010: Enable write access to all 6 registers.
- *  0b0000..Any other value than b1010: disable write access to all 6 registers.
+/*! LOCK_ALL - Control write access to security registers.
+ *  0b0000..Any other value than b1010: disable write access to all registers.
+ *  0b1010..1010: Enable write access to all registers.
  */
 #define SYSCON_DEBUG_LOCK_EN_LOCK_ALL(x)         (((uint32_t)(((uint32_t)(x)) << SYSCON_DEBUG_LOCK_EN_LOCK_ALL_SHIFT)) & SYSCON_DEBUG_LOCK_EN_LOCK_ALL_MASK)
 /*! @} */
 
-/*! @name DEBUG_FEATURES - Cortex M33 (CPU0) and micro Cortex M33 (CPU1) debug features control. */
+/*! @name DEBUG_FEATURES - Cortex debug features control. */
 /*! @{ */
 
 #define SYSCON_DEBUG_FEATURES_CPU0_DBGEN_MASK    (0x3U)
 #define SYSCON_DEBUG_FEATURES_CPU0_DBGEN_SHIFT   (0U)
 /*! CPU0_DBGEN - CPU0 Invasive debug control:.
- *  0b10..10: Invasive debug is enabled.
  *  0b01..Any other value than b10: invasive debug is disable.
+ *  0b10..10: Invasive debug is enabled.
  */
 #define SYSCON_DEBUG_FEATURES_CPU0_DBGEN(x)      (((uint32_t)(((uint32_t)(x)) << SYSCON_DEBUG_FEATURES_CPU0_DBGEN_SHIFT)) & SYSCON_DEBUG_FEATURES_CPU0_DBGEN_MASK)
 
 #define SYSCON_DEBUG_FEATURES_CPU0_NIDEN_MASK    (0xCU)
 #define SYSCON_DEBUG_FEATURES_CPU0_NIDEN_SHIFT   (2U)
 /*! CPU0_NIDEN - CPU0 Non Invasive debug control:.
- *  0b10..10: Invasive debug is enabled.
  *  0b01..Any other value than b10: invasive debug is disable.
+ *  0b10..10: Invasive debug is enabled.
  */
 #define SYSCON_DEBUG_FEATURES_CPU0_NIDEN(x)      (((uint32_t)(((uint32_t)(x)) << SYSCON_DEBUG_FEATURES_CPU0_NIDEN_SHIFT)) & SYSCON_DEBUG_FEATURES_CPU0_NIDEN_MASK)
 
 #define SYSCON_DEBUG_FEATURES_CPU0_SPIDEN_MASK   (0x30U)
 #define SYSCON_DEBUG_FEATURES_CPU0_SPIDEN_SHIFT  (4U)
 /*! CPU0_SPIDEN - CPU0 Secure Invasive debug control:.
- *  0b10..10: Invasive debug is enabled.
  *  0b01..Any other value than b10: invasive debug is disable.
+ *  0b10..10: Invasive debug is enabled.
  */
 #define SYSCON_DEBUG_FEATURES_CPU0_SPIDEN(x)     (((uint32_t)(((uint32_t)(x)) << SYSCON_DEBUG_FEATURES_CPU0_SPIDEN_SHIFT)) & SYSCON_DEBUG_FEATURES_CPU0_SPIDEN_MASK)
 
 #define SYSCON_DEBUG_FEATURES_CPU0_SPNIDEN_MASK  (0xC0U)
 #define SYSCON_DEBUG_FEATURES_CPU0_SPNIDEN_SHIFT (6U)
 /*! CPU0_SPNIDEN - CPU0 Secure Non Invasive debug control:.
- *  0b10..10: Invasive debug is enabled.
  *  0b01..Any other value than b10: invasive debug is disable.
+ *  0b10..10: Invasive debug is enabled.
  */
 #define SYSCON_DEBUG_FEATURES_CPU0_SPNIDEN(x)    (((uint32_t)(((uint32_t)(x)) << SYSCON_DEBUG_FEATURES_CPU0_SPNIDEN_SHIFT)) & SYSCON_DEBUG_FEATURES_CPU0_SPNIDEN_MASK)
-
-#define SYSCON_DEBUG_FEATURES_CPU1_DBGEN_MASK    (0x300U)
-#define SYSCON_DEBUG_FEATURES_CPU1_DBGEN_SHIFT   (8U)
-/*! CPU1_DBGEN - CPU1 Invasive debug control:.
- *  0b10..10: Invasive debug is enabled.
- *  0b01..Any other value than b10: invasive debug is disable.
- */
-#define SYSCON_DEBUG_FEATURES_CPU1_DBGEN(x)      (((uint32_t)(((uint32_t)(x)) << SYSCON_DEBUG_FEATURES_CPU1_DBGEN_SHIFT)) & SYSCON_DEBUG_FEATURES_CPU1_DBGEN_MASK)
-
-#define SYSCON_DEBUG_FEATURES_CPU1_NIDEN_MASK    (0xC00U)
-#define SYSCON_DEBUG_FEATURES_CPU1_NIDEN_SHIFT   (10U)
-/*! CPU1_NIDEN - CPU1 Non Invasive debug control:.
- *  0b10..10: Invasive debug is enabled.
- *  0b01..Any other value than b10: invasive debug is disable.
- */
-#define SYSCON_DEBUG_FEATURES_CPU1_NIDEN(x)      (((uint32_t)(((uint32_t)(x)) << SYSCON_DEBUG_FEATURES_CPU1_NIDEN_SHIFT)) & SYSCON_DEBUG_FEATURES_CPU1_NIDEN_MASK)
 /*! @} */
 
-/*! @name DEBUG_FEATURES_DP - Cortex M33 (CPU0) and micro Cortex M33 (CPU1) debug features control DUPLICATE register. */
+/*! @name DEBUG_FEATURES_DP - Cortex debug features control. (duplicate) */
 /*! @{ */
 
 #define SYSCON_DEBUG_FEATURES_DP_CPU0_DBGEN_MASK (0x3U)
 #define SYSCON_DEBUG_FEATURES_DP_CPU0_DBGEN_SHIFT (0U)
 /*! CPU0_DBGEN - CPU0 (CPU0) Invasive debug control:.
- *  0b10..10: Invasive debug is enabled.
  *  0b01..Any other value than b10: invasive debug is disable.
+ *  0b10..10: Invasive debug is enabled.
  */
 #define SYSCON_DEBUG_FEATURES_DP_CPU0_DBGEN(x)   (((uint32_t)(((uint32_t)(x)) << SYSCON_DEBUG_FEATURES_DP_CPU0_DBGEN_SHIFT)) & SYSCON_DEBUG_FEATURES_DP_CPU0_DBGEN_MASK)
 
 #define SYSCON_DEBUG_FEATURES_DP_CPU0_NIDEN_MASK (0xCU)
 #define SYSCON_DEBUG_FEATURES_DP_CPU0_NIDEN_SHIFT (2U)
 /*! CPU0_NIDEN - CPU0 Non Invasive debug control:.
- *  0b10..10: Invasive debug is enabled.
  *  0b01..Any other value than b10: invasive debug is disable.
+ *  0b10..10: Invasive debug is enabled.
  */
 #define SYSCON_DEBUG_FEATURES_DP_CPU0_NIDEN(x)   (((uint32_t)(((uint32_t)(x)) << SYSCON_DEBUG_FEATURES_DP_CPU0_NIDEN_SHIFT)) & SYSCON_DEBUG_FEATURES_DP_CPU0_NIDEN_MASK)
 
 #define SYSCON_DEBUG_FEATURES_DP_CPU0_SPIDEN_MASK (0x30U)
 #define SYSCON_DEBUG_FEATURES_DP_CPU0_SPIDEN_SHIFT (4U)
 /*! CPU0_SPIDEN - CPU0 Secure Invasive debug control:.
- *  0b10..10: Invasive debug is enabled.
  *  0b01..Any other value than b10: invasive debug is disable.
+ *  0b10..10: Invasive debug is enabled.
  */
 #define SYSCON_DEBUG_FEATURES_DP_CPU0_SPIDEN(x)  (((uint32_t)(((uint32_t)(x)) << SYSCON_DEBUG_FEATURES_DP_CPU0_SPIDEN_SHIFT)) & SYSCON_DEBUG_FEATURES_DP_CPU0_SPIDEN_MASK)
 
 #define SYSCON_DEBUG_FEATURES_DP_CPU0_SPNIDEN_MASK (0xC0U)
 #define SYSCON_DEBUG_FEATURES_DP_CPU0_SPNIDEN_SHIFT (6U)
 /*! CPU0_SPNIDEN - CPU0 Secure Non Invasive debug control:.
- *  0b10..10: Invasive debug is enabled.
  *  0b01..Any other value than b10: invasive debug is disable.
+ *  0b10..10: Invasive debug is enabled.
  */
 #define SYSCON_DEBUG_FEATURES_DP_CPU0_SPNIDEN(x) (((uint32_t)(((uint32_t)(x)) << SYSCON_DEBUG_FEATURES_DP_CPU0_SPNIDEN_SHIFT)) & SYSCON_DEBUG_FEATURES_DP_CPU0_SPNIDEN_MASK)
+/*! @} */
 
-#define SYSCON_DEBUG_FEATURES_DP_CPU1_DBGEN_MASK (0x300U)
-#define SYSCON_DEBUG_FEATURES_DP_CPU1_DBGEN_SHIFT (8U)
-/*! CPU1_DBGEN - CPU1 Invasive debug control:.
- *  0b10..10: Invasive debug is enabled.
- *  0b01..Any other value than b10: invasive debug is disable.
- */
-#define SYSCON_DEBUG_FEATURES_DP_CPU1_DBGEN(x)   (((uint32_t)(((uint32_t)(x)) << SYSCON_DEBUG_FEATURES_DP_CPU1_DBGEN_SHIFT)) & SYSCON_DEBUG_FEATURES_DP_CPU1_DBGEN_MASK)
+/*! @name SWD_ACCESS_CPU0 - This register is used by ROM during DEBUG authentication mechanism to enable debug access port for CPU0. */
+/*! @{ */
 
-#define SYSCON_DEBUG_FEATURES_DP_CPU1_NIDEN_MASK (0xC00U)
-#define SYSCON_DEBUG_FEATURES_DP_CPU1_NIDEN_SHIFT (10U)
-/*! CPU1_NIDEN - CPU1 Non Invasive debug control:.
- *  0b10..10: Invasive debug is enabled.
- *  0b01..Any other value than b10: invasive debug is disable.
+#define SYSCON_SWD_ACCESS_CPU0_SEC_CODE_MASK     (0xFFFFFFFFU)
+#define SYSCON_SWD_ACCESS_CPU0_SEC_CODE_SHIFT    (0U)
+/*! SEC_CODE - CPU0 SWD-AP: 0x12345678.
+ *  0b00000000000000000000000000000000..CPU0 DAP is not allowed. Reading back register will be read as 0x5.
+ *  0b00010010001101000101011001111000..Value to write to enable CPU0 SWD access. Reading back register will be read as 0xA.
  */
-#define SYSCON_DEBUG_FEATURES_DP_CPU1_NIDEN(x)   (((uint32_t)(((uint32_t)(x)) << SYSCON_DEBUG_FEATURES_DP_CPU1_NIDEN_SHIFT)) & SYSCON_DEBUG_FEATURES_DP_CPU1_NIDEN_MASK)
+#define SYSCON_SWD_ACCESS_CPU0_SEC_CODE(x)       (((uint32_t)(((uint32_t)(x)) << SYSCON_SWD_ACCESS_CPU0_SEC_CODE_SHIFT)) & SYSCON_SWD_ACCESS_CPU0_SEC_CODE_MASK)
 /*! @} */
 
 /*! @name KEY_BLOCK - block quiddikey/PUF all index. */
@@ -3782,18 +3746,6 @@ typedef struct {
  *    Beacon and Authentication Beacon) to application code.
  */
 #define SYSCON_DEBUG_AUTH_BEACON_BEACON(x)       (((uint32_t)(((uint32_t)(x)) << SYSCON_DEBUG_AUTH_BEACON_BEACON_SHIFT)) & SYSCON_DEBUG_AUTH_BEACON_BEACON_MASK)
-/*! @} */
-
-/*! @name CPUCFG - CPUs configuration register */
-/*! @{ */
-
-#define SYSCON_CPUCFG_CPU1ENABLE_MASK            (0x4U)
-#define SYSCON_CPUCFG_CPU1ENABLE_SHIFT           (2U)
-/*! CPU1ENABLE - Enable CPU1.
- *  0b0..CPU1 is disable (Processor in reset).
- *  0b1..CPU1 is enable.
- */
-#define SYSCON_CPUCFG_CPU1ENABLE(x)              (((uint32_t)(((uint32_t)(x)) << SYSCON_CPUCFG_CPU1ENABLE_SHIFT)) & SYSCON_CPUCFG_CPU1ENABLE_MASK)
 /*! @} */
 
 /*! @name DEVICE_ID0 - Device ID */
@@ -3824,31 +3776,6 @@ typedef struct {
  * @}
  */ /* end of group SYSCON_Register_Masks */
 
-/*!
- * @brief Get the chip value.
- *
- * @return chip version, 0x0: A0 version chip, 0x1: A1 version chip, 0xFF: invalid version.
- */
-static inline uint32_t Chip_GetVersion(void)
-{
-    uint32_t deviceRevision;
-
-    deviceRevision = SYSCON->DIEID & SYSCON_DIEID_REV_ID_MASK;
-
-    if(0UL == deviceRevision) /* A0 device revision is 0 */
-    {
-        return 0x0;
-    }
-    else if(1UL == deviceRevision) /* A1 device revision is 1 */
-    {
-        return 0x1;
-    }
-    else
-    {
-        return 0xFF;
-    }
-}
-
 
 /*!
  * @}
@@ -3878,5 +3805,5 @@ static inline uint32_t Chip_GetVersion(void)
  */ /* end of group Peripheral_access_layer */
 
 
-#endif  /* SYSCON_H_ */
+#endif  /* PERI_SYSCON_H_ */
 

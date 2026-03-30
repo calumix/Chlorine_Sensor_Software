@@ -35,13 +35,13 @@ struct Message{
 	int wr_index;
 	enum Message_State state;
 	StreamBufferHandle_t rx_stream;
-	QueueHandle_t tx_queue;
+	StreamBufferHandle_t tx_stream;
 	char message[MAX_MESSAGE_LEN+1];	//+1 for null termination
 	char response[MAX_MESSAGE_LEN+MAX_HEADER_FOOTER_LEN+1];
 };
 
 int MessageSendFormat(struct Message * msg, const char * fmt,...);
-void MessageInit(struct Message * msg);
+void MessageInit(struct Message * msg, StreamBufferHandle_t tx_stream, StreamBufferHandle_t rx_stream);
 int MessageProcess(struct Message * msg, unsigned char * data, int len);
 void MessageClear(struct Message * msg);
 int MessageCheckReady(struct Message * msg);

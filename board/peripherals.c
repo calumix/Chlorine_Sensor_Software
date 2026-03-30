@@ -7,8 +7,8 @@
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
 product: Peripherals v15.0
-processor: LPC5528
-package_id: LPC5528JBD64
+processor: LPC5514
+package_id: LPC5514JBD64
 mcu_data: ksdk2_0
 processor_version: 24.12.10
 functionalGroups:
@@ -286,277 +286,12 @@ static void FLEXCOMM_SPI_init(void) {
 }
 
 /***********************************************************************************************************************
- * ADC0 initialization code
+ * FLEXCOMM_UART initialization code
  **********************************************************************************************************************/
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 instance:
-- name: 'ADC0'
-- type: 'lpadc'
-- mode: 'LPADC'
-- custom_name_enabled: 'false'
-- type_id: 'lpadc_2.8.1'
-- functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'ADC0'
-- config_sets:
-  - fsl_lpadc:
-    - lpadcConfig:
-      - clockSource: 'AsynchronousFunctionClock'
-      - clockSourceFreq: 'ClocksTool_DefaultInit'
-      - enableInDozeMode: 'true'
-      - conversionAverageMode: 'kLPADC_ConversionAverage1'
-      - offsetCalibration: 'no'
-      - autoCalibrate: 'true'
-      - enableAnalogPreliminary: 'true'
-      - powerUpDelay: '0x80'
-      - referenceVoltageSource: 'kLPADC_ReferenceVoltageAlt2'
-      - powerLevelMode: 'kLPADC_PowerLevelAlt1'
-      - triggerPriorityPolicy: 'kLPADC_ConvPreemptImmediatelyNotAutoResumed'
-      - enableConvPause: 'false'
-      - convPauseDelay: '0'
-      - FIFO0Watermark: '4'
-      - FIFO1Watermark: '0'
-      - FIFO0WatermarkDMA: 'true'
-      - FIFO1WatermarkDMA: 'false'
-    - lpadcConvCommandConfig:
-      - 0:
-        - user_commandId: 'THERMISTOR'
-        - commandId: '1'
-        - chainedNextCommandNumber: '0'
-        - sampleChannelMode: 'kLPADC_SampleChannelSingleEndSideA'
-        - channelNumber: 'CH.2'
-        - enableAutoChannelIncrement: 'false'
-        - loopCount: '0'
-        - hardwareAverageMode: 'kLPADC_HardwareAverageCount128'
-        - sampleTimeMode: 'kLPADC_SampleTimeADCK131'
-        - hardwareCompareMode: 'kLPADC_HardwareCompareDisabled'
-        - hardwareCompareValueHigh: '0'
-        - hardwareCompareValueLow: '0'
-        - conversionResoultuionMode: 'kLPADC_ConversionResolutionStandard'
-        - enableWaitTrigger: 'false'
-      - 1:
-        - user_commandId: 'ECHO'
-        - commandId: '2'
-        - chainedNextCommandNumber: '0'
-        - sampleChannelMode: 'kLPADC_SampleChannelSingleEndSideB'
-        - channelNumber: 'CH.11'
-        - enableAutoChannelIncrement: 'false'
-        - loopCount: '0'
-        - hardwareAverageMode: 'kLPADC_HardwareAverageCount4'
-        - sampleTimeMode: 'kLPADC_SampleTimeADCK7'
-        - hardwareCompareMode: 'kLPADC_HardwareCompareDisabled'
-        - hardwareCompareValueHigh: '0'
-        - hardwareCompareValueLow: '0'
-        - conversionResoultuionMode: 'kLPADC_ConversionResolutionStandard'
-        - enableWaitTrigger: 'false'
-      - 2:
-        - user_commandId: 'CPU_TEMP'
-        - commandId: '3'
-        - chainedNextCommandNumber: '0'
-        - sampleChannelMode: 'kLPADC_SampleChannelDiffBothSide'
-        - channelNumber: 'CH.26A'
-        - enableAutoChannelIncrement: 'false'
-        - loopCount: '3'
-        - hardwareAverageMode: 'kLPADC_HardwareAverageCount128'
-        - sampleTimeMode: 'kLPADC_SampleTimeADCK131'
-        - hardwareCompareMode: 'kLPADC_HardwareCompareDisabled'
-        - hardwareCompareValueHigh: '0'
-        - hardwareCompareValueLow: '0'
-        - conversionResoultuionMode: 'kLPADC_ConversionResolutionStandard'
-        - enableWaitTrigger: 'false'
-    - lpadcConvTriggerConfig:
-      - 0:
-        - user_triggerId: 'ECHO_TRIGGER'
-        - triggerId: '2'
-        - targetCommandId: '2'
-        - delayPower: '0'
-        - priority: 'false'
-        - channelAFIFOSelect: '0'
-        - channelBFIFOSelect: '0'
-        - enableHardwareTrigger: 'false'
-      - 1:
-        - user_triggerId: 'THERM_TRIGGER'
-        - triggerId: '0'
-        - targetCommandId: '1'
-        - delayPower: '0'
-        - priority: 'false'
-        - channelAFIFOSelect: '1'
-        - channelBFIFOSelect: '0'
-        - enableHardwareTrigger: 'false'
-    - IRQ_cfg:
-      - interrupt_type: ''
-      - enable_irq: 'false'
-      - adc_interrupt:
-        - IRQn: 'ADC0_IRQn'
-        - enable_interrrupt: 'enabled'
-        - enable_priority: 'false'
-        - priority: '0'
-        - enable_custom_name: 'false'
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
-/* clang-format on */
-const lpadc_config_t ADC0_config = {
-  .enableInDozeMode = true,
-  .conversionAverageMode = kLPADC_ConversionAverage1,
-  .enableAnalogPreliminary = true,
-  .powerUpDelay = 0x80UL,
-  .referenceVoltageSource = kLPADC_ReferenceVoltageAlt2,
-  .powerLevelMode = kLPADC_PowerLevelAlt1,
-  .triggerPriorityPolicy = kLPADC_ConvPreemptImmediatelyNotAutoResumed,
-  .enableConvPause = false,
-  .convPauseDelay = 0UL,
-  .FIFO0Watermark = 4UL,
-  .FIFO1Watermark = 0UL
-};
-lpadc_conv_command_config_t ADC0_commandsConfig[3] = {
-  {
-    .sampleChannelMode = kLPADC_SampleChannelSingleEndSideA,
-    .channelNumber = 2U,
-    .chainedNextCommandNumber = 0,
-    .enableAutoChannelIncrement = false,
-    .loopCount = 0UL,
-    .hardwareAverageMode = kLPADC_HardwareAverageCount128,
-    .sampleTimeMode = kLPADC_SampleTimeADCK131,
-    .hardwareCompareMode = kLPADC_HardwareCompareDisabled,
-    .hardwareCompareValueHigh = 0UL,
-    .hardwareCompareValueLow = 0UL,
-    .conversionResolutionMode = kLPADC_ConversionResolutionStandard,
-    .enableWaitTrigger = false
-  },
-  {
-    .sampleChannelMode = kLPADC_SampleChannelSingleEndSideB,
-    .channelNumber = 3U,
-    .chainedNextCommandNumber = 0,
-    .enableAutoChannelIncrement = false,
-    .loopCount = 0UL,
-    .hardwareAverageMode = kLPADC_HardwareAverageCount4,
-    .sampleTimeMode = kLPADC_SampleTimeADCK7,
-    .hardwareCompareMode = kLPADC_HardwareCompareDisabled,
-    .hardwareCompareValueHigh = 0UL,
-    .hardwareCompareValueLow = 0UL,
-    .conversionResolutionMode = kLPADC_ConversionResolutionStandard,
-    .enableWaitTrigger = false
-  },
-  {
-    .sampleChannelMode = kLPADC_SampleChannelDiffBothSide,
-    .channelNumber = 26U,
-    .chainedNextCommandNumber = 0,
-    .enableAutoChannelIncrement = false,
-    .loopCount = 3UL,
-    .hardwareAverageMode = kLPADC_HardwareAverageCount128,
-    .sampleTimeMode = kLPADC_SampleTimeADCK131,
-    .hardwareCompareMode = kLPADC_HardwareCompareDisabled,
-    .hardwareCompareValueHigh = 0UL,
-    .hardwareCompareValueLow = 0UL,
-    .conversionResolutionMode = kLPADC_ConversionResolutionStandard,
-    .enableWaitTrigger = false
-  }
-};
-lpadc_conv_trigger_config_t ADC0_triggersConfig[2] = {
-  {
-    .targetCommandId = 2,
-    .delayPower = 0UL,
-    .channelAFIFOSelect = 0,
-    .channelBFIFOSelect = 0,
-    .priority = 1,
-    .enableHardwareTrigger = false
-  },
-  {
-    .targetCommandId = 1,
-    .delayPower = 0UL,
-    .channelAFIFOSelect = 1,
-    .channelBFIFOSelect = 0,
-    .priority = 1,
-    .enableHardwareTrigger = false
-  }
-};
-
-static void ADC0_init(void) {
-  /* Power up LDO for ADC */
-  POWER_DisablePD(kPDRUNCFG_PD_LDOGPADC);
-  /* Initialize LPADC converter */
-  LPADC_Init(ADC0_PERIPHERAL, &ADC0_config);
-  /* Perform auto calibration */
-  LPADC_DoAutoCalibration(ADC0_PERIPHERAL);
-  /* Enable DMA request on FIFO 0 watermark event */
-  LPADC_EnableFIFO0WatermarkDMA(ADC0_PERIPHERAL, true);
-  /* Configure conversion command 1. */
-  LPADC_SetConvCommandConfig(ADC0_PERIPHERAL, ADC0_THERMISTOR, &ADC0_commandsConfig[0]);
-  /* Configure conversion command 2. */
-  LPADC_SetConvCommandConfig(ADC0_PERIPHERAL, ADC0_ECHO, &ADC0_commandsConfig[1]);
-  /* Configure conversion command 3. */
-  LPADC_SetConvCommandConfig(ADC0_PERIPHERAL, ADC0_CPU_TEMP, &ADC0_commandsConfig[2]);
-  /* Configure trigger 2. */
-  LPADC_SetConvTriggerConfig(ADC0_PERIPHERAL, ADC0_ECHO_TRIGGER, &ADC0_triggersConfig[0]);
-  /* Configure trigger 0. */
-  LPADC_SetConvTriggerConfig(ADC0_PERIPHERAL, ADC0_THERM_TRIGGER, &ADC0_triggersConfig[1]);
-}
-
-/***********************************************************************************************************************
- * FLEXCOMM_USART initialization code
- **********************************************************************************************************************/
-/* clang-format off */
-/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-instance:
-- name: 'FLEXCOMM_USART'
-- type: 'flexcomm_usart'
-- mode: 'polling'
-- custom_name_enabled: 'true'
-- type_id: 'flexcomm_usart_2.8.0'
-- functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'FLEXCOMM2'
-- config_sets:
-  - usartConfig_t:
-    - usartConfig:
-      - clockSource: 'FXCOMFunctionClock'
-      - clockSourceFreq: 'ClocksTool_DefaultInit'
-      - baudRate_Bps: '115200'
-      - syncMode: 'kUSART_SyncModeDisabled'
-      - parityMode: 'kUSART_ParityDisabled'
-      - stopBitCount: 'kUSART_OneStopBit'
-      - bitCountPerChar: 'kUSART_8BitsPerChar'
-      - loopback: 'false'
-      - txWatermark: 'kUSART_TxFifo0'
-      - rxWatermark: 'kUSART_RxFifo1'
-      - enableMatchAddress: 'false'
-      - matchAddressConfig:
-        - matchAddress: '0'
-        - addressMode: 'automatic'
-      - enableRx: 'false'
-      - enableTx: 'true'
-      - enableHardwareFlowControl: 'false'
-      - enableRTS: 'false'
-      - clockPolarity: 'kUSART_RxSampleOnFallingEdge'
-      - enableContinuousSCLK: 'false'
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
-/* clang-format on */
-const usart_config_t FLEXCOMM_USART_config = {
-  .baudRate_Bps = 115200UL,
-  .syncMode = kUSART_SyncModeDisabled,
-  .parityMode = kUSART_ParityDisabled,
-  .stopBitCount = kUSART_OneStopBit,
-  .bitCountPerChar = kUSART_8BitsPerChar,
-  .loopback = false,
-  .txWatermark = kUSART_TxFifo0,
-  .rxWatermark = kUSART_RxFifo1,
-  .enableRx = false,
-  .enableTx = true,
-  .enableHardwareFlowControl = false,
-  .enableMode32k = false,
-  .clockPolarity = kUSART_RxSampleOnFallingEdge,
-  .enableContinuousSCLK = false
-};
-
-static void FLEXCOMM_USART_init(void) {
-  USART_Init(FLEXCOMM_USART_PERIPHERAL, &FLEXCOMM_USART_config, FLEXCOMM_USART_CLOCK_SOURCE);
-}
-
-/***********************************************************************************************************************
- * FLEXCOMM_NMEA initialization code
- **********************************************************************************************************************/
-/* clang-format off */
-/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-instance:
-- name: 'FLEXCOMM_NMEA'
+- name: 'FLEXCOMM_UART'
 - type: 'flexcomm_usart'
 - mode: 'polling'
 - custom_name_enabled: 'true'
@@ -568,7 +303,7 @@ instance:
     - usartConfig:
       - clockSource: 'FXCOMFunctionClock'
       - clockSourceFreq: 'ClocksTool_DefaultInit'
-      - baudRate_Bps: '4800'
+      - baudRate_Bps: '115200'
       - syncMode: 'kUSART_SyncModeDisabled'
       - parityMode: 'kUSART_ParityDisabled'
       - stopBitCount: 'kUSART_OneStopBit'
@@ -588,8 +323,8 @@ instance:
       - enableContinuousSCLK: 'false'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
-const usart_config_t FLEXCOMM_NMEA_config = {
-  .baudRate_Bps = 4800UL,
+const usart_config_t FLEXCOMM_UART_config = {
+  .baudRate_Bps = 115200UL,
   .syncMode = kUSART_SyncModeDisabled,
   .parityMode = kUSART_ParityDisabled,
   .stopBitCount = kUSART_OneStopBit,
@@ -605,8 +340,8 @@ const usart_config_t FLEXCOMM_NMEA_config = {
   .enableContinuousSCLK = false
 };
 
-static void FLEXCOMM_NMEA_init(void) {
-  USART_Init(FLEXCOMM_NMEA_PERIPHERAL, &FLEXCOMM_NMEA_config, FLEXCOMM_NMEA_CLOCK_SOURCE);
+static void FLEXCOMM_UART_init(void) {
+  USART_Init(FLEXCOMM_UART_PERIPHERAL, &FLEXCOMM_UART_config, FLEXCOMM_UART_CLOCK_SOURCE);
 }
 
 /***********************************************************************************************************************
@@ -648,6 +383,224 @@ static void CRC_ENGINE_init(void) {
 }
 
 /***********************************************************************************************************************
+ * CAN0 initialization code
+ **********************************************************************************************************************/
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+instance:
+- name: 'CAN0'
+- type: 'mcan'
+- mode: 'interrupts'
+- custom_name_enabled: 'false'
+- type_id: 'mcan_2.1.3'
+- functional_group: 'BOARD_InitPeripherals'
+- peripheral: 'CAN0'
+- config_sets:
+  - interruptsCfg:
+    - txBufferInterruptSources:
+      - txBufferInterruptSources_L:
+        - 0: 'disabled'
+        - 1: 'disabled'
+        - 2: 'disabled'
+        - 3: 'disabled'
+        - 4: 'disabled'
+        - 5: 'disabled'
+        - 6: 'disabled'
+        - 7: 'disabled'
+        - 8: 'disabled'
+        - 9: 'disabled'
+        - 10: 'disabled'
+        - 11: 'disabled'
+        - 12: 'disabled'
+        - 13: 'disabled'
+        - 14: 'disabled'
+        - 15: 'disabled'
+      - txBufferInterruptSources_H:
+        - 0: 'disabled'
+        - 1: 'disabled'
+        - 2: 'disabled'
+        - 3: 'disabled'
+        - 4: 'disabled'
+        - 5: 'disabled'
+        - 6: 'disabled'
+        - 7: 'disabled'
+        - 8: 'disabled'
+        - 9: 'disabled'
+        - 10: 'disabled'
+        - 11: 'disabled'
+        - 12: 'disabled'
+        - 13: 'disabled'
+        - 14: 'disabled'
+        - 15: 'disabled'
+    - interrupts:
+      - 0:
+        - interrupts: ''
+        - enable_irq: 'false'
+        - interrupt_line:
+          - IRQn: 'CAN0_IRQ0_IRQn'
+          - enable_interrrupt: 'enabled'
+          - enable_priority: 'false'
+          - priority: '0'
+          - enable_custom_name: 'false'
+      - 1:
+        - interrupts: ''
+        - enable_irq: 'false'
+        - interrupt_line:
+          - IRQn: 'CAN0_IRQ1_IRQn'
+          - enable_interrrupt: 'enabled'
+          - enable_priority: 'false'
+          - priority: '0'
+          - enable_custom_name: 'false'
+    - quick_selection: 'default'
+  - fsl_mcan:
+    - mcanConfig:
+      - clockSource: 'FunctionClock'
+      - clockSourceFreq: 'ClocksTool_DefaultInit'
+      - baudRateA: '500000'
+      - baudRateD: '1000000'
+      - enableCanfdNormal: 'false'
+      - enableCanfdSwitch: 'false'
+      - loopBackBusMonMode: 'kMCAN_disabled'
+      - setNormalOperation: 'true'
+      - nominalBitTiming:
+        - seg1: '11'
+        - seg2: '4'
+        - rJumpwidth: '4'
+        - bitTime: []
+      - dataBitTiming:
+        - seg1: '11'
+        - seg2: '4'
+        - rJumpwidth: '4'
+        - bitTime: []
+      - timingConfig: []
+    - messagesConfig:
+      - enable_custom_name: 'false'
+      - allocateRAM: 'true'
+      - stdFilter:
+        - listSize: '1'
+        - remFrame: 'kMCAN_rejectFrame'
+        - nmFrame: 'kMCAN_reject0'
+      - extFilter:
+        - listSize: '0'
+        - remFrame: 'kMCAN_rejectFrame'
+        - nmFrame: 'kMCAN_reject0'
+      - rxFifo0:
+        - elementSize: '1'
+        - watermark: '0'
+        - opmode: 'kMCAN_FifoBlocking'
+        - datafieldSize: 'kMCAN_8ByteDatafield'
+      - rxFifo1:
+        - elementSize: '0'
+        - watermark: '0'
+        - opmode: 'kMCAN_FifoBlocking'
+        - datafieldSize: 'kMCAN_8ByteDatafield'
+      - rxBuffer:
+        - elementSize: '0'
+        - datafieldSize: 'kMCAN_8ByteDatafield'
+      - txFifo:
+        - elementSize: '0'
+        - watermark: '0'
+      - txBuffer:
+        - dedicatedSize: '1'
+        - fqSize: '0'
+        - mode: 'kMCAN_txFifo'
+        - datafieldSize: 'kMCAN_8ByteDatafield'
+    - stdFilters: []
+    - extFilters: []
+    - quick_selection: 'default'
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
+const mcan_config_t CAN0_config = {
+  .baudRateA = 500000UL,
+  .baudRateD = 1000000UL,
+  .enableCanfdNormal = false,
+  .enableCanfdSwitch = false,
+  .enableLoopBackInt = false,
+  .enableLoopBackExt = false,
+  .enableBusMon = false,
+  .timingConfig = {
+    .preDivider = 0,
+    .rJumpwidth = 3,
+    .seg1 = 10,
+    .seg2 = 3,
+    .datapreDivider = 0,
+    .datarJumpwidth = 3,
+    .dataseg1 = 10,
+    .dataseg2 = 3
+  }
+};
+/* Allocation of the Message RAM in memory that is alligned to 16 bits. */
+SDK_ALIGN(uint32_t CAN0_RAM_BASE_ADDRESS[CAN0_MESSAGE_RAM_SIZE], CAN0_BASE_ADDRESS_ALIGN_SIZE);
+const mcan_frame_filter_config_t CAN0_std_filter_config = {
+  .address = 0,
+  .listSize = 1UL,
+  .idFormat = kMCAN_FrameIDStandard,
+  .remFrame = kMCAN_rejectFrame,
+  .nmFrame = kMCAN_reject0
+};
+const mcan_frame_filter_config_t CAN0_ext_filter_config = {
+  .address = 4,
+  .listSize = 0UL,
+  .idFormat = kMCAN_FrameIDExtend,
+  .remFrame = kMCAN_rejectFrame,
+  .nmFrame = kMCAN_reject0
+};
+const mcan_rx_fifo_config_t CAN0_rx_fifo0_config = {
+  .address = 4,
+  .elementSize = 1UL,
+  .watermark = 0UL,
+  .opmode = kMCAN_FifoBlocking,
+  .datafieldSize = kMCAN_8ByteDatafield
+};
+const mcan_rx_fifo_config_t CAN0_rx_fifo1_config = {
+  .address = 20,
+  .elementSize = 0UL,
+  .watermark = 0UL,
+  .opmode = kMCAN_FifoBlocking,
+  .datafieldSize = kMCAN_8ByteDatafield
+};
+const mcan_rx_buffer_config_t CAN0_rx_buffers_config = {
+  .address = 20,
+  .datafieldSize = kMCAN_8ByteDatafield
+};
+const mcan_tx_fifo_config_t CAN0_tx_event_fifo_config = {
+  .address = 20,
+  .elementSize = 0UL,
+  .watermark = 0UL
+};
+const mcan_tx_buffer_config_t CAN0_tx_buffers_config = {
+  .address = 20,
+  .dedicatedSize = 1UL,
+  .fqSize = 0UL,
+  .mode = kMCAN_txFifo,
+  .datafieldSize = kMCAN_8ByteDatafield
+};
+
+static void CAN0_init(void) {
+  /* MCAN initialization */
+  MCAN_Init(CAN0_PERIPHERAL, &CAN0_config, CAN0_CLOCK_SOURCE);
+  /* Message RAM initialization */
+  memset(CAN0_RAM_BASE_ADDRESS, 0,CAN0_MESSAGE_RAM_SIZE * sizeof(uint32_t));
+  MCAN_SetMsgRAMBase(CAN0_PERIPHERAL, (uint32_t)CAN0_RAM_BASE_ADDRESS);
+  /* Configuration of the standard filter list */
+  MCAN_SetFilterConfig(CAN0_PERIPHERAL, &CAN0_std_filter_config);
+  /* Configuration of the extended filter list */
+  MCAN_SetFilterConfig(CAN0_PERIPHERAL, &CAN0_ext_filter_config);
+  /* Configuration of Rx FIFO 0 */
+  MCAN_SetRxFifo0Config(CAN0_PERIPHERAL, &CAN0_rx_fifo0_config);
+  /* Configuration of Rx FIFO 1 */
+  MCAN_SetRxFifo1Config(CAN0_PERIPHERAL, &CAN0_rx_fifo1_config);
+  /* Configuration of Rx buffers */
+  MCAN_SetRxBufferConfig(CAN0_PERIPHERAL, &CAN0_rx_buffers_config);
+  /* Configuration of Tx event FIFO */
+  MCAN_SetTxEventFifoConfig(CAN0_PERIPHERAL, &CAN0_tx_event_fifo_config);
+  /* Configuration of Tx buffers and FIFO/Queue */
+  MCAN_SetTxBufferConfig(CAN0_PERIPHERAL, &CAN0_tx_buffers_config);
+  /* Setting of the CAN normal mode to start communication */
+  MCAN_EnterNormalMode(CAN0_PERIPHERAL);
+}
+
+/***********************************************************************************************************************
  * Initialization functions
  **********************************************************************************************************************/
 static void BOARD_InitPeripherals_CommonPostInit(void)
@@ -675,10 +628,9 @@ void BOARD_InitPeripherals(void)
   DMA0_init();
   FLEXCOMM_I2C_init();
   FLEXCOMM_SPI_init();
-  ADC0_init();
-  FLEXCOMM_USART_init();
-  FLEXCOMM_NMEA_init();
+  FLEXCOMM_UART_init();
   CRC_ENGINE_init();
+  CAN0_init();
   /* Common post-initialization */
   BOARD_InitPeripherals_CommonPostInit();
 }

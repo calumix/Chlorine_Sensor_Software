@@ -13,10 +13,8 @@
 #include "commands.h"
 #include "env.h"
 #include "message.h"
-#include "tuss4470.h"
 #include "peripherals.h"
 #include <math.h>
-static QueueHandle_t ping_queue;
 
 
 /*
@@ -115,18 +113,6 @@ int EnvCommand(struct Command * cmd,struct Message * msg, int argc, char * argv[
 					env.threshold_filter_scale);
 		return 0;
 	}
-	/*
-	 * TODO: Add support for 8-bit echogram data
-	if(strcmp(argv[1],"EG_8BIT")==0 && (argc == 3 || argv[2][0] == '?' || argc == 2)){
-		if(argc == 3){
-			if(argv[2][0] == '1') env.flags |= ENV_FLAGS_8BIT_ECHO;
-			else env.flags &= ~ENV_FLAGS_8BIT_ECHO;
-		}
-		MessageSendFormat(msg, "%s,%s,%s",cmd->str,argv[1],
-					(env.flags & ENV_FLAGS_8BIT_ECHO) ? "1":"0");
-		return 0;
-	}
-	*/
 
 	MessageSendFormat(msg, "%s,?",cmd->str);
 
@@ -143,28 +129,6 @@ int VerCommand(struct Command * cmd,struct Message * msg,int argc, char * argv[]
 	return 0;
 }
 
-int RegCommand(struct Command * cmd,struct Message * msg,int argc, char * argv[]){
-	uint8_t reg=0xFF;
-	uint8_t data,status;
-
-	if(argc >= 2){
-		//read
-		reg = strtoul(argv[1],NULL,0);
-		if(argc == 3){
-			//write
-			data = strtoul(argv[2],NULL,0);
-			tuss4470_write(reg,data,NULL);
-		}
-	}
-
-	if(reg != 0xFF){
-		//perform read
-		tuss4470_read(reg,&data,&status);
-	}
-	MessageSendFormat(msg,"%s,0x%x,0x%x,0x%x",cmd->str,reg,data,status);
-
-	return 0;
-}
 
 /*
  * Set parameters of the ping
@@ -182,72 +146,6 @@ const float lna_values[] = {
 const uint8_t q_values[] = {
 		4,5,2,3
 };
-int PingCommand(struct Command * cmd,struct Message * msg,int argc, char * argv[]){
-	ping_cur_cfg_t cfg;
-	ping_cfg_t ping_cmd;
-	float f,e;
-	int i;
-
-	ping_cmd.cmd = PING_NOP;
-
-	if(argc >= 2){
-		if(strcmp(argv[1],"START")==0){
-			ping_cmd.cmd = PING_START;
-		}else if(strcmp(argv[1],"STOP")==0){
-			ping_cmd.cmd = PING_STOP;
-		}else if(strcmp(argv[1],"LEN")==0 && argc == 3){
-			ping_cmd.params[0]=strtoul(argv[2],NULL,10);
-			ping_cmd.cmd = PING_SET_LEN;
-		}else if(strcmp(argv[1],"PER")==0 && argc == 3){
-			ping_cmd.params[0]=strtoul(argv[2],NULL,10);
-			ping_cmd.cmd = PING_SET_PERIOD;
-		}else if(strcmp(argv[1],"LNA")==0 && argc == 3){
-			f = strtof(argv[2],NULL);
-			//find closest LNA value
-			ping_cmd.params[0] = 0;
-			e = 100000000;
-			for(i=0;i<ARRAY_SIZE(lna_values);i++){
-				if(fabs(lna_values[i] - f) < e){
-					e = fabs(lna_values[i] - f);
-					ping_cmd.params[0] = i;
-				}
-			}
-			ping_cmd.cmd = PING_SET_LNA;
-		}else if(strcmp(argv[1],"POWER")==0 && argc == 3){
-			ping_cmd.params[0] = strtoul(argv[2],NULL,10);
-			ping_cmd.cmd = PING_SET_POWER;
-		}else if(strcmp(argv[1],"Q")==0 && argc == 3){
-			f = strtof(argv[2],NULL);
-			//find closest LNA value
-			ping_cmd.params[0] = 0;
-			e = 100000000;
-			for(i=0;i<ARRAY_SIZE(q_values);i++){
-				if(fabs(q_values[i] - f) < e){
-					e = fabs(q_values[i] - f);
-					ping_cmd.params[0] = i;
-				}
-			}
-			ping_cmd.params[0] <<= 4;
-			ping_cmd.cmd = PING_SET_Q;
-		}
-
-		if(ping_cmd.cmd != PING_NOP){
-			xQueueSend(ping_queue,(void*)&ping_cmd,portMAX_DELAY);
-		}
-	}
-	/* Return current config */
-	TUSS4470GetConfig(&cfg);
-	MessageSendFormat(msg,"%s,%s,%uus,%uus,%0.1f,%s,%u",
-			cmd->str,
-			cfg.running ? "running" : "stopped",
-					cfg.len,
-					cfg.period,
-					lna_values[cfg.lna],
-					cfg.power ? "hp" : "lp",
-					q_values[cfg.q>>4]);
-
-	return 0;
-}
 
 /*
  * To write SN:
@@ -274,8 +172,6 @@ static struct Command commands[] = {
 
 		{"ECHO",EchoCommand},
 		{"VER",VerCommand},
-		{"PING",PingCommand},
-		{"REG",RegCommand},
 		{"ENV",EnvCommand},
 		//{"SN",SNCommand},
 
@@ -323,9 +219,8 @@ void CommandParserTask(void*params){
 	}
 }
 
-void CommandParserInit(QueueHandle_t * message_rx_queue, QueueHandle_t ping_cfg_queue){
+void CommandParserInit(QueueHandle_t * message_rx_queue){
 	*message_rx_queue = xQueueCreate(3,sizeof(struct Message));
-	ping_queue = ping_cfg_queue;
 	vQueueAddToRegistry(*message_rx_queue,"CMD");
 	xTaskCreate(CommandParserTask,"CMD",384,message_rx_queue,1,NULL);
 

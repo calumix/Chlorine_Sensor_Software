@@ -82,14 +82,20 @@ static uint32_t findPll0PreDiv(void);
 static uint32_t findPll1PreDiv(void);
 /* Get postdivider (P) from PLL0 PDEC setting */
 static uint32_t findPll0PostDiv(void);
+/* Get postdivider (P) from PLL1 PDEC setting. */
+static uint32_t findPll1PostDiv(void);
 /* Get multiplier (M) from PLL0 MDEC and SSCG settings */
 static float findPll0MMult(void);
+/* Get multiplier (M) from PLL1 MDEC. */
+static uint32_t findPll1MMult(void);
 /* Get the greatest common divisor */
 static uint32_t FindGreatestCommonDivisor(uint32_t m, uint32_t n);
 /* Set PLL output based on desired output rate */
 static pll_error_t CLOCK_GetPll0Config(uint32_t finHz, uint32_t foutHz, pll_setup_t *pSetup, bool useSS);
 /* Update local PLL rate variable */
 static void CLOCK_GetPLL0OutFromSetupUpdate(pll_setup_t *pSetup);
+/* Update local PLL1 rate variable */
+static void CLOCK_GetPLL1OutFromSetupUpdate(pll_setup_t *pSetup);
 
 /*******************************************************************************
  * Code
@@ -103,6 +109,8 @@ static void CLOCK_GetPLL0OutFromSetupUpdate(pll_setup_t *pSetup);
  */
 void CLOCK_AttachClk(clock_attach_id_t connection)
 {
+    assert(connection < kNONE_to_NONE);
+
     uint8_t mux;
     uint8_t sel;
     uint16_t item;
@@ -110,7 +118,7 @@ void CLOCK_AttachClk(clock_attach_id_t connection)
     uint32_t i;
     volatile uint32_t *pClkSel;
 
-    pClkSel = &(SYSCON->SYSTICKCLKSELX[0]);
+	pClkSel = (volatile uint32_t *)(SYSCON_BASE + 0x260U); /* SYSTICKCLKSEL0 offset 0x260 */
 
     if (kNONE_to_NONE != connection)
     {
@@ -123,14 +131,19 @@ void CLOCK_AttachClk(clock_attach_id_t connection)
             item = (uint16_t)GET_ID_ITEM(tmp32);
             if (item != 0U)
             {
-                mux = GET_ID_ITEM_MUX(item);
-                sel = GET_ID_ITEM_SEL(item);
+                mux = (uint8_t)(GET_ID_ITEM_MUX(item) & 0xFFU);
+                sel = (uint8_t)GET_ID_ITEM_SEL(item);
                 if (mux == CM_RTCOSC32KCLKSEL)
                 {
                     PMC->RTCOSC32K = (PMC->RTCOSC32K & ~PMC_RTCOSC32K_SEL_MASK) | PMC_RTCOSC32K_SEL(sel);
                 }
+                else if (mux == CM_OSTIMERCLKSEL)
+                {
+                    PMC->OSTIMERr = (PMC->OSTIMERr & ~PMC_OSTIMER_OSTIMERCLKSEL_MASK) | PMC_OSTIMER_OSTIMERCLKSEL(sel);
+                }
                 else
                 {
+                    assert(mux <= CM_SCTCLKSEL);
                     pClkSel[mux] = sel;
                 }
             }
@@ -149,15 +162,17 @@ void CLOCK_AttachClk(clock_attach_id_t connection)
  */
 clock_attach_id_t CLOCK_GetClockAttachId(clock_attach_id_t attachId)
 {
+    assert(attachId < kNONE_to_NONE);
+    
     uint8_t mux;
-    uint8_t actualSel;
+    uint32_t actualSel;
     uint32_t tmp32 = (uint32_t)attachId;
     uint32_t i;
     uint32_t actualAttachId = 0U;
     uint32_t selector       = GET_ID_SELECTOR(tmp32);
     volatile uint32_t *pClkSel;
 
-    pClkSel = &(SYSCON->SYSTICKCLKSELX[0]);
+    pClkSel = (volatile uint32_t *)(SYSCON_BASE + 0x260U); /* SYSTICKCLKSEL0 offset 0x260 */
 
     if (kNONE_to_NONE == attachId)
     {
@@ -166,25 +181,32 @@ clock_attach_id_t CLOCK_GetClockAttachId(clock_attach_id_t attachId)
 
     for (i = 0U; i < 2U; i++)
     {
-        mux = GET_ID_ITEM_MUX(tmp32);
+        mux = (uint8_t)GET_ID_ITEM_MUX(tmp32);
         if (tmp32 != 0UL)
         {
             if (mux == CM_RTCOSC32KCLKSEL)
             {
-                actualSel = (uint8_t)(PMC->RTCOSC32K);
+                actualSel = ((PMC->RTCOSC32K) & PMC_RTCOSC32K_SEL_MASK) >> PMC_RTCOSC32K_SEL_SHIFT;
+            }
+            else if (mux == CM_OSTIMERCLKSEL)
+            {
+                actualSel = ((PMC->OSTIMERr) & PMC_OSTIMER_OSTIMERCLKSEL_MASK) >> PMC_OSTIMER_OSTIMERCLKSEL_SHIFT;
             }
             else
             {
-                actualSel = (uint8_t)(pClkSel[mux]);
+                assert(mux <= CM_SCTCLKSEL);
+                actualSel = pClkSel[mux];
             }
 
             /* Consider the combination of two registers */
+            assert(actualSel < UINT32_MAX);
             actualAttachId |= CLK_ATTACH_ID(mux, actualSel, i);
         }
         tmp32 = GET_ID_NEXT_ITEM(tmp32); /*!<  pick up next descriptor */
     }
 
     actualAttachId |= selector;
+    assert(actualAttachId < kNONE_to_NONE);
 
     return (clock_attach_id_t)actualAttachId;
 }
@@ -212,15 +234,15 @@ void CLOCK_SetClkDiv(clock_div_name_t div_name, uint32_t divided_by_value, bool 
     {
         if (reset)
         {
-            ((volatile uint32_t *)pClkDiv)[(uint32_t)div_name] = 1UL << 29U;
+            ((volatile uint32_t *)pClkDiv)[(uint8_t)div_name] = 1UL << 29U;
         }
         if (divided_by_value == 0U) /*!<  halt */
         {
-            ((volatile uint32_t *)pClkDiv)[(uint32_t)div_name] = 1UL << 30U;
+            ((volatile uint32_t *)pClkDiv)[(uint8_t)div_name] = 1UL << 30U;
         }
         else
         {
-            ((volatile uint32_t *)pClkDiv)[(uint32_t)div_name] = (divided_by_value - 1U);
+            ((volatile uint32_t *)pClkDiv)[(uint8_t)div_name] = (divided_by_value - 1U);
         }
     }
 }
@@ -233,7 +255,9 @@ void CLOCK_SetClkDiv(clock_div_name_t div_name, uint32_t divided_by_value, bool 
  */
 void CLOCK_SetRtc1khzClkDiv(uint32_t divided_by_value)
 {
-    PMC->RTCOSC32K |= (((divided_by_value - 28U) << PMC_RTCOSC32K_CLK1KHZDIV_SHIFT) | PMC_RTCOSC32K_CLK1KHZDIV_MASK);
+    assert(divided_by_value >= 28U);
+    PMC->RTCOSC32K =
+        (PMC->RTCOSC32K & ~PMC_RTCOSC32K_CLK1KHZDIV_MASK) | PMC_RTCOSC32K_CLK1KHZDIV(divided_by_value - 28U);
 }
 
 /* Set RTC 1KHz Clock Divider */
@@ -250,8 +274,8 @@ void CLOCK_SetRtc1hzClkDiv(uint32_t divided_by_value)
     }
     else
     {
-        PMC->RTCOSC32K |=
-            (((divided_by_value - 31744U) << PMC_RTCOSC32K_CLK1HZDIV_SHIFT) | PMC_RTCOSC32K_CLK1HZDIV_MASK);
+        PMC->RTCOSC32K =
+            (PMC->RTCOSC32K & ~PMC_RTCOSC32K_CLK1HZDIV_MASK) | PMC_RTCOSC32K_CLK1HZDIV(divided_by_value - 31744U);
     }
 }
 
@@ -265,7 +289,7 @@ void CLOCK_SetRtc1hzClkDiv(uint32_t divided_by_value)
  */
 status_t CLOCK_SetupFROClocking(uint32_t iFreq)
 {
-    if ((iFreq != 12000000U) && (iFreq != 48000000U) && (iFreq != 96000000U))
+    if ((iFreq != 12000000U) && (iFreq != 96000000U))
     {
         return kStatus_Fail;
     }
@@ -297,81 +321,49 @@ status_t CLOCK_SetupFROClocking(uint32_t iFreq)
  * param    iFreq: Input frequency
  * return    Nothing
  */
-void CLOCK_SetFLASHAccessCyclesForFreq(uint32_t iFreq)
+typedef struct
 {
-    uint32_t num_wait_states; /* Flash Controller & FMC internal number of Wait States (minus 1) */
+    uint32_t waitstate;
+    uint32_t freqMax;
+} WaitStateInterval_t;
+
+/* clang-format off */
+/* Wait state if frequency is inferior to the one specified */
+static const WaitStateInterval_t IntervalList[] = {
+    {0, 11000000},
+    {1, 22000000},
+    {2, 33000000},
+    {3, 44000000},
+    {4, 55000000},
+    {5, 66000000},
+    {6, 84000000},
+    {7, 104000000},
+    {8, 119000000},
+    {9, 129000000},
+    {10, 144000000},
+    {11, 150000000} /* Maximum allowed frequency (150 MHz) */
+};
+/* clang-format on */
+
+void CLOCK_SetFLASHAccessCyclesForFreq(uint32_t system_freq_hz)
+{
+    /* Flash Controller & FMC internal number of Wait States (minus 1) */
+    uint32_t num_wait_states      = 15UL; /* Default to the maximum number of wait states */
     uint32_t prefetch_enable_mask = SYSCON->FMCCR & SYSCON_FMCCR_PREFEN_MASK;
 
-    if (iFreq <= 11000000UL)
+    for (size_t cnt = 0; cnt < (sizeof(IntervalList) / sizeof(WaitStateInterval_t)); cnt++)
     {
-        /* [0 - 11 MHz] */
-        num_wait_states = 0UL;
-    }
-    else if (iFreq <= 22000000UL)
-    {
-        /* [11 MHz - 22 MHz] */
-        num_wait_states = 1UL;
-    }
-    else if (iFreq <= 33000000UL)
-    {
-        /* [22 MHz - 33 MHz] */
-        num_wait_states = 2UL;
-    }
-    else if (iFreq <= 44000000UL)
-    {
-        /* [33 MHz - 44 MHz] */
-        num_wait_states = 3UL;
-    }
-    else if (iFreq <= 55000000UL)
-    {
-        /* [44 MHz - 55 MHz] */
-        num_wait_states = 4UL;
-    }
-    else if (iFreq <= 66000000UL)
-    {
-        /* [55 MHz - 662 MHz] */
-        num_wait_states = 5UL;
-    }
-    else if (iFreq <= 77000000UL)
-    {
-        /* [66 MHz - 77 MHz] */
-        num_wait_states = 6UL;
-    }
-    else if (iFreq <= 88000000UL)
-    {
-        /* [77 MHz - 88 MHz] */
-        num_wait_states = 7UL;
-    }
-    else if (iFreq <= 100000000UL)
-    {
-        /* [88 MHz - 100 MHz] */
-        num_wait_states = 8UL;
-    }
-    else if (iFreq <= 115000000UL)
-    {
-        /* [100 MHz - 115 MHz] */
-        num_wait_states = 9UL;
-    }
-    else if (iFreq <= 130000000UL)
-    {
-        /* [115 MHz - 130 MHz] */
-        num_wait_states = 10UL;
-    }
-    else if (iFreq <= 150000000UL)
-    {
-        /* [130 MHz - 150 MHz] */
-        num_wait_states = 11UL;
-    }
-    else
-    {
-        /* Above 150 MHz */
-        num_wait_states = 12UL;
+        if (system_freq_hz <= IntervalList[cnt].freqMax)
+        {
+            num_wait_states = IntervalList[cnt].waitstate;
+            break;
+        }
     }
 
     /*The prefetch bit must be disabled before any flash commands*/
     SYSCON->FMCCR &= ~SYSCON_FMCCR_PREFEN_MASK;
 
-    FLASH->INT_CLR_STATUS = 0x1FUL; /* Clear all status flags */
+    FLASH->INT_CLR_STATUS = 0x1F; /* Clear all status flags */
 
     FLASH->DATAW[0] = (FLASH->DATAW[0] & 0xFFFFFFF0UL) |
                       (num_wait_states & (SYSCON_FMCCR_FLASHTIM_MASK >> SYSCON_FMCCR_FLASHTIM_SHIFT));
@@ -379,9 +371,8 @@ void CLOCK_SetFLASHAccessCyclesForFreq(uint32_t iFreq)
     FLASH->CMD = 0x2; /* CMD_SET_READ_MODE */
 
     /* Wait until the cmd is completed (without error) */
-    while (0UL == (FLASH->INT_STATUS & FLASH_INT_STATUS_DONE_MASK))
+    while ((FLASH->INT_STATUS & FLASH_INT_STATUS_DONE_MASK) == 0UL)
     {
-        ;
     }
 
     /* Adjust FMC waiting time cycles (num_wait_states) */
@@ -488,10 +479,41 @@ uint32_t CLOCK_GetClockOutClkFreq(void)
             break;
 
         default:
-            assert(false);
+            freq = 0U;
             break;
     }
     return freq / ((SYSCON->CLKOUTDIV & 0xffU) + 1U);
+}
+
+/* Get CAN Clk */
+/*! brief  Return Frequency of Can Clock
+ *  return Frequency of Can.
+ */
+uint32_t CLOCK_GetMCanClkFreq(void)
+{
+    uint32_t freq = 0U;
+
+    switch (SYSCON->CANCLKSEL)
+    {
+        case 0U:
+            freq = CLOCK_GetCoreSysClkFreq() / ((SYSCON->CANCLKDIV & SYSCON_CANCLKDIV_DIV_MASK) + 1U);
+            break;
+        case 1U:
+            freq = CLOCK_GetFro1MFreq();
+            break;
+        case 2U:
+            freq = CLOCK_GetOsc32KFreq();
+            break;
+        case 7U:
+            freq = 0U;
+            break;
+
+        default:
+            freq = 0U;
+            break;
+    }
+
+    return freq;
 }
 
 /* Get ADC Clk */
@@ -518,7 +540,7 @@ uint32_t CLOCK_GetAdcClkFreq(void)
             break;
 
         default:
-            assert(false);
+            freq = 0U;
             break;
     }
 
@@ -552,7 +574,7 @@ uint32_t CLOCK_GetUsb0ClkFreq(void)
             break;
 
         default:
-            assert(false);
+            freq = 0U;
             break;
     }
 
@@ -589,7 +611,7 @@ uint32_t CLOCK_GetMclkClkFreq(void)
             break;
 
         default:
-            assert(false);
+            freq = 0U;
             break;
     }
 
@@ -626,44 +648,11 @@ uint32_t CLOCK_GetSctClkFreq(void)
             break;
 
         default:
-            assert(false);
+            freq = 0U;
             break;
     }
 
     return freq / ((SYSCON->SCTCLKDIV & 0xffU) + 1U);
-}
-
-/* Get SDIO Clk */
-/*! brief  Return Frequency of SDIO Clock
- *  return Frequency of SDIO Clock.
- */
-uint32_t CLOCK_GetSdioClkFreq(void)
-{
-    uint32_t freq = 0U;
-
-    switch (SYSCON->SDIOCLKSEL)
-    {
-        case 0U:
-            freq = CLOCK_GetCoreSysClkFreq();
-            break;
-        case 1U:
-            freq = CLOCK_GetPll0OutFreq();
-            break;
-        case 3U:
-            freq = CLOCK_GetFroHfFreq();
-            break;
-        case 5U:
-            freq = CLOCK_GetPll1OutFreq();
-            break;
-        case 7U:
-            freq = 0U;
-            break;
-        default:
-            assert(false);
-            break;
-    }
-
-    return freq / ((SYSCON->SDIOCLKDIV & 0xffU) + 1U);
 }
 
 /* Get FRO 12M Clk */
@@ -739,9 +728,9 @@ uint32_t CLOCK_GetOsc32KFreq(void)
             (0UL == (PMC->RTCOSC32K & PMC_RTCOSC32K_SEL_MASK))) ?
                CLK_RTC_32K_CLK :
                ((0UL == (PMC->PDRUNCFG0 & PMC_PDRUNCFG0_PDEN_XTAL32K_MASK)) &&
-                (0UL != (PMC->RTCOSC32K & PMC_RTCOSC32K_SEL_MASK))) ?
+                ((PMC->RTCOSC32K & PMC_RTCOSC32K_SEL_MASK) != 0UL)) ?
                CLK_RTC_32K_CLK :
-               0U;
+               0UL;
 }
 
 /* Get MAIN Clk */
@@ -773,7 +762,7 @@ uint32_t CLOCK_GetCoreSysClkFreq(void)
             }
             else
             {
-                /* Add comments to prevent the case of MISRA C-2012 rule 15.7. */
+                /* Added comments to avoid the violation of MISRA C-2012 rule 15.7 */
             }
             break;
         case 1U:
@@ -850,7 +839,7 @@ uint32_t CLOCK_GetFlexCommInputClock(uint32_t id)
             break;
 
         default:
-            assert(false);
+            freq = 0U;
             break;
     }
 
@@ -867,7 +856,7 @@ uint32_t CLOCK_GetFlexCommClkFreq(uint32_t id)
     freq   = CLOCK_GetFlexCommInputClock(id);
     frgMul = (SYSCON->FLEXFRGXCTRL[id] & SYSCON_FLEXFRG0CTRL_MULT_MASK) >> 8U;
     frgDiv = SYSCON->FLEXFRGXCTRL[id] & SYSCON_FLEXFRG0CTRL_DIV_MASK;
-    return (uint32_t)(((uint64_t)freq * ((uint64_t)frgDiv + 1ULL)) / (frgMul + frgDiv + 1UL));
+    return (uint32_t)((((uint64_t)freq * ((uint64_t)frgDiv + 1ULL)) / (frgMul + frgDiv + 1UL)) & 0xFFFFFFFFUL);
 }
 
 /* Get HS_LPSI Clk */
@@ -900,7 +889,7 @@ uint32_t CLOCK_GetHsLspiClkFreq(void)
             break;
 
         default:
-            assert(false);
+            freq = 0U;
             break;
     }
 
@@ -940,7 +929,7 @@ uint32_t CLOCK_GetCTimerClkFreq(uint32_t id)
             break;
 
         default:
-            assert(false);
+            freq = 0U;
             break;
     }
 
@@ -953,14 +942,14 @@ uint32_t CLOCK_GetCTimerClkFreq(uint32_t id)
  */
 uint32_t CLOCK_GetSystickClkFreq(uint32_t id)
 {
-    volatile uint32_t *pSystickClkDiv;
-    pSystickClkDiv = &(SYSCON->SYSTICKCLKDIV0);
-    uint32_t freq  = 0U;
+    uint32_t freq = 0U;
 
     switch (SYSCON->SYSTICKCLKSELX[id])
     {
         case 0U:
-            freq = CLOCK_GetCoreSysClkFreq() / ((((volatile uint32_t *)pSystickClkDiv)[(uint32_t)id] & 0xffU) + 1U);
+            /*Niobe4mini just has one SYSTICKSEL and SYSTICKDIV register, Fix coverity problem in this way temporarily
+             */
+            freq = CLOCK_GetCoreSysClkFreq() / (((SYSCON->SYSTICKCLKDIV0) & 0xffU) + 1U);
             break;
         case 1U:
             freq = CLOCK_GetFro1MFreq();
@@ -1000,7 +989,7 @@ uint32_t CLOCK_SetFlexCommClock(uint32_t id, uint32_t freq)
     }
     else
     {
-        mul                      = (uint32_t)((((uint64_t)input - freq) * 256ULL) / ((uint64_t)freq));
+        mul                      = (uint32_t)(((((uint64_t)input - freq) * 256ULL) / ((uint64_t)freq)) & 0xFFFFFFFFUL);
         SYSCON->FLEXFRGXCTRL[id] = (mul << 8U) | 0xFFU;
         return 1UL;
     }
@@ -1035,6 +1024,9 @@ uint32_t CLOCK_GetFreq(clock_name_t clockName)
             break;
         case kCLOCK_Fro12M:
             freq = CLOCK_GetFro12MFreq();
+            break;
+        case kCLOCK_Fro1M:
+            freq = CLOCK_GetFro1MFreq();
             break;
         case kCLOCK_ExtClk:
             freq = CLOCK_GetExtClkFreq();
@@ -1085,7 +1077,7 @@ static void pllFindSel(uint32_t M, uint32_t *pSelP, uint32_t *pSelI, uint32_t *p
         }
         *pSelI = seli;
 
-        *pSelR = 0U;
+        *pSelR = 0UL;
     }
     else
     {
@@ -1153,6 +1145,30 @@ static uint32_t findPll0PostDiv(void)
     return postDiv;
 }
 
+/* Get postdivider (P) from PLL1 PDEC setting. */
+static uint32_t findPll1PostDiv(void)
+{
+    uint32_t postDiv = 1UL;
+
+    if ((SYSCON->PLL1CTRL & SYSCON_PLL1CTRL_BYPASSPOSTDIV_MASK) == 0UL)
+    {
+        if ((SYSCON->PLL1CTRL & SYSCON_PLL1CTRL_BYPASSPOSTDIV2_MASK) != 0UL)
+        {
+            postDiv = SYSCON->PLL1PDEC & SYSCON_PLL1PDEC_PDIV_MASK;
+        }
+        else
+        {
+            postDiv = 2UL * (SYSCON->PLL1PDEC & SYSCON_PLL1PDEC_PDIV_MASK);
+        }
+        if (postDiv == 0UL)
+        {
+            postDiv = 2UL;
+        }
+    }
+
+    return postDiv;
+}
+
 /* Get multiplier (M) from PLL0 SSCG and SEL_EXT settings */
 static float findPll0MMult(void)
 {
@@ -1177,6 +1193,21 @@ static float findPll0MMult(void)
     {
         mMult = 1.0F;
     }
+    return mMult;
+}
+
+/* Get multiplier (M) from PLL1 MDEC. */
+static uint32_t findPll1MMult(void)
+{
+    uint32_t mMult = 1UL;
+
+    mMult = SYSCON->PLL1MDEC & SYSCON_PLL1MDEC_MDIV_MASK;
+
+    if (mMult == 0UL)
+    {
+        mMult = 1UL;
+    }
+
     return mMult;
 }
 
@@ -1327,18 +1358,18 @@ static pll_error_t CLOCK_GetPll0ConfigInternal(uint32_t finHz, uint32_t foutHz, 
         uint64_t fc;
 
         /* Filtering will be handled by SSC */
-        pllSelR  = 0U;
-        pllSelI  = 0U;
-        pllSelP  = 0U;
+        pllSelR  = 0UL;
+        pllSelI  = 0UL;
+        pllSelP  = 0UL;
         uplimoff = 1U;
 
         /* The PLL multiplier will get very close and slightly under the
            desired target frequency. A small fractional component can be
            added to fine tune the frequency upwards to the target. */
-        fc = (((uint64_t)fccoHz % (uint64_t)nDivOutHz) << 25U) / nDivOutHz;
+        fc = ((uint64_t)(uint32_t)(fccoHz % nDivOutHz) << 25UL) / nDivOutHz;
 
         /* Set multiplier */
-        pSetup->pllsscg[0] = (uint32_t)(PLL0_SSCG_MD_INT_SET(pllMultiplier) | PLL0_SSCG_MD_FRACT_SET((uint32_t)fc));
+        pSetup->pllsscg[0] = (uint32_t)((PLL0_SSCG_MD_INT_SET(pllMultiplier) | PLL0_SSCG_MD_FRACT_SET((uint32_t)fc)) & 0xFFFFFFFFUL);
         pSetup->pllsscg[1] = (uint32_t)(PLL0_SSCG_MD_INT_SET(pllMultiplier) >> 32U);
     }
 
@@ -1412,6 +1443,7 @@ static pll_error_t CLOCK_GetPll0Config(uint32_t finHz, uint32_t foutHz, pll_setu
     s_PllSetupCacheStruct[s_PllSetupCacheIdx].pllsscg[0] = pSetup->pllsscg[0];
     s_PllSetupCacheStruct[s_PllSetupCacheIdx].pllsscg[1] = pSetup->pllsscg[1];
     /* Update the index for next available buffer. */
+    assert(s_PllSetupCacheIdx <= UINT32_MAX - 1U);
     s_PllSetupCacheIdx = (s_PllSetupCacheIdx + 1U) % CLOCK_USR_CFG_PLL_CONFIG_CACHE_COUNT;
 #endif /* CLOCK_USR_CFG_PLL_CONFIG_CACHE_COUNT */
 
@@ -1422,6 +1454,12 @@ static pll_error_t CLOCK_GetPll0Config(uint32_t finHz, uint32_t foutHz, pll_setu
 static void CLOCK_GetPLL0OutFromSetupUpdate(pll_setup_t *pSetup)
 {
     s_Pll0_Freq = CLOCK_GetPLL0OutFromSetup(pSetup);
+}
+
+/* Update local PLL1 rate variable */
+static void CLOCK_GetPLL1OutFromSetupUpdate(pll_setup_t *pSetup)
+{
+    s_Pll1_Freq = CLOCK_GetPLL1OutFromSetup(pSetup);
 }
 
 /* Return System PLL input clock rate */
@@ -1520,6 +1558,37 @@ uint32_t CLOCK_GetPLL0OutFromSetup(pll_setup_t *pSetup)
     return (uint32_t)workRate;
 }
 
+/* Return PLL1 output clock rate from setup structure */
+/*! brief    Return PLL1 output clock rate from setup structure
+ *  param    pSetup : Pointer to a PLL setup structure
+ *  return   PLL0 output clock rate the setup structure will generate
+ */
+uint32_t CLOCK_GetPLL1OutFromSetup(pll_setup_t *pSetup)
+{
+    uint32_t clkRate = 0;
+    uint32_t prediv, postdiv;
+    uint32_t workRate = 0UL;
+
+    /* Get the input clock frequency of PLL. */
+    clkRate = CLOCK_GetPLL1InClockRate();
+
+    if (((pSetup->pllctrl & SYSCON_PLL1CTRL_BYPASSPLL_MASK) == 0UL) &&
+        ((pSetup->pllctrl & SYSCON_PLL1CTRL_CLKEN_MASK) != 0UL) &&
+        ((PMC->PDRUNCFG0 & PMC_PDRUNCFG0_PDEN_PLL1_MASK) == 0UL))
+    {
+        prediv  = findPll1PreDiv();
+        postdiv = findPll1PostDiv();
+        /* Adjust input clock */
+        clkRate = clkRate / prediv;
+        /* MDEC used for rate */
+		assert(clkRate <= UINT32_MAX / findPll1MMult());
+        workRate = clkRate * findPll1MMult();
+        workRate /= postdiv;
+    }
+
+    return workRate;
+}
+
 /* Set the current PLL0 Rate */
 /*! brief Store the current PLL rate
  *  param    rate: Current rate of the PLL
@@ -1559,6 +1628,32 @@ uint32_t CLOCK_GetPLL0OutClockRate(bool recompute)
     return rate;
 }
 
+/*! brief    Return  PLL1 output clock rate
+ *  param    recompute   : Forces a PLL rate recomputation if true
+ *  return    PLL1 output clock rate
+ *  note The PLL rate is cached in the driver in a variable as
+ *  the rate computation function can take some time to perform. It
+ *  is recommended to use 'false' with the 'recompute' parameter.
+ */
+uint32_t CLOCK_GetPLL1OutClockRate(bool recompute)
+{
+    pll_setup_t Setup;
+    uint32_t rate;
+
+    if ((recompute) || (s_Pll1_Freq == 0U))
+    {
+        Setup.pllctrl = SYSCON->PLL1CTRL;
+        Setup.pllndec = SYSCON->PLL1NDEC;
+        Setup.pllpdec = SYSCON->PLL1PDEC;
+        Setup.pllmdec = SYSCON->PLL1MDEC;
+        CLOCK_GetPLL1OutFromSetupUpdate(&Setup);
+    }
+
+    rate = s_Pll1_Freq;
+
+    return rate;
+}
+
 /* Set PLL0 output based on the passed PLL setup data */
 /*! brief    Set PLL output based on the passed PLL setup data
  *  param    pControl    : Pointer to populated PLL control structure to generate setup with
@@ -1570,12 +1665,12 @@ uint32_t CLOCK_GetPLL0OutClockRate(bool recompute)
 pll_error_t CLOCK_SetupPLL0Data(pll_config_t *pControl, pll_setup_t *pSetup)
 {
     uint32_t inRate;
-    bool useSS = ((pControl->flags & PLL_CONFIGFLAG_FORCENOFRACT) == 0U);
+    bool useSS = (bool)((pControl->flags & PLL_CONFIGFLAG_FORCENOFRACT) == 0UL);
 
     pll_error_t pllError;
 
     /* Determine input rate for the PLL */
-    if ((pControl->flags & PLL_CONFIGFLAG_USEINRATE) != 0U)
+    if ((pControl->flags & PLL_CONFIGFLAG_USEINRATE) != 0UL)
     {
         inRate = pControl->inputRate;
     }
@@ -1635,7 +1730,7 @@ pll_error_t CLOCK_SetupPLL0Prec(pll_setup_t *pSetup, uint32_t flagcfg)
     POWER_DisablePD(kPDRUNCFG_PD_PLL0);
     POWER_DisablePD(kPDRUNCFG_PD_PLL0_SSCG);
 
-    if ((pSetup->flags & PLL_SETUPFLAG_WAITLOCK) != 0U)
+    if ((pSetup->flags & PLL_SETUPFLAG_WAITLOCK) != 0UL)
     {
         if ((SYSCON->PLL0SSCG1 & SYSCON_PLL0SSCG1_SEL_EXT_MASK) != 0UL) /* normal mode */
         {
@@ -1646,6 +1741,7 @@ pll_error_t CLOCK_SetupPLL0Prec(pll_setup_t *pSetup, uint32_t flagcfg)
 
             /* Need wait at least (500us + 400/Fref) (Fref in Hz result in s) to ensure the PLL is stable.
                The lock bit could be used to shorten the wait time when freq<20MHZ */
+            assert((400000000U / clkRate) <= UINT32_MAX - 500U);
             max_pll_lock_wait_time = 500U + (400000000U / clkRate);
 
             if (clkRate < 20000000UL)
@@ -1665,8 +1761,8 @@ pll_error_t CLOCK_SetupPLL0Prec(pll_setup_t *pSetup, uint32_t flagcfg)
         else /* spread spectrum mode */
         {
             SDK_DelayAtLeastUs(6000U,
-                               SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY); /* software should use a 6 ms time interval
-                                                                           to insure the PLL will be stable */
+                               SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY); /* software should use a 6 ms time interval to
+                                                                           insure the PLL will be stable */
         }
     }
 
@@ -1674,7 +1770,7 @@ pll_error_t CLOCK_SetupPLL0Prec(pll_setup_t *pSetup, uint32_t flagcfg)
     CLOCK_GetPLL0OutFromSetupUpdate(pSetup);
 
     /* System voltage adjustment, occurs prior to setting main system clock */
-    if ((pSetup->flags & PLL_SETUPFLAG_ADGVOLT) != 0U)
+    if ((pSetup->flags & PLL_SETUPFLAG_ADGVOLT) != 0UL)
     {
         POWER_SetVoltageForFreq(s_Pll0_Freq);
     }
@@ -1727,6 +1823,7 @@ pll_error_t CLOCK_SetPLL0Freq(const pll_setup_t *pSetup)
 
             /* Need wait at least (500us + 400/Fref) (Fref in Hz result in s) to ensure the PLL is
                stable. The lock bit could be used to shorten the wait time when freq<20MHZ */
+            assert((400000000U / clkRate) <= UINT32_MAX - 500U);
             max_pll_lock_wait_time = 500U + (400000000U / clkRate);
 
             if (clkRate < 20000000UL)
@@ -1796,6 +1893,7 @@ pll_error_t CLOCK_SetPLL1Freq(const pll_setup_t *pSetup)
 
         /* Need wait at least (500us + 400/Fref) (Fref in Hz result in s) to ensure the PLL is stable.
            The lock bit could be used to shorten the wait time when freq<20MHZ */
+        assert((400000000U / clkRate) <= UINT32_MAX - 500U);
         max_pll_lock_wait_time = 500U + (400000000U / clkRate);
 
         if (clkRate < 20000000UL)
@@ -1883,10 +1981,10 @@ void CLOCK_SetupPLL0Mult(uint32_t multiply_by, uint32_t input_freq)
     SYSCON->PLL0CTRL = SYSCON_PLL0CTRL_CLKEN_MASK | SYSCON_PLL0CTRL_BYPASSPOSTDIV(0) |
                        SYSCON_PLL0CTRL_BYPASSPOSTDIV2(0) | (selr << SYSCON_PLL0CTRL_SELR_SHIFT) |
                        (seli << SYSCON_PLL0CTRL_SELI_SHIFT) | (selp << SYSCON_PLL0CTRL_SELP_SHIFT);
-    SYSCON->PLL0PDEC = pdec | (1UL << SYSCON_PLL0PDEC_PREQ_SHIFT); /* set Pdec value and assert preq */
-    SYSCON->PLL0NDEC = ndec | (1UL << SYSCON_PLL0NDEC_NREQ_SHIFT); /* set Pdec value and assert preq */
-    SYSCON->PLL0SSCG1 =
-        mdec | (1UL << SYSCON_PLL0SSCG1_MREQ_SHIFT); /* select non sscg MDEC value, assert mreq and select mdec value */
+    SYSCON->PLL0PDEC  = pdec | (1UL << SYSCON_PLL0PDEC_PREQ_SHIFT);  /* set Pdec value and assert preq */
+    SYSCON->PLL0NDEC  = ndec | (1UL << SYSCON_PLL0NDEC_NREQ_SHIFT);  /* set Pdec value and assert preq */
+    SYSCON->PLL0SSCG1 = mdec | (1UL << SYSCON_PLL0SSCG1_MREQ_SHIFT); /* select non sscg MDEC value, assert
+                                                                        mreq and select mdec value */
 }
 
 /* Enable USB DEVICE FULL SPEED clock */
@@ -1984,6 +2082,31 @@ bool CLOCK_EnableUsbfs0HostClock(clock_usbfs_src_t src, uint32_t freq)
         /* Select FRO 96 MHz */
         CLOCK_AttachClk(kFRO_HF_to_USB0_CLK);
     }
+    else if (kCLOCK_UsbfsSrcPll0 == src)
+    {
+        /*!< Configure XTAL32M */
+        POWER_DisablePD(kPDRUNCFG_PD_XTAL32M);                                /* Ensure XTAL32M is powered */
+        POWER_DisablePD(kPDRUNCFG_PD_LDOXO32M);                               /* Ensure XTAL32M is powered */
+        (void)CLOCK_SetupExtClocking(16000000U);                              /* Enable clk_in clock */
+        SYSCON->CLOCK_CTRL |= SYSCON_CLOCK_CTRL_CLKIN_ENA_MASK;               /* Enable clk_in from XTAL32M clock  */
+        ANACTRL->XO32M_CTRL |= ANACTRL_XO32M_CTRL_ENABLE_SYSTEM_CLK_OUT_MASK; /* Enable clk_in to system  */
+
+        /*!< Set up PLL0 */
+        POWER_DisablePD(kPDRUNCFG_PD_PLL0);
+        CLOCK_AttachClk(kEXT_CLK_to_PLL0); /*!< Switch PLL0CLKSEL to EXT_CLK */
+        const pll_setup_t pll0Setup = {
+            .pllctrl = SYSCON_PLL0CTRL_CLKEN_MASK | SYSCON_PLL0CTRL_SELI(17U) | SYSCON_PLL0CTRL_SELP(8U),
+            .pllndec = SYSCON_PLL0NDEC_NDIV(1U),
+            .pllpdec = SYSCON_PLL0PDEC_PDIV(5U),
+            .pllsscg = {0x0U,(SYSCON_PLL0SSCG1_MDIV_EXT(30U) | SYSCON_PLL0SSCG1_SEL_EXT_MASK)},
+            .pllRate = 48000000U,
+            .flags =  PLL_SETUPFLAG_WAITLOCK};
+        (void)CLOCK_SetPLL0Freq(&pll0Setup);
+
+        CLOCK_SetClkDiv(kCLOCK_DivUsb0Clk, 1U, false);
+        CLOCK_AttachClk(kPLL0_to_USB0_CLK);
+        SDK_DelayAtLeastUs(50U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+    }
     else
     {
         /*!< Configure XTAL32M */
@@ -2011,11 +2134,14 @@ bool CLOCK_EnableUsbfs0HostClock(clock_usbfs_src_t src, uint32_t freq)
     }
     CLOCK_EnableClock(kCLOCK_Usbhmr0);
     CLOCK_EnableClock(kCLOCK_Usbhsl0);
+#ifdef USBHSH
     CLOCK_EnableClock(kCLOCK_UsbRam1);
+#endif
 
     return ret;
 }
 
+#ifdef USBHSH
 /* Enable USB PHY clock */
 bool CLOCK_EnableUsbhs0PhyPllClock(clock_usb_phy_src_t src, uint32_t freq)
 {
@@ -2035,15 +2161,14 @@ bool CLOCK_EnableUsbhs0PhyPllClock(clock_usb_phy_src_t src, uint32_t freq)
     SYSCON->AHBCLKCTRLSET[2] = SYSCON_AHBCLKCTRL2_USB1_PHY(1);
 
     /* wait to make sure PHY power is fully up */
-    i = 100000U;
-    while ((i--) != 0U)
+    for (i = 0U; i < 100000U; i++)
     {
         __ASM("nop");
     }
 
     USBPHY->CTRL_CLR = USBPHY_CTRL_SFTRST_MASK;
 
-    multiplier = (uint16_t)(480000000UL / freq);
+    multiplier = (uint16_t)((480000000UL / freq) & 0xFFFFU);
 
     switch (multiplier)
     {
@@ -2077,11 +2202,6 @@ bool CLOCK_EnableUsbhs0PhyPllClock(clock_usb_phy_src_t src, uint32_t freq)
             phyPllDiv = USBPHY_PLL_SIC_PLL_DIV_SEL(6U);
             break;
         }
-        case 40U:
-        {
-            phyPllDiv = USBPHY_PLL_SIC_PLL_DIV_SEL(7U);
-            break;
-        }
         default:
         {
             ret = false;
@@ -2093,11 +2213,13 @@ bool CLOCK_EnableUsbhs0PhyPllClock(clock_usb_phy_src_t src, uint32_t freq)
     {
         USBPHY->PLL_SIC     = (USBPHY->PLL_SIC & ~USBPHY_PLL_SIC_PLL_DIV_SEL(0x7)) | phyPllDiv;
         USBPHY->PLL_SIC_SET = USBPHY_PLL_SIC_SET_PLL_REG_ENABLE_MASK;
+        SDK_DelayAtLeastUs(15U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
         USBPHY->PLL_SIC_CLR = (1UL << 16U); // Reserved. User must set this bit to 0x0
         USBPHY->PLL_SIC_SET = USBPHY_PLL_SIC_SET_PLL_POWER_MASK;
         USBPHY->PLL_SIC_SET = USBPHY_PLL_SIC_SET_PLL_EN_USB_CLKS_MASK;
 
         USBPHY->CTRL_CLR = USBPHY_CTRL_CLR_CLKGATE_MASK;
+        USBPHY->PWD_SET  = 0x0;
     }
 
     return ret;
@@ -2127,6 +2249,7 @@ bool CLOCK_EnableUsbhs0HostClock(clock_usbhs_src_t src, uint32_t freq)
 
     return true;
 }
+#endif
 
 /*! @brief Enable the OSTIMER 32k clock.
  *  @return  Nothing

@@ -22,7 +22,7 @@ struct Command {
 	int (*Func)(struct Command * cmd, struct Message * msg, int argc, char * argv[]);
 };
 
-void CommandParserInit(QueueHandle_t * message_rx_queue, QueueHandle_t ping_cfg_queue);
+void CommandParserInit(QueueHandle_t * message_rx_queue);
 
 
 #endif /* COMMANDS_H_ */

@@ -1,42 +1,30 @@
 /*
 ** ###################################################################
-**     Processors:          LPC5526JBD100
-**                          LPC5526JBD64
-**                          LPC5526JEV98
-**                          LPC5528JBD100
-**                          LPC5528JBD64
-**                          LPC5528JEV59
-**                          LPC5528JEV98
-**                          LPC55S26JBD100
-**                          LPC55S26JBD64
-**                          LPC55S26JEV98
-**                          LPC55S28JBD100
-**                          LPC55S28JBD64
-**                          LPC55S28JEV59
-**                          LPC55S28JEV98
-**                          LPC55S66JBD100_cm33_core0
-**                          LPC55S66JBD100_cm33_core1
-**                          LPC55S66JBD64_cm33_core0
-**                          LPC55S66JBD64_cm33_core1
-**                          LPC55S66JEV98_cm33_core0
-**                          LPC55S66JEV98_cm33_core1
-**                          LPC55S69JBD100_cm33_core0
-**                          LPC55S69JBD100_cm33_core1
-**                          LPC55S69JBD64_cm33_core0
-**                          LPC55S69JBD64_cm33_core1
-**                          LPC55S69JEV59_cm33_core0
-**                          LPC55S69JEV59_cm33_core1
-**                          LPC55S69JEV98_cm33_core0
-**                          LPC55S69JEV98_cm33_core1
+**     Processors:          LPC5512JBD100
+**                          LPC5512JBD64
+**                          LPC5514JBD100
+**                          LPC5514JBD64
+**                          LPC5514JEV59
+**                          LPC5516JBD100
+**                          LPC5516JBD64
+**                          LPC5516JEV59
+**                          LPC5516JEV98
+**                          LPC55S14JBD100
+**                          LPC55S14JBD64
+**                          LPC55S14JEV59
+**                          LPC55S16JBD100
+**                          LPC55S16JBD64
+**                          LPC55S16JEV59
+**                          LPC55S16JEV98
 **
-**     Version:             rev. 1.1, 2019-05-16
-**     Build:               b240704
+**     Version:             rev. 2.0, 2024-10-29
+**     Build:               b250520
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for ADC
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -45,40 +33,37 @@
 **     Revisions:
 **     - rev. 1.0 (2018-08-22)
 **         Initial version based on v0.2UM
-**     - rev. 1.1 (2019-05-16)
-**         Initial A1 version based on v1.3UM
+**     - rev. 1.1 (2019-12-03)
+**         Initial version based on v0.6UM
+**     - rev. 2.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
 **
 ** ###################################################################
 */
 
 /*!
- * @file ADC.h
- * @version 1.1
- * @date 2019-05-16
+ * @file PERI_ADC.h
+ * @version 2.0
+ * @date 2024-10-29
  * @brief CMSIS Peripheral Access Layer for ADC
  *
  * CMSIS Peripheral Access Layer for ADC
  */
 
-#if !defined(ADC_H_)
-#define ADC_H_                                   /**< Symbol preventing repeated inclusion */
+#if !defined(PERI_ADC_H_)
+#define PERI_ADC_H_                              /**< Symbol preventing repeated inclusion */
 
-#if (defined(CPU_LPC5526JBD100) || defined(CPU_LPC5526JBD64) || defined(CPU_LPC5526JEV98))
-#include "LPC5526_COMMON.h"
-#elif (defined(CPU_LPC5528JBD100) || defined(CPU_LPC5528JBD64) || defined(CPU_LPC5528JEV59) || defined(CPU_LPC5528JEV98))
-#include "LPC5528_COMMON.h"
-#elif (defined(CPU_LPC55S26JBD100) || defined(CPU_LPC55S26JBD64) || defined(CPU_LPC55S26JEV98))
-#include "LPC55S26_COMMON.h"
-#elif (defined(CPU_LPC55S28JBD100) || defined(CPU_LPC55S28JBD64) || defined(CPU_LPC55S28JEV59) || defined(CPU_LPC55S28JEV98))
-#include "LPC55S28_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core0) || defined(CPU_LPC55S66JBD64_cm33_core0) || defined(CPU_LPC55S66JEV98_cm33_core0))
-#include "LPC55S66_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core1) || defined(CPU_LPC55S66JBD64_cm33_core1) || defined(CPU_LPC55S66JEV98_cm33_core1))
-#include "LPC55S66_cm33_core1_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core0) || defined(CPU_LPC55S69JBD64_cm33_core0) || defined(CPU_LPC55S69JEV59_cm33_core0) || defined(CPU_LPC55S69JEV98_cm33_core0))
-#include "LPC55S69_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core1) || defined(CPU_LPC55S69JBD64_cm33_core1) || defined(CPU_LPC55S69JEV59_cm33_core1) || defined(CPU_LPC55S69JEV98_cm33_core1))
-#include "LPC55S69_cm33_core1_COMMON.h"
+#if (defined(CPU_LPC5512JBD100) || defined(CPU_LPC5512JBD64))
+#include "LPC5512_COMMON.h"
+#elif (defined(CPU_LPC5514JBD100) || defined(CPU_LPC5514JBD64) || defined(CPU_LPC5514JEV59))
+#include "LPC5514_COMMON.h"
+#elif (defined(CPU_LPC5516JBD100) || defined(CPU_LPC5516JBD64) || defined(CPU_LPC5516JEV59) || defined(CPU_LPC5516JEV98))
+#include "LPC5516_COMMON.h"
+#elif (defined(CPU_LPC55S14JBD100) || defined(CPU_LPC55S14JBD64) || defined(CPU_LPC55S14JEV59))
+#include "LPC55S14_COMMON.h"
+#elif (defined(CPU_LPC55S16JBD100) || defined(CPU_LPC55S16JBD64) || defined(CPU_LPC55S16JEV59) || defined(CPU_LPC55S16JEV98))
+#include "LPC55S16_COMMON.h"
 #else
   #error "No valid CPU defined!"
 #endif
@@ -144,7 +129,7 @@ typedef struct {
   __IO uint32_t CFG;                               /**< ADC Configuration Register, offset: 0x20 */
   __IO uint32_t PAUSE;                             /**< ADC Pause Register, offset: 0x24 */
        uint8_t RESERVED_1[12];
-  __O  uint32_t SWTRIG;                            /**< Software Trigger Register, offset: 0x34 */
+  __IO uint32_t SWTRIG;                            /**< Software Trigger Register, offset: 0x34 */
   __IO uint32_t TSTAT;                             /**< Trigger Status Register, offset: 0x38 */
        uint8_t RESERVED_2[4];
   __IO uint32_t OFSTRIM;                           /**< ADC Offset Trim Register, offset: 0x40 */
@@ -166,8 +151,6 @@ typedef struct {
   __IO uint32_t CAL_GAR[ADC_CAL_GAR_COUNT];        /**< Calibration General A-Side Registers, array offset: 0x400, array step: 0x4 */
        uint8_t RESERVED_8[124];
   __IO uint32_t CAL_GBR[ADC_CAL_GBR_COUNT];        /**< Calibration General B-Side Registers, array offset: 0x500, array step: 0x4 */
-       uint8_t RESERVED_9[2680];
-  __IO uint32_t TST;                               /**< ADC Test Register, offset: 0xFFC */
 } ADC_Type;
 
 /* ----------------------------------------------------------------------------
@@ -1111,58 +1094,6 @@ typedef struct {
 #define ADC_CAL_GBR_CAL_GBR_VAL(x)               (((uint32_t)(((uint32_t)(x)) << ADC_CAL_GBR_CAL_GBR_VAL_SHIFT)) & ADC_CAL_GBR_CAL_GBR_VAL_MASK)
 /*! @} */
 
-/*! @name TST - ADC Test Register */
-/*! @{ */
-
-#define ADC_TST_CST_LONG_MASK                    (0x1U)
-#define ADC_TST_CST_LONG_SHIFT                   (0U)
-/*! CST_LONG - Calibration Sample Time Long
- *  0b0..Normal sample time. Minimum sample time of 3 ADCK cycles.
- *  0b1..Increased sample time. 67 ADCK cycles total sample time.
- */
-#define ADC_TST_CST_LONG(x)                      (((uint32_t)(((uint32_t)(x)) << ADC_TST_CST_LONG_SHIFT)) & ADC_TST_CST_LONG_MASK)
-
-#define ADC_TST_FOFFM_MASK                       (0x100U)
-#define ADC_TST_FOFFM_SHIFT                      (8U)
-/*! FOFFM - Force M-side positive offset
- *  0b0..Normal operation. No forced offset.
- *  0b1..Test configuration. Forced positive offset on MDAC.
- */
-#define ADC_TST_FOFFM(x)                         (((uint32_t)(((uint32_t)(x)) << ADC_TST_FOFFM_SHIFT)) & ADC_TST_FOFFM_MASK)
-
-#define ADC_TST_FOFFP_MASK                       (0x200U)
-#define ADC_TST_FOFFP_SHIFT                      (9U)
-/*! FOFFP - Force P-side positive offset
- *  0b0..Normal operation. No forced offset.
- *  0b1..Test configuration. Forced positive offset on PDAC.
- */
-#define ADC_TST_FOFFP(x)                         (((uint32_t)(((uint32_t)(x)) << ADC_TST_FOFFP_SHIFT)) & ADC_TST_FOFFP_MASK)
-
-#define ADC_TST_FOFFM2_MASK                      (0x400U)
-#define ADC_TST_FOFFM2_SHIFT                     (10U)
-/*! FOFFM2 - Force M-side negative offset
- *  0b0..Normal operation. No forced offset.
- *  0b1..Test configuration. Forced negative offset on MDAC.
- */
-#define ADC_TST_FOFFM2(x)                        (((uint32_t)(((uint32_t)(x)) << ADC_TST_FOFFM2_SHIFT)) & ADC_TST_FOFFM2_MASK)
-
-#define ADC_TST_FOFFP2_MASK                      (0x800U)
-#define ADC_TST_FOFFP2_SHIFT                     (11U)
-/*! FOFFP2 - Force P-side negative offset
- *  0b0..Normal operation. No forced offset.
- *  0b1..Test configuration. Forced negative offset on PDAC.
- */
-#define ADC_TST_FOFFP2(x)                        (((uint32_t)(((uint32_t)(x)) << ADC_TST_FOFFP2_SHIFT)) & ADC_TST_FOFFP2_MASK)
-
-#define ADC_TST_TESTEN_MASK                      (0x800000U)
-#define ADC_TST_TESTEN_SHIFT                     (23U)
-/*! TESTEN - Enable test configuration
- *  0b0..Normal operation. Test configuration not enabled.
- *  0b1..Hardware BIST Test in progress.
- */
-#define ADC_TST_TESTEN(x)                        (((uint32_t)(((uint32_t)(x)) << ADC_TST_TESTEN_SHIFT)) & ADC_TST_TESTEN_MASK)
-/*! @} */
-
 
 /*!
  * @}
@@ -1197,5 +1128,5 @@ typedef struct {
  */ /* end of group Peripheral_access_layer */
 
 
-#endif  /* ADC_H_ */
+#endif  /* PERI_ADC_H_ */
 

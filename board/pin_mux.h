@@ -29,8 +29,8 @@ void BOARD_InitBootPins(void);
  * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
 #define PIO0_0_DIGIMODE_DIGITAL 0x01u
 /*!
- * @brief Selects pin function.: Alternative connection 0. */
-#define PIO0_0_FUNC_ALT0 0x00u
+ * @brief Selects pin function.: Alternative connection 2. */
+#define PIO0_0_FUNC_ALT2 0x02u
 /*!
  * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
 #define PIO0_10_DIGIMODE_DIGITAL 0x01u
@@ -62,25 +62,11 @@ void BOARD_InitBootPins(void);
  * @brief Selects pin function.: Alternative connection 1. */
 #define PIO0_14_FUNC_ALT1 0x01u
 /*!
- * @brief
- * Analog switch input control.
- * : For all pins except PIO0_9, PIO0_11, PIO0_12, PIO0_15, PIO0_18, PIO0_31, PIO1_0 and PIO1_9 analog switch is
- * closed (enabled).
- */
-#define PIO0_15_ASW_VALUE1 0x01u
-/*!
- * @brief Select Digital mode.: Disable digital mode. Digital input set to 0. */
-#define PIO0_15_DIGIMODE_ANALOG 0x00u
+ * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
+#define PIO0_15_DIGIMODE_DIGITAL 0x01u
 /*!
  * @brief Selects pin function.: Alternative connection 0. */
 #define PIO0_15_FUNC_ALT0 0x00u
-/*!
- * @brief
- * Selects function mode (on-chip pull-up/pull-down resistor control).
- * : Inactive.
- * Inactive (no pull-down/pull-up resistor enabled).
- */
-#define PIO0_15_MODE_INACTIVE 0x00u
 /*!
  * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
 #define PIO0_16_DIGIMODE_DIGITAL 0x01u
@@ -91,14 +77,8 @@ void BOARD_InitBootPins(void);
  * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
 #define PIO0_17_DIGIMODE_DIGITAL 0x01u
 /*!
- * @brief Selects pin function.: Alternative connection 4. */
-#define PIO0_17_FUNC_ALT4 0x04u
-/*!
- * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
-#define PIO0_18_DIGIMODE_DIGITAL 0x01u
-/*!
- * @brief Selects pin function.: Alternative connection 4. */
-#define PIO0_18_FUNC_ALT4 0x04u
+ * @brief Selects pin function.: Alternative connection 0. */
+#define PIO0_17_FUNC_ALT0 0x00u
 /*!
  * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
 #define PIO0_19_DIGIMODE_DIGITAL 0x01u
@@ -109,8 +89,8 @@ void BOARD_InitBootPins(void);
  * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
 #define PIO0_1_DIGIMODE_DIGITAL 0x01u
 /*!
- * @brief Selects pin function.: Alternative connection 2. */
-#define PIO0_1_FUNC_ALT2 0x02u
+ * @brief Selects pin function.: Alternative connection 0. */
+#define PIO0_1_FUNC_ALT0 0x00u
 /*!
  * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
 #define PIO0_20_DIGIMODE_DIGITAL 0x01u
@@ -119,22 +99,28 @@ void BOARD_InitBootPins(void);
 #define PIO0_20_FUNC_ALT0 0x00u
 /*!
  * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
+#define PIO0_21_DIGIMODE_DIGITAL 0x01u
+/*!
+ * @brief Selects pin function.: Alternative connection 0. */
+#define PIO0_21_FUNC_ALT0 0x00u
+/*!
+ * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
 #define PIO0_22_DIGIMODE_DIGITAL 0x01u
 /*!
- * @brief Selects pin function.: Alternative connection 7. */
-#define PIO0_22_FUNC_ALT7 0x07u
+ * @brief Selects pin function.: Alternative connection 0. */
+#define PIO0_22_FUNC_ALT0 0x00u
 /*!
  * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
 #define PIO0_23_DIGIMODE_DIGITAL 0x01u
 /*!
- * @brief Selects pin function.: Alternative connection 4. */
-#define PIO0_23_FUNC_ALT4 0x04u
+ * @brief Selects pin function.: Alternative connection 0. */
+#define PIO0_23_FUNC_ALT0 0x00u
 /*!
  * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
-#define PIO0_27_DIGIMODE_DIGITAL 0x01u
+#define PIO0_26_DIGIMODE_DIGITAL 0x01u
 /*!
- * @brief Selects pin function.: Alternative connection 1. */
-#define PIO0_27_FUNC_ALT1 0x01u
+ * @brief Selects pin function.: Alternative connection 0. */
+#define PIO0_26_FUNC_ALT0 0x00u
 /*!
  * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
 #define PIO0_29_DIGIMODE_DIGITAL 0x01u
@@ -155,22 +141,22 @@ void BOARD_InitBootPins(void);
 #define PIO0_30_FUNC_ALT1 0x01u
 /*!
  * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
-#define PIO0_3_DIGIMODE_DIGITAL 0x01u
-/*!
- * @brief Selects pin function.: Alternative connection 1. */
-#define PIO0_3_FUNC_ALT1 0x01u
-/*!
- * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
-#define PIO0_4_DIGIMODE_DIGITAL 0x01u
+#define PIO0_31_DIGIMODE_DIGITAL 0x01u
 /*!
  * @brief Selects pin function.: Alternative connection 0. */
-#define PIO0_4_FUNC_ALT0 0x00u
+#define PIO0_31_FUNC_ALT0 0x00u
+/*!
+ * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
+#define PIO0_5_DIGIMODE_DIGITAL 0x01u
+/*!
+ * @brief Selects pin function.: Alternative connection 0. */
+#define PIO0_5_FUNC_ALT0 0x00u
 /*!
  * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
 #define PIO0_6_DIGIMODE_DIGITAL 0x01u
 /*!
- * @brief Selects pin function.: Alternative connection 1. */
-#define PIO0_6_FUNC_ALT1 0x01u
+ * @brief Selects pin function.: Alternative connection 0. */
+#define PIO0_6_FUNC_ALT0 0x00u
 /*!
  * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
 #define PIO0_7_DIGIMODE_DIGITAL 0x01u
@@ -178,201 +164,235 @@ void BOARD_InitBootPins(void);
  * @brief Selects pin function.: Alternative connection 0. */
 #define PIO0_7_FUNC_ALT0 0x00u
 /*!
- * @brief
- * Analog switch input control.
- * : For all pins except PIO0_9, PIO0_11, PIO0_12, PIO0_15, PIO0_18, PIO0_31, PIO1_0 and PIO1_9 analog switch is
- * closed (enabled).
- */
-#define PIO1_0_ASW_VALUE1 0x01u
-/*!
- * @brief Select Digital mode.: Disable digital mode. Digital input set to 0. */
-#define PIO1_0_DIGIMODE_ANALOG 0x00u
+ * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
+#define PIO0_8_DIGIMODE_DIGITAL 0x01u
 /*!
  * @brief Selects pin function.: Alternative connection 0. */
-#define PIO1_0_FUNC_ALT0 0x00u
-/*!
- * @brief
- * Selects function mode (on-chip pull-up/pull-down resistor control).
- * : Inactive.
- * Inactive (no pull-down/pull-up resistor enabled).
- */
-#define PIO1_0_MODE_INACTIVE 0x00u
-/*!
- * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
-#define PIO1_1_DIGIMODE_DIGITAL 0x01u
-/*!
- * @brief Selects pin function.: Alternative connection 4. */
-#define PIO1_1_FUNC_ALT4 0x04u
+#define PIO0_8_FUNC_ALT0 0x00u
 /*!
  * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
 #define PIO1_2_DIGIMODE_DIGITAL 0x01u
 /*!
- * @brief Selects pin function.: Alternative connection 3. */
-#define PIO1_2_FUNC_ALT3 0x03u
+ * @brief Selects pin function.: Alternative connection 1. */
+#define PIO1_2_FUNC_ALT1 0x01u
+/*!
+ * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
+#define PIO1_3_DIGIMODE_DIGITAL 0x01u
+/*!
+ * @brief Selects pin function.: Alternative connection 1. */
+#define PIO1_3_FUNC_ALT1 0x01u
 
-/*! @name PIO0_0 (number 36), ECHO_IN2
-  @{ */
-
-/* Symbols to be used with GPIO driver */
-#define BOARD_INITPINS_ECHO_IN2_GPIO GPIO                /*!<@brief GPIO peripheral base pointer */
-#define BOARD_INITPINS_ECHO_IN2_GPIO_PIN_MASK (1U << 0U) /*!<@brief GPIO pin mask */
-#define BOARD_INITPINS_ECHO_IN2_PORT 0U                  /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_ECHO_IN2_PIN 0U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_ECHO_IN2_PIN_MASK (1U << 0U)      /*!<@brief PORT pin mask */
-                                                         /* @} */
-
-/*! @name PIO0_2 (number 52), ECHO_MISO
-  @{ */
-#define BOARD_INITPINS_ECHO_MISO_PORT 0U                  /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_ECHO_MISO_PIN 2U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_ECHO_MISO_PIN_MASK (1U << 2U)      /*!<@brief PORT pin mask */
-                                                          /* @} */
-
-/*! @name PIO0_3 (number 53), ECHO_MOSI
-  @{ */
-#define BOARD_INITPINS_ECHO_MOSI_PORT 0U                  /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_ECHO_MOSI_PIN 3U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_ECHO_MOSI_PIN_MASK (1U << 3U)      /*!<@brief PORT pin mask */
-                                                          /* @} */
-
-/*! @name PIO0_4 (number 55), ECHO_IN1
-  @{ */
-
-/* Symbols to be used with GPIO driver */
-#define BOARD_INITPINS_ECHO_IN1_GPIO GPIO                /*!<@brief GPIO peripheral base pointer */
-#define BOARD_INITPINS_ECHO_IN1_GPIO_PIN_MASK (1U << 4U) /*!<@brief GPIO pin mask */
-#define BOARD_INITPINS_ECHO_IN1_PORT 0U                  /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_ECHO_IN1_PIN 4U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_ECHO_IN1_PIN_MASK (1U << 4U)      /*!<@brief PORT pin mask */
-                                                         /* @} */
-
-/*! @name PIO0_6 (number 57), ECHO_SCLK
-  @{ */
-#define BOARD_INITPINS_ECHO_SCLK_PORT 0U                  /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_ECHO_SCLK_PIN 6U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_ECHO_SCLK_PIN_MASK (1U << 6U)      /*!<@brief PORT pin mask */
-                                                          /* @} */
-
-/*! @name PIO0_13 (number 46), I2C_SDA
-  @{ */
-#define BOARD_INITPINS_I2C_SDA_PORT 0U                   /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_I2C_SDA_PIN 13U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_I2C_SDA_PIN_MASK (1U << 13U)      /*!<@brief PORT pin mask */
-                                                         /* @} */
-
-/*! @name PIO0_14 (number 47), I2C_SCL
-  @{ */
-#define BOARD_INITPINS_I2C_SCL_PORT 0U                   /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_I2C_SCL_PIN 14U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_I2C_SCL_PIN_MASK (1U << 14U)      /*!<@brief PORT pin mask */
-                                                         /* @} */
-
-/*! @name PIO0_15 (number 14), ADC_THERMISTOR
-  @{ */
-#define BOARD_INITPINS_ADC_THERMISTOR_GPIO GPIO                 /*!<@brief GPIO device name: GPIO */
-#define BOARD_INITPINS_ADC_THERMISTOR_PORT 0U                   /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_ADC_THERMISTOR_PIN 15U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_ADC_THERMISTOR_PIN_MASK (1U << 15U)      /*!<@brief PORT pin mask */
-                                                                /* @} */
-
-/*! @name PIO0_16 (number 7), CLKOUT
+/*! @name CLKOUT (number 7), CLKOUT
   @{ */
 #define BOARD_INITPINS_CLKOUT_PORT 0U                   /*!<@brief PORT peripheral base pointer */
 #define BOARD_INITPINS_CLKOUT_PIN 16U                   /*!<@brief PORT pin number */
 #define BOARD_INITPINS_CLKOUT_PIN_MASK (1U << 16U)      /*!<@brief PORT pin mask */
                                                         /* @} */
 
-/*! @name PIO0_17 (number 3), ECHO_PWM1
+/*! @name FC3_SCK (number 36), SPI_SCLK
   @{ */
-#define BOARD_INITPINS_ECHO_PWM1_PORT 0U                   /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_ECHO_PWM1_PIN 17U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_ECHO_PWM1_PIN_MASK (1U << 17U)      /*!<@brief PORT pin mask */
-                                                           /* @} */
+#define BOARD_INITPINS_SPI_SCLK_PORT 0U                  /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_SPI_SCLK_PIN 0U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_SPI_SCLK_PIN_MASK (1U << 0U)      /*!<@brief PORT pin mask */
+                                                         /* @} */
 
-/*! @name PIO0_18 (number 38), ECHO_PWM2
-  @{ */
-#define BOARD_INITPINS_ECHO_PWM2_PORT 0U                   /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_ECHO_PWM2_PIN 18U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_ECHO_PWM2_PIN_MASK (1U << 18U)      /*!<@brief PORT pin mask */
-                                                           /* @} */
-
-/*! @name PIO0_19 (number 58), LED
+/*! @name PIO0_1 (number 2), RTD_CH_SEL0
   @{ */
 
 /* Symbols to be used with GPIO driver */
-#define BOARD_INITPINS_LED_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
-#define BOARD_INITPINS_LED_INIT_GPIO_VALUE 1U        /*!<@brief GPIO output initial state */
-#define BOARD_INITPINS_LED_GPIO_PIN_MASK (1U << 19U) /*!<@brief GPIO pin mask */
-#define BOARD_INITPINS_LED_PORT 0U                   /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_LED_PIN 19U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_LED_PIN_MASK (1U << 19U)      /*!<@brief PORT pin mask */
-                                                     /* @} */
+#define BOARD_INITPINS_RTD_CH_SEL0_GPIO GPIO                /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_RTD_CH_SEL0_GPIO_PIN_MASK (1U << 1U) /*!<@brief GPIO pin mask */
+#define BOARD_INITPINS_RTD_CH_SEL0_PORT 0U                  /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_RTD_CH_SEL0_PIN 1U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_RTD_CH_SEL0_PIN_MASK (1U << 1U)      /*!<@brief PORT pin mask */
+                                                            /* @} */
+
+/*! @name FC3_TXD_SCL_MISO_WS (number 52), SPI_MISO
+  @{ */
+#define BOARD_INITPINS_SPI_MISO_PORT 0U                  /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_SPI_MISO_PIN 2U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_SPI_MISO_PIN_MASK (1U << 2U)      /*!<@brief PORT pin mask */
+                                                         /* @} */
+
+/*! @name PIO0_5 (number 56), ENTER_ISPn
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_ENTER_ISPn_GPIO GPIO                /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_ENTER_ISPn_GPIO_PIN_MASK (1U << 5U) /*!<@brief GPIO pin mask */
+#define BOARD_INITPINS_ENTER_ISPn_PORT 0U                  /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_ENTER_ISPn_PIN 5U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_ENTER_ISPn_PIN_MASK (1U << 5U)      /*!<@brief PORT pin mask */
+                                                           /* @} */
+
+/*! @name PIO0_6 (number 57), MEASURE_CSn
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_MEASURE_CSn_GPIO GPIO                /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_MEASURE_CSn_GPIO_PIN_MASK (1U << 6U) /*!<@brief GPIO pin mask */
+#define BOARD_INITPINS_MEASURE_CSn_PORT 0U                  /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_MEASURE_CSn_PIN 6U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_MEASURE_CSn_PIN_MASK (1U << 6U)      /*!<@brief PORT pin mask */
+                                                            /* @} */
+
+/*! @name PIO0_7 (number 1), VOLT_CURRn
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_VOLT_CURRn_GPIO GPIO                /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_VOLT_CURRn_GPIO_PIN_MASK (1U << 7U) /*!<@brief GPIO pin mask */
+#define BOARD_INITPINS_VOLT_CURRn_PORT 0U                  /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_VOLT_CURRn_PIN 7U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_VOLT_CURRn_PIN_MASK (1U << 7U)      /*!<@brief PORT pin mask */
+                                                           /* @} */
+
+/*! @name PIO0_8 (number 17), LED_ONn
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_LED_ONn_GPIO GPIO                /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_LED_ONn_GPIO_PIN_MASK (1U << 8U) /*!<@brief GPIO pin mask */
+#define BOARD_INITPINS_LED_ONn_PORT 0U                  /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_LED_ONn_PIN 8U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_LED_ONn_PIN_MASK (1U << 8U)      /*!<@brief PORT pin mask */
+                                                        /* @} */
+
+/*! @name FC1_CTS_SDA_SSEL0 (number 46), I2C_SDA
+  @{ */
+#define BOARD_INITPINS_I2C_SDA_PORT 0U                   /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_I2C_SDA_PIN 13U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_I2C_SDA_PIN_MASK (1U << 13U)      /*!<@brief PORT pin mask */
+                                                         /* @} */
+
+/*! @name FC1_RTS_SCL_SSEL1 (number 47), I2C_SCL
+  @{ */
+#define BOARD_INITPINS_I2C_SCL_PORT 0U                   /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_I2C_SCL_PIN 14U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_I2C_SCL_PIN_MASK (1U << 14U)      /*!<@brief PORT pin mask */
+                                                         /* @} */
+
+/*! @name PIO0_15 (number 14), BTN2n
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_BTN2n_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_BTN2n_GPIO_PIN_MASK (1U << 15U) /*!<@brief GPIO pin mask */
+#define BOARD_INITPINS_BTN2n_PORT 0U                   /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_BTN2n_PIN 15U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_BTN2n_PIN_MASK (1U << 15U)      /*!<@brief PORT pin mask */
+                                                       /* @} */
+
+/*! @name PIO0_17 (number 3), RTD_CSn
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_RTD_CSn_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_RTD_CSn_GPIO_PIN_MASK (1U << 17U) /*!<@brief GPIO pin mask */
+#define BOARD_INITPINS_RTD_CSn_PORT 0U                   /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_RTD_CSn_PIN 17U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_RTD_CSn_PIN_MASK (1U << 17U)      /*!<@brief PORT pin mask */
+                                                         /* @} */
+
+/*! @name PIO0_19 (number 58), RTD_CH_SEL1
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_RTD_CH_SEL1_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_RTD_CH_SEL1_GPIO_PIN_MASK (1U << 19U) /*!<@brief GPIO pin mask */
+#define BOARD_INITPINS_RTD_CH_SEL1_PORT 0U                   /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_RTD_CH_SEL1_PIN 19U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_RTD_CH_SEL1_PIN_MASK (1U << 19U)      /*!<@brief PORT pin mask */
+                                                             /* @} */
 
 /*! @name PIO0_20 (number 48), DBG
   @{ */
 
 /* Symbols to be used with GPIO driver */
 #define BOARD_INITPINS_DBG_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
-#define BOARD_INITPINS_DBG_INIT_GPIO_VALUE 0U        /*!<@brief GPIO output initial state */
 #define BOARD_INITPINS_DBG_GPIO_PIN_MASK (1U << 20U) /*!<@brief GPIO pin mask */
 #define BOARD_INITPINS_DBG_PORT 0U                   /*!<@brief PORT peripheral base pointer */
 #define BOARD_INITPINS_DBG_PIN 20U                   /*!<@brief PORT pin number */
 #define BOARD_INITPINS_DBG_PIN_MASK (1U << 20U)      /*!<@brief PORT pin mask */
                                                      /* @} */
 
-/*! @name PIO0_27 (number 18), PORT1_TXD
+/*! @name PIO0_21 (number 49), MEASURE_CH_SEL1
   @{ */
-#define BOARD_INITPINS_PORT1_TXD_PORT 0U                   /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_PORT1_TXD_PIN 27U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_PORT1_TXD_PIN_MASK (1U << 27U)      /*!<@brief PORT pin mask */
-                                                           /* @} */
 
-/*! @name PIO0_29 (number 59), PORT0_RXD
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_MEASURE_CH_SEL1_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_MEASURE_CH_SEL1_GPIO_PIN_MASK (1U << 21U) /*!<@brief GPIO pin mask */
+#define BOARD_INITPINS_MEASURE_CH_SEL1_PORT 0U                   /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_MEASURE_CH_SEL1_PIN 21U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_MEASURE_CH_SEL1_PIN_MASK (1U << 21U)      /*!<@brief PORT pin mask */
+                                                                 /* @} */
+
+/*! @name PIO0_22 (number 50), MEASURE_CH_SEL0
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_MEASURE_CH_SEL0_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_MEASURE_CH_SEL0_GPIO_PIN_MASK (1U << 22U) /*!<@brief GPIO pin mask */
+#define BOARD_INITPINS_MEASURE_CH_SEL0_PORT 0U                   /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_MEASURE_CH_SEL0_PIN 22U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_MEASURE_CH_SEL0_PIN_MASK (1U << 22U)      /*!<@brief PORT pin mask */
+                                                                 /* @} */
+
+/*! @name PIO0_26 (number 40), USB_POWERED
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_USB_POWERED_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_USB_POWERED_GPIO_PIN_MASK (1U << 26U) /*!<@brief GPIO pin mask */
+#define BOARD_INITPINS_USB_POWERED_PORT 0U                   /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_USB_POWERED_PIN 26U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_USB_POWERED_PIN_MASK (1U << 26U)      /*!<@brief PORT pin mask */
+                                                             /* @} */
+
+/*! @name FC0_RXD_SDA_MOSI_DATA (number 59), PORT0_RXD
   @{ */
 #define BOARD_INITPINS_PORT0_RXD_PORT 0U                   /*!<@brief PORT peripheral base pointer */
 #define BOARD_INITPINS_PORT0_RXD_PIN 29U                   /*!<@brief PORT pin number */
 #define BOARD_INITPINS_PORT0_RXD_PIN_MASK (1U << 29U)      /*!<@brief PORT pin mask */
                                                            /* @} */
 
-/*! @name PIO0_30 (number 60), PORT0_TXD
+/*! @name FC0_TXD_SCL_MISO_WS (number 60), PORT0_TXD
   @{ */
 #define BOARD_INITPINS_PORT0_TXD_PORT 0U                   /*!<@brief PORT peripheral base pointer */
 #define BOARD_INITPINS_PORT0_TXD_PIN 30U                   /*!<@brief PORT pin number */
 #define BOARD_INITPINS_PORT0_TXD_PIN_MASK (1U << 30U)      /*!<@brief PORT pin mask */
                                                            /* @} */
 
-/*! @name PIO1_0 (number 4), ADC_ECHO
-  @{ */
-#define BOARD_INITPINS_ADC_ECHO_GPIO GPIO                /*!<@brief GPIO device name: GPIO */
-#define BOARD_INITPINS_ADC_ECHO_PORT 1U                  /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_ADC_ECHO_PIN 0U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_ADC_ECHO_PIN_MASK (1U << 0U)      /*!<@brief PORT pin mask */
-                                                         /* @} */
-
-/*! @name PIO0_1 (number 2), ECHO_CS
-  @{ */
-#define BOARD_INITPINS_ECHO_CS_PORT 0U                  /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_ECHO_CS_PIN 1U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_ECHO_CS_PIN_MASK (1U << 1U)      /*!<@brief PORT pin mask */
-                                                        /* @} */
-
-/*! @name PIO0_7 (number 1), HIGH_POWER
+/*! @name PIO0_31 (number 15), BTN1n
   @{ */
 
 /* Symbols to be used with GPIO driver */
-#define BOARD_INITPINS_HIGH_POWER_GPIO GPIO                /*!<@brief GPIO peripheral base pointer */
-#define BOARD_INITPINS_HIGH_POWER_INIT_GPIO_VALUE 0U       /*!<@brief GPIO output initial state */
-#define BOARD_INITPINS_HIGH_POWER_GPIO_PIN_MASK (1U << 7U) /*!<@brief GPIO pin mask */
-#define BOARD_INITPINS_HIGH_POWER_PORT 0U                  /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_HIGH_POWER_PIN 7U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_HIGH_POWER_PIN_MASK (1U << 7U)      /*!<@brief PORT pin mask */
-                                                           /* @} */
+#define BOARD_INITPINS_BTN1n_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_BTN1n_GPIO_PIN_MASK (1U << 31U) /*!<@brief GPIO pin mask */
+#define BOARD_INITPINS_BTN1n_PORT 0U                   /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_BTN1n_PIN 31U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_BTN1n_PIN_MASK (1U << 31U)      /*!<@brief PORT pin mask */
+                                                       /* @} */
+
+/*! @name CAN0_TD (number 41), CAN_TD
+  @{ */
+#define BOARD_INITPINS_CAN_TD_PORT 1U                  /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_CAN_TD_PIN 2U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_CAN_TD_PIN_MASK (1U << 2U)      /*!<@brief PORT pin mask */
+                                                       /* @} */
+
+/*! @name CAN0_RD (number 42), CAN_RD
+  @{ */
+#define BOARD_INITPINS_CAN_RD_PORT 1U                  /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_CAN_RD_PIN 3U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_CAN_RD_PIN_MASK (1U << 3U)      /*!<@brief PORT pin mask */
+                                                       /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *
  */
-void BOARD_InitPins(void); /* Function assigned for the Cortex-M33 (Core #0) */
+void BOARD_InitPins(void); /* Function assigned for the Cortex-M33 */
 
 #if defined(__cplusplus)
 }

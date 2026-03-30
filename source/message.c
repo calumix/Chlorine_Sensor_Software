@@ -25,9 +25,17 @@ void MessageClear(struct Message * msg){
 /*
  * Not a whole lot to do here.
  */
-void MessageInit(struct Message * msg){
-	msg->rx_stream = xStreamBufferCreate(MAX_MESSAGE_LEN,1);
-	msg->tx_queue = xQueueCreate(6,sizeof(msg->response));
+void MessageInit(struct Message * msg, StreamBufferHandle_t tx_stream, StreamBufferHandle_t rx_stream){
+	if(tx_stream != NULL)
+		msg->tx_stream = tx_stream;
+	else
+		msg->tx_stream = xStreamBufferCreate(MAX_MESSAGE_LEN,1);
+
+	if(rx_stream != NULL)
+		msg->rx_stream = rx_stream;
+	else
+		msg->rx_stream = xStreamBufferCreate(MAX_MESSAGE_LEN,1);
+
 	MessageClear(msg);
 }
 
@@ -46,7 +54,7 @@ int MessageSendFormat(struct Message * msg, const char * fmt,...){
 	//put in the checksum and final delimiters
 	sprintf(&msg->response[ret], "*%02X\r\n",checksum);
 	ret = strlen(msg->response);
-	xQueueSend(msg->tx_queue,(void*)msg->response,portMAX_DELAY);
+	xStreamBufferSend(msg->tx_stream,(void*)msg->response,strlen(msg->response),portMAX_DELAY);
 	return ret;
 }
 

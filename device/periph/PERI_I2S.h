@@ -1,42 +1,30 @@
 /*
 ** ###################################################################
-**     Processors:          LPC5526JBD100
-**                          LPC5526JBD64
-**                          LPC5526JEV98
-**                          LPC5528JBD100
-**                          LPC5528JBD64
-**                          LPC5528JEV59
-**                          LPC5528JEV98
-**                          LPC55S26JBD100
-**                          LPC55S26JBD64
-**                          LPC55S26JEV98
-**                          LPC55S28JBD100
-**                          LPC55S28JBD64
-**                          LPC55S28JEV59
-**                          LPC55S28JEV98
-**                          LPC55S66JBD100_cm33_core0
-**                          LPC55S66JBD100_cm33_core1
-**                          LPC55S66JBD64_cm33_core0
-**                          LPC55S66JBD64_cm33_core1
-**                          LPC55S66JEV98_cm33_core0
-**                          LPC55S66JEV98_cm33_core1
-**                          LPC55S69JBD100_cm33_core0
-**                          LPC55S69JBD100_cm33_core1
-**                          LPC55S69JBD64_cm33_core0
-**                          LPC55S69JBD64_cm33_core1
-**                          LPC55S69JEV59_cm33_core0
-**                          LPC55S69JEV59_cm33_core1
-**                          LPC55S69JEV98_cm33_core0
-**                          LPC55S69JEV98_cm33_core1
+**     Processors:          LPC5512JBD100
+**                          LPC5512JBD64
+**                          LPC5514JBD100
+**                          LPC5514JBD64
+**                          LPC5514JEV59
+**                          LPC5516JBD100
+**                          LPC5516JBD64
+**                          LPC5516JEV59
+**                          LPC5516JEV98
+**                          LPC55S14JBD100
+**                          LPC55S14JBD64
+**                          LPC55S14JEV59
+**                          LPC55S16JBD100
+**                          LPC55S16JBD64
+**                          LPC55S16JEV59
+**                          LPC55S16JEV98
 **
-**     Version:             rev. 1.1, 2019-05-16
-**     Build:               b240704
+**     Version:             rev. 2.0, 2024-10-29
+**     Build:               b250520
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for I2S
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -45,40 +33,37 @@
 **     Revisions:
 **     - rev. 1.0 (2018-08-22)
 **         Initial version based on v0.2UM
-**     - rev. 1.1 (2019-05-16)
-**         Initial A1 version based on v1.3UM
+**     - rev. 1.1 (2019-12-03)
+**         Initial version based on v0.6UM
+**     - rev. 2.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
 **
 ** ###################################################################
 */
 
 /*!
- * @file I2S.h
- * @version 1.1
- * @date 2019-05-16
+ * @file PERI_I2S.h
+ * @version 2.0
+ * @date 2024-10-29
  * @brief CMSIS Peripheral Access Layer for I2S
  *
  * CMSIS Peripheral Access Layer for I2S
  */
 
-#if !defined(I2S_H_)
-#define I2S_H_                                   /**< Symbol preventing repeated inclusion */
+#if !defined(PERI_I2S_H_)
+#define PERI_I2S_H_                              /**< Symbol preventing repeated inclusion */
 
-#if (defined(CPU_LPC5526JBD100) || defined(CPU_LPC5526JBD64) || defined(CPU_LPC5526JEV98))
-#include "LPC5526_COMMON.h"
-#elif (defined(CPU_LPC5528JBD100) || defined(CPU_LPC5528JBD64) || defined(CPU_LPC5528JEV59) || defined(CPU_LPC5528JEV98))
-#include "LPC5528_COMMON.h"
-#elif (defined(CPU_LPC55S26JBD100) || defined(CPU_LPC55S26JBD64) || defined(CPU_LPC55S26JEV98))
-#include "LPC55S26_COMMON.h"
-#elif (defined(CPU_LPC55S28JBD100) || defined(CPU_LPC55S28JBD64) || defined(CPU_LPC55S28JEV59) || defined(CPU_LPC55S28JEV98))
-#include "LPC55S28_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core0) || defined(CPU_LPC55S66JBD64_cm33_core0) || defined(CPU_LPC55S66JEV98_cm33_core0))
-#include "LPC55S66_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core1) || defined(CPU_LPC55S66JBD64_cm33_core1) || defined(CPU_LPC55S66JEV98_cm33_core1))
-#include "LPC55S66_cm33_core1_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core0) || defined(CPU_LPC55S69JBD64_cm33_core0) || defined(CPU_LPC55S69JEV59_cm33_core0) || defined(CPU_LPC55S69JEV98_cm33_core0))
-#include "LPC55S69_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core1) || defined(CPU_LPC55S69JBD64_cm33_core1) || defined(CPU_LPC55S69JEV59_cm33_core1) || defined(CPU_LPC55S69JEV98_cm33_core1))
-#include "LPC55S69_cm33_core1_COMMON.h"
+#if (defined(CPU_LPC5512JBD100) || defined(CPU_LPC5512JBD64))
+#include "LPC5512_COMMON.h"
+#elif (defined(CPU_LPC5514JBD100) || defined(CPU_LPC5514JBD64) || defined(CPU_LPC5514JEV59))
+#include "LPC5514_COMMON.h"
+#elif (defined(CPU_LPC5516JBD100) || defined(CPU_LPC5516JBD64) || defined(CPU_LPC5516JEV59) || defined(CPU_LPC5516JEV98))
+#include "LPC5516_COMMON.h"
+#elif (defined(CPU_LPC55S14JBD100) || defined(CPU_LPC55S14JBD64) || defined(CPU_LPC55S14JEV59))
+#include "LPC55S14_COMMON.h"
+#elif (defined(CPU_LPC55S16JBD100) || defined(CPU_LPC55S16JBD64) || defined(CPU_LPC55S16JEV59) || defined(CPU_LPC55S16JEV98))
+#include "LPC55S16_COMMON.h"
 #else
   #error "No valid CPU defined!"
 #endif
@@ -121,6 +106,9 @@
  * @{
  */
 
+/** I2S - Size of Registers Arrays */
+#define I2S_SECCHANNEL_COUNT                      3u
+
 /** I2S - Register Layout Typedef */
 typedef struct {
        uint8_t RESERVED_0[3072];
@@ -129,7 +117,13 @@ typedef struct {
   __IO uint32_t STAT;                              /**< Status register for the primary channel pair., offset: 0xC08 */
        uint8_t RESERVED_1[16];
   __IO uint32_t DIV;                               /**< Clock divider, used by all channel pairs., offset: 0xC1C */
-       uint8_t RESERVED_2[480];
+  struct {                                         /* offset: 0xC20, array step: 0x20 */
+    __IO uint32_t PCFG1;                             /**< Configuration register 1 for channel pair, array offset: 0xC20, array step: 0x20 */
+    __IO uint32_t PCFG2;                             /**< Configuration register 2 for channel pair, array offset: 0xC24, array step: 0x20 */
+    __IO uint32_t PSTAT;                             /**< Status register for channel pair, array offset: 0xC28, array step: 0x20 */
+         uint8_t RESERVED_0[20];
+  } SECCHANNEL[I2S_SECCHANNEL_COUNT];
+       uint8_t RESERVED_2[384];
   __IO uint32_t FIFOCFG;                           /**< FIFO configuration and enable register., offset: 0xE00 */
   __IO uint32_t FIFOSTAT;                          /**< FIFO status register., offset: 0xE04 */
   __IO uint32_t FIFOTRIG;                          /**< FIFO trigger settings for interrupt and DMA request., offset: 0xE08 */
@@ -302,12 +296,12 @@ typedef struct {
 /*! @name CFG2 - Configuration register 2 for the primary channel pair. */
 /*! @{ */
 
-#define I2S_CFG2_FRAMELEN_MASK                   (0x1FFU)
+#define I2S_CFG2_FRAMELEN_MASK                   (0x7FFU)
 #define I2S_CFG2_FRAMELEN_SHIFT                  (0U)
 /*! FRAMELEN - Frame Length, minus 1 encoded, defines the number of clocks and data bits in the
  *    frames that this channel pair participates in. See Frame format. 0x000 to 0x002 = not supported
- *    0x003 = frame is 4 bits in total length 0x004 = frame is 5 bits in total length 0x1FF = frame is
- *    512 bits in total length if FRAMELEN is an defines an odd length frame (e.g. 33 clocks) in
+ *    0x003 = frame is 4 bits in total length 0x004 = frame is 5 bits in total length 0x7FF = frame is
+ *    2048 bits in total length if FRAMELEN is an defines an odd length frame (e.g. 33 clocks) in
  *    mode 0 or 1, the extra clock appears in the right half. When MODE = 3, FRAMELEN must be larger
  *    than DATALEN in order for the WS pulse to be generated correctly.
  */
@@ -381,6 +375,74 @@ typedef struct {
  */
 #define I2S_DIV_DIV(x)                           (((uint32_t)(((uint32_t)(x)) << I2S_DIV_DIV_SHIFT)) & I2S_DIV_DIV_MASK)
 /*! @} */
+
+/*! @name SECCHANNEL_PCFG1 - Configuration register 1 for channel pair */
+/*! @{ */
+
+#define I2S_SECCHANNEL_PCFG1_PAIRENABLE_MASK     (0x1U)
+#define I2S_SECCHANNEL_PCFG1_PAIRENABLE_SHIFT    (0U)
+/*! PAIRENABLE - Enable for this channel pair.
+ *  0b0..This I2S channel pair is disabled.
+ *  0b1..This I2S channel pair is enabled.
+ */
+#define I2S_SECCHANNEL_PCFG1_PAIRENABLE(x)       (((uint32_t)(((uint32_t)(x)) << I2S_SECCHANNEL_PCFG1_PAIRENABLE_SHIFT)) & I2S_SECCHANNEL_PCFG1_PAIRENABLE_MASK)
+
+#define I2S_SECCHANNEL_PCFG1_ONECHANNEL_MASK     (0x400U)
+#define I2S_SECCHANNEL_PCFG1_ONECHANNEL_SHIFT    (10U)
+/*! ONECHANNEL - Single channel mode.
+ *  0b0..I2S data for this channel pair is treated as left and right channels.
+ *  0b1..I2S data for this channel pair is treated as a single channel, functionally the left channel for this pair.
+ */
+#define I2S_SECCHANNEL_PCFG1_ONECHANNEL(x)       (((uint32_t)(((uint32_t)(x)) << I2S_SECCHANNEL_PCFG1_ONECHANNEL_SHIFT)) & I2S_SECCHANNEL_PCFG1_ONECHANNEL_MASK)
+/*! @} */
+
+/* The count of I2S_SECCHANNEL_PCFG1 */
+#define I2S_SECCHANNEL_PCFG1_COUNT               (3U)
+
+/*! @name SECCHANNEL_PCFG2 - Configuration register 2 for channel pair */
+/*! @{ */
+
+#define I2S_SECCHANNEL_PCFG2_POSITION_MASK       (0x1FF0000U)
+#define I2S_SECCHANNEL_PCFG2_POSITION_SHIFT      (16U)
+/*! POSITION - Data Position. */
+#define I2S_SECCHANNEL_PCFG2_POSITION(x)         (((uint32_t)(((uint32_t)(x)) << I2S_SECCHANNEL_PCFG2_POSITION_SHIFT)) & I2S_SECCHANNEL_PCFG2_POSITION_MASK)
+/*! @} */
+
+/* The count of I2S_SECCHANNEL_PCFG2 */
+#define I2S_SECCHANNEL_PCFG2_COUNT               (3U)
+
+/*! @name SECCHANNEL_PSTAT - Status register for channel pair */
+/*! @{ */
+
+#define I2S_SECCHANNEL_PSTAT_BUSY_MASK           (0x1U)
+#define I2S_SECCHANNEL_PSTAT_BUSY_SHIFT          (0U)
+/*! BUSY - Busy status for this channel pair.
+ *  0b0..The transmitter/receiver for this channel pair is currently idle.
+ *  0b1..The transmitter/receiver for this channel pair is currently processing data.
+ */
+#define I2S_SECCHANNEL_PSTAT_BUSY(x)             (((uint32_t)(((uint32_t)(x)) << I2S_SECCHANNEL_PSTAT_BUSY_SHIFT)) & I2S_SECCHANNEL_PSTAT_BUSY_MASK)
+
+#define I2S_SECCHANNEL_PSTAT_SLVFRMERR_MASK      (0x2U)
+#define I2S_SECCHANNEL_PSTAT_SLVFRMERR_SHIFT     (1U)
+/*! SLVFRMERR - Save Frame Error flag. */
+#define I2S_SECCHANNEL_PSTAT_SLVFRMERR(x)        (((uint32_t)(((uint32_t)(x)) << I2S_SECCHANNEL_PSTAT_SLVFRMERR_SHIFT)) & I2S_SECCHANNEL_PSTAT_SLVFRMERR_MASK)
+
+#define I2S_SECCHANNEL_PSTAT_LR_MASK             (0x4U)
+#define I2S_SECCHANNEL_PSTAT_LR_SHIFT            (2U)
+/*! LR - Left/Right indication. */
+#define I2S_SECCHANNEL_PSTAT_LR(x)               (((uint32_t)(((uint32_t)(x)) << I2S_SECCHANNEL_PSTAT_LR_SHIFT)) & I2S_SECCHANNEL_PSTAT_LR_MASK)
+
+#define I2S_SECCHANNEL_PSTAT_DATAPAUSED_MASK     (0x8U)
+#define I2S_SECCHANNEL_PSTAT_DATAPAUSED_SHIFT    (3U)
+/*! DATAPAUSED - Data Paused status flag.
+ *  0b0..Data is not currently paused.
+ *  0b1..A data pause has been requested and is now in force.
+ */
+#define I2S_SECCHANNEL_PSTAT_DATAPAUSED(x)       (((uint32_t)(((uint32_t)(x)) << I2S_SECCHANNEL_PSTAT_DATAPAUSED_SHIFT)) & I2S_SECCHANNEL_PSTAT_DATAPAUSED_MASK)
+/*! @} */
+
+/* The count of I2S_SECCHANNEL_PSTAT */
+#define I2S_SECCHANNEL_PSTAT_COUNT               (3U)
 
 /*! @name FIFOCFG - FIFO configuration and enable register. */
 /*! @{ */
@@ -805,5 +867,5 @@ typedef struct {
  */ /* end of group Peripheral_access_layer */
 
 
-#endif  /* I2S_H_ */
+#endif  /* PERI_I2S_H_ */
 

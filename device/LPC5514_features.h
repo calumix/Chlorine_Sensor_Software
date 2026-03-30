@@ -1,13 +1,13 @@
 /*
 ** ###################################################################
-**     Version:             rev. 1.1, 2019-05-16
-**     Build:               b241031
+**     Version:             rev. 2.1, 2025-12-01
+**     Build:               b260209
 **
 **     Abstract:
 **         Chip specific module features.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2026 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -16,17 +16,25 @@
 **     Revisions:
 **     - rev. 1.0 (2018-08-22)
 **         Initial version based on v0.2UM
-**     - rev. 1.1 (2019-05-16)
-**         Initial A1 version based on v1.3UM
+**     - rev. 1.1 (2019-12-03)
+**         Initial version based on v0.6UM
+**     - rev. 2.0 (2025-11-18)
+**         Update puf feature align to shared definition changes.
+**     - rev. 2.1 (2025-12-01)
+**         Add FSL_FEATURE_PUF_HAS_KEYRESET to indicate if PUF hardware has key reset feature.
 **
 ** ###################################################################
 */
 
-#ifndef _LPC5528_FEATURES_H_
-#define _LPC5528_FEATURES_H_
+#ifndef _LPC5514_FEATURES_H_
+#define _LPC5514_FEATURES_H_
 
 /* SOC module features */
 
+/* @brief LPC_CAN availability on the SoC. */
+#define FSL_FEATURE_SOC_LPC_CAN_COUNT (1)
+/* @brief CDOG availability on the SoC. */
+#define FSL_FEATURE_SOC_CDOG_COUNT (1)
 /* @brief CRC availability on the SoC. */
 #define FSL_FEATURE_SOC_CRC_COUNT (1)
 /* @brief CTIMER availability on the SoC. */
@@ -71,8 +79,6 @@
 #define FSL_FEATURE_SOC_RTC_COUNT (1)
 /* @brief SCT availability on the SoC. */
 #define FSL_FEATURE_SOC_SCT_COUNT (1)
-/* @brief SDIF availability on the SoC. */
-#define FSL_FEATURE_SOC_SDIF_COUNT (1)
 /* @brief SPI availability on the SoC. */
 #define FSL_FEATURE_SOC_SPI_COUNT (9)
 /* @brief SYSCON availability on the SoC. */
@@ -100,6 +106,8 @@
 
 /* @brief FIFO availability on the SoC. */
 #define FSL_FEATURE_LPADC_FIFO_COUNT (2)
+/* @brief Does not support two simultanious single ended conversions (bitfield TCTRL[FIFO_SEL_B]). */
+#define FSL_FEATURE_LPADC_HAS_NO_TCTRL_FIFO_SEL_B (0)
 /* @brief Has subsequent trigger priority (bitfield CFG[TPRICTRL]). */
 #define FSL_FEATURE_LPADC_HAS_CFG_SUBSEQUENT_PRIORITY (1)
 /* @brief Has differential mode (bitfield CMDLn[DIFF]). */
@@ -110,8 +118,6 @@
 #define FSL_FEATURE_LPADC_HAS_CMDL_CTYPE (1)
 /* @brief Has conversion resolution select  (bitfield CMDLn[MODE]). */
 #define FSL_FEATURE_LPADC_HAS_CMDL_MODE (1)
-/* @brief Has compare function enable (bitfield CMDHn[CMPEN]). */
-#define FSL_FEATURE_LPADC_HAS_CMDH_CMPEN (1)
 /* @brief Has Wait for trigger assertion before execution (bitfield CMDHn[WAIT_TRIG]). */
 #define FSL_FEATURE_LPADC_HAS_CMDH_WAIT_TRIG (1)
 /* @brief Has offset calibration (bitfield CTRL[CALOFS]). */
@@ -128,10 +134,6 @@
 #define FSL_FEATURE_LPADC_HAS_CFG_CALOFS (0)
 /* @brief Has offset trim (register OFSTRIM). */
 #define FSL_FEATURE_LPADC_HAS_OFSTRIM (1)
-/* @brief OFSTRIM availability on the SoC. */
-#define FSL_FEATURE_LPADC_OFSTRIM_COUNT (2)
-/* @brief Has Trigger status register. */
-#define FSL_FEATURE_LPADC_HAS_TSTAT (1)
 /* @brief Has power select (bitfield CFG[PWRSEL]). */
 #define FSL_FEATURE_LPADC_HAS_CFG_PWRSEL (1)
 /* @brief Has alternate channel B scale (bitfield CMDLn[ALTB_CSCALE]). */
@@ -144,6 +146,12 @@
 #define FSL_FEATURE_LPADC_HAS_CTRL_CALOFSMODE (0)
 /* @brief Conversion averaged bitfiled width. */
 #define FSL_FEATURE_LPADC_CONVERSIONS_AVERAGED_BITFIELD_WIDTH (3)
+/* @brief Enable hardware trigger command selection */
+#define FSL_FEATURE_LPADC_HAS_TCTRL_CMD_SEL (0)
+/* @brief OFSTRIM availability on the SoC. */
+#define FSL_FEATURE_LPADC_OFSTRIM_COUNT (2)
+/* @brief Has Trigger status register. */
+#define FSL_FEATURE_LPADC_HAS_TSTAT (1)
 /* @brief Has B side channels. */
 #define FSL_FEATURE_LPADC_HAS_B_SIDE_CHANNELS (1)
 /* @brief Indicate whether the LPADC STAT register has trigger exception interrupt function (bitfield STAT[TEXC_INT]). */
@@ -166,31 +174,59 @@
 #define FSL_FEATURE_LPADC_HAS_CFG_HPT_EXDI (1)
 /* @brief Indicate LPADC CFG register TPRICTRL bitfield width. */
 #define FSL_FEATURE_LPADC_CFG_TPRICTRL_BITFIELD_WIDTH (2)
+/* @brief Has compare function enable (bitfield CMDHn[CMPEN]). */
+#define FSL_FEATURE_LPADC_HAS_CMDH_CMPEN (1)
+/* @brief Has High Speed Mode Trim Request (bitfield CTRL[CALHS]). */
+#define FSL_FEATURE_LPADC_HAS_CTRL_CALHS (0)
+/* @brief Has Justified Left Enable (bitfield CFG2[JLEFT]). */
+#define FSL_FEATURE_LPADC_HAS_CFG2_JLEFT (0)
 /* @brief Has internal temperature sensor. */
 #define FSL_FEATURE_LPADC_HAS_INTERNAL_TEMP_SENSOR (1)
-/* @brief Chip Rev 0A Temperature sensor parameter A (slope). */
-#define FSL_FEATURE_LPADC_TEMP_PARAMETER_A_CHIP_REV_0A (770.0f)
-/* @brief Chip Rev 0A Temperature sensor parameter B (offset). */
-#define FSL_FEATURE_LPADC_TEMP_PARAMETER_B_CHIP_REV_0A (289.4f)
-/* @brief Chip Rev 0A Temperature sensor parameter Alpha. */
-#define FSL_FEATURE_LPADC_TEMP_PARAMETER_ALPHA_CHIP_REV_0A (9.5f)
-/* @brief Chip Rev 1B Temperature sensor parameter A (slope). */
-#define FSL_FEATURE_LPADC_TEMP_PARAMETER_A_CHIP_REV_1B (804.0f)
-/* @brief Chip Rev 1B Temperature sensor parameter B (offset). */
-#define FSL_FEATURE_LPADC_TEMP_PARAMETER_B_CHIP_REV_1B (280.0f)
-/* @brief Chip Rev 1B Temperature sensor parameter Alpha. */
-#define FSL_FEATURE_LPADC_TEMP_PARAMETER_ALPHA_CHIP_REV_1B (8.5f)
+/* @brief Temperature sensor parameter A (slope). */
+#define FSL_FEATURE_LPADC_TEMP_PARAMETER_A (799.0f)
+/* @brief Temperature sensor parameter B (offset). */
+#define FSL_FEATURE_LPADC_TEMP_PARAMETER_B (280.0f)
+/* @brief Temperature sensor parameter Alpha. */
+#define FSL_FEATURE_LPADC_TEMP_PARAMETER_ALPHA (8.5f)
+/* @brief Temperature sensor need calibration. */
+#define FSL_FEATURE_LPADC_TEMP_NEED_CALIBRATION (1)
+/* @brief the address of temperature sensor parameter A (slope) in Flash. */
+#define FSL_FEATURE_FLASH_NMPA_TEMP_SLOPE_ADDRS (0x3FD28U)
+/* @brief the address of temperature sensor parameter B (offset) in Flash. */
+#define FSL_FEATURE_FLASH_NMPA_TEMP_OFFSET_ADDRS (0x3FD2CU)
 /* @brief the buffer size of temperature sensor. */
-#define FSL_FEATURE_LPADC_TEMP_SENS_BUFFER_SIZE (4U)
+#define FSL_FEATURE_LPADC_TEMP_SENS_BUFFER_SIZE (2U)
 
 /* ANALOGCTRL module features */
 
 /* @brief Has PLL_USB_OUT_BIT_FIELD bitfile in XO32M_CTRL reigster. */
 #define FSL_FEATURE_ANACTRL_HAS_NO_ENABLE_PLL_USB_OUT_BIT_FIELD (1)
 /* @brief Has XO32M_ADC_CLK_MODE bitfile in DUMMY_CTRL reigster. */
-#define FSL_FEATURE_ANACTRL_HAS_XO32M_ADC_CLK_MODE_BIF_FIELD (0)
+#define FSL_FEATURE_ANACTRL_HAS_XO32M_ADC_CLK_MODE_BIF_FIELD (1)
 /* @brief Has auxiliary bias(register AUX_BIAS). */
 #define FSL_FEATURE_ANACTRL_HAS_AUX_BIAS_REG (1)
+/* @brief ANACTRL interrupt control BOD1. */
+#define FSL_FEATURE_ANACTRL_CONTROL_BOD1_INT (0)
+/* @brief ANACTRL interrupt control BOD2. */
+#define FSL_FEATURE_ANACTRL_CONTROL_BOD2_INT (0)
+/* @brief BOD_DCDC_INT_CTRL reigster has BODCORE bit field. */
+#define FSL_FEATURE_ANACTRL_HAS_BODCORE_BIT_FIELD (1)
+/* @brief ANACTRL has XO32M_CTRL reigster. */
+#define FSL_FEATURE_ANACTRL_HAS_XO32M_CTRL (1)
+/* @brief FRO192M_CTRL reigster has 96MHz clock control. */
+#define FSL_FEATURE_ANACTRL_HAS_96MHZCLK_CONTROL (1)
+
+/* CAN module features */
+
+/* @brief Support CANFD or not */
+#define FSL_FEATURE_CAN_SUPPORT_CANFD (1)
+
+/* CDOG module features */
+
+/* @brief SOC has no reset driver. */
+#define FSL_FEATURE_CDOG_HAS_NO_RESET (0)
+/* @brief CDOG Load default configurations during init function */
+#define FSL_FEATURE_CDOG_NEED_LOAD_DEFAULT_CONF (0)
 
 /* CTIMER module features */
 
@@ -286,16 +322,31 @@
 #define FSL_FEATURE_FLEXCOMM8_SPI_INDEX  (8)
 /* @brief I2S has DMIC interconnection */
 #define FSL_FEATURE_FLEXCOMM_INSTANCE_I2S_HAS_DMIC_INTERCONNECTIONn(x) (0)
+/* @brief I2S support dual channel transfer */
+#define FSL_FEATURE_FLEXCOMM_INSTANCE_I2S_SUPPORT_SECONDARY_CHANNELn(x) \
+    (((x) == FLEXCOMM0) ? (0) : \
+    (((x) == FLEXCOMM1) ? (0) : \
+    (((x) == FLEXCOMM2) ? (0) : \
+    (((x) == FLEXCOMM3) ? (0) : \
+    (((x) == FLEXCOMM4) ? (0) : \
+    (((x) == FLEXCOMM5) ? (0) : \
+    (((x) == FLEXCOMM6) ? (1) : \
+    (((x) == FLEXCOMM7) ? (1) : \
+    (((x) == FLEXCOMM8) ? (0) : (-1))))))))))
 
 /* GINT module features */
 
 /* @brief The count of th port which are supported in GINT. */
 #define FSL_FEATURE_GINT_PORT_COUNT (2)
 
+/* I2C module features */
+
+/* No feature definitions */
+
 /* I2S module features */
 
-/* @brief I2S support dual channel transfer. */
-#define FSL_FEATURE_I2S_SUPPORT_SECONDARY_CHANNEL (0)
+/* @brief I2S6 and I2S7 support dual channel transfer. */
+#define FSL_FEATURE_I2S_SUPPORT_SECONDARY_CHANNEL (1)
 /* @brief I2S has DMIC interconnection */
 #define FSL_FEATURE_FLEXCOMM_I2S_HAS_DMIC_INTERCONNECTION (0)
 
@@ -314,7 +365,7 @@
 /* MRT module features */
 
 /* @brief number of channels. */
-#define FSL_FEATURE_MRT_NUMBER_OF_CHANNELS  (4)
+#define FSL_FEATURE_MRT_NUMBER_OF_CHANNELS (4)
 
 /* PINT module features */
 
@@ -353,17 +404,8 @@
 #define FSL_FEATURE_SCT_NUMBER_OF_MATCH_CAPTURE (16)
 /* @brief Number of outputs */
 #define FSL_FEATURE_SCT_NUMBER_OF_OUTPUTS (10)
-
-/* SDIF module features */
-
-/* @brief FIFO depth, every location is a WORD */
-#define FSL_FEATURE_SDIF_FIFO_DEPTH_64_32BITS (64)
-/* @brief Max DMA buffer size */
-#define FSL_FEATURE_SDIF_INTERNAL_DMA_MAX_BUFFER_SIZE (4096)
-/* @brief Max source clock in HZ */
-#define FSL_FEATURE_SDIF_MAX_SOURCE_CLOCK (52000000)
-/* @brief support 2 cards */
-#define FSL_FEATURE_SDIF_ONE_INSTANCE_SUPPORT_TWO_CARD (1)
+/* @brief Writing a zero asserts the SCT reset. */
+#define FSL_FEATURE_SCT_WRITE_ZERO_ASSERT_RESET (0)
 
 /* SECPINT module features */
 
@@ -382,7 +424,7 @@
 /* @brief Flash sector size in bytes */
 #define FSL_FEATURE_SYSCON_FLASH_SECTOR_SIZE_BYTES (32768)
 /* @brief Flash size in bytes */
-#define FSL_FEATURE_SYSCON_FLASH_SIZE_BYTES (524288)
+#define FSL_FEATURE_SYSCON_FLASH_SIZE_BYTES (131072)
 /* @brief Has Power Down mode */
 #define FSL_FEATURE_SYSCON_HAS_POWERDOWN_MODE (1)
 /* @brief CCM_ANALOG availability on the SoC.  */
@@ -392,14 +434,15 @@
 
 /* SYSCTL1 module features */
 
-/* No feature definitions */
+/* @brief SYSCTRL has Code Gray feature. */
+#define FSL_FEATURE_SYSCTRL_HAS_CODE_GRAY (1)
 
 /* USB module features */
 
 /* @brief Size of the USB dedicated RAM */
 #define FSL_FEATURE_USB_USB_RAM (0x00004000)
 /* @brief Base address of the USB dedicated RAM */
-#define FSL_FEATURE_USB_USB_RAM_BASE_ADDRESS (0x40100000)
+#define FSL_FEATURE_USB_USB_RAM_BASE_ADDRESS (0x20010000)
 /* @brief USB version */
 #define FSL_FEATURE_USB_VERSION (200)
 /* @brief Number of the endpoint in USB FS */
@@ -410,7 +453,7 @@
 /* @brief Size of the USB dedicated RAM */
 #define FSL_FEATURE_USBFSH_USB_RAM (0x00004000)
 /* @brief Base address of the USB dedicated RAM */
-#define FSL_FEATURE_USBFSH_USB_RAM_BASE_ADDRESS (0x40100000)
+#define FSL_FEATURE_USBFSH_USB_RAM_BASE_ADDRESS (0x20010000)
 /* @brief USBFSH version */
 #define FSL_FEATURE_USBFSH_VERSION (200)
 
@@ -419,7 +462,7 @@
 /* @brief Size of the USB dedicated RAM */
 #define FSL_FEATURE_USBHSD_USB_RAM (0x00004000)
 /* @brief Base address of the USB dedicated RAM */
-#define FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS (0x40100000)
+#define FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS (0x20010000)
 /* @brief USBHSD version */
 #define FSL_FEATURE_USBHSD_VERSION (300)
 /* @brief Number of the endpoint in USB HS */
@@ -430,27 +473,37 @@
 /* @brief Size of the USB dedicated RAM */
 #define FSL_FEATURE_USBHSH_USB_RAM (0x00004000)
 /* @brief Base address of the USB dedicated RAM */
-#define FSL_FEATURE_USBHSH_USB_RAM_BASE_ADDRESS (0x40100000)
+#define FSL_FEATURE_USBHSH_USB_RAM_BASE_ADDRESS (0x20010000)
 /* @brief USBHSH version */
 #define FSL_FEATURE_USBHSH_VERSION (300)
+/* @brief USBHSH has packet turnaround time-out register */
+#define FSL_FEATURE_USBHSH_HAS_TURNAROUND_TIMEOUT (0)
 
 /* USBPHY module features */
 
 /* @brief Size of the USB dedicated RAM */
 #define FSL_FEATURE_USBPHY_USB_RAM (0x00004000)
 /* @brief Base address of the USB dedicated RAM */
-#define FSL_FEATURE_USBPHY_USB_RAM_BASE_ADDRESS (0x40100000)
+#define FSL_FEATURE_USBPHY_USB_RAM_BASE_ADDRESS (0x20010000)
 /* @brief USBHSD version */
 #define FSL_FEATURE_USBPHY_VERSION (300)
 /* @brief Number of the endpoint in USB HS */
 #define FSL_FEATURE_USBPHY_EP_NUM (6)
 
+/* UTICK module features */
+
+/* No feature definitions */
+
 /* WWDT module features */
 
-/* @brief Has no RESET register. */
-#define FSL_FEATURE_WWDT_HAS_NO_RESET (1)
 /* @brief WWDT does not support oscillator lock. */
 #define FSL_FEATURE_WWDT_HAS_NO_OSCILLATOR_LOCK (1)
+/* @brief soc has reset. */
+#define FSL_FEATURE_WWDT_HAS_NO_RESET (1)
+/* @brief Has LPOSC as clock source. */
+#define FSL_FEATURE_WWDT_HAS_LPOSC_CLOCK_SOURCE (0)
+/* @brief WWDT WDTOF is not set in case of WD reset - get info from PMC instead. */
+#define FSL_FEATURE_WWDT_WDTRESET_FROM_PMC (0)
 
-#endif /* _LPC5528_FEATURES_H_ */
+#endif /* _LPC5514_FEATURES_H_ */
 

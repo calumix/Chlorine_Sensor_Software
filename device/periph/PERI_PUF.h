@@ -1,42 +1,30 @@
 /*
 ** ###################################################################
-**     Processors:          LPC5526JBD100
-**                          LPC5526JBD64
-**                          LPC5526JEV98
-**                          LPC5528JBD100
-**                          LPC5528JBD64
-**                          LPC5528JEV59
-**                          LPC5528JEV98
-**                          LPC55S26JBD100
-**                          LPC55S26JBD64
-**                          LPC55S26JEV98
-**                          LPC55S28JBD100
-**                          LPC55S28JBD64
-**                          LPC55S28JEV59
-**                          LPC55S28JEV98
-**                          LPC55S66JBD100_cm33_core0
-**                          LPC55S66JBD100_cm33_core1
-**                          LPC55S66JBD64_cm33_core0
-**                          LPC55S66JBD64_cm33_core1
-**                          LPC55S66JEV98_cm33_core0
-**                          LPC55S66JEV98_cm33_core1
-**                          LPC55S69JBD100_cm33_core0
-**                          LPC55S69JBD100_cm33_core1
-**                          LPC55S69JBD64_cm33_core0
-**                          LPC55S69JBD64_cm33_core1
-**                          LPC55S69JEV59_cm33_core0
-**                          LPC55S69JEV59_cm33_core1
-**                          LPC55S69JEV98_cm33_core0
-**                          LPC55S69JEV98_cm33_core1
+**     Processors:          LPC5512JBD100
+**                          LPC5512JBD64
+**                          LPC5514JBD100
+**                          LPC5514JBD64
+**                          LPC5514JEV59
+**                          LPC5516JBD100
+**                          LPC5516JBD64
+**                          LPC5516JEV59
+**                          LPC5516JEV98
+**                          LPC55S14JBD100
+**                          LPC55S14JBD64
+**                          LPC55S14JEV59
+**                          LPC55S16JBD100
+**                          LPC55S16JBD64
+**                          LPC55S16JEV59
+**                          LPC55S16JEV98
 **
-**     Version:             rev. 1.1, 2019-05-16
-**     Build:               b240704
+**     Version:             rev. 2.0, 2024-10-29
+**     Build:               b250520
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for PUF
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -45,40 +33,37 @@
 **     Revisions:
 **     - rev. 1.0 (2018-08-22)
 **         Initial version based on v0.2UM
-**     - rev. 1.1 (2019-05-16)
-**         Initial A1 version based on v1.3UM
+**     - rev. 1.1 (2019-12-03)
+**         Initial version based on v0.6UM
+**     - rev. 2.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
 **
 ** ###################################################################
 */
 
 /*!
- * @file PUF.h
- * @version 1.1
- * @date 2019-05-16
+ * @file PERI_PUF.h
+ * @version 2.0
+ * @date 2024-10-29
  * @brief CMSIS Peripheral Access Layer for PUF
  *
  * CMSIS Peripheral Access Layer for PUF
  */
 
-#if !defined(PUF_H_)
-#define PUF_H_                                   /**< Symbol preventing repeated inclusion */
+#if !defined(PERI_PUF_H_)
+#define PERI_PUF_H_                              /**< Symbol preventing repeated inclusion */
 
-#if (defined(CPU_LPC5526JBD100) || defined(CPU_LPC5526JBD64) || defined(CPU_LPC5526JEV98))
-#include "LPC5526_COMMON.h"
-#elif (defined(CPU_LPC5528JBD100) || defined(CPU_LPC5528JBD64) || defined(CPU_LPC5528JEV59) || defined(CPU_LPC5528JEV98))
-#include "LPC5528_COMMON.h"
-#elif (defined(CPU_LPC55S26JBD100) || defined(CPU_LPC55S26JBD64) || defined(CPU_LPC55S26JEV98))
-#include "LPC55S26_COMMON.h"
-#elif (defined(CPU_LPC55S28JBD100) || defined(CPU_LPC55S28JBD64) || defined(CPU_LPC55S28JEV59) || defined(CPU_LPC55S28JEV98))
-#include "LPC55S28_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core0) || defined(CPU_LPC55S66JBD64_cm33_core0) || defined(CPU_LPC55S66JEV98_cm33_core0))
-#include "LPC55S66_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core1) || defined(CPU_LPC55S66JBD64_cm33_core1) || defined(CPU_LPC55S66JEV98_cm33_core1))
-#include "LPC55S66_cm33_core1_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core0) || defined(CPU_LPC55S69JBD64_cm33_core0) || defined(CPU_LPC55S69JEV59_cm33_core0) || defined(CPU_LPC55S69JEV98_cm33_core0))
-#include "LPC55S69_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core1) || defined(CPU_LPC55S69JBD64_cm33_core1) || defined(CPU_LPC55S69JEV59_cm33_core1) || defined(CPU_LPC55S69JEV98_cm33_core1))
-#include "LPC55S69_cm33_core1_COMMON.h"
+#if (defined(CPU_LPC5512JBD100) || defined(CPU_LPC5512JBD64))
+#include "LPC5512_COMMON.h"
+#elif (defined(CPU_LPC5514JBD100) || defined(CPU_LPC5514JBD64) || defined(CPU_LPC5514JEV59))
+#include "LPC5514_COMMON.h"
+#elif (defined(CPU_LPC5516JBD100) || defined(CPU_LPC5516JBD64) || defined(CPU_LPC5516JEV59) || defined(CPU_LPC5516JEV98))
+#include "LPC5516_COMMON.h"
+#elif (defined(CPU_LPC55S14JBD100) || defined(CPU_LPC55S14JBD64) || defined(CPU_LPC55S14JEV59))
+#include "LPC55S14_COMMON.h"
+#elif (defined(CPU_LPC55S16JBD100) || defined(CPU_LPC55S16JBD64) || defined(CPU_LPC55S16JEV59) || defined(CPU_LPC55S16JEV98))
+#include "LPC55S16_COMMON.h"
 #else
   #error "No valid CPU defined!"
 #endif
@@ -142,23 +127,21 @@ typedef struct {
   __I  uint32_t KEYOUTPUT;                         /**< PUF Key Output register, offset: 0x64 */
        uint8_t RESERVED_4[116];
   __IO uint32_t IFSTAT;                            /**< PUF Interface Status and clear register, offset: 0xDC */
-       uint8_t RESERVED_5[28];
-  __I  uint32_t VERSION;                           /**< PUF version register., offset: 0xFC */
+       uint8_t RESERVED_5[32];
   __IO uint32_t INTEN;                             /**< PUF Interrupt Enable, offset: 0x100 */
   __IO uint32_t INTSTAT;                           /**< PUF interrupt status, offset: 0x104 */
-  __IO uint32_t PWRCTRL;                           /**< PUF RAM Power Control, offset: 0x108 */
+       uint8_t RESERVED_6[4];
   __IO uint32_t CFG;                               /**< PUF config register for block bits, offset: 0x10C */
-       uint8_t RESERVED_6[240];
+       uint8_t RESERVED_7[240];
   __IO uint32_t KEYLOCK;                           /**< Only reset in case of full IC reset, offset: 0x200 */
   __IO uint32_t KEYENABLE;                         /**< offset: 0x204 */
   __O  uint32_t KEYRESET;                          /**< Reinitialize Keys shift registers counters, offset: 0x208 */
-  __IO uint32_t IDXBLK_L;                          /**< offset: 0x20C */
-  __IO uint32_t IDXBLK_H_DP;                       /**< offset: 0x210 */
+  __O  uint32_t IDXBLK;                            /**< offset: 0x20C */
+  __O  uint32_t IDXBLK_DP;                         /**< offset: 0x210 */
   __O  uint32_t KEYMASK[PUF_KEYMASK_COUNT];        /**< Only reset in case of full IC reset, array offset: 0x214, array step: 0x4 */
-       uint8_t RESERVED_7[48];
-  __IO uint32_t IDXBLK_H;                          /**< offset: 0x254 */
-  __IO uint32_t IDXBLK_L_DP;                       /**< offset: 0x258 */
-  __I  uint32_t SHIFT_STATUS;                      /**< offset: 0x25C */
+       uint8_t RESERVED_8[48];
+  __I  uint32_t IDXBLK_STATUS;                     /**< Index block status, offset: 0x254 */
+  __I  uint32_t SHIFT_STATUS;                      /**< offset: 0x258 */
 } PUF_Type;
 
 /* ----------------------------------------------------------------------------
@@ -339,15 +322,6 @@ typedef struct {
 #define PUF_IFSTAT_ERROR(x)                      (((uint32_t)(((uint32_t)(x)) << PUF_IFSTAT_ERROR_SHIFT)) & PUF_IFSTAT_ERROR_MASK)
 /*! @} */
 
-/*! @name VERSION - PUF version register. */
-/*! @{ */
-
-#define PUF_VERSION_VERSION_MASK                 (0xFFFFFFFFU)
-#define PUF_VERSION_VERSION_SHIFT                (0U)
-/*! VERSION - Version of the PUF module. */
-#define PUF_VERSION_VERSION(x)                   (((uint32_t)(((uint32_t)(x)) << PUF_VERSION_VERSION_SHIFT)) & PUF_VERSION_VERSION_MASK)
-/*! @} */
-
 /*! @name INTEN - PUF Interrupt Enable */
 /*! @{ */
 
@@ -424,20 +398,6 @@ typedef struct {
 #define PUF_INTSTAT_CODEOUTAVAIL_SHIFT           (7U)
 /*! CODEOUTAVAIL - Level sensitive interrupt, cleared when interrupt source clears */
 #define PUF_INTSTAT_CODEOUTAVAIL(x)              (((uint32_t)(((uint32_t)(x)) << PUF_INTSTAT_CODEOUTAVAIL_SHIFT)) & PUF_INTSTAT_CODEOUTAVAIL_MASK)
-/*! @} */
-
-/*! @name PWRCTRL - PUF RAM Power Control */
-/*! @{ */
-
-#define PUF_PWRCTRL_RAMON_MASK                   (0x1U)
-#define PUF_PWRCTRL_RAMON_SHIFT                  (0U)
-/*! RAMON - Power on the PUF RAM. */
-#define PUF_PWRCTRL_RAMON(x)                     (((uint32_t)(((uint32_t)(x)) << PUF_PWRCTRL_RAMON_SHIFT)) & PUF_PWRCTRL_RAMON_MASK)
-
-#define PUF_PWRCTRL_RAMSTAT_MASK                 (0x2U)
-#define PUF_PWRCTRL_RAMSTAT_SHIFT                (1U)
-/*! RAMSTAT - PUF RAM status. */
-#define PUF_PWRCTRL_RAMSTAT(x)                   (((uint32_t)(((uint32_t)(x)) << PUF_PWRCTRL_RAMSTAT_SHIFT)) & PUF_PWRCTRL_RAMSTAT_MASK)
 /*! @} */
 
 /*! @name CFG - PUF config register for block bits */
@@ -550,92 +510,172 @@ typedef struct {
 #define PUF_KEYRESET_KEY3(x)                     (((uint32_t)(((uint32_t)(x)) << PUF_KEYRESET_KEY3_SHIFT)) & PUF_KEYRESET_KEY3_MASK)
 /*! @} */
 
-/*! @name IDXBLK_L -  */
+/*! @name IDXBLK -  */
 /*! @{ */
 
-#define PUF_IDXBLK_L_IDX1_MASK                   (0xCU)
-#define PUF_IDXBLK_L_IDX1_SHIFT                  (2U)
+#define PUF_IDXBLK_IDX0_MASK                     (0x3U)
+#define PUF_IDXBLK_IDX0_SHIFT                    (0U)
+/*! IDX0 - Use to block PUF index 0 */
+#define PUF_IDXBLK_IDX0(x)                       (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_IDX0_SHIFT)) & PUF_IDXBLK_IDX0_MASK)
+
+#define PUF_IDXBLK_IDX1_MASK                     (0xCU)
+#define PUF_IDXBLK_IDX1_SHIFT                    (2U)
 /*! IDX1 - Use to block PUF index 1 */
-#define PUF_IDXBLK_L_IDX1(x)                     (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_L_IDX1_SHIFT)) & PUF_IDXBLK_L_IDX1_MASK)
+#define PUF_IDXBLK_IDX1(x)                       (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_IDX1_SHIFT)) & PUF_IDXBLK_IDX1_MASK)
 
-#define PUF_IDXBLK_L_IDX2_MASK                   (0x30U)
-#define PUF_IDXBLK_L_IDX2_SHIFT                  (4U)
+#define PUF_IDXBLK_IDX2_MASK                     (0x30U)
+#define PUF_IDXBLK_IDX2_SHIFT                    (4U)
 /*! IDX2 - Use to block PUF index 2 */
-#define PUF_IDXBLK_L_IDX2(x)                     (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_L_IDX2_SHIFT)) & PUF_IDXBLK_L_IDX2_MASK)
+#define PUF_IDXBLK_IDX2(x)                       (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_IDX2_SHIFT)) & PUF_IDXBLK_IDX2_MASK)
 
-#define PUF_IDXBLK_L_IDX3_MASK                   (0xC0U)
-#define PUF_IDXBLK_L_IDX3_SHIFT                  (6U)
+#define PUF_IDXBLK_IDX3_MASK                     (0xC0U)
+#define PUF_IDXBLK_IDX3_SHIFT                    (6U)
 /*! IDX3 - Use to block PUF index 3 */
-#define PUF_IDXBLK_L_IDX3(x)                     (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_L_IDX3_SHIFT)) & PUF_IDXBLK_L_IDX3_MASK)
+#define PUF_IDXBLK_IDX3(x)                       (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_IDX3_SHIFT)) & PUF_IDXBLK_IDX3_MASK)
 
-#define PUF_IDXBLK_L_IDX4_MASK                   (0x300U)
-#define PUF_IDXBLK_L_IDX4_SHIFT                  (8U)
+#define PUF_IDXBLK_IDX4_MASK                     (0x300U)
+#define PUF_IDXBLK_IDX4_SHIFT                    (8U)
 /*! IDX4 - Use to block PUF index 4 */
-#define PUF_IDXBLK_L_IDX4(x)                     (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_L_IDX4_SHIFT)) & PUF_IDXBLK_L_IDX4_MASK)
+#define PUF_IDXBLK_IDX4(x)                       (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_IDX4_SHIFT)) & PUF_IDXBLK_IDX4_MASK)
 
-#define PUF_IDXBLK_L_IDX5_MASK                   (0xC00U)
-#define PUF_IDXBLK_L_IDX5_SHIFT                  (10U)
+#define PUF_IDXBLK_IDX5_MASK                     (0xC00U)
+#define PUF_IDXBLK_IDX5_SHIFT                    (10U)
 /*! IDX5 - Use to block PUF index 5 */
-#define PUF_IDXBLK_L_IDX5(x)                     (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_L_IDX5_SHIFT)) & PUF_IDXBLK_L_IDX5_MASK)
+#define PUF_IDXBLK_IDX5(x)                       (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_IDX5_SHIFT)) & PUF_IDXBLK_IDX5_MASK)
 
-#define PUF_IDXBLK_L_IDX6_MASK                   (0x3000U)
-#define PUF_IDXBLK_L_IDX6_SHIFT                  (12U)
+#define PUF_IDXBLK_IDX6_MASK                     (0x3000U)
+#define PUF_IDXBLK_IDX6_SHIFT                    (12U)
 /*! IDX6 - Use to block PUF index 6 */
-#define PUF_IDXBLK_L_IDX6(x)                     (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_L_IDX6_SHIFT)) & PUF_IDXBLK_L_IDX6_MASK)
+#define PUF_IDXBLK_IDX6(x)                       (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_IDX6_SHIFT)) & PUF_IDXBLK_IDX6_MASK)
 
-#define PUF_IDXBLK_L_IDX7_MASK                   (0xC000U)
-#define PUF_IDXBLK_L_IDX7_SHIFT                  (14U)
+#define PUF_IDXBLK_IDX7_MASK                     (0xC000U)
+#define PUF_IDXBLK_IDX7_SHIFT                    (14U)
 /*! IDX7 - Use to block PUF index 7 */
-#define PUF_IDXBLK_L_IDX7(x)                     (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_L_IDX7_SHIFT)) & PUF_IDXBLK_L_IDX7_MASK)
+#define PUF_IDXBLK_IDX7(x)                       (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_IDX7_SHIFT)) & PUF_IDXBLK_IDX7_MASK)
 
-#define PUF_IDXBLK_L_LOCK_IDX_MASK               (0xC0000000U)
-#define PUF_IDXBLK_L_LOCK_IDX_SHIFT              (30U)
-/*! LOCK_IDX - Lock 0 to 7 PUF key indexes */
-#define PUF_IDXBLK_L_LOCK_IDX(x)                 (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_L_LOCK_IDX_SHIFT)) & PUF_IDXBLK_L_LOCK_IDX_MASK)
+#define PUF_IDXBLK_IDX8_MASK                     (0x30000U)
+#define PUF_IDXBLK_IDX8_SHIFT                    (16U)
+/*! IDX8 - Use to block PUF index 8 */
+#define PUF_IDXBLK_IDX8(x)                       (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_IDX8_SHIFT)) & PUF_IDXBLK_IDX8_MASK)
+
+#define PUF_IDXBLK_IDX9_MASK                     (0xC0000U)
+#define PUF_IDXBLK_IDX9_SHIFT                    (18U)
+/*! IDX9 - Use to block PUF index 9 */
+#define PUF_IDXBLK_IDX9(x)                       (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_IDX9_SHIFT)) & PUF_IDXBLK_IDX9_MASK)
+
+#define PUF_IDXBLK_IDX10_MASK                    (0x300000U)
+#define PUF_IDXBLK_IDX10_SHIFT                   (20U)
+/*! IDX10 - Use to block PUF index 10 */
+#define PUF_IDXBLK_IDX10(x)                      (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_IDX10_SHIFT)) & PUF_IDXBLK_IDX10_MASK)
+
+#define PUF_IDXBLK_IDX11_MASK                    (0xC00000U)
+#define PUF_IDXBLK_IDX11_SHIFT                   (22U)
+/*! IDX11 - Use to block PUF index 11 */
+#define PUF_IDXBLK_IDX11(x)                      (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_IDX11_SHIFT)) & PUF_IDXBLK_IDX11_MASK)
+
+#define PUF_IDXBLK_IDX12_MASK                    (0x3000000U)
+#define PUF_IDXBLK_IDX12_SHIFT                   (24U)
+/*! IDX12 - Use to block PUF index 12 */
+#define PUF_IDXBLK_IDX12(x)                      (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_IDX12_SHIFT)) & PUF_IDXBLK_IDX12_MASK)
+
+#define PUF_IDXBLK_IDX13_MASK                    (0xC000000U)
+#define PUF_IDXBLK_IDX13_SHIFT                   (26U)
+/*! IDX13 - Use to block PUF index 13 */
+#define PUF_IDXBLK_IDX13(x)                      (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_IDX13_SHIFT)) & PUF_IDXBLK_IDX13_MASK)
+
+#define PUF_IDXBLK_IDX14_MASK                    (0x30000000U)
+#define PUF_IDXBLK_IDX14_SHIFT                   (28U)
+/*! IDX14 - Use to block PUF index 14 */
+#define PUF_IDXBLK_IDX14(x)                      (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_IDX14_SHIFT)) & PUF_IDXBLK_IDX14_MASK)
+
+#define PUF_IDXBLK_IDX15_MASK                    (0xC0000000U)
+#define PUF_IDXBLK_IDX15_SHIFT                   (30U)
+/*! IDX15 - Use to block PUF index 15 */
+#define PUF_IDXBLK_IDX15(x)                      (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_IDX15_SHIFT)) & PUF_IDXBLK_IDX15_MASK)
 /*! @} */
 
-/*! @name IDXBLK_H_DP -  */
+/*! @name IDXBLK_DP -  */
 /*! @{ */
 
-#define PUF_IDXBLK_H_DP_IDX8_MASK                (0x3U)
-#define PUF_IDXBLK_H_DP_IDX8_SHIFT               (0U)
+#define PUF_IDXBLK_DP_IDX0_MASK                  (0x3U)
+#define PUF_IDXBLK_DP_IDX0_SHIFT                 (0U)
+/*! IDX0 - Use to block PUF index 0 */
+#define PUF_IDXBLK_DP_IDX0(x)                    (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_DP_IDX0_SHIFT)) & PUF_IDXBLK_DP_IDX0_MASK)
+
+#define PUF_IDXBLK_DP_IDX1_MASK                  (0xCU)
+#define PUF_IDXBLK_DP_IDX1_SHIFT                 (2U)
+/*! IDX1 - Use to block PUF index 1 */
+#define PUF_IDXBLK_DP_IDX1(x)                    (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_DP_IDX1_SHIFT)) & PUF_IDXBLK_DP_IDX1_MASK)
+
+#define PUF_IDXBLK_DP_IDX2_MASK                  (0x30U)
+#define PUF_IDXBLK_DP_IDX2_SHIFT                 (4U)
+/*! IDX2 - Use to block PUF index 2 */
+#define PUF_IDXBLK_DP_IDX2(x)                    (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_DP_IDX2_SHIFT)) & PUF_IDXBLK_DP_IDX2_MASK)
+
+#define PUF_IDXBLK_DP_IDX3_MASK                  (0xC0U)
+#define PUF_IDXBLK_DP_IDX3_SHIFT                 (6U)
+/*! IDX3 - Use to block PUF index 3 */
+#define PUF_IDXBLK_DP_IDX3(x)                    (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_DP_IDX3_SHIFT)) & PUF_IDXBLK_DP_IDX3_MASK)
+
+#define PUF_IDXBLK_DP_IDX4_MASK                  (0x300U)
+#define PUF_IDXBLK_DP_IDX4_SHIFT                 (8U)
+/*! IDX4 - Use to block PUF index 4 */
+#define PUF_IDXBLK_DP_IDX4(x)                    (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_DP_IDX4_SHIFT)) & PUF_IDXBLK_DP_IDX4_MASK)
+
+#define PUF_IDXBLK_DP_IDX5_MASK                  (0xC00U)
+#define PUF_IDXBLK_DP_IDX5_SHIFT                 (10U)
+/*! IDX5 - Use to block PUF index 5 */
+#define PUF_IDXBLK_DP_IDX5(x)                    (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_DP_IDX5_SHIFT)) & PUF_IDXBLK_DP_IDX5_MASK)
+
+#define PUF_IDXBLK_DP_IDX6_MASK                  (0x3000U)
+#define PUF_IDXBLK_DP_IDX6_SHIFT                 (12U)
+/*! IDX6 - Use to block PUF index 6 */
+#define PUF_IDXBLK_DP_IDX6(x)                    (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_DP_IDX6_SHIFT)) & PUF_IDXBLK_DP_IDX6_MASK)
+
+#define PUF_IDXBLK_DP_IDX7_MASK                  (0xC000U)
+#define PUF_IDXBLK_DP_IDX7_SHIFT                 (14U)
+/*! IDX7 - Use to block PUF index 7 */
+#define PUF_IDXBLK_DP_IDX7(x)                    (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_DP_IDX7_SHIFT)) & PUF_IDXBLK_DP_IDX7_MASK)
+
+#define PUF_IDXBLK_DP_IDX8_MASK                  (0x30000U)
+#define PUF_IDXBLK_DP_IDX8_SHIFT                 (16U)
 /*! IDX8 - Use to block PUF index 8 */
-#define PUF_IDXBLK_H_DP_IDX8(x)                  (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_H_DP_IDX8_SHIFT)) & PUF_IDXBLK_H_DP_IDX8_MASK)
+#define PUF_IDXBLK_DP_IDX8(x)                    (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_DP_IDX8_SHIFT)) & PUF_IDXBLK_DP_IDX8_MASK)
 
-#define PUF_IDXBLK_H_DP_IDX9_MASK                (0xCU)
-#define PUF_IDXBLK_H_DP_IDX9_SHIFT               (2U)
+#define PUF_IDXBLK_DP_IDX9_MASK                  (0xC0000U)
+#define PUF_IDXBLK_DP_IDX9_SHIFT                 (18U)
 /*! IDX9 - Use to block PUF index 9 */
-#define PUF_IDXBLK_H_DP_IDX9(x)                  (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_H_DP_IDX9_SHIFT)) & PUF_IDXBLK_H_DP_IDX9_MASK)
+#define PUF_IDXBLK_DP_IDX9(x)                    (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_DP_IDX9_SHIFT)) & PUF_IDXBLK_DP_IDX9_MASK)
 
-#define PUF_IDXBLK_H_DP_IDX10_MASK               (0x30U)
-#define PUF_IDXBLK_H_DP_IDX10_SHIFT              (4U)
+#define PUF_IDXBLK_DP_IDX10_MASK                 (0x300000U)
+#define PUF_IDXBLK_DP_IDX10_SHIFT                (20U)
 /*! IDX10 - Use to block PUF index 10 */
-#define PUF_IDXBLK_H_DP_IDX10(x)                 (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_H_DP_IDX10_SHIFT)) & PUF_IDXBLK_H_DP_IDX10_MASK)
+#define PUF_IDXBLK_DP_IDX10(x)                   (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_DP_IDX10_SHIFT)) & PUF_IDXBLK_DP_IDX10_MASK)
 
-#define PUF_IDXBLK_H_DP_IDX11_MASK               (0xC0U)
-#define PUF_IDXBLK_H_DP_IDX11_SHIFT              (6U)
+#define PUF_IDXBLK_DP_IDX11_MASK                 (0xC00000U)
+#define PUF_IDXBLK_DP_IDX11_SHIFT                (22U)
 /*! IDX11 - Use to block PUF index 11 */
-#define PUF_IDXBLK_H_DP_IDX11(x)                 (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_H_DP_IDX11_SHIFT)) & PUF_IDXBLK_H_DP_IDX11_MASK)
+#define PUF_IDXBLK_DP_IDX11(x)                   (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_DP_IDX11_SHIFT)) & PUF_IDXBLK_DP_IDX11_MASK)
 
-#define PUF_IDXBLK_H_DP_IDX12_MASK               (0x300U)
-#define PUF_IDXBLK_H_DP_IDX12_SHIFT              (8U)
+#define PUF_IDXBLK_DP_IDX12_MASK                 (0x3000000U)
+#define PUF_IDXBLK_DP_IDX12_SHIFT                (24U)
 /*! IDX12 - Use to block PUF index 12 */
-#define PUF_IDXBLK_H_DP_IDX12(x)                 (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_H_DP_IDX12_SHIFT)) & PUF_IDXBLK_H_DP_IDX12_MASK)
+#define PUF_IDXBLK_DP_IDX12(x)                   (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_DP_IDX12_SHIFT)) & PUF_IDXBLK_DP_IDX12_MASK)
 
-#define PUF_IDXBLK_H_DP_IDX13_MASK               (0xC00U)
-#define PUF_IDXBLK_H_DP_IDX13_SHIFT              (10U)
+#define PUF_IDXBLK_DP_IDX13_MASK                 (0xC000000U)
+#define PUF_IDXBLK_DP_IDX13_SHIFT                (26U)
 /*! IDX13 - Use to block PUF index 13 */
-#define PUF_IDXBLK_H_DP_IDX13(x)                 (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_H_DP_IDX13_SHIFT)) & PUF_IDXBLK_H_DP_IDX13_MASK)
+#define PUF_IDXBLK_DP_IDX13(x)                   (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_DP_IDX13_SHIFT)) & PUF_IDXBLK_DP_IDX13_MASK)
 
-#define PUF_IDXBLK_H_DP_IDX14_MASK               (0x3000U)
-#define PUF_IDXBLK_H_DP_IDX14_SHIFT              (12U)
+#define PUF_IDXBLK_DP_IDX14_MASK                 (0x30000000U)
+#define PUF_IDXBLK_DP_IDX14_SHIFT                (28U)
 /*! IDX14 - Use to block PUF index 14 */
-#define PUF_IDXBLK_H_DP_IDX14(x)                 (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_H_DP_IDX14_SHIFT)) & PUF_IDXBLK_H_DP_IDX14_MASK)
+#define PUF_IDXBLK_DP_IDX14(x)                   (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_DP_IDX14_SHIFT)) & PUF_IDXBLK_DP_IDX14_MASK)
 
-#define PUF_IDXBLK_H_DP_IDX15_MASK               (0xC000U)
-#define PUF_IDXBLK_H_DP_IDX15_SHIFT              (14U)
+#define PUF_IDXBLK_DP_IDX15_MASK                 (0xC0000000U)
+#define PUF_IDXBLK_DP_IDX15_SHIFT                (30U)
 /*! IDX15 - Use to block PUF index 15 */
-#define PUF_IDXBLK_H_DP_IDX15(x)                 (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_H_DP_IDX15_SHIFT)) & PUF_IDXBLK_H_DP_IDX15_MASK)
+#define PUF_IDXBLK_DP_IDX15(x)                   (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_DP_IDX15_SHIFT)) & PUF_IDXBLK_DP_IDX15_MASK)
 /*! @} */
 
 /*! @name KEYMASK - Only reset in case of full IC reset */
@@ -646,92 +686,88 @@ typedef struct {
 #define PUF_KEYMASK_KEYMASK(x)                   (((uint32_t)(((uint32_t)(x)) << PUF_KEYMASK_KEYMASK_SHIFT)) & PUF_KEYMASK_KEYMASK_MASK)
 /*! @} */
 
-/*! @name IDXBLK_H -  */
+/*! @name IDXBLK_STATUS - Index block status */
 /*! @{ */
 
-#define PUF_IDXBLK_H_IDX8_MASK                   (0x3U)
-#define PUF_IDXBLK_H_IDX8_SHIFT                  (0U)
-/*! IDX8 - Use to block PUF index 8 */
-#define PUF_IDXBLK_H_IDX8(x)                     (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_H_IDX8_SHIFT)) & PUF_IDXBLK_H_IDX8_MASK)
+#define PUF_IDXBLK_STATUS_IDX0_MASK              (0x3U)
+#define PUF_IDXBLK_STATUS_IDX0_SHIFT             (0U)
+/*! IDX0 - Status block index 0 */
+#define PUF_IDXBLK_STATUS_IDX0(x)                (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_STATUS_IDX0_SHIFT)) & PUF_IDXBLK_STATUS_IDX0_MASK)
 
-#define PUF_IDXBLK_H_IDX9_MASK                   (0xCU)
-#define PUF_IDXBLK_H_IDX9_SHIFT                  (2U)
-/*! IDX9 - Use to block PUF index 9 */
-#define PUF_IDXBLK_H_IDX9(x)                     (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_H_IDX9_SHIFT)) & PUF_IDXBLK_H_IDX9_MASK)
+#define PUF_IDXBLK_STATUS_IDX1_MASK              (0xCU)
+#define PUF_IDXBLK_STATUS_IDX1_SHIFT             (2U)
+/*! IDX1 - Status block index 1 */
+#define PUF_IDXBLK_STATUS_IDX1(x)                (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_STATUS_IDX1_SHIFT)) & PUF_IDXBLK_STATUS_IDX1_MASK)
 
-#define PUF_IDXBLK_H_IDX10_MASK                  (0x30U)
-#define PUF_IDXBLK_H_IDX10_SHIFT                 (4U)
-/*! IDX10 - Use to block PUF index 10 */
-#define PUF_IDXBLK_H_IDX10(x)                    (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_H_IDX10_SHIFT)) & PUF_IDXBLK_H_IDX10_MASK)
+#define PUF_IDXBLK_STATUS_IDX2_MASK              (0x30U)
+#define PUF_IDXBLK_STATUS_IDX2_SHIFT             (4U)
+/*! IDX2 - Status block index 2 */
+#define PUF_IDXBLK_STATUS_IDX2(x)                (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_STATUS_IDX2_SHIFT)) & PUF_IDXBLK_STATUS_IDX2_MASK)
 
-#define PUF_IDXBLK_H_IDX11_MASK                  (0xC0U)
-#define PUF_IDXBLK_H_IDX11_SHIFT                 (6U)
-/*! IDX11 - Use to block PUF index 11 */
-#define PUF_IDXBLK_H_IDX11(x)                    (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_H_IDX11_SHIFT)) & PUF_IDXBLK_H_IDX11_MASK)
+#define PUF_IDXBLK_STATUS_IDX3_MASK              (0xC0U)
+#define PUF_IDXBLK_STATUS_IDX3_SHIFT             (6U)
+/*! IDX3 - Status block index 3 */
+#define PUF_IDXBLK_STATUS_IDX3(x)                (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_STATUS_IDX3_SHIFT)) & PUF_IDXBLK_STATUS_IDX3_MASK)
 
-#define PUF_IDXBLK_H_IDX12_MASK                  (0x300U)
-#define PUF_IDXBLK_H_IDX12_SHIFT                 (8U)
-/*! IDX12 - Use to block PUF index 12 */
-#define PUF_IDXBLK_H_IDX12(x)                    (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_H_IDX12_SHIFT)) & PUF_IDXBLK_H_IDX12_MASK)
+#define PUF_IDXBLK_STATUS_IDX4_MASK              (0x300U)
+#define PUF_IDXBLK_STATUS_IDX4_SHIFT             (8U)
+/*! IDX4 - Status block index 4 */
+#define PUF_IDXBLK_STATUS_IDX4(x)                (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_STATUS_IDX4_SHIFT)) & PUF_IDXBLK_STATUS_IDX4_MASK)
 
-#define PUF_IDXBLK_H_IDX13_MASK                  (0xC00U)
-#define PUF_IDXBLK_H_IDX13_SHIFT                 (10U)
-/*! IDX13 - Use to block PUF index 13 */
-#define PUF_IDXBLK_H_IDX13(x)                    (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_H_IDX13_SHIFT)) & PUF_IDXBLK_H_IDX13_MASK)
+#define PUF_IDXBLK_STATUS_IDX5_MASK              (0xC00U)
+#define PUF_IDXBLK_STATUS_IDX5_SHIFT             (10U)
+/*! IDX5 - Status block index 5 */
+#define PUF_IDXBLK_STATUS_IDX5(x)                (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_STATUS_IDX5_SHIFT)) & PUF_IDXBLK_STATUS_IDX5_MASK)
 
-#define PUF_IDXBLK_H_IDX14_MASK                  (0x3000U)
-#define PUF_IDXBLK_H_IDX14_SHIFT                 (12U)
-/*! IDX14 - Use to block PUF index 14 */
-#define PUF_IDXBLK_H_IDX14(x)                    (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_H_IDX14_SHIFT)) & PUF_IDXBLK_H_IDX14_MASK)
+#define PUF_IDXBLK_STATUS_IDX6_MASK              (0x3000U)
+#define PUF_IDXBLK_STATUS_IDX6_SHIFT             (12U)
+/*! IDX6 - Status block index 6 */
+#define PUF_IDXBLK_STATUS_IDX6(x)                (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_STATUS_IDX6_SHIFT)) & PUF_IDXBLK_STATUS_IDX6_MASK)
 
-#define PUF_IDXBLK_H_IDX15_MASK                  (0xC000U)
-#define PUF_IDXBLK_H_IDX15_SHIFT                 (14U)
-/*! IDX15 - Use to block PUF index 15 */
-#define PUF_IDXBLK_H_IDX15(x)                    (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_H_IDX15_SHIFT)) & PUF_IDXBLK_H_IDX15_MASK)
+#define PUF_IDXBLK_STATUS_IDX7_MASK              (0xC000U)
+#define PUF_IDXBLK_STATUS_IDX7_SHIFT             (14U)
+/*! IDX7 - Status block index 7 */
+#define PUF_IDXBLK_STATUS_IDX7(x)                (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_STATUS_IDX7_SHIFT)) & PUF_IDXBLK_STATUS_IDX7_MASK)
 
-#define PUF_IDXBLK_H_LOCK_IDX_MASK               (0xC0000000U)
-#define PUF_IDXBLK_H_LOCK_IDX_SHIFT              (30U)
-/*! LOCK_IDX - Lock 8 to 15 PUF key indexes */
-#define PUF_IDXBLK_H_LOCK_IDX(x)                 (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_H_LOCK_IDX_SHIFT)) & PUF_IDXBLK_H_LOCK_IDX_MASK)
-/*! @} */
+#define PUF_IDXBLK_STATUS_IDX8_MASK              (0x30000U)
+#define PUF_IDXBLK_STATUS_IDX8_SHIFT             (16U)
+/*! IDX8 - Status block index 8 */
+#define PUF_IDXBLK_STATUS_IDX8(x)                (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_STATUS_IDX8_SHIFT)) & PUF_IDXBLK_STATUS_IDX8_MASK)
 
-/*! @name IDXBLK_L_DP -  */
-/*! @{ */
+#define PUF_IDXBLK_STATUS_IDX9_MASK              (0xC0000U)
+#define PUF_IDXBLK_STATUS_IDX9_SHIFT             (18U)
+/*! IDX9 - Status block index 9 */
+#define PUF_IDXBLK_STATUS_IDX9(x)                (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_STATUS_IDX9_SHIFT)) & PUF_IDXBLK_STATUS_IDX9_MASK)
 
-#define PUF_IDXBLK_L_DP_IDX1_MASK                (0xCU)
-#define PUF_IDXBLK_L_DP_IDX1_SHIFT               (2U)
-/*! IDX1 - Use to block PUF index 1 */
-#define PUF_IDXBLK_L_DP_IDX1(x)                  (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_L_DP_IDX1_SHIFT)) & PUF_IDXBLK_L_DP_IDX1_MASK)
+#define PUF_IDXBLK_STATUS_IDX10_MASK             (0x300000U)
+#define PUF_IDXBLK_STATUS_IDX10_SHIFT            (20U)
+/*! IDX10 - Status block index 10 */
+#define PUF_IDXBLK_STATUS_IDX10(x)               (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_STATUS_IDX10_SHIFT)) & PUF_IDXBLK_STATUS_IDX10_MASK)
 
-#define PUF_IDXBLK_L_DP_IDX2_MASK                (0x30U)
-#define PUF_IDXBLK_L_DP_IDX2_SHIFT               (4U)
-/*! IDX2 - Use to block PUF index 2 */
-#define PUF_IDXBLK_L_DP_IDX2(x)                  (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_L_DP_IDX2_SHIFT)) & PUF_IDXBLK_L_DP_IDX2_MASK)
+#define PUF_IDXBLK_STATUS_IDX11_MASK             (0xC00000U)
+#define PUF_IDXBLK_STATUS_IDX11_SHIFT            (22U)
+/*! IDX11 - Status block index 11 */
+#define PUF_IDXBLK_STATUS_IDX11(x)               (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_STATUS_IDX11_SHIFT)) & PUF_IDXBLK_STATUS_IDX11_MASK)
 
-#define PUF_IDXBLK_L_DP_IDX3_MASK                (0xC0U)
-#define PUF_IDXBLK_L_DP_IDX3_SHIFT               (6U)
-/*! IDX3 - Use to block PUF index 3 */
-#define PUF_IDXBLK_L_DP_IDX3(x)                  (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_L_DP_IDX3_SHIFT)) & PUF_IDXBLK_L_DP_IDX3_MASK)
+#define PUF_IDXBLK_STATUS_IDX12_MASK             (0x3000000U)
+#define PUF_IDXBLK_STATUS_IDX12_SHIFT            (24U)
+/*! IDX12 - Status block index 12 */
+#define PUF_IDXBLK_STATUS_IDX12(x)               (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_STATUS_IDX12_SHIFT)) & PUF_IDXBLK_STATUS_IDX12_MASK)
 
-#define PUF_IDXBLK_L_DP_IDX4_MASK                (0x300U)
-#define PUF_IDXBLK_L_DP_IDX4_SHIFT               (8U)
-/*! IDX4 - Use to block PUF index 4 */
-#define PUF_IDXBLK_L_DP_IDX4(x)                  (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_L_DP_IDX4_SHIFT)) & PUF_IDXBLK_L_DP_IDX4_MASK)
+#define PUF_IDXBLK_STATUS_IDX13_MASK             (0xC000000U)
+#define PUF_IDXBLK_STATUS_IDX13_SHIFT            (26U)
+/*! IDX13 - Status block index 13 */
+#define PUF_IDXBLK_STATUS_IDX13(x)               (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_STATUS_IDX13_SHIFT)) & PUF_IDXBLK_STATUS_IDX13_MASK)
 
-#define PUF_IDXBLK_L_DP_IDX5_MASK                (0xC00U)
-#define PUF_IDXBLK_L_DP_IDX5_SHIFT               (10U)
-/*! IDX5 - Use to block PUF index 5 */
-#define PUF_IDXBLK_L_DP_IDX5(x)                  (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_L_DP_IDX5_SHIFT)) & PUF_IDXBLK_L_DP_IDX5_MASK)
+#define PUF_IDXBLK_STATUS_IDX14_MASK             (0x30000000U)
+#define PUF_IDXBLK_STATUS_IDX14_SHIFT            (28U)
+/*! IDX14 - Status block index 14 */
+#define PUF_IDXBLK_STATUS_IDX14(x)               (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_STATUS_IDX14_SHIFT)) & PUF_IDXBLK_STATUS_IDX14_MASK)
 
-#define PUF_IDXBLK_L_DP_IDX6_MASK                (0x3000U)
-#define PUF_IDXBLK_L_DP_IDX6_SHIFT               (12U)
-/*! IDX6 - Use to block PUF index 6 */
-#define PUF_IDXBLK_L_DP_IDX6(x)                  (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_L_DP_IDX6_SHIFT)) & PUF_IDXBLK_L_DP_IDX6_MASK)
-
-#define PUF_IDXBLK_L_DP_IDX7_MASK                (0xC000U)
-#define PUF_IDXBLK_L_DP_IDX7_SHIFT               (14U)
-/*! IDX7 - Use to block PUF index 7 */
-#define PUF_IDXBLK_L_DP_IDX7(x)                  (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_L_DP_IDX7_SHIFT)) & PUF_IDXBLK_L_DP_IDX7_MASK)
+#define PUF_IDXBLK_STATUS_IDX15_MASK             (0xC0000000U)
+#define PUF_IDXBLK_STATUS_IDX15_SHIFT            (30U)
+/*! IDX15 - Status block index 15 */
+#define PUF_IDXBLK_STATUS_IDX15(x)               (((uint32_t)(((uint32_t)(x)) << PUF_IDXBLK_STATUS_IDX15_SHIFT)) & PUF_IDXBLK_STATUS_IDX15_MASK)
 /*! @} */
 
 /*! @name SHIFT_STATUS -  */
@@ -792,5 +828,5 @@ typedef struct {
  */ /* end of group Peripheral_access_layer */
 
 
-#endif  /* PUF_H_ */
+#endif  /* PERI_PUF_H_ */
 

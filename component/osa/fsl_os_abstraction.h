@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2020, 2024 NXP
+ * Copyright 2016-2020, 2024-2025 NXP
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,6 +15,7 @@
 #if (defined(SDK_COMPONENT_DEPENDENCY_FSL_COMMON) && (SDK_COMPONENT_DEPENDENCY_FSL_COMMON > 0U))
 #include "fsl_common.h"
 #else
+#include <stdint.h>
 #endif
 
 #include "fsl_os_abstraction_config.h"
@@ -203,10 +204,10 @@ extern const uint8_t gUseRtos_c;
 #define OSA_EVENT_HANDLE_SIZE (16U)
 #endif /* FSL_OSA_TASK_ENABLE */
 #if (defined(FSL_OSA_BM_TIMEOUT_ENABLE) && (FSL_OSA_BM_TIMEOUT_ENABLE > 0U))
-#define OSA_SEM_HANDLE_SIZE   (16U)
+#define OSA_SEM_HANDLE_SIZE   (20U)
 #define OSA_MUTEX_HANDLE_SIZE (12U)
 #else
-#define OSA_SEM_HANDLE_SIZE   (8U)
+#define OSA_SEM_HANDLE_SIZE   (12U)
 #define OSA_MUTEX_HANDLE_SIZE (4U)
 #endif
 #if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
@@ -264,8 +265,8 @@ extern const uint8_t gUseRtos_c;
 #define SIZE_IN_UINT32_UNITS(size) (((size) + sizeof(uint32_t) - 1) / sizeof(uint32_t))
 
 /*! @brief Constant to pass as timeout value in order to wait indefinitely. */
-#define osaWaitNone_c            ((uint32_t)(0))
-#define osaWaitForever_c         ((uint32_t)(-1))
+#define osaWaitNone_c            ((uint32_t)(0UL))
+#define osaWaitForever_c         ((uint32_t)(~0UL))
 #define osaEventFlagsAll_c       ((osa_event_flags_t)(0x00FFFFFF))
 #define osThreadStackArray(name) osThread_##name##_stack
 #define osThreadStackDef(name, stacksize, instances) \
@@ -433,11 +434,11 @@ extern const uint8_t gUseRtos_c;
     uint32_t name[(OSA_MSGQ_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t)]
 #elif defined(__ZEPHYR__)
 #define OSA_MSGQ_HANDLE_DEFINE(name, numberOfMsgs, msgSize) \
-    uint32_t name[(OSA_MSGQ_HANDLE_SIZE + (numberOfMsgs * msgSize) + sizeof(uint32_t) - 1U) / sizeof(uint32_t)]
+    uint32_t name[(OSA_MSGQ_HANDLE_SIZE + ((numberOfMsgs) * (msgSize)) + sizeof(uint32_t) - 1U) / sizeof(uint32_t)]
 #else
 /*< Macro For BARE_MATEL and FREE_RTOS static allocation*/
 #define OSA_MSGQ_HANDLE_DEFINE(name, numberOfMsgs, msgSize) \
-    uint32_t name[((OSA_MSGQ_HANDLE_SIZE + numberOfMsgs * msgSize) + sizeof(uint32_t) - 1U) / sizeof(uint32_t)]
+    uint32_t name[((OSA_MSGQ_HANDLE_SIZE + (numberOfMsgs) * (msgSize)) + sizeof(uint32_t) - 1U) / sizeof(uint32_t)]
 #endif
 
 /*!
@@ -1104,22 +1105,36 @@ int OSA_MsgQAvailableMsgs(osa_msgq_handle_t msgqHandle);
 osa_status_t OSA_MsgQDestroy(osa_msgq_handle_t msgqHandle);
 
 /*!
- * @brief Enable all interrupts.
+ * @brief Enable all interrupts managed by OS.
+ *
+ * Different operating system may have different implementaions.
+ * The enabled interrupt range may be configured through operating system.
+ * This function supports nested calls.
  */
 void OSA_InterruptEnable(void);
 
 /*!
- * @brief Disable all interrupts.
+ * @brief Disable all interrupts managed by OS.
+ *
+ * Different operating system may have different implementaions.
+ * The disabled interrupt range may be configured through operating system.
+ * This function supports nested calls.
  */
 void OSA_InterruptDisable(void);
 
 /*!
  * @brief Enable all interrupts using PRIMASK.
+ *
+ * This function enable all interrupts apart from non-maskable interrupts.
+ * This function supports nested calls.
  */
 void OSA_EnableIRQGlobal(void);
 
 /*!
  * @brief Disable all interrupts using PRIMASK.
+ *
+ * This function disable all interrupts apart from non-maskable interrupts.
+ * This function supports nested calls.
  */
 void OSA_DisableIRQGlobal(void);
 

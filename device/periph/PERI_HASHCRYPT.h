@@ -1,42 +1,30 @@
 /*
 ** ###################################################################
-**     Processors:          LPC5526JBD100
-**                          LPC5526JBD64
-**                          LPC5526JEV98
-**                          LPC5528JBD100
-**                          LPC5528JBD64
-**                          LPC5528JEV59
-**                          LPC5528JEV98
-**                          LPC55S26JBD100
-**                          LPC55S26JBD64
-**                          LPC55S26JEV98
-**                          LPC55S28JBD100
-**                          LPC55S28JBD64
-**                          LPC55S28JEV59
-**                          LPC55S28JEV98
-**                          LPC55S66JBD100_cm33_core0
-**                          LPC55S66JBD100_cm33_core1
-**                          LPC55S66JBD64_cm33_core0
-**                          LPC55S66JBD64_cm33_core1
-**                          LPC55S66JEV98_cm33_core0
-**                          LPC55S66JEV98_cm33_core1
-**                          LPC55S69JBD100_cm33_core0
-**                          LPC55S69JBD100_cm33_core1
-**                          LPC55S69JBD64_cm33_core0
-**                          LPC55S69JBD64_cm33_core1
-**                          LPC55S69JEV59_cm33_core0
-**                          LPC55S69JEV59_cm33_core1
-**                          LPC55S69JEV98_cm33_core0
-**                          LPC55S69JEV98_cm33_core1
+**     Processors:          LPC5512JBD100
+**                          LPC5512JBD64
+**                          LPC5514JBD100
+**                          LPC5514JBD64
+**                          LPC5514JEV59
+**                          LPC5516JBD100
+**                          LPC5516JBD64
+**                          LPC5516JEV59
+**                          LPC5516JEV98
+**                          LPC55S14JBD100
+**                          LPC55S14JBD64
+**                          LPC55S14JEV59
+**                          LPC55S16JBD100
+**                          LPC55S16JBD64
+**                          LPC55S16JEV59
+**                          LPC55S16JEV98
 **
-**     Version:             rev. 1.1, 2019-05-16
-**     Build:               b240704
+**     Version:             rev. 2.0, 2024-10-29
+**     Build:               b250520
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for HASHCRYPT
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -45,40 +33,37 @@
 **     Revisions:
 **     - rev. 1.0 (2018-08-22)
 **         Initial version based on v0.2UM
-**     - rev. 1.1 (2019-05-16)
-**         Initial A1 version based on v1.3UM
+**     - rev. 1.1 (2019-12-03)
+**         Initial version based on v0.6UM
+**     - rev. 2.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
 **
 ** ###################################################################
 */
 
 /*!
- * @file HASHCRYPT.h
- * @version 1.1
- * @date 2019-05-16
+ * @file PERI_HASHCRYPT.h
+ * @version 2.0
+ * @date 2024-10-29
  * @brief CMSIS Peripheral Access Layer for HASHCRYPT
  *
  * CMSIS Peripheral Access Layer for HASHCRYPT
  */
 
-#if !defined(HASHCRYPT_H_)
-#define HASHCRYPT_H_                             /**< Symbol preventing repeated inclusion */
+#if !defined(PERI_HASHCRYPT_H_)
+#define PERI_HASHCRYPT_H_                        /**< Symbol preventing repeated inclusion */
 
-#if (defined(CPU_LPC5526JBD100) || defined(CPU_LPC5526JBD64) || defined(CPU_LPC5526JEV98))
-#include "LPC5526_COMMON.h"
-#elif (defined(CPU_LPC5528JBD100) || defined(CPU_LPC5528JBD64) || defined(CPU_LPC5528JEV59) || defined(CPU_LPC5528JEV98))
-#include "LPC5528_COMMON.h"
-#elif (defined(CPU_LPC55S26JBD100) || defined(CPU_LPC55S26JBD64) || defined(CPU_LPC55S26JEV98))
-#include "LPC55S26_COMMON.h"
-#elif (defined(CPU_LPC55S28JBD100) || defined(CPU_LPC55S28JBD64) || defined(CPU_LPC55S28JEV59) || defined(CPU_LPC55S28JEV98))
-#include "LPC55S28_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core0) || defined(CPU_LPC55S66JBD64_cm33_core0) || defined(CPU_LPC55S66JEV98_cm33_core0))
-#include "LPC55S66_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core1) || defined(CPU_LPC55S66JBD64_cm33_core1) || defined(CPU_LPC55S66JEV98_cm33_core1))
-#include "LPC55S66_cm33_core1_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core0) || defined(CPU_LPC55S69JBD64_cm33_core0) || defined(CPU_LPC55S69JEV59_cm33_core0) || defined(CPU_LPC55S69JEV98_cm33_core0))
-#include "LPC55S69_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core1) || defined(CPU_LPC55S69JBD64_cm33_core1) || defined(CPU_LPC55S69JEV59_cm33_core1) || defined(CPU_LPC55S69JEV98_cm33_core1))
-#include "LPC55S69_cm33_core1_COMMON.h"
+#if (defined(CPU_LPC5512JBD100) || defined(CPU_LPC5512JBD64))
+#include "LPC5512_COMMON.h"
+#elif (defined(CPU_LPC5514JBD100) || defined(CPU_LPC5514JBD64) || defined(CPU_LPC5514JEV59))
+#include "LPC5514_COMMON.h"
+#elif (defined(CPU_LPC5516JBD100) || defined(CPU_LPC5516JBD64) || defined(CPU_LPC5516JEV59) || defined(CPU_LPC5516JEV98))
+#include "LPC5516_COMMON.h"
+#elif (defined(CPU_LPC55S14JBD100) || defined(CPU_LPC55S14JBD64) || defined(CPU_LPC55S14JEV59))
+#include "LPC55S14_COMMON.h"
+#elif (defined(CPU_LPC55S16JBD100) || defined(CPU_LPC55S16JBD64) || defined(CPU_LPC55S16JEV59) || defined(CPU_LPC55S16JEV98))
+#include "LPC55S16_COMMON.h"
 #else
   #error "No valid CPU defined!"
 #endif
@@ -125,6 +110,7 @@
 #define HASHCRYPT_ALIAS_COUNT                     7u
 #define HASHCRYPT_DIGEST0_COUNT                   8u
 #define HASHCRYPT_MASK_COUNT                      4u
+#define HASHCRYPT_RELOAD_COUNT                    8u
 
 /** HASHCRYPT - Register Layout Typedef */
 typedef struct {
@@ -136,14 +122,19 @@ typedef struct {
   __IO uint32_t MEMADDR;                           /**< Address to start memory access from (if available)., offset: 0x14 */
        uint8_t RESERVED_0[8];
   __O  uint32_t INDATA;                            /**< Input of 16 words at a time to load up buffer., offset: 0x20 */
-  __O  uint32_t ALIAS[HASHCRYPT_ALIAS_COUNT];      /**< array offset: 0x24, array step: 0x4 */
-  __I  uint32_t DIGEST0[HASHCRYPT_DIGEST0_COUNT];  /**< array offset: 0x40, array step: 0x4 */
+  __O  uint32_t ALIAS[HASHCRYPT_ALIAS_COUNT];      /**< Aliases to allow writing words in a burst., array offset: 0x24, array step: 0x4 */
+  __I  uint32_t DIGEST0[HASHCRYPT_DIGEST0_COUNT];  /**< Result digest (when status says so): • Is 1st 5 words if SHA1 used • Is all 8 words if SHA2 used • Is all 8 words if crypto or SHA512, array offset: 0x40, array step: 0x4 */
        uint8_t RESERVED_1[32];
   __IO uint32_t CRYPTCFG;                          /**< Crypto settings for AES and Salsa and ChaCha, offset: 0x80 */
   __I  uint32_t CONFIG;                            /**< Returns the configuration of this block in this chip - indicates what services are available., offset: 0x84 */
        uint8_t RESERVED_2[4];
   __IO uint32_t LOCK;                              /**< Lock register allows locking to the current security level or unlocking by the lock holding level., offset: 0x8C */
-  __O  uint32_t MASK[HASHCRYPT_MASK_COUNT];        /**< array offset: 0x90, array step: 0x4 */
+  __O  uint32_t MASK[HASHCRYPT_MASK_COUNT];        /**< Allows Application to write a random mask for ICB use. Normally only a new one on each system reset (including power up)., array offset: 0x90, array step: 0x4 */
+  __O  uint32_t RELOAD[HASHCRYPT_RELOAD_COUNT];    /**< The WO digest-reload registers may be written with a saved Hash digest, to allow continuation from where left off. These registers may only be written if the Reload field in CTRL is 1. If SHA1, only the 1st 5 are used., array offset: 0xA0, array step: 0x4 */
+       uint8_t RESERVED_3[16];
+  __O  uint32_t PRNG_SEED;                         /**< PRNG random input value used as an entropy source, offset: 0xD0 */
+       uint8_t RESERVED_4[4];
+  __I  uint32_t PRNG_OUT;                          /**< Provide random number., offset: 0xD8 */
 } HASHCRYPT_Type;
 
 /* ----------------------------------------------------------------------------
@@ -166,7 +157,7 @@ typedef struct {
  *  0b001..SHA1 is enabled
  *  0b010..SHA2-256 is enabled
  *  0b100..AES if available (see also CRYPTCFG register for more controls)
- *  0b101..ICB-AES if available (see also CRYPTCFG register for more controls)
+ *  0b101..Reserved
  */
 #define HASHCRYPT_CTRL_MODE(x)                   (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_CTRL_MODE_SHIFT)) & HASHCRYPT_CTRL_MODE_MASK)
 
@@ -177,6 +168,14 @@ typedef struct {
  *  0b1..Starts a new Hash/Crypto and initializes the Digest/Result.
  */
 #define HASHCRYPT_CTRL_NEW_HASH(x)               (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_CTRL_NEW_HASH_SHIFT)) & HASHCRYPT_CTRL_NEW_HASH_MASK)
+
+#define HASHCRYPT_CTRL_RELOAD_MASK               (0x20U)
+#define HASHCRYPT_CTRL_RELOAD_SHIFT              (5U)
+/*! Reload - If 1, allows the SHA RELOAD registers to be used. This is used to save a partial Hash
+ *    Digest (e.g. when need to run AES) and then reload it later for continuation.
+ *  0b1..Allow RELOAD registers to be used.
+ */
+#define HASHCRYPT_CTRL_RELOAD(x)                 (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_CTRL_RELOAD_SHIFT)) & HASHCRYPT_CTRL_RELOAD_MASK)
 
 #define HASHCRYPT_CTRL_DMA_I_MASK                (0x100U)
 #define HASHCRYPT_CTRL_DMA_I_SHIFT               (8U)
@@ -206,6 +205,14 @@ typedef struct {
  *    cryptographic swapping, see the CRYPTCFG register.
  */
 #define HASHCRYPT_CTRL_HASHSWPB(x)               (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_CTRL_HASHSWPB_SHIFT)) & HASHCRYPT_CTRL_HASHSWPB_MASK)
+
+#define HASHCRYPT_CTRL_AESFLUSH_MASK             (0x2000U)
+#define HASHCRYPT_CTRL_AESFLUSH_SHIFT            (13U)
+/*! AESFLUSH - Flushes the AES engine registers. This bit self clears.
+ *  0b0..Do not flush the AES engine registers.
+ *  0b1..Flush the AES engine registers.
+ */
+#define HASHCRYPT_CTRL_AESFLUSH(x)               (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_CTRL_AESFLUSH_SHIFT)) & HASHCRYPT_CTRL_AESFLUSH_MASK)
 /*! @} */
 
 /*! @name STATUS - Indicates status of Hash peripheral. */
@@ -242,6 +249,14 @@ typedef struct {
  */
 #define HASHCRYPT_STATUS_ERROR(x)                (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_STATUS_ERROR_SHIFT)) & HASHCRYPT_STATUS_ERROR_MASK)
 
+#define HASHCRYPT_STATUS_FAULT_MASK              (0x8U)
+#define HASHCRYPT_STATUS_FAULT_SHIFT             (3U)
+/*! FAULT - Indicates if an AES or PRNG fault has occurred
+ *  0b0..No AES or PRNG fault has occurred.
+ *  0b1..An AES or PRNG fault has occurred.
+ */
+#define HASHCRYPT_STATUS_FAULT(x)                (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_STATUS_FAULT_SHIFT)) & HASHCRYPT_STATUS_FAULT_MASK)
+
 #define HASHCRYPT_STATUS_NEEDKEY_MASK            (0x10U)
 #define HASHCRYPT_STATUS_NEEDKEY_SHIFT           (4U)
 /*! NEEDKEY - Indicates the block wants the key to be written in (set along with WAITING)
@@ -258,13 +273,21 @@ typedef struct {
  */
 #define HASHCRYPT_STATUS_NEEDIV(x)               (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_STATUS_NEEDIV_SHIFT)) & HASHCRYPT_STATUS_NEEDIV_MASK)
 
-#define HASHCRYPT_STATUS_ICBIDX_MASK             (0x3F0000U)
-#define HASHCRYPT_STATUS_ICBIDX_SHIFT            (16U)
-/*! ICBIDX - If ICB-AES is selected, then reads as the ICB index count based on ICBSTRM (from
- *    CRYPTCFG). That is, if 3 bits of ICBSTRM, then this will count from 0 to 7 and then back to 0. On 0,
- *    it has to compute the full ICB, quicker when not 0.
+#define HASHCRYPT_STATUS_AESFAULT_MASK           (0x100U)
+#define HASHCRYPT_STATUS_AESFAULT_SHIFT          (8U)
+/*! AESFAULT - AES fault status
+ *  0b0..No AES fault has occurred.
+ *  0b1..An AES fault has occurred.
  */
-#define HASHCRYPT_STATUS_ICBIDX(x)               (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_STATUS_ICBIDX_SHIFT)) & HASHCRYPT_STATUS_ICBIDX_MASK)
+#define HASHCRYPT_STATUS_AESFAULT(x)             (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_STATUS_AESFAULT_SHIFT)) & HASHCRYPT_STATUS_AESFAULT_MASK)
+
+#define HASHCRYPT_STATUS_PRNGFAULT_MASK          (0x200U)
+#define HASHCRYPT_STATUS_PRNGFAULT_SHIFT         (9U)
+/*! PRNGFAULT - PRNG fault status
+ *  0b0..No PRNG fault has occurred.
+ *  0b1..A PRNG fault has occurred.
+ */
+#define HASHCRYPT_STATUS_PRNGFAULT(x)            (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_STATUS_PRNGFAULT_SHIFT)) & HASHCRYPT_STATUS_PRNGFAULT_MASK)
 /*! @} */
 
 /*! @name INTENSET - Write 1 to enable interrupts; reads back with which are set. */
@@ -293,6 +316,14 @@ typedef struct {
  *  0b1..Will interrupt on Error (until cleared).
  */
 #define HASHCRYPT_INTENSET_ERROR(x)              (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_INTENSET_ERROR_SHIFT)) & HASHCRYPT_INTENSET_ERROR_MASK)
+
+#define HASHCRYPT_INTENSET_FAULT_MASK            (0x8U)
+#define HASHCRYPT_INTENSET_FAULT_SHIFT           (3U)
+/*! FAULT - Indicates if should interrupt on an AES or PRNG fault as indicated in the STATUS register
+ *  0b0..No interrupt on an AES or PRNG fault
+ *  0b1..Interrupt on an AES or PRNG fault
+ */
+#define HASHCRYPT_INTENSET_FAULT(x)              (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_INTENSET_FAULT_SHIFT)) & HASHCRYPT_INTENSET_FAULT_MASK)
 /*! @} */
 
 /*! @name INTENCLR - Write 1 to clear interrupts. */
@@ -312,6 +343,11 @@ typedef struct {
 #define HASHCRYPT_INTENCLR_ERROR_SHIFT           (2U)
 /*! ERROR - Write 1 to clear mask. */
 #define HASHCRYPT_INTENCLR_ERROR(x)              (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_INTENCLR_ERROR_SHIFT)) & HASHCRYPT_INTENCLR_ERROR_MASK)
+
+#define HASHCRYPT_INTENCLR_FAULT_MASK            (0x8U)
+#define HASHCRYPT_INTENCLR_FAULT_SHIFT           (3U)
+/*! FAULT - Write 1 to clear mask. */
+#define HASHCRYPT_INTENCLR_FAULT(x)              (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_INTENCLR_FAULT_SHIFT)) & HASHCRYPT_INTENCLR_FAULT_MASK)
 /*! @} */
 
 /*! @name MEMCTRL - Setup Master to access memory (if available) */
@@ -363,7 +399,7 @@ typedef struct {
 #define HASHCRYPT_INDATA_DATA(x)                 (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_INDATA_DATA_SHIFT)) & HASHCRYPT_INDATA_DATA_MASK)
 /*! @} */
 
-/*! @name ALIAS -  */
+/*! @name ALIAS - Aliases to allow writing words in a burst. */
 /*! @{ */
 
 #define HASHCRYPT_ALIAS_DATA_MASK                (0xFFFFFFFFU)
@@ -376,7 +412,7 @@ typedef struct {
 #define HASHCRYPT_ALIAS_DATA(x)                  (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_ALIAS_DATA_SHIFT)) & HASHCRYPT_ALIAS_DATA_MASK)
 /*! @} */
 
-/*! @name DIGEST0 -  */
+/*! @name DIGEST0 - Result digest (when status says so): • Is 1st 5 words if SHA1 used • Is all 8 words if SHA2 used • Is all 8 words if crypto or SHA512 */
 /*! @{ */
 
 #define HASHCRYPT_DIGEST0_DIGEST_MASK            (0xFFFFFFFFU)
@@ -462,28 +498,6 @@ typedef struct {
 #define HASHCRYPT_CRYPTCFG_STREAMLAST_SHIFT      (16U)
 /*! STREAMLAST - Is 1 if last stream block. If not 1, then the engine will compute the next "hash". */
 #define HASHCRYPT_CRYPTCFG_STREAMLAST(x)         (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_CRYPTCFG_STREAMLAST_SHIFT)) & HASHCRYPT_CRYPTCFG_STREAMLAST_MASK)
-
-#define HASHCRYPT_CRYPTCFG_ICBSZ_MASK            (0x300000U)
-#define HASHCRYPT_CRYPTCFG_ICBSZ_SHIFT           (20U)
-/*! ICBSZ - This sets the ICB size between 32 and 128 bits, using the following rules. Note that the
- *    counter is assumed to occupy the low order bits of the IV.
- *  0b00..32 bits of the IV/ctr are used (from 127:96)
- *  0b01..64 bits of the IV/ctr are used (from 127:64)
- *  0b10..96 bits of the IV/ctr are used (from 127:32)
- *  0b11..All 128 bits of the IV/ctr are used
- */
-#define HASHCRYPT_CRYPTCFG_ICBSZ(x)              (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_CRYPTCFG_ICBSZ_SHIFT)) & HASHCRYPT_CRYPTCFG_ICBSZ_MASK)
-
-#define HASHCRYPT_CRYPTCFG_ICBSTRM_MASK          (0xC00000U)
-#define HASHCRYPT_CRYPTCFG_ICBSTRM_SHIFT         (22U)
-/*! ICBSTRM - The size of the ICB-AES stream that can be pushed before needing to compute a new
- *    IV/ctr (counter start). This optimizes the performance of the stream of blocks after the 1st.
- *  0b00..8 blocks
- *  0b01..16 blocks
- *  0b10..32 blocks
- *  0b11..64 blocks
- */
-#define HASHCRYPT_CRYPTCFG_ICBSTRM(x)            (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_CRYPTCFG_ICBSTRM_SHIFT)) & HASHCRYPT_CRYPTCFG_ICBSTRM_MASK)
 /*! @} */
 
 /*! @name CONFIG - Returns the configuration of this block in this chip - indicates what services are available. */
@@ -518,11 +532,6 @@ typedef struct {
 #define HASHCRYPT_CONFIG_SECRET_SHIFT            (8U)
 /*! SECRET - 1 if AES Secret key available */
 #define HASHCRYPT_CONFIG_SECRET(x)               (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_CONFIG_SECRET_SHIFT)) & HASHCRYPT_CONFIG_SECRET_MASK)
-
-#define HASHCRYPT_CONFIG_ICB_MASK                (0x800U)
-#define HASHCRYPT_CONFIG_ICB_SHIFT               (11U)
-/*! ICB - 1 if ICB over AES included */
-#define HASHCRYPT_CONFIG_ICB(x)                  (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_CONFIG_ICB_SHIFT)) & HASHCRYPT_CONFIG_ICB_MASK)
 /*! @} */
 
 /*! @name LOCK - Lock register allows locking to the current security level or unlocking by the lock holding level. */
@@ -545,13 +554,40 @@ typedef struct {
 #define HASHCRYPT_LOCK_PATTERN(x)                (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_LOCK_PATTERN_SHIFT)) & HASHCRYPT_LOCK_PATTERN_MASK)
 /*! @} */
 
-/*! @name MASK -  */
+/*! @name MASK - Allows Application to write a random mask for ICB use. Normally only a new one on each system reset (including power up). */
 /*! @{ */
 
 #define HASHCRYPT_MASK_MASK_MASK                 (0xFFFFFFFFU)
 #define HASHCRYPT_MASK_MASK_SHIFT                (0U)
 /*! MASK - A random word. */
 #define HASHCRYPT_MASK_MASK(x)                   (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_MASK_MASK_SHIFT)) & HASHCRYPT_MASK_MASK_MASK)
+/*! @} */
+
+/*! @name RELOAD - The WO digest-reload registers may be written with a saved Hash digest, to allow continuation from where left off. These registers may only be written if the Reload field in CTRL is 1. If SHA1, only the 1st 5 are used. */
+/*! @{ */
+
+#define HASHCRYPT_RELOAD_DIGEST_MASK             (0xFFFFFFFFU)
+#define HASHCRYPT_RELOAD_DIGEST_SHIFT            (0U)
+/*! DIGEST - SHA Digest word to reload. */
+#define HASHCRYPT_RELOAD_DIGEST(x)               (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_RELOAD_DIGEST_SHIFT)) & HASHCRYPT_RELOAD_DIGEST_MASK)
+/*! @} */
+
+/*! @name PRNG_SEED - PRNG random input value used as an entropy source */
+/*! @{ */
+
+#define HASHCRYPT_PRNG_SEED_PRNG_SEED_MASK       (0xFFFFFFFFU)
+#define HASHCRYPT_PRNG_SEED_PRNG_SEED_SHIFT      (0U)
+/*! PRNG_SEED - Random input value used as an entropy source */
+#define HASHCRYPT_PRNG_SEED_PRNG_SEED(x)         (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_PRNG_SEED_PRNG_SEED_SHIFT)) & HASHCRYPT_PRNG_SEED_PRNG_SEED_MASK)
+/*! @} */
+
+/*! @name PRNG_OUT - Provide random number. */
+/*! @{ */
+
+#define HASHCRYPT_PRNG_OUT_PRNG_OUT_MASK         (0xFFFFFFFFU)
+#define HASHCRYPT_PRNG_OUT_PRNG_OUT_SHIFT        (0U)
+/*! PRNG_OUT - Provide random number. */
+#define HASHCRYPT_PRNG_OUT_PRNG_OUT(x)           (((uint32_t)(((uint32_t)(x)) << HASHCRYPT_PRNG_OUT_PRNG_OUT_SHIFT)) & HASHCRYPT_PRNG_OUT_PRNG_OUT_MASK)
 /*! @} */
 
 
@@ -588,5 +624,5 @@ typedef struct {
  */ /* end of group Peripheral_access_layer */
 
 
-#endif  /* HASHCRYPT_H_ */
+#endif  /* PERI_HASHCRYPT_H_ */
 

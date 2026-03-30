@@ -1,42 +1,30 @@
 /*
 ** ###################################################################
-**     Processors:          LPC5526JBD100
-**                          LPC5526JBD64
-**                          LPC5526JEV98
-**                          LPC5528JBD100
-**                          LPC5528JBD64
-**                          LPC5528JEV59
-**                          LPC5528JEV98
-**                          LPC55S26JBD100
-**                          LPC55S26JBD64
-**                          LPC55S26JEV98
-**                          LPC55S28JBD100
-**                          LPC55S28JBD64
-**                          LPC55S28JEV59
-**                          LPC55S28JEV98
-**                          LPC55S66JBD100_cm33_core0
-**                          LPC55S66JBD100_cm33_core1
-**                          LPC55S66JBD64_cm33_core0
-**                          LPC55S66JBD64_cm33_core1
-**                          LPC55S66JEV98_cm33_core0
-**                          LPC55S66JEV98_cm33_core1
-**                          LPC55S69JBD100_cm33_core0
-**                          LPC55S69JBD100_cm33_core1
-**                          LPC55S69JBD64_cm33_core0
-**                          LPC55S69JBD64_cm33_core1
-**                          LPC55S69JEV59_cm33_core0
-**                          LPC55S69JEV59_cm33_core1
-**                          LPC55S69JEV98_cm33_core0
-**                          LPC55S69JEV98_cm33_core1
+**     Processors:          LPC5512JBD100
+**                          LPC5512JBD64
+**                          LPC5514JBD100
+**                          LPC5514JBD64
+**                          LPC5514JEV59
+**                          LPC5516JBD100
+**                          LPC5516JBD64
+**                          LPC5516JEV59
+**                          LPC5516JEV98
+**                          LPC55S14JBD100
+**                          LPC55S14JBD64
+**                          LPC55S14JEV59
+**                          LPC55S16JBD100
+**                          LPC55S16JBD64
+**                          LPC55S16JEV59
+**                          LPC55S16JEV98
 **
-**     Version:             rev. 1.1, 2019-05-16
-**     Build:               b240704
+**     Version:             rev. 2.0, 2024-10-29
+**     Build:               b250520
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for FLASH_CMPA
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2024 NXP
+**     Copyright 2016-2025 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -45,40 +33,37 @@
 **     Revisions:
 **     - rev. 1.0 (2018-08-22)
 **         Initial version based on v0.2UM
-**     - rev. 1.1 (2019-05-16)
-**         Initial A1 version based on v1.3UM
+**     - rev. 1.1 (2019-12-03)
+**         Initial version based on v0.6UM
+**     - rev. 2.0 (2024-10-29)
+**         Change the device header file from single flat file to multiple files based on peripherals,
+**         each peripheral with dedicated header file located in periphN folder.
 **
 ** ###################################################################
 */
 
 /*!
- * @file FLASH_CMPA.h
- * @version 1.1
- * @date 2019-05-16
+ * @file PERI_FLASH_CMPA.h
+ * @version 2.0
+ * @date 2024-10-29
  * @brief CMSIS Peripheral Access Layer for FLASH_CMPA
  *
  * CMSIS Peripheral Access Layer for FLASH_CMPA
  */
 
-#if !defined(FLASH_CMPA_H_)
-#define FLASH_CMPA_H_                            /**< Symbol preventing repeated inclusion */
+#if !defined(PERI_FLASH_CMPA_H_)
+#define PERI_FLASH_CMPA_H_                       /**< Symbol preventing repeated inclusion */
 
-#if (defined(CPU_LPC5526JBD100) || defined(CPU_LPC5526JBD64) || defined(CPU_LPC5526JEV98))
-#include "LPC5526_COMMON.h"
-#elif (defined(CPU_LPC5528JBD100) || defined(CPU_LPC5528JBD64) || defined(CPU_LPC5528JEV59) || defined(CPU_LPC5528JEV98))
-#include "LPC5528_COMMON.h"
-#elif (defined(CPU_LPC55S26JBD100) || defined(CPU_LPC55S26JBD64) || defined(CPU_LPC55S26JEV98))
-#include "LPC55S26_COMMON.h"
-#elif (defined(CPU_LPC55S28JBD100) || defined(CPU_LPC55S28JBD64) || defined(CPU_LPC55S28JEV59) || defined(CPU_LPC55S28JEV98))
-#include "LPC55S28_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core0) || defined(CPU_LPC55S66JBD64_cm33_core0) || defined(CPU_LPC55S66JEV98_cm33_core0))
-#include "LPC55S66_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S66JBD100_cm33_core1) || defined(CPU_LPC55S66JBD64_cm33_core1) || defined(CPU_LPC55S66JEV98_cm33_core1))
-#include "LPC55S66_cm33_core1_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core0) || defined(CPU_LPC55S69JBD64_cm33_core0) || defined(CPU_LPC55S69JEV59_cm33_core0) || defined(CPU_LPC55S69JEV98_cm33_core0))
-#include "LPC55S69_cm33_core0_COMMON.h"
-#elif (defined(CPU_LPC55S69JBD100_cm33_core1) || defined(CPU_LPC55S69JBD64_cm33_core1) || defined(CPU_LPC55S69JEV59_cm33_core1) || defined(CPU_LPC55S69JEV98_cm33_core1))
-#include "LPC55S69_cm33_core1_COMMON.h"
+#if (defined(CPU_LPC5512JBD100) || defined(CPU_LPC5512JBD64))
+#include "LPC5512_COMMON.h"
+#elif (defined(CPU_LPC5514JBD100) || defined(CPU_LPC5514JBD64) || defined(CPU_LPC5514JEV59))
+#include "LPC5514_COMMON.h"
+#elif (defined(CPU_LPC5516JBD100) || defined(CPU_LPC5516JBD64) || defined(CPU_LPC5516JEV59) || defined(CPU_LPC5516JEV98))
+#include "LPC5516_COMMON.h"
+#elif (defined(CPU_LPC55S14JBD100) || defined(CPU_LPC55S14JBD64) || defined(CPU_LPC55S14JEV59))
+#include "LPC55S14_COMMON.h"
+#elif (defined(CPU_LPC55S16JBD100) || defined(CPU_LPC55S16JBD64) || defined(CPU_LPC55S16JEV59) || defined(CPU_LPC55S16JEV98))
+#include "LPC55S16_COMMON.h"
 #else
   #error "No valid CPU defined!"
 #endif
@@ -142,7 +127,9 @@ typedef struct {
   __IO uint32_t PRINCE_SR_2;                       /**< Region 2, sub-region enable, offset: 0x2C */
   __IO uint32_t XTAL_32KHZ_CAPABANK_TRIM;          /**< Xtal 32kHz capabank triming., offset: 0x30 */
   __IO uint32_t XTAL_16MHZ_CAPABANK_TRIM;          /**< Xtal 16MHz capabank triming., offset: 0x34 */
-       uint8_t RESERVED_0[24];
+  __IO uint32_t FLASH_REMAP_SIZE;                  /**< This 32-bit register contains the size of the image to remap, in bytes. The 12 LSBs are ignored, so the size granularity is 4KB., offset: 0x38 */
+  __IO uint32_t FLASH_REMAP_OFFSET;                /**< This 32-bit register contains the offset by which the image is to be remapped. The 12 LSBs are ignored, so the remap granularity is 4KB., offset: 0x3C */
+       uint8_t RESERVED_0[16];
   __IO uint32_t ROTKH[FLASH_CMPA_ROTKH_COUNT];     /**< ROTKH0 for Root of Trust Keys Table hash[255:224]..ROTKH7 for Root of Trust Keys Table hash[31:0], array offset: 0x50, array step: 0x4 */
        uint8_t RESERVED_1[144];
   __IO uint32_t CUSTOMER_DEFINED[FLASH_CMPA_CUSTOMER_DEFINED_COUNT]; /**< Customer Defined (Programable through ROM API), array offset: 0x100, array step: 0x4 */
@@ -177,7 +164,6 @@ typedef struct {
 #define FLASH_CMPA_BOOT_CFG_BOOT_SPEED_SHIFT     (7U)
 /*! BOOT_SPEED - Core clock:
  *  0b00..Defined by NMPA.SYSTEM_SPEED_CODE
- *  0b01..96MHz FRO
  *  0b10..48MHz FRO
  */
 #define FLASH_CMPA_BOOT_CFG_BOOT_SPEED(x)        (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_BOOT_CFG_BOOT_SPEED_SHIFT)) & FLASH_CMPA_BOOT_CFG_BOOT_SPEED_MASK)
@@ -263,14 +249,6 @@ typedef struct {
  */
 #define FLASH_CMPA_CC_SOCU_PIN_TAPEN(x)          (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_CC_SOCU_PIN_TAPEN_SHIFT)) & FLASH_CMPA_CC_SOCU_PIN_TAPEN_MASK)
 
-#define FLASH_CMPA_CC_SOCU_PIN_CPU1_DBGEN_MASK   (0x20U)
-#define FLASH_CMPA_CC_SOCU_PIN_CPU1_DBGEN_SHIFT  (5U)
-/*! CPU1_DBGEN - CPU1 (Micro cortex M33) invasive debug enable
- *  0b0..Use DAP to enable
- *  0b1..Fixed state
- */
-#define FLASH_CMPA_CC_SOCU_PIN_CPU1_DBGEN(x)     (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_CC_SOCU_PIN_CPU1_DBGEN_SHIFT)) & FLASH_CMPA_CC_SOCU_PIN_CPU1_DBGEN_MASK)
-
 #define FLASH_CMPA_CC_SOCU_PIN_ISP_CMD_EN_MASK   (0x40U)
 #define FLASH_CMPA_CC_SOCU_PIN_ISP_CMD_EN_SHIFT  (6U)
 /*! ISP_CMD_EN - ISP Boot Command enable
@@ -279,29 +257,13 @@ typedef struct {
  */
 #define FLASH_CMPA_CC_SOCU_PIN_ISP_CMD_EN(x)     (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_CC_SOCU_PIN_ISP_CMD_EN_SHIFT)) & FLASH_CMPA_CC_SOCU_PIN_ISP_CMD_EN_MASK)
 
-#define FLASH_CMPA_CC_SOCU_PIN_FA_CMD_EN_MASK    (0x80U)
-#define FLASH_CMPA_CC_SOCU_PIN_FA_CMD_EN_SHIFT   (7U)
-/*! FA_CMD_EN - FA Command enable
+#define FLASH_CMPA_CC_SOCU_PIN_FA_ME_CMD_EN_MASK (0x80U)
+#define FLASH_CMPA_CC_SOCU_PIN_FA_ME_CMD_EN_SHIFT (7U)
+/*! FA_ME_CMD_EN - FA Command enable
  *  0b0..Use DAP to enable
  *  0b1..Fixed state
  */
-#define FLASH_CMPA_CC_SOCU_PIN_FA_CMD_EN(x)      (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_CC_SOCU_PIN_FA_CMD_EN_SHIFT)) & FLASH_CMPA_CC_SOCU_PIN_FA_CMD_EN_MASK)
-
-#define FLASH_CMPA_CC_SOCU_PIN_ME_CMD_EN_MASK    (0x100U)
-#define FLASH_CMPA_CC_SOCU_PIN_ME_CMD_EN_SHIFT   (8U)
-/*! ME_CMD_EN - Flash Mass Erase Command enable
- *  0b0..Use DAP to enable
- *  0b1..Fixed state
- */
-#define FLASH_CMPA_CC_SOCU_PIN_ME_CMD_EN(x)      (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_CC_SOCU_PIN_ME_CMD_EN_SHIFT)) & FLASH_CMPA_CC_SOCU_PIN_ME_CMD_EN_MASK)
-
-#define FLASH_CMPA_CC_SOCU_PIN_CPU1_NIDEN_MASK   (0x200U)
-#define FLASH_CMPA_CC_SOCU_PIN_CPU1_NIDEN_SHIFT  (9U)
-/*! CPU1_NIDEN - CPU1 (Micro cortex M33) non-invasive debug enable
- *  0b0..Use DAP to enable
- *  0b1..Fixed state
- */
-#define FLASH_CMPA_CC_SOCU_PIN_CPU1_NIDEN(x)     (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_CC_SOCU_PIN_CPU1_NIDEN_SHIFT)) & FLASH_CMPA_CC_SOCU_PIN_CPU1_NIDEN_MASK)
+#define FLASH_CMPA_CC_SOCU_PIN_FA_ME_CMD_EN(x)   (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_CC_SOCU_PIN_FA_ME_CMD_EN_SHIFT)) & FLASH_CMPA_CC_SOCU_PIN_FA_ME_CMD_EN_MASK)
 
 #define FLASH_CMPA_CC_SOCU_PIN_UUID_CHECK_MASK   (0x8000U)
 #define FLASH_CMPA_CC_SOCU_PIN_UUID_CHECK_SHIFT  (15U)
@@ -357,14 +319,6 @@ typedef struct {
  */
 #define FLASH_CMPA_CC_SOCU_DFLT_TAPEN(x)         (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_CC_SOCU_DFLT_TAPEN_SHIFT)) & FLASH_CMPA_CC_SOCU_DFLT_TAPEN_MASK)
 
-#define FLASH_CMPA_CC_SOCU_DFLT_CPU1_DBGEN_MASK  (0x20U)
-#define FLASH_CMPA_CC_SOCU_DFLT_CPU1_DBGEN_SHIFT (5U)
-/*! CPU1_DBGEN - CPU1 (Micro cortex M33) invasive debug fixed state
- *  0b0..Disable
- *  0b1..Enable
- */
-#define FLASH_CMPA_CC_SOCU_DFLT_CPU1_DBGEN(x)    (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_CC_SOCU_DFLT_CPU1_DBGEN_SHIFT)) & FLASH_CMPA_CC_SOCU_DFLT_CPU1_DBGEN_MASK)
-
 #define FLASH_CMPA_CC_SOCU_DFLT_ISP_CMD_EN_MASK  (0x40U)
 #define FLASH_CMPA_CC_SOCU_DFLT_ISP_CMD_EN_SHIFT (6U)
 /*! ISP_CMD_EN - ISP Boot Command fixed state
@@ -373,29 +327,13 @@ typedef struct {
  */
 #define FLASH_CMPA_CC_SOCU_DFLT_ISP_CMD_EN(x)    (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_CC_SOCU_DFLT_ISP_CMD_EN_SHIFT)) & FLASH_CMPA_CC_SOCU_DFLT_ISP_CMD_EN_MASK)
 
-#define FLASH_CMPA_CC_SOCU_DFLT_FA_CMD_EN_MASK   (0x80U)
-#define FLASH_CMPA_CC_SOCU_DFLT_FA_CMD_EN_SHIFT  (7U)
-/*! FA_CMD_EN - FA Command fixed state
+#define FLASH_CMPA_CC_SOCU_DFLT_FA_ME_CMD_EN_MASK (0x80U)
+#define FLASH_CMPA_CC_SOCU_DFLT_FA_ME_CMD_EN_SHIFT (7U)
+/*! FA_ME_CMD_EN - FA Command fixed state
  *  0b0..Disable
  *  0b1..Enable
  */
-#define FLASH_CMPA_CC_SOCU_DFLT_FA_CMD_EN(x)     (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_CC_SOCU_DFLT_FA_CMD_EN_SHIFT)) & FLASH_CMPA_CC_SOCU_DFLT_FA_CMD_EN_MASK)
-
-#define FLASH_CMPA_CC_SOCU_DFLT_ME_CMD_EN_MASK   (0x100U)
-#define FLASH_CMPA_CC_SOCU_DFLT_ME_CMD_EN_SHIFT  (8U)
-/*! ME_CMD_EN - Flash Mass Erase Command fixed state
- *  0b0..Disable
- *  0b1..Enable
- */
-#define FLASH_CMPA_CC_SOCU_DFLT_ME_CMD_EN(x)     (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_CC_SOCU_DFLT_ME_CMD_EN_SHIFT)) & FLASH_CMPA_CC_SOCU_DFLT_ME_CMD_EN_MASK)
-
-#define FLASH_CMPA_CC_SOCU_DFLT_CPU1_NIDEN_MASK  (0x200U)
-#define FLASH_CMPA_CC_SOCU_DFLT_CPU1_NIDEN_SHIFT (9U)
-/*! CPU1_NIDEN - CPU1 (Micro cortex M33) non-invasive debug fixed state
- *  0b0..Disable
- *  0b1..Enable
- */
-#define FLASH_CMPA_CC_SOCU_DFLT_CPU1_NIDEN(x)    (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_CC_SOCU_DFLT_CPU1_NIDEN_SHIFT)) & FLASH_CMPA_CC_SOCU_DFLT_CPU1_NIDEN_MASK)
+#define FLASH_CMPA_CC_SOCU_DFLT_FA_ME_CMD_EN(x)  (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_CC_SOCU_DFLT_FA_ME_CMD_EN_SHIFT)) & FLASH_CMPA_CC_SOCU_DFLT_FA_ME_CMD_EN_MASK)
 
 #define FLASH_CMPA_CC_SOCU_DFLT_INVERSE_VALUE_MASK (0xFFFF0000U)
 #define FLASH_CMPA_CC_SOCU_DFLT_INVERSE_VALUE_SHIFT (16U)
@@ -487,8 +425,53 @@ typedef struct {
 
 #define FLASH_CMPA_SECURE_BOOT_CFG_DICE_INC_SEC_EPOCH_MASK (0xC000U)
 #define FLASH_CMPA_SECURE_BOOT_CFG_DICE_INC_SEC_EPOCH_SHIFT (14U)
-/*! DICE_INC_SEC_EPOCH - Include security EPOCH in DICE */
+/*! DICE_INC_SEC_EPOCH - Include security EPOCH in DICE
+ *  0b00..not included
+ *  0b01..included
+ *  0b10..included
+ *  0b11..included
+ */
 #define FLASH_CMPA_SECURE_BOOT_CFG_DICE_INC_SEC_EPOCH(x) (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_SECURE_BOOT_CFG_DICE_INC_SEC_EPOCH_SHIFT)) & FLASH_CMPA_SECURE_BOOT_CFG_DICE_INC_SEC_EPOCH_MASK)
+
+#define FLASH_CMPA_SECURE_BOOT_CFG_SKIP_BOOT_SEED_MASK (0x30000U)
+#define FLASH_CMPA_SECURE_BOOT_CFG_SKIP_BOOT_SEED_SHIFT (16U)
+/*! SKIP_BOOT_SEED - Skip boot seed computation
+ *  0b00..Enable BOOT_SEED
+ *  0b01..Disable BOOT_SEED
+ *  0b10..Disable BOOT_SEED
+ *  0b11..Disable BOOT_SEED
+ */
+#define FLASH_CMPA_SECURE_BOOT_CFG_SKIP_BOOT_SEED(x) (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_SECURE_BOOT_CFG_SKIP_BOOT_SEED_SHIFT)) & FLASH_CMPA_SECURE_BOOT_CFG_SKIP_BOOT_SEED_MASK)
+
+#define FLASH_CMPA_SECURE_BOOT_CFG_BOOT_SEED_INC_NXP_CFG_MASK (0xC0000U)
+#define FLASH_CMPA_SECURE_BOOT_CFG_BOOT_SEED_INC_NXP_CFG_SHIFT (18U)
+/*! BOOT_SEED_INC_NXP_CFG - Include NXP area in BOOT SEED computation
+ *  0b00..not included
+ *  0b01..included
+ *  0b10..included
+ *  0b11..included
+ */
+#define FLASH_CMPA_SECURE_BOOT_CFG_BOOT_SEED_INC_NXP_CFG(x) (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_SECURE_BOOT_CFG_BOOT_SEED_INC_NXP_CFG_SHIFT)) & FLASH_CMPA_SECURE_BOOT_CFG_BOOT_SEED_INC_NXP_CFG_MASK)
+
+#define FLASH_CMPA_SECURE_BOOT_CFG_BOOT_SEED_CUST_CFG_MASK (0x300000U)
+#define FLASH_CMPA_SECURE_BOOT_CFG_BOOT_SEED_CUST_CFG_SHIFT (20U)
+/*! BOOT_SEED_CUST_CFG - Include CMPA area in BOOT SEED computation
+ *  0b00..not included
+ *  0b01..included
+ *  0b10..included
+ *  0b11..included
+ */
+#define FLASH_CMPA_SECURE_BOOT_CFG_BOOT_SEED_CUST_CFG(x) (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_SECURE_BOOT_CFG_BOOT_SEED_CUST_CFG_SHIFT)) & FLASH_CMPA_SECURE_BOOT_CFG_BOOT_SEED_CUST_CFG_MASK)
+
+#define FLASH_CMPA_SECURE_BOOT_CFG_BOOT_SEED_INC_EPOCH_MASK (0xC00000U)
+#define FLASH_CMPA_SECURE_BOOT_CFG_BOOT_SEED_INC_EPOCH_SHIFT (22U)
+/*! BOOT_SEED_INC_EPOCH - Include security epoch area in BOOT_SEED computation.
+ *  0b00..not included
+ *  0b01..included
+ *  0b10..included
+ *  0b11..included
+ */
+#define FLASH_CMPA_SECURE_BOOT_CFG_BOOT_SEED_INC_EPOCH(x) (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_SECURE_BOOT_CFG_BOOT_SEED_INC_EPOCH_SHIFT)) & FLASH_CMPA_SECURE_BOOT_CFG_BOOT_SEED_INC_EPOCH_MASK)
 
 #define FLASH_CMPA_SECURE_BOOT_CFG_SEC_BOOT_EN_MASK (0xC0000000U)
 #define FLASH_CMPA_SECURE_BOOT_CFG_SEC_BOOT_EN_SHIFT (30U)
@@ -648,6 +631,22 @@ typedef struct {
 #define FLASH_CMPA_XTAL_16MHZ_CAPABANK_TRIM_PCB_XOUT_PARA_CAP_PF_X100(x) (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_XTAL_16MHZ_CAPABANK_TRIM_PCB_XOUT_PARA_CAP_PF_X100_SHIFT)) & FLASH_CMPA_XTAL_16MHZ_CAPABANK_TRIM_PCB_XOUT_PARA_CAP_PF_X100_MASK)
 /*! @} */
 
+/*! @name FLASH_REMAP_SIZE - This 32-bit register contains the size of the image to remap, in bytes. The 12 LSBs are ignored, so the size granularity is 4KB. */
+/*! @{ */
+
+#define FLASH_CMPA_FLASH_REMAP_SIZE_FIELD_MASK   (0xFFFFFFFFU)
+#define FLASH_CMPA_FLASH_REMAP_SIZE_FIELD_SHIFT  (0U)
+#define FLASH_CMPA_FLASH_REMAP_SIZE_FIELD(x)     (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_FLASH_REMAP_SIZE_FIELD_SHIFT)) & FLASH_CMPA_FLASH_REMAP_SIZE_FIELD_MASK)
+/*! @} */
+
+/*! @name FLASH_REMAP_OFFSET - This 32-bit register contains the offset by which the image is to be remapped. The 12 LSBs are ignored, so the remap granularity is 4KB. */
+/*! @{ */
+
+#define FLASH_CMPA_FLASH_REMAP_OFFSET_FIELD_MASK (0xFFFFFFFFU)
+#define FLASH_CMPA_FLASH_REMAP_OFFSET_FIELD_SHIFT (0U)
+#define FLASH_CMPA_FLASH_REMAP_OFFSET_FIELD(x)   (((uint32_t)(((uint32_t)(x)) << FLASH_CMPA_FLASH_REMAP_OFFSET_FIELD_SHIFT)) & FLASH_CMPA_FLASH_REMAP_OFFSET_FIELD_MASK)
+/*! @} */
+
 /*! @name ROTKH - ROTKH0 for Root of Trust Keys Table hash[255:224]..ROTKH7 for Root of Trust Keys Table hash[31:0] */
 /*! @{ */
 
@@ -706,5 +705,5 @@ typedef struct {
  */ /* end of group Peripheral_access_layer */
 
 
-#endif  /* FLASH_CMPA_H_ */
+#endif  /* PERI_FLASH_CMPA_H_ */
 
