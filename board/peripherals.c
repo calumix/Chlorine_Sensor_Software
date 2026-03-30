@@ -475,7 +475,7 @@ instance:
       - timingConfig: []
     - messagesConfig:
       - enable_custom_name: 'false'
-      - allocateRAM: 'true'
+      - allocateRAM: 'false'
       - stdFilter:
         - listSize: '1'
         - remFrame: 'kMCAN_rejectFrame'
@@ -507,7 +507,6 @@ instance:
         - datafieldSize: 'kMCAN_8ByteDatafield'
     - stdFilters: []
     - extFilters: []
-    - quick_selection: 'default'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 const mcan_config_t CAN0_config = {
@@ -529,8 +528,6 @@ const mcan_config_t CAN0_config = {
     .dataseg2 = 3
   }
 };
-/* Allocation of the Message RAM in memory that is alligned to 16 bits. */
-SDK_ALIGN(uint32_t CAN0_RAM_BASE_ADDRESS[CAN0_MESSAGE_RAM_SIZE], CAN0_BASE_ADDRESS_ALIGN_SIZE);
 const mcan_frame_filter_config_t CAN0_std_filter_config = {
   .address = 0,
   .listSize = 1UL,

@@ -837,7 +837,7 @@
                            </struct>
                         </array>
                      </config_set>
-                     <config_set name="fsl_mcan" quick_selection="default">
+                     <config_set name="fsl_mcan">
                         <struct name="mcanConfig">
                            <setting name="clockSource" value="FunctionClock"/>
                            <setting name="clockSourceFreq" value="ClocksTool_DefaultInit"/>
@@ -863,7 +863,7 @@
                         </struct>
                         <struct name="messagesConfig">
                            <setting name="enable_custom_name" value="false"/>
-                           <setting name="allocateRAM" value="true"/>
+                           <setting name="allocateRAM" value="false"/>
                            <struct name="stdFilter">
                               <setting name="listSize" value="1"/>
                               <setting name="remFrame" value="kMCAN_rejectFrame"/>

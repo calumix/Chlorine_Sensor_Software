@@ -26,6 +26,18 @@
 #include "usb_port.h"
 #include "env.h"
 
+/*
+ * Allocating this here (instead of letting the driver allocate it) is a workaround
+ * for a bug in the driver/code generator. If the driver allocats this, it puts it in the normal SRAM bank
+ * Since the hardware requriement is for the buffer to be aligned on a 16-bit (64kByte) boundary, it forces
+ * the linker to put this at a memory location that is actually outside of RAM (.data starts at 0x20000000,
+ * then .bss where this variable is located, which the linker puts at 0x20010000 which is actually past the
+ * end of SRAM -- and all other bss variables get tagged in behind it).
+ * The other method to "fix" this is to initialize the variable so that it gets put at the front of the .data
+ * segment...
+ */
+uint32_t CAN0_RAM_BASE_ADDRESS[CAN0_MESSAGE_RAM_SIZE] __attribute__((section(".bss.$SRAMX"), aligned(CAN0_BASE_ADDRESS_ALIGN_SIZE)));
+
 //This prevents linker from removing symbol -- this symbol is necessary for gdb to show individual freertos task call stacks when debugging
 extern const uint8_t FreeRTOSDebugConfig[];
 

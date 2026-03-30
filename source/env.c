@@ -13,7 +13,7 @@
 
 environment_t env;
 #define EEPROM_I2C_ADDR 	(0x50)
-#define EEPROM_PAGE_SIZE	8
+#define EEPROM_PAGE_SIZE	32
 #define DIV_ROUND_UP(x,y)	(((x)+(y)-1)/(y))
 //used internally to write a single page (or less).  That means that addr has to be aligned to EEPROM_PAGE_SIZE bytes for this to work correctly
 static int EEPROMWritePage(uint16_t addr, uint8_t * buff, uint32_t bytes){
@@ -88,16 +88,7 @@ void EnvWrite(void){
 	EEPROM_WriteArray(0,(uint8_t*)&env,sizeof(env));
 }
 void EnvSetDefaults(void){
-	env.echo_baud = 115200;
-	env.nmea_baud = 4800;
-	env.speed_of_sound = 1500;
-	env.thermistor_a = 0.003354;
-	env.thermistor_b=0.000257;
-	env.thermistor_c=2.61e-6;
-	env.thermistor_d=6.33e-8;
-	env.thermistor_r25=10000;
-	env.transducer_offset = 0;
-	env.threshold_filter_scale = 1.0;
+	env.uart_baud = 115200;
 	env.flags = ENV_FLAGS_DEFAULT;
 }
 

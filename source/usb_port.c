@@ -81,8 +81,8 @@ static uint8_t s_lineCoding[LINE_CODING_SIZE] = {
     LINE_CODING_DATABITS};
 
 /* Data buffer for receiving and sending*/
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currRecvBuf[HS_CDC_VCOM_BULK_OUT_PACKET_SIZE];
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currSendBuf[HS_CDC_VCOM_BULK_OUT_PACKET_SIZE];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t __attribute__((section (".noinit.$USB_RAM"))) s_currRecvBuf[HS_CDC_VCOM_BULK_OUT_PACKET_SIZE];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t __attribute__((section (".noinit.$USB_RAM"))) s_currSendBuf[HS_CDC_VCOM_BULK_OUT_PACKET_SIZE];
 
 
 void USB1_IRQHandler(void)

@@ -53,66 +53,15 @@ int EnvCommand(struct Command * cmd,struct Message * msg, int argc, char * argv[
 		return 0;
 	}
 
-	if(strcmp(argv[1],"NMEA_BAUD")==0 && (argc == 3 || argv[2][0] == '?' || argc == 2)){
+	if(strcmp(argv[1],"UART_BAUD")==0 && (argc == 3 || argv[2][0] == '?' || argc == 2)){
 		if(argc == 3){
-			env.nmea_baud = strtoul(argv[2],NULL,10);
+			env.uart_baud = strtoul(argv[2],NULL,10);
 		}
 		MessageSendFormat(msg, "%s,%s,%i",cmd->str,argv[1],
-					env.nmea_baud);
-		return 0;
-	}
-	if(strcmp(argv[1],"ECHO_BAUD")==0 && (argc == 3 || argv[2][0] == '?' || argc == 2)){
-		if(argc == 3){
-			env.echo_baud = strtoul(argv[2],NULL,10);
-		}
-		MessageSendFormat(msg, "%s,%s,%i",cmd->str,argv[1],
-					env.echo_baud);
+					env.uart_baud);
 		return 0;
 	}
 
-	if(strcmp(argv[1],"THERMISTOR")==0 && (argc == 7 || argv[2][0] == '?' || argc == 2)){
-		if(argc == 7){
-			env.thermistor_r25 = strtof(argv[2],NULL);
-			env.thermistor_a = strtof(argv[3],NULL);
-			env.thermistor_b = strtof(argv[4],NULL);
-			env.thermistor_c = strtof(argv[5],NULL);
-			env.thermistor_d = strtof(argv[6],NULL);
-		}
-		MessageSendFormat(msg, "%s,%s,%f,%f,%f,%f,%f",cmd->str,argv[1],
-					env.thermistor_r25,
-					env.thermistor_a,
-					env.thermistor_b,
-					env.thermistor_c,
-					env.thermistor_d);
-		return 0;
-	}
-
-	if(strcmp(argv[1],"SOS")==0 && (argc == 3 || argv[2][0] == '?' || argc == 2)){
-		if(argc == 3){
-			env.speed_of_sound = strtof(argv[2],NULL);
-		}
-		MessageSendFormat(msg, "%s,%s,%f",cmd->str,argv[1],
-					env.speed_of_sound);
-		return 0;
-	}
-
-	if(strcmp(argv[1],"TOFFSET")==0 && (argc == 3 || argv[2][0] == '?' || argc == 2)){
-		if(argc == 3){
-			env.transducer_offset = strtof(argv[2],NULL);
-		}
-		MessageSendFormat(msg, "%s,%s,%f",cmd->str,argv[1],
-					env.transducer_offset);
-		return 0;
-	}
-
-	if(strcmp(argv[1],"THRESH_FILT_SCALE")==0 && (argc == 3 || argv[2][0] == '?' || argc == 2)){
-		if(argc == 3){
-			env.threshold_filter_scale = strtof(argv[2],NULL);
-		}
-		MessageSendFormat(msg, "%s,%s,%f",cmd->str,argv[1],
-					env.threshold_filter_scale);
-		return 0;
-	}
 
 	MessageSendFormat(msg, "%s,?",cmd->str);
 
