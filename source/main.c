@@ -25,7 +25,7 @@
 #include "message.h"
 #include "usb_port.h"
 #include "env.h"
-
+#include "adc.h"
 /*
  * Allocating this here (instead of letting the driver allocate it) is a workaround
  * for a bug in the driver/code generator. If the driver allocats this, it puts it in the normal SRAM bank
@@ -46,6 +46,7 @@ extern const uint8_t FreeRTOSDebugConfig[];
  */
 struct RxTaskParams {
 	QueueHandle_t command;
+	StreamBufferHandle_t rx_stream;
 	struct Message * msg;
 };
 
@@ -55,7 +56,7 @@ void CommandRxTask(void * params){
 	uint8_t data;
 
 	while(1){
-		bytes = xStreamBufferReceive(rx->msg->rx_stream,&data,sizeof(data),portMAX_DELAY);
+		bytes = xStreamBufferReceive(rx->rx_stream,&data,sizeof(data),portMAX_DELAY);
 		while(bytes){
 			 bytes -= MessageProcess(rx->msg, &data, bytes);
 			 if(MessageCheckReady(rx->msg)){
@@ -65,11 +66,70 @@ void CommandRxTask(void * params){
 		}
 	}
 }
+/*
+ * The Tx task monitors the queue and converts any messages to the USB
+ * data stream. This one way around the USB subsystem using streams (as a stream
+ * can only have one writer unless extra protection is used).
+ */
+struct TxTaskParams{
+	QueueHandle_t msg_queue;
+	StreamBufferHandle_t usb_tx_stream;
+};
 
+void DataTxTask(void * params){
+	struct TxTaskParams * tx = (struct TxTaskParams *)params;
+	uint8_t buffer[MESSAGE_RESP_BUFFER_LEN];
+
+	while(1){
+		xQueueReceive(tx->msg_queue,&buffer,portMAX_DELAY);
+		xStreamBufferSend(tx->usb_tx_stream,buffer,strlen((char*)buffer),portMAX_DELAY);
+	}
+}
 
 struct RxTaskParams rx_task_config;
+struct TxTaskParams tx_task_config;
 struct Message usb_port_msg;
-QueueHandle_t cmd_queue;
+struct Message data_msg;
+struct Message rtd_msg;
+struct mcp3551 spi_dev;
+struct adc_task_params meas_task_params = {
+		.cs_port = BOARD_INITPINS_MEASURE_CSn_PORT,
+		.cs_pin = BOARD_INITPINS_MEASURE_CSn_PIN,
+		.ch_sel0_port = BOARD_INITPINS_MEASURE_CH_SEL0_PORT,
+		.ch_sel0_pin =  BOARD_INITPINS_MEASURE_CH_SEL0_PIN,
+		.ch_sel1_port = BOARD_INITPINS_MEASURE_CH_SEL1_PORT,
+		.ch_sel1_pin =  BOARD_INITPINS_MEASURE_CH_SEL1_PIN,
+		.group_port = BOARD_INITPINS_VOLT_CURRn_PORT,
+		.group_pin = BOARD_INITPINS_VOLT_CURRn_PIN,
+		.group_a_name = "VOLT",
+		.group_a_scale = 1.0,
+		.group_a_offset = 0.0,
+		.group_b_name = "CURR",
+		.group_b_scale = 1.0,
+		.group_b_offset = 0.0,
+		.dev = &spi_dev,
+		.msg = &data_msg,
+	};
+struct adc_task_params rtd_task_params = {
+		.cs_port = BOARD_INITPINS_RTD_CSn_PORT,
+		.cs_pin = BOARD_INITPINS_RTD_CSn_PIN,
+		.ch_sel0_port = BOARD_INITPINS_RTD_CH_SEL0_PORT,
+		.ch_sel0_pin =  BOARD_INITPINS_RTD_CH_SEL0_PIN,
+		.ch_sel1_port = BOARD_INITPINS_RTD_CH_SEL1_PORT,
+		.ch_sel1_pin =  BOARD_INITPINS_RTD_CH_SEL1_PIN,
+		.group_port = BOARD_INITPINS_RTD_REFn_PORT,
+		.group_pin = BOARD_INITPINS_RTD_REFn_PIN,
+		.group_a_name = "RTD",
+		.group_a_scale = 1.0,
+		.group_a_offset = 0.0,
+		.group_b_name = "REF",
+		.group_b_scale = 1.0,
+		.group_b_offset = 0.0,
+		.dev = &spi_dev,
+		.msg = &rtd_msg,
+	};
+QueueHandle_t cmd_queue;	//post messages to this to be parsed
+QueueHandle_t tx_queue;		//post messages to this to be sent out USB port
 StreamBufferHandle_t usb_tx;
 StreamBufferHandle_t usb_rx;
 
@@ -88,12 +148,39 @@ void FreeRTOSRuntimeCounterInit(void){
  */
 void InitTask(void*params){
 	EnvInit();
-    CommandParserInit(&cmd_queue);
+
+	/* The command parser will create a queue (to post commands to be parsed to) and kick off it's thread */
+	CommandParserInit(&cmd_queue);
+
+	/* Set up USB. interaction after this point will be via the two stream buffers. Note that there can only
+	 * be one writer/reader task for each of the stream buffers!
+	 */
     USBInit(&usb_tx, &usb_rx);
-    MessageInit(&usb_port_msg,usb_tx,usb_rx);
+
+    /*
+     * Since data to the USB port will be sourced from both ADC data and command responses, we have to
+     * multiplex them into a single stream. This queue will be posted to from both sources, and a task
+     * will merge the queue data into the USB tx stream buffer
+     */
+	tx_queue = xQueueCreate(4,MESSAGE_RESP_BUFFER_LEN);
+	vQueueAddToRegistry(tx_queue,"USB");
+
+    MessageInit(&usb_port_msg,tx_queue);
+    MessageInit(&data_msg,tx_queue);
+    MessageInit(&rtd_msg,tx_queue);
+
     rx_task_config.command = cmd_queue;
     rx_task_config.msg = &usb_port_msg;
+    rx_task_config.rx_stream = usb_rx;
     xTaskCreate(CommandRxTask,"CMD Parse",256,(void*)&rx_task_config,0,NULL);
+
+    tx_task_config.msg_queue = tx_queue;
+    tx_task_config.usb_tx_stream = usb_tx;
+    xTaskCreate(DataTxTask,"TX Data",256,(void*)&tx_task_config,0,NULL);
+
+    mcp3551_init(&spi_dev);
+    xTaskCreate(ADCTask,"MEAS",256,(void*)&meas_task_params,0,NULL);
+    xTaskCreate(ADCTask,"RTD",256,(void*)&rtd_task_params,0,NULL);
 
 	vTaskDelete(NULL);
 }

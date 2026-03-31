@@ -14,7 +14,6 @@
 environment_t env;
 #define EEPROM_I2C_ADDR 	(0x50)
 #define EEPROM_PAGE_SIZE	32
-#define DIV_ROUND_UP(x,y)	(((x)+(y)-1)/(y))
 //used internally to write a single page (or less).  That means that addr has to be aligned to EEPROM_PAGE_SIZE bytes for this to work correctly
 static int EEPROMWritePage(uint16_t addr, uint8_t * buff, uint32_t bytes){
 	int status;

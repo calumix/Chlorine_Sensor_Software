@@ -15,6 +15,8 @@ enum {
 
 #include <stdint.h>
 
+#define DIV_ROUND_UP(x,y)	(((x)+(y)-1)/(y))
+
 /*
  * make sure structure elements are aligned to their native length!
  */

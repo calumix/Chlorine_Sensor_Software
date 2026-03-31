@@ -53,11 +53,17 @@ void BOARD_InitBootPins(void);
  * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
 #define PIO0_13_DIGIMODE_DIGITAL 0x01u
 /*!
+ * @brief Switch between GPIO mode and I2C mode.: I2C mode. */
+#define PIO0_13_EGP_I2C_MODE 0x00u
+/*!
  * @brief Selects pin function.: Alternative connection 1. */
 #define PIO0_13_FUNC_ALT1 0x01u
 /*!
  * @brief Select Digital mode.: Enable Digital mode. Digital input is enabled. */
 #define PIO0_14_DIGIMODE_DIGITAL 0x01u
+/*!
+ * @brief Switch between GPIO mode and I2C mode.: I2C mode. */
+#define PIO0_14_EGP_I2C_MODE 0x00u
 /*!
  * @brief Selects pin function.: Alternative connection 1. */
 #define PIO0_14_FUNC_ALT1 0x01u
@@ -337,6 +343,17 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_MEASURE_CH_SEL0_PIN 22U                   /*!<@brief PORT pin number */
 #define BOARD_INITPINS_MEASURE_CH_SEL0_PIN_MASK (1U << 22U)      /*!<@brief PORT pin mask */
                                                                  /* @} */
+
+/*! @name PIO0_23 (number 12), RTD_REFn
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_RTD_REFn_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_RTD_REFn_GPIO_PIN_MASK (1U << 23U) /*!<@brief GPIO pin mask */
+#define BOARD_INITPINS_RTD_REFn_PORT 0U                   /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_RTD_REFn_PIN 23U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_RTD_REFn_PIN_MASK (1U << 23U)      /*!<@brief PORT pin mask */
+                                                          /* @} */
 
 /*! @name PIO0_26 (number 40), USB_POWERED
   @{ */

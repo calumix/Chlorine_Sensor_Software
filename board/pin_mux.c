@@ -32,7 +32,7 @@ pin_labels:
 - {pin_num: '17', pin_signal: PIO0_8/FC3_SSEL3/FC5_RXD_SDA_MOSI_DATA/SWO/SECURE_GPIO0_8, label: LED_ONn, identifier: LED_ONn}
 - {pin_num: '49', pin_signal: PIO0_21/FC3_RTS_SCL_SSEL1/UTICK_CAP3/CTIMER3_MAT3/SCT_GPI3/FC7_SCK/HS_SPI_SSEL3/PLU_CLKIN/SECURE_GPIO0_21, label: MEASURE_CH_SEL1, identifier: MEASURE_CH_SEL1}
 - {pin_num: '50', pin_signal: PIO0_22/FC6_TXD_SCL_MISO_WS/UTICK_CAP1/CT_INP15/SCT0_OUT3/USB0_VBUS/PLU_OUT7/SECURE_GPIO0_22, label: MEASURE_CH_SEL0, identifier: MEASURE_CH_SEL0}
-- {pin_num: '12', pin_signal: PIO0_23/MCLK/CTIMER1_MAT2/CTIMER3_MAT3/SCT0_OUT4/FC0_CTS_SDA_SSEL0/SECURE_GPIO0_23/ADC0_0, label: RTD_nREF}
+- {pin_num: '12', pin_signal: PIO0_23/MCLK/CTIMER1_MAT2/CTIMER3_MAT3/SCT0_OUT4/FC0_CTS_SDA_SSEL0/SECURE_GPIO0_23/ADC0_0, label: RTD_REFn, identifier: RTD_REFn}
 - {pin_num: '40', pin_signal: PIO0_26/FC2_RXD_SDA_MOSI_DATA/CLKOUT/CT_INP14/SCT0_OUT5/USB0_IDVALUE/FC0_SCK/HS_SPI_MOSI/SECURE_GPIO0_26, label: USB_POWERED, identifier: USB_POWERED}
 - {pin_num: '15', pin_signal: PIO0_31/FC0_CTS_SDA_SSEL0/CTIMER0_MAT1/SCT0_OUT3/SECURE_GPIO0_31/ADC0_3, label: BTN1n, identifier: BTN1n}
 - {pin_num: '41', pin_signal: PIO1_2/CAN0_TD/CTIMER0_MAT3/SCT_GPI6/HS_SPI_SCK/USB1_PORTPWRN/PLU_OUT5, label: CAN_TD, identifier: CAN_TD}
@@ -67,13 +67,15 @@ BOARD_InitPins:
   - {pin_num: '7', peripheral: SYSCON, signal: CLKOUT, pin_signal: PIO0_16/FC4_TXD_SCL_MISO_WS/CLKOUT/CT_INP4/SECURE_GPIO0_16/ADC0_8}
   - {pin_num: '36', peripheral: FLEXCOMM3, signal: SCK, pin_signal: PIO0_0/FC3_SCK/CTIMER0_MAT0/SCT_GPI0/SECURE_GPIO0_0/ACMP0_A}
   - {pin_num: '2', peripheral: GPIO, signal: 'PIO0, 1', pin_signal: PIO0_1/FC3_CTS_SDA_SSEL0/CT_INP0/SCT_GPI1/CMP0_OUT/SECURE_GPIO0_1}
-  - {pin_num: '52', peripheral: FLEXCOMM3, signal: TXD_SCL_MISO_WS, pin_signal: PIO0_2/FC3_TXD_SCL_MISO_WS/CT_INP1/SCT0_OUT0/SCT_GPI2/SECURE_GPIO0_2}
+  - {pin_num: '52', peripheral: FLEXCOMM3, signal: TXD_SCL_MISO_WS, pin_signal: PIO0_2/FC3_TXD_SCL_MISO_WS/CT_INP1/SCT0_OUT0/SCT_GPI2/SECURE_GPIO0_2, direction: INPUT}
   - {pin_num: '56', peripheral: GPIO, signal: 'PIO0, 5', pin_signal: PIO0_5/CAN0_TD/FC4_RXD_SDA_MOSI_DATA/CTIMER3_MAT0/SCT_GPI5/FC3_RTS_SCL_SSEL1/MCLK/SECURE_GPIO0_5}
   - {pin_num: '57', peripheral: GPIO, signal: 'PIO0, 6', pin_signal: PIO0_6/FC3_SCK/CT_INP13/CTIMER4_MAT0/SCT_GPI6/SECURE_GPIO0_6}
   - {pin_num: '1', peripheral: GPIO, signal: 'PIO0, 7', pin_signal: PIO0_7/FC3_RTS_SCL_SSEL1/FC5_SCK/FC1_SCK/SECURE_GPIO0_7}
   - {pin_num: '17', peripheral: GPIO, signal: 'PIO0, 8', pin_signal: PIO0_8/FC3_SSEL3/FC5_RXD_SDA_MOSI_DATA/SWO/SECURE_GPIO0_8}
-  - {pin_num: '46', peripheral: FLEXCOMM1, signal: CTS_SDA_SSEL0, pin_signal: PIO0_13/FC1_CTS_SDA_SSEL0/UTICK_CAP0/CT_INP0/SCT_GPI0/FC1_RXD_SDA_MOSI_DATA/PLU_IN0/SECURE_GPIO0_13}
-  - {pin_num: '47', peripheral: FLEXCOMM1, signal: RTS_SCL_SSEL1, pin_signal: PIO0_14/FC1_RTS_SCL_SSEL1/UTICK_CAP1/CT_INP1/SCT_GPI1/FC1_TXD_SCL_MISO_WS/PLU_IN1/SECURE_GPIO0_14}
+  - {pin_num: '46', peripheral: FLEXCOMM1, signal: CTS_SDA_SSEL0, pin_signal: PIO0_13/FC1_CTS_SDA_SSEL0/UTICK_CAP0/CT_INP0/SCT_GPI0/FC1_RXD_SDA_MOSI_DATA/PLU_IN0/SECURE_GPIO0_13,
+    egp: i2c}
+  - {pin_num: '47', peripheral: FLEXCOMM1, signal: RTS_SCL_SSEL1, pin_signal: PIO0_14/FC1_RTS_SCL_SSEL1/UTICK_CAP1/CT_INP1/SCT_GPI1/FC1_TXD_SCL_MISO_WS/PLU_IN1/SECURE_GPIO0_14,
+    egp: i2c}
   - {pin_num: '14', peripheral: GPIO, signal: 'PIO0, 15', pin_signal: PIO0_15/FC6_CTS_SDA_SSEL0/UTICK_CAP2/CT_INP16/SCT0_OUT2/SECURE_GPIO0_15/ADC0_2}
   - {pin_num: '3', peripheral: GPIO, signal: 'PIO0, 17', pin_signal: PIO0_17/FC4_SSEL2/SCT_GPI7/SCT0_OUT0/PLU_IN2/SECURE_GPIO0_17}
   - {pin_num: '58', peripheral: GPIO, signal: 'PIO0, 19', pin_signal: PIO0_19/FC4_RTS_SCL_SSEL1/UTICK_CAP0/CTIMER0_MAT2/SCT0_OUT2/FC7_TXD_SCL_MISO_WS/PLU_IN4/SECURE_GPIO0_19}
@@ -170,7 +172,7 @@ void BOARD_InitPins(void)
 
     IOCON->PIO[0][13] = ((IOCON->PIO[0][13] &
                           /* Mask bits to zero which are setting */
-                          (~(IOCON_PIO_FUNC_MASK | IOCON_PIO_DIGIMODE_MASK)))
+                          (~(IOCON_PIO_FUNC_MASK | IOCON_PIO_DIGIMODE_MASK | IOCON_PIO_EGP_MASK)))
 
                          /* Selects pin function.
                           * : PORT013 (pin 46) is configured as FC1_CTS_SDA_SSEL0. */
@@ -179,11 +181,15 @@ void BOARD_InitPins(void)
                          /* Select Digital mode.
                           * : Enable Digital mode.
                           * Digital input is enabled. */
-                         | IOCON_PIO_DIGIMODE(PIO0_13_DIGIMODE_DIGITAL));
+                         | IOCON_PIO_DIGIMODE(PIO0_13_DIGIMODE_DIGITAL)
+
+                         /* Switch between GPIO mode and I2C mode.
+                          * : I2C mode. */
+                         | IOCON_PIO_EGP(PIO0_13_EGP_I2C_MODE));
 
     IOCON->PIO[0][14] = ((IOCON->PIO[0][14] &
                           /* Mask bits to zero which are setting */
-                          (~(IOCON_PIO_FUNC_MASK | IOCON_PIO_DIGIMODE_MASK)))
+                          (~(IOCON_PIO_FUNC_MASK | IOCON_PIO_DIGIMODE_MASK | IOCON_PIO_EGP_MASK)))
 
                          /* Selects pin function.
                           * : PORT014 (pin 47) is configured as FC1_RTS_SCL_SSEL1. */
@@ -192,7 +198,11 @@ void BOARD_InitPins(void)
                          /* Select Digital mode.
                           * : Enable Digital mode.
                           * Digital input is enabled. */
-                         | IOCON_PIO_DIGIMODE(PIO0_14_DIGIMODE_DIGITAL));
+                         | IOCON_PIO_DIGIMODE(PIO0_14_DIGIMODE_DIGITAL)
+
+                         /* Switch between GPIO mode and I2C mode.
+                          * : I2C mode. */
+                         | IOCON_PIO_EGP(PIO0_14_EGP_I2C_MODE));
 
     IOCON->PIO[0][15] = ((IOCON->PIO[0][15] &
                           /* Mask bits to zero which are setting */

@@ -14,7 +14,6 @@
 #include "fsl_i2c.h"
 #include "fsl_i2c_freertos.h"
 #include "fsl_spi.h"
-#include "fsl_spi_freertos.h"
 #include "fsl_reset.h"
 #include "fsl_usart.h"
 #include "fsl_clock.h"
@@ -75,6 +74,8 @@ extern "C" {
 #define FLEXCOMM_SPI_FLEXCOMM_IRQN FLEXCOMM3_IRQn
 /* FLEXCOMM_SPI interrupt vector priority. */
 #define FLEXCOMM_SPI_FLEXCOMM_IRQ_PRIORITY 2
+/* FLEXCOMM_SPI interrupt handler identifier. */
+#define FLEXCOMM3_IRQHandler FLEXCOMM3_IRQHandler
 /* Definition of peripheral ID */
 #define FLEXCOMM_UART_PERIPHERAL ((USART_Type *)FLEXCOMM0)
 /* Definition of the clock source frequency */
@@ -100,7 +101,6 @@ extern "C" {
 extern dma_handle_t DMA0_CH0_Handle;
 extern i2c_rtos_handle_t FLEXCOMM_I2C_rtosHandle;
 extern const i2c_master_config_t FLEXCOMM_I2C_config;
-extern spi_rtos_handle_t FLEXCOMM_SPI_rtosHandle;
 extern const spi_master_config_t FLEXCOMM_SPI_config;
 extern const usart_config_t FLEXCOMM_UART_config;
 extern const crc_config_t CRC_ENGINE_config;

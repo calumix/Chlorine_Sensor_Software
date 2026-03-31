@@ -222,26 +222,33 @@ static void FLEXCOMM_I2C_init(void) {
 instance:
 - name: 'FLEXCOMM_SPI'
 - type: 'flexcomm_spi'
-- mode: 'freertos'
+- mode: 'SPI_Interrupt'
 - custom_name_enabled: 'true'
 - type_id: 'flexcomm_spi_2.3.0'
 - functional_group: 'BOARD_InitPeripherals'
 - peripheral: 'FLEXCOMM3'
 - config_sets:
+  - interrupt:
+    - interrupt_sel: 'kSPI_RxLvlIrq'
+    - interrupt:
+      - IRQn: 'FLEXCOMM3_IRQn'
+      - enable_interrrupt: 'enabled'
+      - enable_priority: 'true'
+      - priority: '2'
+      - enable_custom_name: 'true'
+      - handler_custom_name: 'FLEXCOMM3_IRQHandler'
   - fsl_spi:
     - spi_mode: 'kSPI_Master'
     - clockSource: 'FXCOMFunctionClock'
     - clockSourceFreq: 'ClocksTool_DefaultInit'
-    - rtos_handle:
-      - enable_custom_name: 'false'
     - spi_master_config:
       - enableLoopback: 'false'
       - enableMaster: 'true'
       - polarity: 'kSPI_ClockPolarityActiveHigh'
       - phase: 'kSPI_ClockPhaseSecondEdge'
       - direction: 'kSPI_MsbFirst'
-      - baudRate_Bps: '500000'
-      - dataWidth: 'kSPI_Data16Bits'
+      - baudRate_Bps: '2000000'
+      - dataWidth: 'kSPI_Data8Bits'
       - sselNum: 'kSPI_Ssel0'
       - sselPol_set: ''
       - txWatermark: 'kSPI_TxFifo0'
@@ -251,21 +258,16 @@ instance:
         - postDelay: '0'
         - frameDelay: '0'
         - transferDelay: '0'
-    - interrupt_priority:
-      - IRQn: 'FLEXCOMM3_IRQn'
-      - enable_priority: 'true'
-      - priority: '2'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
-spi_rtos_handle_t FLEXCOMM_SPI_rtosHandle;
 const spi_master_config_t FLEXCOMM_SPI_config = {
   .enableLoopback = false,
   .enableMaster = true,
   .polarity = kSPI_ClockPolarityActiveHigh,
   .phase = kSPI_ClockPhaseSecondEdge,
   .direction = kSPI_MsbFirst,
-  .baudRate_Bps = 500000UL,
-  .dataWidth = kSPI_Data16Bits,
+  .baudRate_Bps = 2000000UL,
+  .dataWidth = kSPI_Data8Bits,
   .sselNum = kSPI_Ssel0,
   .sselPol = kSPI_SpolActiveAllLow,
   .txWatermark = kSPI_TxFifo0,
@@ -280,9 +282,13 @@ const spi_master_config_t FLEXCOMM_SPI_config = {
 
 static void FLEXCOMM_SPI_init(void) {
   /* Initialization function */
-  SPI_RTOS_Init(&FLEXCOMM_SPI_rtosHandle, FLEXCOMM_SPI_PERIPHERAL, &FLEXCOMM_SPI_config, FLEXCOMM_SPI_CLOCK_SOURCE);
+  SPI_MasterInit(FLEXCOMM_SPI_PERIPHERAL, &FLEXCOMM_SPI_config, FLEXCOMM_SPI_CLOCK_SOURCE);
+  /* Enable interrupts */
+  SPI_EnableInterrupts(FLEXCOMM_SPI_PERIPHERAL, (kSPI_RxLvlIrq));
   /* Interrupt vector FLEXCOMM3_IRQn priority settings in the NVIC. */
   NVIC_SetPriority(FLEXCOMM_SPI_FLEXCOMM_IRQN, FLEXCOMM_SPI_FLEXCOMM_IRQ_PRIORITY);
+  /* Enable interrupt FLEXCOMM_SPI_FLEXCOMM_IRQN request in the NVIC */
+  EnableIRQ(FLEXCOMM_SPI_FLEXCOMM_IRQN);
 }
 
 /***********************************************************************************************************************
