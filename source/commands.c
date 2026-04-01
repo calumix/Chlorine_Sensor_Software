@@ -15,7 +15,11 @@
 #include "message.h"
 #include "peripherals.h"
 #include <math.h>
+#include "channel.h"
 
+uint8_t dig_pot_addr[NUM_CHANNELS] = {0x18, 0x4c, 0x1a, 0x4e};
+uint8_t io_exp_addr[NUM_CHANNELS] = {0x38,0x39, 0x3a, 0x3b};
+struct channel channel_cfg[NUM_CHANNELS];
 
 /*
  * Echos the first argument back (for testing)
@@ -115,6 +119,53 @@ int SNCommand(struct Command * cmd,StreamBufferHandle_t reply_stream,int argc, c
 */
 
 /*
+ * Set channel parameters (voltage/TIA amplification/isolation
+ * To read:
+ * CH,[ch_num]
+ * To write:
+ * CH, [ch_num],[on/off],[voltage],[1|10|100|1000]
+ */
+int ChCommand(struct Command * cmd,struct Message * msg,int argc, char * argv[]){
+	uint8_t ch;
+	struct channel_state st;
+	bool isolate = 0;
+	uint16_t range = 0;
+
+	if(argc >= 2){
+		ch = strtoul(argv[1],NULL,0)-1;
+		if(ch >= NUM_CHANNELS){
+			return 1;
+		}
+	}else{
+		return 1;
+	}
+
+	if(argc == 5){
+		//Set range
+		if(strncmp(argv[2],"on",2)==0) isolate = 0;
+		else if(strncmp(argv[2],"off",3)==0) isolate = 1;
+		else return 1;
+
+		st.voltage = strtof(argv[3],NULL);
+		range = strtoul(argv[4],NULL,0);
+		st.range = ChannelRangeUaToNum(range);
+		ChannelSetState(&channel_cfg[ch],&st,isolate);
+
+	}else if(argc != 2){
+		//not a set, not a read. syntax error
+		return 1;
+	}
+	ChannelGetState(&channel_cfg[ch],&st);
+	MessageSendFormat(msg,"%s,%u,%s,%f,%u",cmd->str,
+			ch+1,
+			channel_cfg[ch].isolate ? "off" : "on",
+			st.voltage,
+			ChannelRangeNumToUa(st.range)
+			);
+	return 0;
+}
+
+/*
  * This table has our message commands and the function to execute for each
  */
 static struct Command commands[] = {
@@ -122,6 +173,7 @@ static struct Command commands[] = {
 		{"ECHO",EchoCommand},
 		{"VER",VerCommand},
 		{"ENV",EnvCommand},
+		{"CH",ChCommand},
 		//{"SN",SNCommand},
 
 };
@@ -161,6 +213,11 @@ static void HandleMessage(struct Message * msg){
 void CommandParserTask(void*params){
 	QueueHandle_t * msg_queue = (QueueHandle_t*)params;
 	struct Message msg;
+	int i;
+
+	for(i=0;i<NUM_CHANNELS;i++){
+		ChannelInit(&channel_cfg[i], dig_pot_addr[i], io_exp_addr[i]);
+	}
 
 	while(1){
 		xQueueReceive(*msg_queue,&msg,portMAX_DELAY);

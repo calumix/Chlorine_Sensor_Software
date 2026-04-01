@@ -20,10 +20,40 @@
 #define IO_EXP_TIA_GAIN_1	(1<<5)
 #define IO_EXP_TIA_GAIN_0	(1<<6)
 
+struct range_map ranges[NUM_RANGES]={
+		{CH_RANGE_1UA,1},
+		{CH_RANGE_10UA,10},
+		{CH_RANGE_100UA,100},
+		{CH_RANGE_1MA,1000},
+};
+
 #define R_TOP			750000.0
 #define R_AB			10000.0
 #define RDAC_COUNTS		64
 #define VOLT_SET_REF	1.65
+
+uint16_t ChannelRangeNumToUa(enum channel_range r){
+	int i;
+	for(i=0;i<NUM_RANGES;i++){
+		if(ranges[i].range == r)
+			return ranges[i].range_ua;
+	}
+	return ranges[i].range_ua;
+}
+
+enum channel_range ChannelRangeUaToNum(uint16_t ua){
+	int i;
+	//assume largest range to start.
+	uint16_t selected_index=NUM_RANGES-1;
+	//loop from second largest (3) down to lowest (1).
+	for(i=NUM_RANGES-1;i>0;i++){
+		if(ranges[i-1].range_ua < ua){
+			return ranges[selected_index].range;	//use currently selected index
+		}
+		else selected_index = i-1;
+	}
+	return ranges[selected_index].range;
+}
 
 static void _setvoltage(struct channel * ch, float voltage){
 	double calc;
