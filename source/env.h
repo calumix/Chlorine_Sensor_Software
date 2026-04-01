@@ -9,7 +9,6 @@
 #define ENV_H_
 
 enum {
-	ENV_FLAGS_8BIT_ECHO = (1<<0),	//if set, serial echogram data is sent as 8-bit values, otherwise 16-bit
 	ENV_FLAGS_DEFAULT = (1<<31),	//set if the environment is default (crc failed)
 };
 
