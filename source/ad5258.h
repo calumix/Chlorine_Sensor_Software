@@ -19,5 +19,6 @@ struct ad5258 {
 int ad5258_load_tolerance(struct ad5258 * dev);
 int ad5258_read_rdac(struct ad5258 * dev, uint8_t * val);
 int ad5258_write_rdac(struct ad5258 * dev, uint8_t val);
+int ad5258_set_wp(struct ad5258 * dev, uint8_t wp);
 
 #endif /* AD5258_H_ */

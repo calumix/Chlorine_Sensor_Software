@@ -457,6 +457,6 @@ void USBInit(StreamBufferHandle_t * tx, StreamBufferHandle_t * rx){
     s_cdcVcom.rxStream = xStreamBufferCreate(1024,1);
     *rx = s_cdcVcom.rxStream;
     *tx = s_cdcVcom.txStream;
-    xTaskCreate(USBTxTask,"USB Tx",256,NULL,0,&s_cdcVcom.txTaskHandle);
+    xTaskCreate(USBTxTask,"USB Tx",256,NULL,1,&s_cdcVcom.txTaskHandle);
 
 }

@@ -26,6 +26,7 @@
 #include "usb_port.h"
 #include "env.h"
 #include "adc.h"
+#include "channel.h"
 /*
  * Allocating this here (instead of letting the driver allocate it) is a workaround
  * for a bug in the driver/code generator. If the driver allocats this, it puts it in the normal SRAM bank
@@ -91,43 +92,7 @@ struct TxTaskParams tx_task_config;
 struct Message usb_port_msg;
 struct Message data_msg;
 struct Message rtd_msg;
-struct mcp3551 spi_dev;
-struct adc_task_params meas_task_params = {
-		.cs_port = BOARD_INITPINS_MEASURE_CSn_PORT,
-		.cs_pin = BOARD_INITPINS_MEASURE_CSn_PIN,
-		.ch_sel0_port = BOARD_INITPINS_MEASURE_CH_SEL0_PORT,
-		.ch_sel0_pin =  BOARD_INITPINS_MEASURE_CH_SEL0_PIN,
-		.ch_sel1_port = BOARD_INITPINS_MEASURE_CH_SEL1_PORT,
-		.ch_sel1_pin =  BOARD_INITPINS_MEASURE_CH_SEL1_PIN,
-		.group_port = BOARD_INITPINS_VOLT_CURRn_PORT,
-		.group_pin = BOARD_INITPINS_VOLT_CURRn_PIN,
-		.group_a_name = "VOLT",
-		.group_a_scale = 1.0,
-		.group_a_offset = 0.0,
-		.group_b_name = "CURR",
-		.group_b_scale = 1.0,
-		.group_b_offset = 0.0,
-		.dev = &spi_dev,
-		.msg = &data_msg,
-	};
-struct adc_task_params rtd_task_params = {
-		.cs_port = BOARD_INITPINS_RTD_CSn_PORT,
-		.cs_pin = BOARD_INITPINS_RTD_CSn_PIN,
-		.ch_sel0_port = BOARD_INITPINS_RTD_CH_SEL0_PORT,
-		.ch_sel0_pin =  BOARD_INITPINS_RTD_CH_SEL0_PIN,
-		.ch_sel1_port = BOARD_INITPINS_RTD_CH_SEL1_PORT,
-		.ch_sel1_pin =  BOARD_INITPINS_RTD_CH_SEL1_PIN,
-		.group_port = BOARD_INITPINS_RTD_REFn_PORT,
-		.group_pin = BOARD_INITPINS_RTD_REFn_PIN,
-		.group_a_name = "RTD",
-		.group_a_scale = 1.0,
-		.group_a_offset = 0.0,
-		.group_b_name = "REF",
-		.group_b_scale = 1.0,
-		.group_b_offset = 0.0,
-		.dev = &spi_dev,
-		.msg = &rtd_msg,
-	};
+
 QueueHandle_t cmd_queue;	//post messages to this to be parsed
 QueueHandle_t tx_queue;		//post messages to this to be sent out USB port
 StreamBufferHandle_t usb_tx;
@@ -149,6 +114,8 @@ void FreeRTOSRuntimeCounterInit(void){
 void InitTask(void*params){
 	EnvInit();
 
+	ChannelInit();
+
 	/* The command parser will create a queue (to post commands to be parsed to) and kick off it's thread */
 	CommandParserInit(&cmd_queue);
 
@@ -166,21 +133,19 @@ void InitTask(void*params){
 	vQueueAddToRegistry(tx_queue,"USB");
 
     MessageInit(&usb_port_msg,tx_queue);
-    MessageInit(&data_msg,tx_queue);
-    MessageInit(&rtd_msg,tx_queue);
+
 
     rx_task_config.command = cmd_queue;
     rx_task_config.msg = &usb_port_msg;
     rx_task_config.rx_stream = usb_rx;
-    xTaskCreate(CommandRxTask,"CMD Parse",256,(void*)&rx_task_config,0,NULL);
+    xTaskCreate(CommandRxTask,"CMD Parse",128,(void*)&rx_task_config,1,NULL);
 
     tx_task_config.msg_queue = tx_queue;
     tx_task_config.usb_tx_stream = usb_tx;
-    xTaskCreate(DataTxTask,"TX Data",256,(void*)&tx_task_config,0,NULL);
+    xTaskCreate(DataTxTask,"TX Data",128,(void*)&tx_task_config,1,NULL);
 
-    mcp3551_init(&spi_dev);
-    xTaskCreate(ADCTask,"MEAS",256,(void*)&meas_task_params,0,NULL);
-    xTaskCreate(ADCTask,"RTD",256,(void*)&rtd_task_params,0,NULL);
+    xTaskCreate(MeasTask,"MEAS",384,(void*)tx_queue,0,NULL);
+    xTaskCreate(RTDTask,"RTD",384,(void*)tx_queue,0,NULL);
 
 	vTaskDelete(NULL);
 }

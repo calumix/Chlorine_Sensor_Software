@@ -23,7 +23,7 @@ void FLEXCOMM3_IRQHandler(void) {
   BaseType_t task_woken=pdFALSE;
 
   /* Reading all interrupt flags of status register */
-  intStatus = SPI_GetStatusFlags(FLEXCOMM_SPI_PERIPHERAL);
+  intStatus = FLEXCOMM_SPI_PERIPHERAL->INTSTAT;
 
   if(intStatus & SPI_STAT_MSTIDLE(1)){
 	  FLEXCOMM_SPI_PERIPHERAL->INTENCLR = SPI_STAT_MSTIDLE(1);	//disable further interrupts
@@ -56,8 +56,13 @@ int mcp3551_start(struct mcp3551 * dev,uint32_t gpio_port, uint32_t gpio_pin){
 	return 1;
 }
 
-int mcp3551_read(struct mcp3551 * dev,uint32_t gpio_port, uint32_t gpio_pin, uint32_t * value){
+int mcp3551_read(struct mcp3551 * dev,uint32_t gpio_port, uint32_t gpio_pin, int32_t * value){
 	uint8_t t;
+	union{
+		uint8_t bytes[4];
+		int32_t total;
+	} val;
+	uint32_t rd_val;
 
 	/* wait until the ADC is ready */
 	do{
@@ -82,22 +87,33 @@ int mcp3551_read(struct mcp3551 * dev,uint32_t gpio_port, uint32_t gpio_pin, uin
 	//ADC is now ready, we still hold the mutex, and CS is still low
 
 	//start SPI read of 3 bytes
-	FLEXCOMM_SPI_PERIPHERAL->FIFOWR = 0;
-	FLEXCOMM_SPI_PERIPHERAL->FIFOWR = 0;
-	FLEXCOMM_SPI_PERIPHERAL->FIFOWR = 0;
+	FLEXCOMM_SPI_PERIPHERAL->FIFOWR = SPI_FIFOWR_LEN(8-1);
+	FLEXCOMM_SPI_PERIPHERAL->FIFOWR = SPI_FIFOWR_LEN(8-1);
+	FLEXCOMM_SPI_PERIPHERAL->FIFOWR = SPI_FIFOWR_LEN(8-1) | SPI_FIFOWR_EOT(1);
 
 	//enable our idle interrupt
 	FLEXCOMM_SPI_PERIPHERAL->INTENSET = SPI_STAT_MSTIDLE(1);
 
 	xSemaphoreTake(sync,portMAX_DELAY);
+	GPIO_PinWrite(GPIO,gpio_port,gpio_pin,1);
 
 	//read complete, get data
-	*value = FLEXCOMM_SPI_PERIPHERAL->FIFORD;
-	*value += FLEXCOMM_SPI_PERIPHERAL->FIFORD << 8;
-	*value += FLEXCOMM_SPI_PERIPHERAL->FIFORD << 16;
+	val.bytes[3] = 0;
+	rd_val = FLEXCOMM_SPI_PERIPHERAL->FIFORD;
+	val.bytes[2] = rd_val & 0x00FF;
+	rd_val = FLEXCOMM_SPI_PERIPHERAL->FIFORD;
+	val.bytes[1] = rd_val & 0x00FF;
+	rd_val = FLEXCOMM_SPI_PERIPHERAL->FIFORD;
+	val.bytes[0] = rd_val & 0x00FF;
 
-	GPIO_PinWrite(GPIO,gpio_port,gpio_pin,1);
 	xSemaphoreGive(dev->lock);
+
+	val.bytes[2] &= 0x3F;	//clear overflow bits
+	if(val.bytes[2] & 0x20){	//sign extend
+		val.bytes[2] |= 0xC0;
+		val.bytes[3] = 0xFF;
+	}
+	*value = val.total;
 
 	return 1;
 }

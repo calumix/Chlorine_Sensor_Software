@@ -11,6 +11,39 @@
 #include "tca9554.h"
 #include "ad5258.h"
 
+/*
+ * This wraps the mcp3551 + multiplexor options, and prevents multiple access
+ */
+
+enum {
+	MEAS_ADC_VOLT_GROUP = 1,
+	MEAS_ADC_CURR_GROUP = 0,
+};
+
+enum {
+	RTD_ADC_RTD_GROUP = 1,
+	RTD_ADC_REF_GROUP = 0,
+};
+
+
+struct adc {
+	struct mcp3551 * dev;
+
+	SemaphoreHandle_t lock;	//protects objects below
+
+	uint32_t cs_port;
+	uint32_t cs_pin;
+
+	uint32_t ch_sel0_port;
+	uint32_t ch_sel0_pin;
+	uint32_t ch_sel1_port;
+	uint32_t ch_sel1_pin;
+
+	uint32_t group_port;
+	uint32_t group_pin;
+};
+
+
 struct channel {
 	struct tca9554 io_exp;
 	struct ad5258 pot;
@@ -30,6 +63,7 @@ enum channel_range {
 struct range_map {
 	enum channel_range range;
 	uint16_t range_ua;
+	float scale;
 };
 
 extern struct range_map ranges[NUM_RANGES];
@@ -39,9 +73,16 @@ struct channel_state {
 	enum channel_range range;
 };
 
-int ChannelInit(struct channel * ch, uint8_t dig_pot_addr, uint8_t io_exp_addr);
-int ChannelSetState(struct channel * ch, const struct channel_state *state,bool isolate);
-int ChannelGetState(struct channel * ch, struct channel_state *state);
+void ChannelInit(void);
+void ChannelSetState(uint8_t channel_num, const struct channel_state *state,bool isolate);
+int ChannelGetState(uint8_t channel_num, struct channel_state *state);
 enum channel_range ChannelRangeUaToNum(uint16_t ua);
 uint16_t ChannelRangeNumToUa(enum channel_range r);
+float ChannelRangeNumToScale(enum channel_range r);
+float ChannelReadVoltage(uint8_t channel_num);
+float ChannelReadCurrent(uint8_t channel_num);
+float ChannelReadResistance(uint8_t channel_num, float * voltage, float * current);
+float ChannelReadRTD(uint8_t channel_num);
+void ChannelAutoRange(uint8_t channel_num, float max_voltage, float max_resistance);
+
 #endif /* CHANNEL_H_ */

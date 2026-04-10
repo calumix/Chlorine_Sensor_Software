@@ -229,7 +229,7 @@ instance:
 - peripheral: 'FLEXCOMM3'
 - config_sets:
   - interrupt:
-    - interrupt_sel: 'kSPI_RxLvlIrq'
+    - interrupt_sel: ''
     - interrupt:
       - IRQn: 'FLEXCOMM3_IRQn'
       - enable_interrrupt: 'enabled'
@@ -244,7 +244,7 @@ instance:
     - spi_master_config:
       - enableLoopback: 'false'
       - enableMaster: 'true'
-      - polarity: 'kSPI_ClockPolarityActiveHigh'
+      - polarity: 'kSPI_ClockPolarityActiveLow'
       - phase: 'kSPI_ClockPhaseSecondEdge'
       - direction: 'kSPI_MsbFirst'
       - baudRate_Bps: '2000000'
@@ -263,7 +263,7 @@ instance:
 const spi_master_config_t FLEXCOMM_SPI_config = {
   .enableLoopback = false,
   .enableMaster = true,
-  .polarity = kSPI_ClockPolarityActiveHigh,
+  .polarity = kSPI_ClockPolarityActiveLow,
   .phase = kSPI_ClockPhaseSecondEdge,
   .direction = kSPI_MsbFirst,
   .baudRate_Bps = 2000000UL,
@@ -283,8 +283,6 @@ const spi_master_config_t FLEXCOMM_SPI_config = {
 static void FLEXCOMM_SPI_init(void) {
   /* Initialization function */
   SPI_MasterInit(FLEXCOMM_SPI_PERIPHERAL, &FLEXCOMM_SPI_config, FLEXCOMM_SPI_CLOCK_SOURCE);
-  /* Enable interrupts */
-  SPI_EnableInterrupts(FLEXCOMM_SPI_PERIPHERAL, (kSPI_RxLvlIrq));
   /* Interrupt vector FLEXCOMM3_IRQn priority settings in the NVIC. */
   NVIC_SetPriority(FLEXCOMM_SPI_FLEXCOMM_IRQN, FLEXCOMM_SPI_FLEXCOMM_IRQ_PRIORITY);
   /* Enable interrupt FLEXCOMM_SPI_FLEXCOMM_IRQN request in the NVIC */
@@ -462,7 +460,7 @@ instance:
     - mcanConfig:
       - clockSource: 'FunctionClock'
       - clockSourceFreq: 'ClocksTool_DefaultInit'
-      - baudRateA: '500000'
+      - baudRateA: '125000'
       - baudRateD: '1000000'
       - enableCanfdNormal: 'false'
       - enableCanfdSwitch: 'false'
@@ -516,7 +514,7 @@ instance:
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 const mcan_config_t CAN0_config = {
-  .baudRateA = 500000UL,
+  .baudRateA = 125000UL,
   .baudRateD = 1000000UL,
   .enableCanfdNormal = false,
   .enableCanfdSwitch = false,
@@ -524,7 +522,7 @@ const mcan_config_t CAN0_config = {
   .enableLoopBackExt = false,
   .enableBusMon = false,
   .timingConfig = {
-    .preDivider = 0,
+    .preDivider = 7,
     .rJumpwidth = 3,
     .seg1 = 10,
     .seg2 = 3,

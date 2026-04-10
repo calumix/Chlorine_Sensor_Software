@@ -207,6 +207,7 @@ void BOARD_InitBootPins(void);
 
 /* Symbols to be used with GPIO driver */
 #define BOARD_INITPINS_RTD_CH_SEL0_GPIO GPIO                /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_RTD_CH_SEL0_INIT_GPIO_VALUE 0U       /*!<@brief GPIO output initial state */
 #define BOARD_INITPINS_RTD_CH_SEL0_GPIO_PIN_MASK (1U << 1U) /*!<@brief GPIO pin mask */
 #define BOARD_INITPINS_RTD_CH_SEL0_PORT 0U                  /*!<@brief PORT peripheral base pointer */
 #define BOARD_INITPINS_RTD_CH_SEL0_PIN 1U                   /*!<@brief PORT pin number */
@@ -236,6 +237,7 @@ void BOARD_InitBootPins(void);
 
 /* Symbols to be used with GPIO driver */
 #define BOARD_INITPINS_MEASURE_CSn_GPIO GPIO                /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_MEASURE_CSn_INIT_GPIO_VALUE 1U       /*!<@brief GPIO output initial state */
 #define BOARD_INITPINS_MEASURE_CSn_GPIO_PIN_MASK (1U << 6U) /*!<@brief GPIO pin mask */
 #define BOARD_INITPINS_MEASURE_CSn_PORT 0U                  /*!<@brief PORT peripheral base pointer */
 #define BOARD_INITPINS_MEASURE_CSn_PIN 6U                   /*!<@brief PORT pin number */
@@ -247,6 +249,7 @@ void BOARD_InitBootPins(void);
 
 /* Symbols to be used with GPIO driver */
 #define BOARD_INITPINS_VOLT_CURRn_GPIO GPIO                /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_VOLT_CURRn_INIT_GPIO_VALUE 0U       /*!<@brief GPIO output initial state */
 #define BOARD_INITPINS_VOLT_CURRn_GPIO_PIN_MASK (1U << 7U) /*!<@brief GPIO pin mask */
 #define BOARD_INITPINS_VOLT_CURRn_PORT 0U                  /*!<@brief PORT peripheral base pointer */
 #define BOARD_INITPINS_VOLT_CURRn_PIN 7U                   /*!<@brief PORT pin number */
@@ -258,6 +261,7 @@ void BOARD_InitBootPins(void);
 
 /* Symbols to be used with GPIO driver */
 #define BOARD_INITPINS_LED_ONn_GPIO GPIO                /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_LED_ONn_INIT_GPIO_VALUE 1U       /*!<@brief GPIO output initial state */
 #define BOARD_INITPINS_LED_ONn_GPIO_PIN_MASK (1U << 8U) /*!<@brief GPIO pin mask */
 #define BOARD_INITPINS_LED_ONn_PORT 0U                  /*!<@brief PORT peripheral base pointer */
 #define BOARD_INITPINS_LED_ONn_PIN 8U                   /*!<@brief PORT pin number */
@@ -294,6 +298,7 @@ void BOARD_InitBootPins(void);
 
 /* Symbols to be used with GPIO driver */
 #define BOARD_INITPINS_RTD_CSn_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_RTD_CSn_INIT_GPIO_VALUE 1U        /*!<@brief GPIO output initial state */
 #define BOARD_INITPINS_RTD_CSn_GPIO_PIN_MASK (1U << 17U) /*!<@brief GPIO pin mask */
 #define BOARD_INITPINS_RTD_CSn_PORT 0U                   /*!<@brief PORT peripheral base pointer */
 #define BOARD_INITPINS_RTD_CSn_PIN 17U                   /*!<@brief PORT pin number */
@@ -305,6 +310,7 @@ void BOARD_InitBootPins(void);
 
 /* Symbols to be used with GPIO driver */
 #define BOARD_INITPINS_RTD_CH_SEL1_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_RTD_CH_SEL1_INIT_GPIO_VALUE 0U        /*!<@brief GPIO output initial state */
 #define BOARD_INITPINS_RTD_CH_SEL1_GPIO_PIN_MASK (1U << 19U) /*!<@brief GPIO pin mask */
 #define BOARD_INITPINS_RTD_CH_SEL1_PORT 0U                   /*!<@brief PORT peripheral base pointer */
 #define BOARD_INITPINS_RTD_CH_SEL1_PIN 19U                   /*!<@brief PORT pin number */
@@ -316,6 +322,7 @@ void BOARD_InitBootPins(void);
 
 /* Symbols to be used with GPIO driver */
 #define BOARD_INITPINS_DBG_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_DBG_INIT_GPIO_VALUE 0U        /*!<@brief GPIO output initial state */
 #define BOARD_INITPINS_DBG_GPIO_PIN_MASK (1U << 20U) /*!<@brief GPIO pin mask */
 #define BOARD_INITPINS_DBG_PORT 0U                   /*!<@brief PORT peripheral base pointer */
 #define BOARD_INITPINS_DBG_PIN 20U                   /*!<@brief PORT pin number */
@@ -327,6 +334,7 @@ void BOARD_InitBootPins(void);
 
 /* Symbols to be used with GPIO driver */
 #define BOARD_INITPINS_MEASURE_CH_SEL1_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_MEASURE_CH_SEL1_INIT_GPIO_VALUE 0U        /*!<@brief GPIO output initial state */
 #define BOARD_INITPINS_MEASURE_CH_SEL1_GPIO_PIN_MASK (1U << 21U) /*!<@brief GPIO pin mask */
 #define BOARD_INITPINS_MEASURE_CH_SEL1_PORT 0U                   /*!<@brief PORT peripheral base pointer */
 #define BOARD_INITPINS_MEASURE_CH_SEL1_PIN 21U                   /*!<@brief PORT pin number */
@@ -338,6 +346,7 @@ void BOARD_InitBootPins(void);
 
 /* Symbols to be used with GPIO driver */
 #define BOARD_INITPINS_MEASURE_CH_SEL0_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_MEASURE_CH_SEL0_INIT_GPIO_VALUE 0U        /*!<@brief GPIO output initial state */
 #define BOARD_INITPINS_MEASURE_CH_SEL0_GPIO_PIN_MASK (1U << 22U) /*!<@brief GPIO pin mask */
 #define BOARD_INITPINS_MEASURE_CH_SEL0_PORT 0U                   /*!<@brief PORT peripheral base pointer */
 #define BOARD_INITPINS_MEASURE_CH_SEL0_PIN 22U                   /*!<@brief PORT pin number */
@@ -349,6 +358,7 @@ void BOARD_InitBootPins(void);
 
 /* Symbols to be used with GPIO driver */
 #define BOARD_INITPINS_RTD_REFn_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_RTD_REFn_INIT_GPIO_VALUE 0U        /*!<@brief GPIO output initial state */
 #define BOARD_INITPINS_RTD_REFn_GPIO_PIN_MASK (1U << 23U) /*!<@brief GPIO pin mask */
 #define BOARD_INITPINS_RTD_REFn_PORT 0U                   /*!<@brief PORT peripheral base pointer */
 #define BOARD_INITPINS_RTD_REFn_PIN 23U                   /*!<@brief PORT pin number */

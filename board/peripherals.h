@@ -60,7 +60,7 @@ extern "C" {
 /* Definition of peripheral ID */
 #define FLEXCOMM_I2C_PERIPHERAL ((I2C_Type *)FLEXCOMM1)
 /* Definition of the clock source frequency */
-#define FLEXCOMM_I2C_CLOCK_SOURCE 37536656UL
+#define FLEXCOMM_I2C_CLOCK_SOURCE 36035190UL
 /* FLEXCOMM_I2C interrupt vector ID (number). */
 #define FLEXCOMM_I2C_FLEXCOMM_IRQN FLEXCOMM1_IRQn
 /* FLEXCOMM_I2C interrupt vector priority. */
@@ -69,7 +69,7 @@ extern "C" {
 /* Definition of peripheral ID */
 #define FLEXCOMM_SPI_PERIPHERAL ((SPI_Type *)FLEXCOMM3)
 /* Definition of the clock source frequency */
-#define FLEXCOMM_SPI_CLOCK_SOURCE 37536656UL
+#define FLEXCOMM_SPI_CLOCK_SOURCE 36035190UL
 /* FLEXCOMM_SPI interrupt vector ID (number). */
 #define FLEXCOMM_SPI_FLEXCOMM_IRQN FLEXCOMM3_IRQn
 /* FLEXCOMM_SPI interrupt vector priority. */
@@ -79,19 +79,19 @@ extern "C" {
 /* Definition of peripheral ID */
 #define FLEXCOMM_UART_PERIPHERAL ((USART_Type *)FLEXCOMM0)
 /* Definition of the clock source frequency */
-#define FLEXCOMM_UART_CLOCK_SOURCE 37536656UL
+#define FLEXCOMM_UART_CLOCK_SOURCE 36035190UL
 /* Definition of peripheral ID */
 #define CRC_ENGINE_PERIPHERAL CRC_ENGINE
 /* Definition of peripheral ID */
 #define CAN0_PERIPHERAL CAN0
 /* Definition of the clock source frequency */
-#define CAN0_CLOCK_SOURCE 1500000UL
+#define CAN0_CLOCK_SOURCE 16000000UL
 /* Definition of the base address alignment */
 #define CAN0_BASE_ADDRESS_ALIGN_SIZE (0x10000)
 /* Definition of the message RAM size in words */
 #define CAN0_MESSAGE_RAM_SIZE 9
 /* Nominal baud rate value (calculated) */
-#define CAN0_NOMINAL_BAUD_RATE_VALUE 93750
+#define CAN0_NOMINAL_BAUD_RATE_VALUE 125000
 /* Mask of enabled TX buffer interrupts */
 #define CAN0_TX_BUFFERS_IRQ_MASK 0
 

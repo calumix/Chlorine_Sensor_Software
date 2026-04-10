@@ -17,10 +17,6 @@
 #include <math.h>
 #include "channel.h"
 
-uint8_t dig_pot_addr[NUM_CHANNELS] = {0x18, 0x4c, 0x1a, 0x4e};
-uint8_t io_exp_addr[NUM_CHANNELS] = {0x38,0x39, 0x3a, 0x3b};
-struct channel channel_cfg[NUM_CHANNELS];
-
 /*
  * Echos the first argument back (for testing)
  */
@@ -142,23 +138,23 @@ int ChCommand(struct Command * cmd,struct Message * msg,int argc, char * argv[])
 
 	if(argc == 5){
 		//Set range
-		if(strncmp(argv[2],"on",2)==0) isolate = 0;
-		else if(strncmp(argv[2],"off",3)==0) isolate = 1;
+		if(strncasecmp(argv[2],"on",2)==0) isolate = 0;
+		else if(strncasecmp(argv[2],"off",3)==0) isolate = 1;
 		else return 1;
 
 		st.voltage = strtof(argv[3],NULL);
 		range = strtoul(argv[4],NULL,0);
 		st.range = ChannelRangeUaToNum(range);
-		ChannelSetState(&channel_cfg[ch],&st,isolate);
+		ChannelSetState(ch,&st,isolate);
 
 	}else if(argc != 2){
 		//not a set, not a read. syntax error
 		return 1;
 	}
-	ChannelGetState(&channel_cfg[ch],&st);
+	isolate = ChannelGetState(ch,&st);
 	MessageSendFormat(msg,"%s,%u,%s,%f,%u",cmd->str,
 			ch+1,
-			channel_cfg[ch].isolate ? "off" : "on",
+			isolate ? "off" : "on",
 			st.voltage,
 			ChannelRangeNumToUa(st.range)
 			);
@@ -213,11 +209,6 @@ static void HandleMessage(struct Message * msg){
 void CommandParserTask(void*params){
 	QueueHandle_t * msg_queue = (QueueHandle_t*)params;
 	struct Message msg;
-	int i;
-
-	for(i=0;i<NUM_CHANNELS;i++){
-		ChannelInit(&channel_cfg[i], dig_pot_addr[i], io_exp_addr[i]);
-	}
 
 	while(1){
 		xQueueReceive(*msg_queue,&msg,portMAX_DELAY);

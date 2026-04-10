@@ -42,6 +42,7 @@ pin_labels:
 /* clang-format on */
 
 #include "fsl_common.h"
+#include "fsl_gpio.h"
 #include "pin_mux.h"
 
 /* FUNCTION ************************************************************************************************************
@@ -66,27 +67,33 @@ BOARD_InitPins:
   - {pin_num: '5', peripheral: SWD, signal: SWDIO, pin_signal: PIO0_12/FC3_TXD_SCL_MISO_WS/FREQME_GPIO_CLK_B/SCT_GPI7/SWDIO/FC6_TXD_SCL_MISO_WS/SECURE_GPIO0_12/ADC0_10}
   - {pin_num: '7', peripheral: SYSCON, signal: CLKOUT, pin_signal: PIO0_16/FC4_TXD_SCL_MISO_WS/CLKOUT/CT_INP4/SECURE_GPIO0_16/ADC0_8}
   - {pin_num: '36', peripheral: FLEXCOMM3, signal: SCK, pin_signal: PIO0_0/FC3_SCK/CTIMER0_MAT0/SCT_GPI0/SECURE_GPIO0_0/ACMP0_A}
-  - {pin_num: '2', peripheral: GPIO, signal: 'PIO0, 1', pin_signal: PIO0_1/FC3_CTS_SDA_SSEL0/CT_INP0/SCT_GPI1/CMP0_OUT/SECURE_GPIO0_1}
+  - {pin_num: '2', peripheral: GPIO, signal: 'PIO0, 1', pin_signal: PIO0_1/FC3_CTS_SDA_SSEL0/CT_INP0/SCT_GPI1/CMP0_OUT/SECURE_GPIO0_1, direction: OUTPUT, gpio_init_state: 'false'}
   - {pin_num: '52', peripheral: FLEXCOMM3, signal: TXD_SCL_MISO_WS, pin_signal: PIO0_2/FC3_TXD_SCL_MISO_WS/CT_INP1/SCT0_OUT0/SCT_GPI2/SECURE_GPIO0_2, direction: INPUT}
   - {pin_num: '56', peripheral: GPIO, signal: 'PIO0, 5', pin_signal: PIO0_5/CAN0_TD/FC4_RXD_SDA_MOSI_DATA/CTIMER3_MAT0/SCT_GPI5/FC3_RTS_SCL_SSEL1/MCLK/SECURE_GPIO0_5}
-  - {pin_num: '57', peripheral: GPIO, signal: 'PIO0, 6', pin_signal: PIO0_6/FC3_SCK/CT_INP13/CTIMER4_MAT0/SCT_GPI6/SECURE_GPIO0_6}
-  - {pin_num: '1', peripheral: GPIO, signal: 'PIO0, 7', pin_signal: PIO0_7/FC3_RTS_SCL_SSEL1/FC5_SCK/FC1_SCK/SECURE_GPIO0_7}
-  - {pin_num: '17', peripheral: GPIO, signal: 'PIO0, 8', pin_signal: PIO0_8/FC3_SSEL3/FC5_RXD_SDA_MOSI_DATA/SWO/SECURE_GPIO0_8}
+  - {pin_num: '57', peripheral: GPIO, signal: 'PIO0, 6', pin_signal: PIO0_6/FC3_SCK/CT_INP13/CTIMER4_MAT0/SCT_GPI6/SECURE_GPIO0_6, direction: OUTPUT, gpio_init_state: 'true'}
+  - {pin_num: '1', peripheral: GPIO, signal: 'PIO0, 7', pin_signal: PIO0_7/FC3_RTS_SCL_SSEL1/FC5_SCK/FC1_SCK/SECURE_GPIO0_7, direction: OUTPUT, gpio_init_state: 'false'}
+  - {pin_num: '17', peripheral: GPIO, signal: 'PIO0, 8', pin_signal: PIO0_8/FC3_SSEL3/FC5_RXD_SDA_MOSI_DATA/SWO/SECURE_GPIO0_8, direction: OUTPUT, gpio_init_state: 'true'}
   - {pin_num: '46', peripheral: FLEXCOMM1, signal: CTS_SDA_SSEL0, pin_signal: PIO0_13/FC1_CTS_SDA_SSEL0/UTICK_CAP0/CT_INP0/SCT_GPI0/FC1_RXD_SDA_MOSI_DATA/PLU_IN0/SECURE_GPIO0_13,
     egp: i2c}
   - {pin_num: '47', peripheral: FLEXCOMM1, signal: RTS_SCL_SSEL1, pin_signal: PIO0_14/FC1_RTS_SCL_SSEL1/UTICK_CAP1/CT_INP1/SCT_GPI1/FC1_TXD_SCL_MISO_WS/PLU_IN1/SECURE_GPIO0_14,
     egp: i2c}
-  - {pin_num: '14', peripheral: GPIO, signal: 'PIO0, 15', pin_signal: PIO0_15/FC6_CTS_SDA_SSEL0/UTICK_CAP2/CT_INP16/SCT0_OUT2/SECURE_GPIO0_15/ADC0_2}
-  - {pin_num: '3', peripheral: GPIO, signal: 'PIO0, 17', pin_signal: PIO0_17/FC4_SSEL2/SCT_GPI7/SCT0_OUT0/PLU_IN2/SECURE_GPIO0_17}
-  - {pin_num: '58', peripheral: GPIO, signal: 'PIO0, 19', pin_signal: PIO0_19/FC4_RTS_SCL_SSEL1/UTICK_CAP0/CTIMER0_MAT2/SCT0_OUT2/FC7_TXD_SCL_MISO_WS/PLU_IN4/SECURE_GPIO0_19}
-  - {pin_num: '48', peripheral: GPIO, signal: 'PIO0, 20', pin_signal: PIO0_20/FC3_CTS_SDA_SSEL0/CTIMER1_MAT1/CT_INP15/SCT_GPI2/FC7_RXD_SDA_MOSI_DATA/HS_SPI_SSEL0/PLU_IN5/SECURE_GPIO0_20/FC4_TXD_SCL_MISO_WS}
-  - {pin_num: '49', peripheral: GPIO, signal: 'PIO0, 21', pin_signal: PIO0_21/FC3_RTS_SCL_SSEL1/UTICK_CAP3/CTIMER3_MAT3/SCT_GPI3/FC7_SCK/HS_SPI_SSEL3/PLU_CLKIN/SECURE_GPIO0_21}
-  - {pin_num: '50', peripheral: GPIO, signal: 'PIO0, 22', pin_signal: PIO0_22/FC6_TXD_SCL_MISO_WS/UTICK_CAP1/CT_INP15/SCT0_OUT3/USB0_VBUS/PLU_OUT7/SECURE_GPIO0_22}
-  - {pin_num: '12', peripheral: GPIO, signal: 'PIO0, 23', pin_signal: PIO0_23/MCLK/CTIMER1_MAT2/CTIMER3_MAT3/SCT0_OUT4/FC0_CTS_SDA_SSEL0/SECURE_GPIO0_23/ADC0_0}
-  - {pin_num: '40', peripheral: GPIO, signal: 'PIO0, 26', pin_signal: PIO0_26/FC2_RXD_SDA_MOSI_DATA/CLKOUT/CT_INP14/SCT0_OUT5/USB0_IDVALUE/FC0_SCK/HS_SPI_MOSI/SECURE_GPIO0_26}
+  - {pin_num: '14', peripheral: GPIO, signal: 'PIO0, 15', pin_signal: PIO0_15/FC6_CTS_SDA_SSEL0/UTICK_CAP2/CT_INP16/SCT0_OUT2/SECURE_GPIO0_15/ADC0_2, direction: INPUT}
+  - {pin_num: '3', peripheral: GPIO, signal: 'PIO0, 17', pin_signal: PIO0_17/FC4_SSEL2/SCT_GPI7/SCT0_OUT0/PLU_IN2/SECURE_GPIO0_17, direction: OUTPUT, gpio_init_state: 'true'}
+  - {pin_num: '58', peripheral: GPIO, signal: 'PIO0, 19', pin_signal: PIO0_19/FC4_RTS_SCL_SSEL1/UTICK_CAP0/CTIMER0_MAT2/SCT0_OUT2/FC7_TXD_SCL_MISO_WS/PLU_IN4/SECURE_GPIO0_19,
+    direction: OUTPUT, gpio_init_state: 'false'}
+  - {pin_num: '48', peripheral: GPIO, signal: 'PIO0, 20', pin_signal: PIO0_20/FC3_CTS_SDA_SSEL0/CTIMER1_MAT1/CT_INP15/SCT_GPI2/FC7_RXD_SDA_MOSI_DATA/HS_SPI_SSEL0/PLU_IN5/SECURE_GPIO0_20/FC4_TXD_SCL_MISO_WS,
+    direction: OUTPUT, gpio_init_state: 'false'}
+  - {pin_num: '49', peripheral: GPIO, signal: 'PIO0, 21', pin_signal: PIO0_21/FC3_RTS_SCL_SSEL1/UTICK_CAP3/CTIMER3_MAT3/SCT_GPI3/FC7_SCK/HS_SPI_SSEL3/PLU_CLKIN/SECURE_GPIO0_21,
+    direction: OUTPUT, gpio_init_state: 'false'}
+  - {pin_num: '50', peripheral: GPIO, signal: 'PIO0, 22', pin_signal: PIO0_22/FC6_TXD_SCL_MISO_WS/UTICK_CAP1/CT_INP15/SCT0_OUT3/USB0_VBUS/PLU_OUT7/SECURE_GPIO0_22,
+    direction: OUTPUT, gpio_init_state: 'false'}
+  - {pin_num: '12', peripheral: GPIO, signal: 'PIO0, 23', pin_signal: PIO0_23/MCLK/CTIMER1_MAT2/CTIMER3_MAT3/SCT0_OUT4/FC0_CTS_SDA_SSEL0/SECURE_GPIO0_23/ADC0_0, direction: OUTPUT,
+    gpio_init_state: 'false'}
+  - {pin_num: '40', peripheral: GPIO, signal: 'PIO0, 26', pin_signal: PIO0_26/FC2_RXD_SDA_MOSI_DATA/CLKOUT/CT_INP14/SCT0_OUT5/USB0_IDVALUE/FC0_SCK/HS_SPI_MOSI/SECURE_GPIO0_26,
+    direction: INPUT}
   - {pin_num: '59', peripheral: FLEXCOMM0, signal: RXD_SDA_MOSI_DATA, pin_signal: PIO0_29/FC0_RXD_SDA_MOSI_DATA/CTIMER2_MAT3/SCT0_OUT8/CMP0_OUT/PLU_OUT2/SECURE_GPIO0_29}
   - {pin_num: '60', peripheral: FLEXCOMM0, signal: TXD_SCL_MISO_WS, pin_signal: PIO0_30/FC0_TXD_SCL_MISO_WS/CTIMER0_MAT0/SCT0_OUT9/SECURE_GPIO0_30}
-  - {pin_num: '15', peripheral: GPIO, signal: 'PIO0, 31', pin_signal: PIO0_31/FC0_CTS_SDA_SSEL0/CTIMER0_MAT1/SCT0_OUT3/SECURE_GPIO0_31/ADC0_3}
+  - {pin_num: '15', peripheral: GPIO, signal: 'PIO0, 31', pin_signal: PIO0_31/FC0_CTS_SDA_SSEL0/CTIMER0_MAT1/SCT0_OUT3/SECURE_GPIO0_31/ADC0_3, direction: INPUT}
   - {pin_num: '41', peripheral: CAN0, signal: CAN_TD, pin_signal: PIO1_2/CAN0_TD/CTIMER0_MAT3/SCT_GPI6/HS_SPI_SCK/USB1_PORTPWRN/PLU_OUT5}
   - {pin_num: '42', peripheral: CAN0, signal: CAN_RD, pin_signal: PIO1_3/CAN0_RD/SCT0_OUT4/HS_SPI_MISO/USB0_PORTPWRN/PLU_OUT6}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -104,6 +111,100 @@ void BOARD_InitPins(void)
 {
     /* Enables the clock for the I/O controller.: Enable Clock. */
     CLOCK_EnableClock(kCLOCK_Iocon);
+
+    /* Enables the clock for the GPIO0 module */
+    CLOCK_EnableClock(kCLOCK_Gpio0);
+
+    gpio_pin_config_t RTD_CH_SEL0_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PIO0_1 (pin 2)  */
+    GPIO_PinInit(BOARD_INITPINS_RTD_CH_SEL0_GPIO, BOARD_INITPINS_RTD_CH_SEL0_PORT, BOARD_INITPINS_RTD_CH_SEL0_PIN, &RTD_CH_SEL0_config);
+
+    gpio_pin_config_t MEASURE_CSn_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 1U
+    };
+    /* Initialize GPIO functionality on pin PIO0_6 (pin 57)  */
+    GPIO_PinInit(BOARD_INITPINS_MEASURE_CSn_GPIO, BOARD_INITPINS_MEASURE_CSn_PORT, BOARD_INITPINS_MEASURE_CSn_PIN, &MEASURE_CSn_config);
+
+    gpio_pin_config_t VOLT_CURRn_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PIO0_7 (pin 1)  */
+    GPIO_PinInit(BOARD_INITPINS_VOLT_CURRn_GPIO, BOARD_INITPINS_VOLT_CURRn_PORT, BOARD_INITPINS_VOLT_CURRn_PIN, &VOLT_CURRn_config);
+
+    gpio_pin_config_t LED_ONn_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 1U
+    };
+    /* Initialize GPIO functionality on pin PIO0_8 (pin 17)  */
+    GPIO_PinInit(BOARD_INITPINS_LED_ONn_GPIO, BOARD_INITPINS_LED_ONn_PORT, BOARD_INITPINS_LED_ONn_PIN, &LED_ONn_config);
+
+    gpio_pin_config_t BTN2n_config = {
+        .pinDirection = kGPIO_DigitalInput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PIO0_15 (pin 14)  */
+    GPIO_PinInit(BOARD_INITPINS_BTN2n_GPIO, BOARD_INITPINS_BTN2n_PORT, BOARD_INITPINS_BTN2n_PIN, &BTN2n_config);
+
+    gpio_pin_config_t RTD_CSn_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 1U
+    };
+    /* Initialize GPIO functionality on pin PIO0_17 (pin 3)  */
+    GPIO_PinInit(BOARD_INITPINS_RTD_CSn_GPIO, BOARD_INITPINS_RTD_CSn_PORT, BOARD_INITPINS_RTD_CSn_PIN, &RTD_CSn_config);
+
+    gpio_pin_config_t RTD_CH_SEL1_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PIO0_19 (pin 58)  */
+    GPIO_PinInit(BOARD_INITPINS_RTD_CH_SEL1_GPIO, BOARD_INITPINS_RTD_CH_SEL1_PORT, BOARD_INITPINS_RTD_CH_SEL1_PIN, &RTD_CH_SEL1_config);
+
+    gpio_pin_config_t DBG_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PIO0_20 (pin 48)  */
+    GPIO_PinInit(BOARD_INITPINS_DBG_GPIO, BOARD_INITPINS_DBG_PORT, BOARD_INITPINS_DBG_PIN, &DBG_config);
+
+    gpio_pin_config_t MEASURE_CH_SEL1_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PIO0_21 (pin 49)  */
+    GPIO_PinInit(BOARD_INITPINS_MEASURE_CH_SEL1_GPIO, BOARD_INITPINS_MEASURE_CH_SEL1_PORT, BOARD_INITPINS_MEASURE_CH_SEL1_PIN, &MEASURE_CH_SEL1_config);
+
+    gpio_pin_config_t MEASURE_CH_SEL0_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PIO0_22 (pin 50)  */
+    GPIO_PinInit(BOARD_INITPINS_MEASURE_CH_SEL0_GPIO, BOARD_INITPINS_MEASURE_CH_SEL0_PORT, BOARD_INITPINS_MEASURE_CH_SEL0_PIN, &MEASURE_CH_SEL0_config);
+
+    gpio_pin_config_t RTD_REFn_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PIO0_23 (pin 12)  */
+    GPIO_PinInit(BOARD_INITPINS_RTD_REFn_GPIO, BOARD_INITPINS_RTD_REFn_PORT, BOARD_INITPINS_RTD_REFn_PIN, &RTD_REFn_config);
+
+    gpio_pin_config_t USB_POWERED_config = {
+        .pinDirection = kGPIO_DigitalInput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PIO0_26 (pin 40)  */
+    GPIO_PinInit(BOARD_INITPINS_USB_POWERED_GPIO, BOARD_INITPINS_USB_POWERED_PORT, BOARD_INITPINS_USB_POWERED_PIN, &USB_POWERED_config);
+
+    gpio_pin_config_t BTN1n_config = {
+        .pinDirection = kGPIO_DigitalInput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PIO0_31 (pin 15)  */
+    GPIO_PinInit(BOARD_INITPINS_BTN1n_GPIO, BOARD_INITPINS_BTN1n_PORT, BOARD_INITPINS_BTN1n_PIN, &BTN1n_config);
 
     IOCON->PIO[0][0] = ((IOCON->PIO[0][0] &
                          /* Mask bits to zero which are setting */
