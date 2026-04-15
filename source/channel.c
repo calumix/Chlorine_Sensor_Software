@@ -52,7 +52,7 @@ uint16_t ChannelRangeNumToUa(enum channel_range r){
 		if(ranges[i].range == r)
 			return ranges[i].range_ua;
 	}
-	return ranges[i].range_ua;
+	return ranges[NUM_RANGES-1].range_ua;
 }
 
 enum channel_range ChannelRangeUaToNum(uint16_t ua){
@@ -75,7 +75,7 @@ float ChannelRangeNumToScale(enum channel_range r){
 		if(ranges[i].range == r)
 			return ranges[i].scale;
 	}
-	return ranges[i].scale;
+	return ranges[NUM_RANGES-1].scale;
 }
 
 static void _setvoltage(struct channel * ch, float voltage){
