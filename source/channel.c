@@ -40,7 +40,8 @@ static struct adc rtd_adc;
 
 static struct channel channels[NUM_CHANNELS];
 
-#define R_TOP			750000.0
+#define R_TOP			270.0
+#define AV				101.0		//nominal instr amp gain
 #define R_AB			10000.0
 #define RDAC_COUNTS		64
 #define VOLT_SET_REF	1.65
@@ -84,14 +85,14 @@ static void _setvoltage(struct channel * ch, float voltage){
 	/* voltage is +/-, and is set from ~0 to ~20mV. Actual maximum varies
 	 * because of tolerance of pot
 	 * Voltage is calculated as:
-	 * Vset = +/-1.65 * Rwb/(750k + Rab*(1+tol))
+	 * Vset = (+/-1.65 * Rwb/(750k + Rab*(1+tol)))/Av
 	 * where Rab is 10k, Rwb is (Rab*rdac/64)
 	 *
-	 * Vset = +/-1.65 * (rdac/64) * (1/((750k/Rab) + (1+tol)))
+	 * Vset = (+/-1.65 * (rdac/64) * (1/((750k/Rab) + (1+tol))))/Av
 	 * So:
-	 * D = Vset*64 * (750k/Rab + (1+tol))/(+/- 1.65)
+	 * D = (Vset*Av)*64 * (750k/Rab + (1+tol))/(+/- 1.65)
 	 */
-	calc = voltage * RDAC_COUNTS;
+	calc = voltage * AV * RDAC_COUNTS;
 	calc *= R_TOP/R_AB + (1+ch->pot.tolerance);
 	calc /= VOLT_SET_REF;
 
@@ -120,7 +121,7 @@ static float _getvoltage(struct channel * ch){
 	calc *= rdac;
 	calc /= RDAC_COUNTS;
 	calc /= R_TOP/R_AB + (1+ch->pot.tolerance);
-	return calc;
+	return calc/AV;
 }
 
 static void _relay(struct channel * ch, bool isolate){
@@ -219,7 +220,7 @@ float ChannelReadVoltage(uint8_t channel_num){
 	f = _adc_read_chan(&meas_adc,MEAS_ADC_VOLT_GROUP,channel_num);
 
 	//convert value
-	f *= 3.3/2097151.0/101.0;
+	f *= 3.3/2097151.0/AV;
 
 	return f;
 }
@@ -260,7 +261,7 @@ float ChannelReadRTD(uint8_t channel_num){
 	v_rtd = _adc_read_chan(&rtd_adc,RTD_ADC_RTD_GROUP,channel_num);
 	v_ref = _adc_read_chan(&rtd_adc,RTD_ADC_REF_GROUP,channel_num);
 
-	return ((v_rtd * 3000.0)/(v_ref * 100.0 * (1+100/3.4))-1)/0.0039083;
+	return ((v_rtd * 3000.0)/(v_ref * 100.0 * (1+100/3.4))-1)/0.00385;
 }
 
 
