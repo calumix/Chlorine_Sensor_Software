@@ -14,16 +14,18 @@ void MeasTask(void * params){
 	struct Message msg;
 	uint8_t chan=0;
 	float r,v,c;
+	uint64_t time_ms;
 
 	MessageInit(&msg,q);
 
 	while(1){
 		if(!ChannelGetState(chan,NULL)){
 			r = ChannelReadResistance(chan,&v,&c);
-
+			time_ms = ( ( uint64_t ) ( xTaskGetTickCount() ) * ( uint64_t ) 1000U ) / ( uint64_t ) configTICK_RATE_HZ;;
 			//send message
-			MessageSendFormat(&msg, "MEAS,%u,%e,%e,%e",
-					chan,
+			MessageSendFormat(&msg, "MEAS,%u,%llu,%e,%e,%e",
+					chan+1,
+					time_ms,
 					r,v,c);
 		}else{
 			taskYIELD();
@@ -39,16 +41,18 @@ void RTDTask(void * params){
 	struct Message msg;
 	uint8_t chan=0;
 	float t;
+	uint64_t time_ms;
 
 	MessageInit(&msg,q);
 
 	while(1){
 		if(!ChannelGetState(chan,NULL)){
 			t = ChannelReadRTD(chan);
-
+			time_ms = ( ( uint64_t ) ( xTaskGetTickCount() ) * ( uint64_t ) 1000U ) / ( uint64_t ) configTICK_RATE_HZ;;
 			//send message
-			MessageSendFormat(&msg, "RTD,%u,%e",
-					chan,
+			MessageSendFormat(&msg, "RTD,%u,%llu,%e",
+					chan+1,
+					time_ms,
 					t);
 		}else{
 			taskYIELD();
