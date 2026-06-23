@@ -3,3 +3,4 @@
 *.launch
 .vscode
 /Release/
+.DS_Store
